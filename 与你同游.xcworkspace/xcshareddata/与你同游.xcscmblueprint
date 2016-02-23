@@ -1,19 +1,21 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A775FA6BA1D5F0313A5BFB6B38D1DD0E10B40B47",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C357C0B26F17B1319C9A7E3E0D7FE707F00CD283",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A775FA6BA1D5F0313A5BFB6B38D1DD0E10B40B47" : 0,
     "24BCA3BF1A6D18906633232D4675C4924CCDFF6E" : 0,
-    "A775FA6BA1D5F0313A5BFB6B38D1DD0E10B40B47" : 0
+    "C357C0B26F17B1319C9A7E3E0D7FE707F00CD283" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "13950379-6355-4315-AC2A-2D947ABADD17",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A775FA6BA1D5F0313A5BFB6B38D1DD0E10B40B47" : "yo_you",
     "24BCA3BF1A6D18906633232D4675C4924CCDFF6E" : "",
-    "A775FA6BA1D5F0313A5BFB6B38D1DD0E10B40B47" : "yo_you"
+    "C357C0B26F17B1319C9A7E3E0D7FE707F00CD283" : "YOYOTEST\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "与你同游",
-  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "与你同游.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
@@ -25,6 +27,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/jgyhc\/yo_you.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A775FA6BA1D5F0313A5BFB6B38D1DD0E10B40B47"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/amandaqian\/YOYOUTEST.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C357C0B26F17B1319C9A7E3E0D7FE707F00CD283"
     }
   ]
 }

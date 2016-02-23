@@ -23,6 +23,7 @@
 - (void)initializedApperance{
     [self initNavTitle:@"选择地点吧"];
     [self initBackButton];
+    //选择地点
 }
 
 
