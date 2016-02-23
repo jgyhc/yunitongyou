@@ -1,0 +1,24 @@
+PODS:
+  - BmobSDK (1.6.6)
+  - MJRefresh (3.1.0)
+  - SDAutoLayout (1.3)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+  - YYModel (0.9.12)
+
+DEPENDENCIES:
+  - BmobSDK
+  - MJRefresh
+  - SDAutoLayout (~> 1.3)
+  - SDWebImage
+  - YYModel
+
+SPEC CHECKSUMS:
+  BmobSDK: c896d4ff3986f2b4fc8406fb2b801230f7419878
+  MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  SDAutoLayout: 5cf822185eaf1c8d236ccda010b890912f9baeba
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  YYModel: 33a27f41a995f4c36ff8178421bac9f221a9c7ea
+
+COCOAPODS: 0.39.0

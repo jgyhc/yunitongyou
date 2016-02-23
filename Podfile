@@ -1,0 +1,6 @@
+pod 'BmobSDK'
+pod 'SDWebImage'
+pod 'SDAutoLayout', '~> 1.3'
+pod 'MJRefresh'
+pod 'YYModel'
+platform :ios, '7.0'
