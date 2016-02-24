@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import <MJRefresh.h>
 #import "CalledModel.h"
+#import <UITableView+SDAutoTableViewCellHeight.h>
 @interface InitiateViewcontroller ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -37,13 +38,6 @@
     [self initRightButtonEvent:@selector(handleAddCalled:) Image:IMAGE_PATH(@"添加游记.png")];
     [self.calledModel addObserver:self forKeyPath:@"calledArray" options:NSKeyValueObservingOptionNew context:nil];
     [self.calledModel addObserver:self forKeyPath:@"userArray" options:NSKeyValueObservingOptionNew context:nil];
-    [self initDataSouce];
-    [self initUserInterface];
-    
-}
-- (void)setupRefresh
-{
-//    [self.calledModel queryTheCalledlList];
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     header.stateLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
@@ -53,7 +47,12 @@
             [self.tableView.mj_footer endRefreshing];
         });
     }];
+
+    [self initUserInterface];
+    [self initPersonButton];
+    
 }
+
 
 - (void)loadNewData {
 //    [self.calledModel queryTheCalledlList];
@@ -63,12 +62,6 @@
     
 }
 
-
-- (void)initDataSouce {
-    [self setupRefresh];
-    
-    
-}
 #pragma mark -- KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"calledArray"]) {
@@ -105,8 +98,9 @@
 
 
 - (void)initUserInterface {
+    self.view.backgroundColor = [UIColor colorWithWhite:0.733 alpha:1.000];
     [self.view addSubview:self.tableView];
-    [self initPersonButton];
+    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
 }
 
 - (void)handleAddCalled:(UIButton *)sender {
@@ -137,6 +131,7 @@
         cell = [[LaunchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
 //    if (self.calledArray.count == 0 || self.userArray.count == 0) {
 //        return cell;
 //    }
@@ -195,6 +190,30 @@
     return cell;
 
 
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    /*
+     普通版也可实现一步设置搞定高度自适应，不再推荐使用此套方法，具体参看“UITableView+SDAutoTableViewCellHeight”头文件
+     return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:currentClass];
+     */
+    
+    
+    // 推荐使用此普通简化版方法（一步设置搞定高度自适应，性能好，易用性好）
+//    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:currentClass contentViewWidth:[self cellContentViewWith]];
+}
+
+- (CGFloat)cellContentViewWith
+{
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    
+    // 适配ios7
+    if ([UIApplication sharedApplication].statusBarOrientation != UIInterfaceOrientationPortrait && [[UIDevice currentDevice].systemVersion floatValue] < 8) {
+        width = [UIScreen mainScreen].bounds.size.height;
+    }
+    return width;
 }
 #pragma mark --文本自适应
 - (float) heightForString:(NSString *)value fontSize:(float)fontSize andWidth:(float)width
@@ -265,10 +284,21 @@
 
 #pragma mark --UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 10;
+    return flexibleHeight(5);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 10;
+    return flexibleHeight(5);
+}
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor colorWithWhite:0.818 alpha:1.000];
+    return view;
+}
+- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor colorWithWhite:0.818 alpha:1.000];
+    return view;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
@@ -281,13 +311,10 @@
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = ({
-            UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStyleGrouped];
-            tableView.frame = flexibleFrame(CGRectMake(10, 64, WIDTH - 20, HEIGHT - 64 - 50), NO);
+            UITableView *tableView = [[UITableView alloc]init];
             tableView.dataSource = self;
             tableView.delegate = self;
             tableView.showsVerticalScrollIndicator = NO;
-            tableView.rowHeight = flexibleHeight(260);
-            tableView.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
             tableView;
         });
         
