@@ -36,11 +36,11 @@
         [self.view2 addSubview:self.imgaeView2];
         [self.view3 addSubview:self.imgaeView3];
         
-        self.view1.sd_layout.leftEqualToView(self).bottomEqualToView(self).topEqualToView(self).widthRatioToView(self, 1 / 3);
+        self.view1.sd_layout.leftEqualToView(self).bottomEqualToView(self).topEqualToView(self).widthIs(flexibleWidth(375 / 3));
         
-        self.view2.sd_layout.leftEqualToView(self.view1).bottomEqualToView(self).topEqualToView(self).widthRatioToView(self, 1 / 3);
+        self.view2.sd_layout.leftSpaceToView(self.view1, 0).bottomEqualToView(self).topEqualToView(self).widthIs(flexibleWidth(375 / 3));
         
-        self.view3.sd_layout.leftEqualToView(self.view2).bottomEqualToView(self).topEqualToView(self).widthRatioToView(self, 1 / 3);
+        self.view3.sd_layout.leftSpaceToView(self.view2, 0).bottomEqualToView(self).topEqualToView(self).widthIs(flexibleWidth(375 / 3));
         
         self.imgaeView1.sd_layout.centerYEqualToView(self.view1).leftSpaceToView(self.view1, flexibleWidth(75)).heightIs(flexibleHeight(20)).widthEqualToHeight(1);
         
@@ -67,7 +67,7 @@
     self.imgaeView1.image = [UIImage imageNamed:imageArray[0]];
     self.imgaeView1.image = [UIImage imageNamed:imageArray[1]];
     self.imgaeView1.image = [UIImage imageNamed:imageArray[2]];
-
+    [self layoutSubviews];
 }
 
 - (UIImageView *)imgaeView3 {
@@ -129,6 +129,7 @@
 - (UIView *)view3 {
 	if(_view3 == nil) {
 		_view3 = [[UIView alloc] init];
+        _view3.backgroundColor = [UIColor redColor];
 	}
 	return _view3;
 }
@@ -136,6 +137,7 @@
 - (UIView *)view2 {
 	if(_view2 == nil) {
 		_view2 = [[UIView alloc] init];
+        _view2.backgroundColor = [UIColor colorWithRed:0.671 green:0.636 blue:1.000 alpha:1.000];
 	}
 	return _view2;
 }
@@ -143,6 +145,7 @@
 - (UIView *)view1 {
 	if(_view1 == nil) {
 		_view1 = [[UIView alloc] init];
+        _view1.backgroundColor = [UIColor colorWithRed:0.679 green:1.000 blue:0.884 alpha:1.000];
 	}
 	return _view1;
 }
