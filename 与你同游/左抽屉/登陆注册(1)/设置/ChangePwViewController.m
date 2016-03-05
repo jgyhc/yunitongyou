@@ -160,8 +160,8 @@
     if (!_completeButton) {
         _completeButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = flexibleFrame(CGRectMake(0, 0, 300, 40), NO);
-            button.center =  flexibleCenter(CGPointMake(WIDTH / 2, 560), NO);
+            button.frame = flexibleFrame(CGRectMake(0, 0, 300,50), NO);
+            button.center =  flexibleCenter(CGPointMake(WIDTH / 2, 600), NO);
             button.titleLabel.font = [UIFont systemFontOfSize:18];
             button.layer.borderColor = THEMECOLOR.CGColor;
             button.layer.masksToBounds = YES;

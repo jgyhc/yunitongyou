@@ -56,8 +56,9 @@
 
 - (void)initializedApperance{
     self.hintArray = @[@"昵称", @"性别", @"年龄", @"个性签名"];
-    NSString * ageStr = [NSString stringWithFormat:@"%@", [self.user.getUserData objectForKey:@"age"]];
-    NSArray * array = @[[self.user.getUserData objectForKey:@"userName"], [self.user.getUserData objectForKey:@"sex"], ageStr, [self.user.getUserData objectForKey:@"IndividualitySignature"]];
+//    NSString * ageStr = [NSString stringWithFormat:@"%@", [self.user.getUserData objectForKey:@"age"]];
+//    NSArray * array = @[[self.user.getUserData objectForKey:@"userName"], [self.user.getUserData objectForKey:@"sex"], ageStr, [self.user.getUserData objectForKey:@"IndividualitySignature"]];
+    NSArray * array = @[@"提莫",@"女",@"21岁",@"岁月静好，我要你知道，在这个世界上，总有一个人是会永远等着你的。无论什么时候，无论在什么地方，总会有那么一个人。。。"];
     
     
 
@@ -339,9 +340,10 @@
             UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(147.5, 100, 80, 80), NO)];
             imageView.layer.cornerRadius = 0.5 * CGRectGetWidth(imageView.bounds);
             imageView.clipsToBounds = YES;
-            NSString * url = [self.user.getUserData objectForKey:@"head_portraits1"];
-            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-            imageView.image = [UIImage imageWithData:data];
+//            NSString * url = [self.user.getUserData objectForKey:@"head_portraits1"];
+//            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//            imageView.image = [UIImage imageWithData:data];
+            imageView.image = IMAGE_PATH(@"测试头像1.png");
             UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleGesture)];
             [imageView addGestureRecognizer:tap];
             imageView.userInteractionEnabled = YES;
@@ -372,9 +374,10 @@
         _topView = ({
             UIImageView *customBackgournd = [[UIImageView alloc] initWithFrame:flexibleFrame(CGRectMake(0, 0, 375, 250), NO)];
             
-            NSString * url = [self.user.getUserData objectForKey:@"head_portraits1"];
-            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-            customBackgournd.image = [UIImage imageWithData:data];
+//            NSString * url = [self.user.getUserData objectForKey:@"head_portraits1"];
+//            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//            customBackgournd.image = [UIImage imageWithData:data];
+            customBackgournd.image = IMAGE_PATH(@"测试头像1.png");
         
             UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
             visualEfView.frame = flexibleFrame(CGRectMake(0, 0, 375, 250), NO);

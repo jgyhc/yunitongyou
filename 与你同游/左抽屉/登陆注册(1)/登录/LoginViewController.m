@@ -219,7 +219,7 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.frame = flexibleFrame(CGRectMake(0, 0, 300, 50), NO);
             button.center =  flexibleCenter(CGPointMake(WIDTH / 2, 440), NO);
-            button.layer.cornerRadius = 10;
+            button.layer.cornerRadius = 5.0;
             button.backgroundColor = THEMECOLOR;
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button setTitle:@"登录" forState:UIControlStateNormal];
@@ -238,7 +238,7 @@
             button.center =  flexibleCenter(CGPointMake(WIDTH / 4, HEIGHT - 50), NO);
             button.titleLabel.font = [UIFont systemFontOfSize:16];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [button setTitle:@"忘记密码" forState:UIControlStateNormal];
+            [button setTitle:@"忘记密码？" forState:UIControlStateNormal];
             [button addTarget:self action:@selector(forgetAction:) forControlEvents:UIControlEventTouchUpInside];
             button;
         });

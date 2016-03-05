@@ -27,13 +27,12 @@
 @implementation MyActivitiesViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self initUserInterface];
 }
 
 - (void)initUserInterface {
     [self initBackButton];
-    [self initNavTitle:@"我的活动"];
+    [self initNavTitle:@"我的发起"];
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.activitiesView];

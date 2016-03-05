@@ -47,6 +47,11 @@
  
  */
 
+
+// 如果需要用“断言”调试程序请打开此宏
+
+//#define SDDebugWithAssert
+
 #import <UIKit/UIKit.h>
 
 @class SDAutoLayoutModel;
@@ -138,7 +143,7 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 
 /** 宽度是参照view宽度的多少倍，参数为“(View, CGFloat)” */
 @property (nonatomic, copy, readonly) WidthHeightEqualToView widthRatioToView;
-/** 高度是参照view宽度的多少倍，参数为“(View, CGFloat)” */
+/** 高度是参照view高度的多少倍，参数为“(View, CGFloat)” */
 @property (nonatomic, copy, readonly) WidthHeightEqualToView heightRatioToView;
 /** 设置一个view的宽度和它的高度相同，参数为空“()” */
 @property (nonatomic, copy, readonly) SameWidthHeight widthEqualToHeight;
@@ -166,12 +171,15 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 /** 设置Cell的高度自适应，也可用于设置普通view内容自适应 */
 - (void)setupAutoHeightWithBottomView:(UIView *)bottomView bottomMargin:(CGFloat)bottomMargin;
 
+/** 设置Cell的高度自适应，也可用于设置普通view内容自适应（应用于当你不确定哪个view在自动布局之后会排布在最下方最为bottomView的时候可以调用次方法将所有可能在最下方的view都传过去） */
+- (void)setupAutoHeightWithBottomViewsArray:(NSArray *)bottomViewsArray bottomMargin:(CGFloat)bottomMargin;
+
 /** 主动刷新布局（如果你需要设置完布局代码就获得view的frame请调用此方法） */
 - (void)updateLayout;
 
 @property (nonatomic) CGFloat autoHeight;
 
-@property (nonatomic) UIView *sd_bottomView;
+@property (nonatomic, readonly) NSMutableArray *sd_bottomViewsArray;
 @property (nonatomic) CGFloat sd_bottomViewBottomMargin;
 
 @property (nonatomic) UIView *sd_rightView;
@@ -180,6 +188,9 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 @end
 
 @interface UIView (SDLayoutExtention)
+
+/** 自动布局完成后的回调block，可以在这里获取到view的真实frame  */
+@property (nonatomic) void (^didFinishAutoLayoutBlock)(CGRect frame);
 
 /* 设置圆角 */
 
@@ -208,6 +219,9 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 
 
 @interface UILabel (SDLabelAutoResize)
+
+/** 是否是attributedString */
+@property (nonatomic) BOOL isAttributedContent;
 
 /** 设置单行文本label宽度自适应 */
 - (void)setSingleLineAutoResizeWithMaxWidth:(CGFloat)maxWidth;
@@ -259,15 +273,17 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 
 @interface UIView (SDAutoLayout)
 
-- (NSMutableArray *)autoLayoutModelsArray;
-
 /** 开始自动布局  */
 - (SDAutoLayoutModel *)sd_layout;
 
 /** 清空之前的自动布局设置，重新开始自动布局  */
 - (SDAutoLayoutModel *)sd_resetLayout;
 
+- (NSMutableArray *)autoLayoutModelsArray;
+
 - (void)addAutoLayoutModel:(SDAutoLayoutModel *)model;
+
+@property (nonatomic) SDAutoLayoutModel *ownLayoutModel;
 
 @property (nonatomic, strong) NSNumber *fixedWith;
 @property (nonatomic, strong) NSNumber *fixedHeight;

@@ -92,8 +92,8 @@
     if (!_ExitButton) {
         _ExitButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = flexibleFrame(CGRectMake(0, 0, 310, 40), NO);
-            button.center = flexibleCenter(CGPointMake(375 / 2, 590), NO);
+            button.frame = flexibleFrame(CGRectMake(0, 0, 310, 50), NO);
+            button.center = flexibleCenter(CGPointMake(375 / 2, 600), NO);
             button.layer.cornerRadius = 5;
             [button setTitle:@"退出登录" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

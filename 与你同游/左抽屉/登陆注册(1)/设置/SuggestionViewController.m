@@ -13,7 +13,7 @@
 
 @property (nonatomic,strong) SharedView * sharedView;
 @property (nonatomic,strong) UILabel * textlable;
-
+@property (nonatomic,strong) UIButton * callbt;
 @property (nonatomic,strong) UIButton * presentButton;
 
 @end
@@ -32,6 +32,7 @@
     
     [self.view addSubview:self.textlable];
     [self.view addSubview:self.presentButton];
+    
     
     
     self.sharedView.textView.frame = flexibleFrame(CGRectMake(10, 230, 355, 180), NO);
@@ -63,7 +64,7 @@
         _textlable = ({
             
             UILabel * lable = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(10, 60, 355, 160), NO)];
-            lable.text = @"感谢您使用该软件，你的意见将帮助我们不断改进，感谢您使用该软件，你的意见将帮助我们不断改进，感谢您使用该软件，你的意见将帮助我们不断改进，感谢您使用该软件，你的意见将帮助我们不断改进。\n若有疑问，还可拨打服务电话：120118119110";
+            lable.text = @"感谢您使用该软件，你的意见将帮助我们不断改进，感谢您使用该软件，你的意见将帮助我们不断改进，感谢您使用该软件，你的意见将帮助我们不断改进，感谢您使用该软件，你的意见将帮助我们不断改进。\n若有疑问，还可拨打服务电话：118983311304";
             lable.numberOfLines = 0;
             lable.textColor = [UIColor grayColor];
             lable;
@@ -73,11 +74,23 @@
     return _textlable;
 }
 
+//- (UIButton *)callbt{
+//    if (!_callbt) {
+//        _callbt = ({
+//            UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+//            button;
+//        });
+//    }
+//    return _callbt;
+//}
+
 - (UIButton *)presentButton{
     if (!_presentButton) {
         _presentButton = ({
             
-            UIButton * button = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(20, 500, 335, 40), NO)];
+             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = flexibleFrame(CGRectMake(0, 0, 300,50), NO);
+            button.center =  flexibleCenter(CGPointMake(WIDTH / 2, 600), NO);
             button.backgroundColor = THEMECOLOR;
             [button setTitle:@"提交" forState:UIControlStateNormal];
             button.layer.cornerRadius = 6;

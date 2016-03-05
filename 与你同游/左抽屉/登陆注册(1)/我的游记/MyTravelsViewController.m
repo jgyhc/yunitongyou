@@ -7,11 +7,13 @@
 //
 
 #import "MyTravelsViewController.h"
-
-#import "SharedView.h"
 #import "RecordDetailViewController.h"
 #import "AddTravelViewController.h"
 #import "PersonalViewController.h"
+
+//#import "MyTravelNotesTableViewCell.h"
+//#import "MyTravelNoteModel.h"
+#import "UITableView+SDAutoTableViewCellHeight.h"
 
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
@@ -26,63 +28,23 @@
 
 static NSString * const identifier = @"CELL";
 @interface MyTravelsViewController ()<UITableViewDelegate,UITableViewDataSource>
-
-@property (nonatomic, strong) NSMutableArray *notesData;//数据
-@property (nonatomic, strong) UILabel *nameLabel;//昵称
-@property (nonatomic, strong) TravelModel *travelCT;
-@property (nonatomic, strong) UserModel *userModel;
-@property (nonatomic, strong) NSMutableArray *userArray;
-@property (nonatomic, strong) BmobObject *userObject;
-
+@property (nonatomic, strong) NSMutableArray *modelsArray;
 
 @end
 
 
 
 @implementation MyTravelsViewController
-- (void)dealloc {
-    [self.travel removeObserver:self forKeyPath:@"travelListArray"];
-    [self.travel removeObserver:self forKeyPath:@"userData"];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+  
+    
     [self initalizedInterface];
-    [self.travel addObserver:self forKeyPath:@"travelListArray" options:NSKeyValueObservingOptionNew context:nil];
-    [self.travel addObserver:self forKeyPath:@"userData" options:NSKeyValueObservingOptionNew context:nil];
 }
-#pragma mark -- KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"travelListArray"]) {
-        self.notesData = self.travel.travelListArray;
-//        for (int i = (int)self.userArray.count; i < self.notesData.count; i ++) {
-//            NSLog(@"%@", [self.notesData[i] objectForKey:@"image"]);
-//            if ([self.notesData[i] objectForKey:@"image"]) {
-//                NSString *strUrl = [self.notesData[i] objectForKey:@"image"];
-//                NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:strUrl]];
-//                UIImage *image = [UIImage imageWithData:data];
-//                [self.notesData[i] setObject:image forKey:@"image"];
-//            }else {
-//                [self.notesData[i] setObject:IMAGE_PATH(@"个人信息背景2.png") forKey:@"image"];
-//            }
-//        }
-//        [self.tableView reloadData];
-//        [self.tableView headerEndRefreshing];
-    }
-    if ([keyPath isEqualToString:@"userData"]) {
-        self.userObject = self.travel.userData;
-        if ([self.userObject objectForKey:@"head_portraits1"]) {
-            NSString *strUrl = [self.userObject objectForKey:@"head_portraits1"];
-            NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:strUrl]];
-            UIImage *image = [UIImage imageWithData:data];
-            [self.userObject setObject:image forKey:@"head_portraits1"];
-        }else {
-            [self.userObject setObject:IMAGE_PATH(@"qq.png") forKey:@"head_portraits1"];
-        }
-    }
-    
-    
-}
+
 - (void)initalizedInterface{
     
     [self initNavTitle:@"我的游记"];
@@ -90,234 +52,153 @@ static NSString * const identifier = @"CELL";
     self.view.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
     [self initRightButtonEvent:@selector(handleTravelNotes:) Image:[UIImage imageNamed:@"添加游记"]];
     [self.view addSubview:self.tableView];
-    [self setupRefresh];
+//       [self creatModelsWithCount:10];
+//     [self setupRefresh];
+
 }
-
-- (void)setupRefresh
-{
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    header.stateLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
-    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
-    self.tableView.mj_header = header;
-}
-- (void)loadNewData {
-    [self.travel queryTravelWithObejectId:OBJECTID];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_header endRefreshing];
-    });
-    
-}
-
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.notesData.count;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    TravelTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[TravelTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    if (self.notesData.count == 0 && self.userArray.count == 0) {
-        return cell;
-    }
-    BmobObject *object = self.notesData[indexPath.section];
-//    BmobObject *self.userObject = self.userArray[indexPath.section];
-//    if ([object objectForKey:@"image"]) {
-//        cell.firstImageView.image = [object objectForKey:@"image"];
-//    }else {
-//        cell.firstImageView.image = IMAGE_PATH(@"效果图1.png");
+//
+//- (void)setupRefresh
+//{
+//    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+//    header.stateLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
+//    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
+//    self.tableView.mj_header = header;
+//}
+//
+//- (void)loadNewData {
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self creatModelsWithCount:10];
+//        [self.tableView reloadData];
+//        [self.tableView.mj_header endRefreshing];
+//    });
+//    
+//}
+//
+//- (void)creatModelsWithCount:(NSInteger)count{
+//    if (!_modelsArray) {
+//        _modelsArray = [NSMutableArray new];
 //    }
-    
-    ((UILabel *)([cell.thumbUpButton subviews][1])).text = [NSString stringWithFormat:@"%@", [object objectForKey:@"number_of_thumb_up"]];
-    [cell.thumbUpButton addTarget:self action:@selector(handleThumbAction:) forControlEvents:UIControlEventTouchUpInside];
-    ((UILabel *)([cell.commentsButton subviews][1])).text = [NSString stringWithFormat:@"%@", [object objectForKey:@"comments_number"]];
-    [cell.commentsButton addTarget:self action:@selector(handleCommentsAction:) forControlEvents:UIControlEventTouchUpInside];
-    ((UILabel *)([cell.shareButton subviews][1])).text = @"0";
-    [cell.shareButton addTarget:self action:@selector(handleShareAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    cell.noteLabel.text = [object objectForKey:@"content"];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"travel_date"]];
-    cell.timeLabel.text = [self compareCurrentTime:date];
-    cell.placeLabel.text = ([object objectForKey:@"sight_spot"])[0];
-    
-    cell.nameLabel.text = [self.userObject objectForKey:@"userName"];
-    [cell.userPortrait setImage:[self.userObject objectForKey:@"head_portraits1"] forState:UIControlStateNormal] ;
-    [cell.userPortrait addTarget:self action:@selector(handleInfo:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-    
-}
+//    NSArray *iconImageNamesArray = @[@"portraint0.png",
+//                                     @"portraint1.png",
+//                                     @"portraint2.png",
+//                                     @"portraint3.png",
+//                                     @"portraint4.png",
+//                                     ];
+//    
+//    NSArray *namesArray = @[@"提莫",
+//                            @"风口上的猪",
+//                            @"当今世界网名都不好起了",
+//                            @"么么哒",
+//                            @"犯二的女神"];
+//    
+//    NSArray *textArray = @[@"游一处风景，寻一处特色；见一处特色，悟一片心得。江南的绮丽，塞北的广漠，能唤起咱们对大自然的尊重和敬畏，如果你能和此地人沟通结识，赋美景以人文，还自然以性命，你会觉得，还有比自然景观更深刻的领悟??不一样的水土养不一样的人，都具有各自的优势和特点。真是一花一世界，万花装扮春。",
+//                           @"旅行的乐趣就在于它存在变数。不必须全都完美，但只要是你身体和情感都在体验，事后想起来，都觉得可爱，这就是旅行最让人着迷的地方。",
+//                           @"人必须要旅行，尤其是女孩子。一个女孩子见识很重要，你见的多了，自然就会心胸豁达，视野宽广，会影响到你对很多事情的看法。旅行让人见多识广，对女孩子来说更是如此，它会让自我更有信心，不会在物质世界里迷失方向。",
+//                           @"人生的旅途中不只是感情为最大的收获，得到知音更加珍重。伯牙鼓琴林中，遇钟子期，知其志在登高山，志在流水，而惺惺相惜。因此琴声悠扬，为知己者而鸣。得到志同道合者甚幸，能携手登高山，同舟荡江河。我在旅途中以前遇到过气味相投人，畅谈一场，痛快淋漓，却都以挥手告别而结束。得到高人启发，如遇仙人庆幸。钟爱思想的人。几乎都苦于难遇知音，因此是世上最孤独的人。",
+//                           @"我要继续我的旅游，心灵的旅游，去从自然中得到启示，去从旅途中遇见志同道合者或听众。"
+//                           ];
+//    
+//    NSArray *picImageNamesArray = @[ @"11.jpg",
+//                                     @"13.jpg",
+//                                     @"14.jpg",
+//                                     @"15.jpg",
+//                                     @"上海.jpg",
+//                                     @"广西.jpg",
+//                                     @"江苏.jpg",
+//                                     @"海南.jpg",
+//                                     @"云南.jpg"
+//                                     ];
+//    for (int i = 0; i < count; i++) {
+//        int iconRandomIndex = arc4random_uniform(5);
+//        int nameRandomIndex = arc4random_uniform(5);
+//        int contentRandomIndex = arc4random_uniform(5);
+//        
+//        MyTravelNoteModel *model = [MyTravelNoteModel new];
+//        model.iconName = iconImageNamesArray[iconRandomIndex];
+//        model.name = namesArray[nameRandomIndex];
+//        model.content = textArray[contentRandomIndex];
+//        
+//        
+//        // 模拟“随机图片”
+//        int random = arc4random_uniform(10);
+//        
+//        NSMutableArray *temp = [NSMutableArray new];
+//        for (int i = 0; i < random; i++) {
+//            int randomIndex = arc4random_uniform(9);
+//            [temp addObject:picImageNamesArray[randomIndex]];
+//        }
+//        if (temp.count) {
+//            model.picArray = [temp copy];
+//        }
+//        
+//        [self.modelsArray addObject:model];
+//    }
+//    
+//    
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+//    return self.modelsArray.count;
+//}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    MyTravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+////    if (!cell) {
+////        cell = [[MyTravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+////    }
+//
+//    cell.indexPath = indexPath;
+//    if (!cell.moreButtonClickedBlock) {
+//        [cell setMoreButtonClickedBlock:^(NSIndexPath * indexPath) {
+//            MyTravelNoteModel * model = self.modelsArray[indexPath.row];
+//            model.isOpening = !model.isOpening;
+//            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        }];
+//    }
+//    
+//    cell.model = self.modelsArray[indexPath.row];
+//    
+//    
+//    return cell;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // >>>>>>>>>>>>>>>>>>>>> * cell自适应 * >>>>>>>>>>>>>>>>>>>>>>>>
+//    id model = self.modelsArray[indexPath.row];
+//    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[MyTravelNoteModel class] contentViewWidth:[self cellContentViewWith]];
+//}
+//
+//
+//
+//
+//- (CGFloat)cellContentViewWith
+//{
+//    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+//    
+//    // 适配ios7
+//    if ([UIApplication sharedApplication].statusBarOrientation != UIInterfaceOrientationPortrait && [[UIDevice currentDevice].systemVersion floatValue] < 8) {
+//        width = [UIScreen mainScreen].bounds.size.height;
+//    }
+//    return width;
+//}
+//
+//
+//- (UITableView *)tableView{
+//    if (!_tableView) {
+//        _tableView = ({
+//            UITableView * tableView = [[UITableView alloc]initWithFrame:flexibleFrame(CGRectMake(10, 64, 355, 603), NO)];
+//            tableView.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
+////            tableView.rowHeight = 400;
+//            tableView.showsVerticalScrollIndicator = NO;
+//            tableView.delegate = self;
+//            tableView.dataSource = self;
+//            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//            tableView;
+//            
+//        });
+//    }
+//    return _tableView;
+//}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 5;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UIView * bcView = [[UIView alloc]init];
-    bcView.backgroundColor = [UIColor clearColor];
-    return bcView;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    RecordDetailViewController * detailVC = [[RecordDetailViewController alloc]init];
-    BmobObject *object = self.notesData[indexPath.section];
-    BmobObject *userobject = self.userObject;
-    detailVC.object = object;
-    detailVC.userobject = userobject;
-    [self.navigationController pushViewController:detailVC animated:YES];
-}
-
-
-
-- (void)handleInfo:(UIButton *)sender{
-    
-    PersonalViewController * informationVC  = [[PersonalViewController alloc]init];
-    
-    [self presentViewController:informationVC animated:YES completion:nil];
-    
-}
-
-
-- (void)handleTravelNotes:(UIButton *)sender {
-    AddTravelViewController * addVC = [[AddTravelViewController alloc]init];
-    [self.navigationController pushViewController:addVC animated:YES];
-}
-
-- (void)handleThumbAction:(UIButton *)sender {
-    UIImageView * imageView = (UIImageView *)[sender subviews][0];
-    UILabel * label = (UILabel *)[sender subviews][1];
-    
-    long number = [label.text longLongValue];
-    
-    if (sender.selected == NO) {
-        label.text = [NSString stringWithFormat:@"%ld",number+1];
-        imageView.image = IMAGE_PATH(@"点赞3.png");
-        sender.selected = YES;
-        
-    }
-    else{
-        label.text = [NSString stringWithFormat:@"%ld",number-1];
-        imageView.image = IMAGE_PATH(@"点赞2.png");
-        sender.selected = NO;
-        
-    }
-    
-    
-}
-
-- (void)handleCommentsAction:(UIButton *)sender {
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:((TravelTableViewCell *)sender.superview.superview)];
-    BmobObject *object = self.notesData[indexPath.section];
-    CommentViewController * detailVC = [[CommentViewController alloc]init];
-    detailVC.phoneNumber = [object objectForKey:@"phone_number"];
-    detailVC.travelDate = [object objectForKey:@"travel_date"];
-    [self.navigationController pushViewController:detailVC animated:YES];
-    
-}
-
-- (void)handleShareAction: (UIButton *)sender {
-    
-    [self.parentViewController.view addSubview:self.sharedView.maskButton];
-    [self.parentViewController.view addSubview:self.sharedView.shareView];
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        self.sharedView.shareView.frame = flexibleFrame(CGRectMake(0,567, 375, 100), NO);
-        
-    }];
-    
-}
-
-
-- (NSString *) compareCurrentTime:(NSDate *) compareDate {
-    NSTimeInterval  timeInterval = [compareDate timeIntervalSinceNow];
-    timeInterval = - timeInterval;
-    long temp = 0;
-    NSString *result = nil;
-    if (timeInterval < 60) {
-        result = [NSString stringWithFormat:@"刚刚"];
-    }
-    else if((temp = timeInterval / 60) < 60){
-        result = [NSString stringWithFormat:@"%ld分前", temp];
-    }
-    else if((temp = temp / 60) < 24){
-        result = [NSString stringWithFormat:@"%ld小时前", temp];
-    }
-    else if((temp = temp / 24) < 30){
-        result = [NSString stringWithFormat:@"%ld天前", temp];
-    }
-    else if((temp = temp / 30) < 12){
-        result = [NSString stringWithFormat:@"%ld月前", temp];
-    }
-    else{
-        temp = temp / 12;
-        result = [NSString stringWithFormat:@"%ld年前", temp];
-    }
-    
-    return  result;
-}
-
-#pragma mark --lazy loading
-
-- (UITableView *)tableView{
-    if (!_tableView) {
-        _tableView = ({
-            UITableView * tableView = [[UITableView alloc]initWithFrame:flexibleFrame(CGRectMake(10, 64, 355, 603), NO)];
-            tableView.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
-            tableView.rowHeight = 400;
-            tableView.showsVerticalScrollIndicator = NO;
-            tableView.delegate = self;
-            tableView.dataSource = self;
-            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            tableView;
-            
-        });
-    }
-    return _tableView;
-}
-
-- (SharedView *)sharedView{
-    if (!_sharedView) {
-        _sharedView = [[SharedView alloc]init];
-    }
-    return _sharedView;
-}
-
-- (UserModel *)travel {
-    if (!_travel) {
-        _travel = [[UserModel alloc] init];
-    }
-    return _travel;
-}
-
-- (TravelModel *)travelCT {
-    if (!_travelCT) {
-        _travelCT = [[TravelModel alloc] init];
-    }
-    return _travelCT;
-}
-
-
-- (UserModel *)userModel {
-    if (!_userModel) {
-        _userModel = [[UserModel alloc] init];
-    }
-    return _userModel;
-}
-- (NSMutableArray *)userArray {
-    if (!_userArray) {
-        _userArray = [NSMutableArray array];
-    }
-    return _userArray;
-}
 
 @end
