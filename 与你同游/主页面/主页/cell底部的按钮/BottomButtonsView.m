@@ -42,19 +42,41 @@
         
         self.view3.sd_layout.leftSpaceToView(self.view2, 0).bottomEqualToView(self).topEqualToView(self).widthIs(flexibleWidth(375 / 3));
         
-        self.imgaeView1.sd_layout.centerYEqualToView(self.view1).leftSpaceToView(self.view1, flexibleWidth(75)).heightIs(flexibleHeight(20)).widthEqualToHeight(1);
+        self.imgaeView1.sd_layout.centerYEqualToView(self.view1).leftSpaceToView(self.view1, flexibleWidth(35)).heightIs(flexibleHeight(20)).widthEqualToHeight(1);
         
-        self.imgaeView2.sd_layout.centerYEqualToView(self.view2).leftSpaceToView(self.view2, flexibleWidth(75)).heightIs(flexibleHeight(20)).widthEqualToHeight(1);
+        self.imgaeView2.sd_layout.centerYEqualToView(self.view2).leftSpaceToView(self.view2, flexibleWidth(35)).heightIs(flexibleHeight(20)).widthEqualToHeight(1);
         
-        self.imgaeView3.sd_layout.centerYEqualToView(self.view3).leftSpaceToView(self.view3, flexibleWidth(75)).heightIs(flexibleHeight(20)).widthEqualToHeight(1);
-        
-        
-        self.label1.sd_layout.centerYEqualToView(self.view1).leftSpaceToView(self.imgaeView1, flexibleWidth(5)).heightIs(flexibleHeight(12)).widthEqualToHeight(1);
-        
-        self.label2.sd_layout.centerYEqualToView(self.view2).leftSpaceToView(self.imgaeView2, flexibleWidth(5)).heightIs(flexibleHeight(12)).widthEqualToHeight(1);
+        self.imgaeView3.sd_layout.centerYEqualToView(self.view3).leftSpaceToView(self.view3, flexibleWidth(35)).heightIs(flexibleHeight(20)).widthEqualToHeight(1);
         
         
-        self.label3.sd_layout.centerYEqualToView(self.view3).leftSpaceToView(self.imgaeView3, flexibleWidth(5)).heightIs(flexibleHeight(12)).widthEqualToHeight(1);
+        self.label1.sd_layout.centerYEqualToView(self.view1).leftSpaceToView(self.imgaeView1, flexibleWidth(5)).heightIs(flexibleHeight(12));
+        [self.label1 setSingleLineAutoResizeWithMaxWidth:100];
+        
+        self.label2.sd_layout.centerYEqualToView(self.view2).leftSpaceToView(self.imgaeView2, flexibleWidth(5)).heightIs(flexibleHeight(12));
+        [self.label2 setSingleLineAutoResizeWithMaxWidth:100];
+        
+        self.label3.sd_layout.centerYEqualToView(self.view3).leftSpaceToView(self.imgaeView3, flexibleWidth(5)).heightIs(flexibleHeight(12));
+        
+        [self.label3 setSingleLineAutoResizeWithMaxWidth:100];
+        
+        UIView *line = [[UIView alloc] init];
+        line.backgroundColor = [UIColor colorWithWhite:0.703 alpha:1.000];
+        [self addSubview:line];
+        line.sd_layout.leftEqualToView(self).rightEqualToView(self).heightIs(flexibleHeight(0.5)).topEqualToView(self);
+        
+        UIView *line1 = [[UIView alloc] init];
+        line1.backgroundColor = [UIColor colorWithWhite:0.703 alpha:1.000];
+        [self addSubview:line1];
+        line1.sd_layout.leftSpaceToView(self.view1, 0).centerYEqualToView(self.view2).heightIs(flexibleHeight(10)).widthIs(flexibleWidth(0.5));
+        
+        
+        
+        UIView *line2 = [[UIView alloc] init];
+        line2.backgroundColor = [UIColor colorWithWhite:0.703 alpha:1.000];
+        [self addSubview:line2];
+        line2.sd_layout.leftSpaceToView(self.view2, 0).centerYEqualToView(self.view2).heightIs(flexibleHeight(25)).widthIs(flexibleWidth(0.5));
+        
+        
     }
     return self;
 }
@@ -65,9 +87,11 @@
     self.label3.text = lableString[2];
     
     self.imgaeView1.image = [UIImage imageNamed:imageArray[0]];
-    self.imgaeView1.image = [UIImage imageNamed:imageArray[1]];
-    self.imgaeView1.image = [UIImage imageNamed:imageArray[2]];
-    [self layoutSubviews];
+    self.imgaeView2.image = [UIImage imageNamed:imageArray[1]];
+    self.imgaeView3.image = [UIImage imageNamed:imageArray[2]];
+    [self.view1 layoutSubviews];
+    [self.view2 layoutSubviews];
+    [self.view3 layoutSubviews];
 }
 
 - (UIImageView *)imgaeView3 {
@@ -129,7 +153,6 @@
 - (UIView *)view3 {
 	if(_view3 == nil) {
 		_view3 = [[UIView alloc] init];
-        _view3.backgroundColor = [UIColor redColor];
 	}
 	return _view3;
 }
@@ -137,7 +160,6 @@
 - (UIView *)view2 {
 	if(_view2 == nil) {
 		_view2 = [[UIView alloc] init];
-        _view2.backgroundColor = [UIColor colorWithRed:0.671 green:0.636 blue:1.000 alpha:1.000];
 	}
 	return _view2;
 }
@@ -145,7 +167,6 @@
 - (UIView *)view1 {
 	if(_view1 == nil) {
 		_view1 = [[UIView alloc] init];
-        _view1.backgroundColor = [UIColor colorWithRed:0.679 green:1.000 blue:0.884 alpha:1.000];
 	}
 	return _view1;
 }
