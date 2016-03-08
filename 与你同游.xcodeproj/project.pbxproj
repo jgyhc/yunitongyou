@@ -754,12 +754,14 @@
 				044F50341C8ACD4D002DF802 /* TravelTableViewCell.h */,
 				044F50351C8ACD4D002DF802 /* TravelTableViewCell.m */,
 			);
-			path = "游记列表";
+			name = "游记列表";
+			path = "../游记列表";
 			sourceTree = "<group>";
 		};
 		2462C5E01BEC9C72001714C8 /* 游记列表cell */ = {
 			isa = PBXGroup;
 			children = (
+				2462C5DF1BEC9C72001714C8 /* 游记列表 */,
 			);
 			path = "游记列表cell";
 			sourceTree = "<group>";
@@ -1084,7 +1086,6 @@
 				24BDA58C1BF2144900C84CAF /* 游记cell里的collection */,
 				24BDA5791BF213D000C84CAF /* 游记详情 */,
 				2462C5DE1BEC9C72001714C8 /* 添加游记 */,
-				2462C5DF1BEC9C72001714C8 /* 游记列表 */,
 				2462C5E01BEC9C72001714C8 /* 游记列表cell */,
 				247D44B41BD24F65006F36D5 /* PositonViewController.h */,
 				247D44B51BD24F65006F36D5 /* PositonViewController.m */,

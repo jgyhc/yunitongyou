@@ -13,6 +13,7 @@
 
 #import "MJRefresh.h"
 
+static NSString * const identifier = @"CELL";
 
 @interface TravelNotesTabelVC ()
 
@@ -24,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:@"TravelCell"];
+    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
     [self creatModelsWithCount:10];
 }
 
@@ -115,37 +116,42 @@
 #pragma mark - Table view data source
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.modelArray.count;
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TravelCell"];
-    
+    TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-                cell = [[TravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TravelCell"];
+                cell = [[TravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.indexPath = indexPath;
-    
-//     __weak typeof(self) weakSelf = self;
-    if (!cell.moreButtonClickedBlock) {
-        [cell setMoreButtonClickedBlock:^(NSIndexPath * indexPath) {
-            
-            TravelNotesModel * model = self.modelArray[indexPath.row];
-            model.isOpening = !model.isOpening;
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }];
-        cell.model = self.modelArray[indexPath.row];
-    }
-    
+    //注意是section,若是numberOfRows returnself.modelArray.count，则是row
+        cell.model = self.modelArray[indexPath.section];
     return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+     return 5;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView * bcView = [[UIView alloc]init];
+    bcView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
+
+    return bcView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // >>>>>>>>>>>>>>>>>>>>> * cell自适应 * >>>>>>>>>>>>>>>>>>>>>>>>
-    id model = self.modelArray[indexPath.row];
+    id model = self.modelArray[indexPath.section];//注意是section
     return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[TravelNotesTableViewCell class] contentViewWidth:[self cellContentViewWith]];
 
 }

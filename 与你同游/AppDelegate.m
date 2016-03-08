@@ -15,6 +15,7 @@
 #import "NetWorking.h"
 #define APPKEY @"affe299f48c2"
 #define APPSECRET @"1d94d057d830f3a18a404527ac49e9ee"
+//连接Bmob
 #define APPLICAYION_ID @"ed38f5e8bc84d1b80a90beab61dbc07b"
 @interface AppDelegate ()
 

@@ -92,20 +92,23 @@
 
 #pragma mark -- 注册
 - (void)registeredWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password successBlock:(void(^)(NSString *objiectId))success failBlock:(void(^)(NSError * error))fail {
-    BmobObject  *user = [BmobObject objectWithClassName:@"User"];
-    [user setObject:password forKey:@"password"];
-    [user setObject:phoneNumber forKey:@"phone_number"];
-    //异步保存
-    [user saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-        if (isSuccessful) {
-            self.registerResult = @"YES";
-        } else if (error){
-            //发生错误后的动作
-            NSLog(@"%@",error);
+
+    
+    BmobUser * User = [BmobUser objectWithClassName:@"User"];
+    [User setObject:phoneNumber forKey:@"phoneNumber"];
+    [User setObject:password forKey:@"password"];
+    [User signUpInBackgroundWithBlock:^ (BOOL isSuccessful, NSError *error){
+        if (isSuccessful){
+            NSLog(@"Sign up successfully");
         } else {
-            NSLog(@"Unknow error");
+            
         }
     }];
+    
+    
+    
+    
+    
 }
 
 
