@@ -10,7 +10,7 @@
 #import "NetWorkingViewController.h"
 #import <BmobSDK/BmobProFile.h>
 #import <SMS_SDK/SMSSDK.h>
-#define APPLICAYION_ID @"ed38f5e8bc84d1b80a90beab61dbc07b"
+
 @interface UserModel ()
 @property (nonatomic, copy) NSString *phoneNumber;
 @property (nonatomic, copy) NSString *userName;
@@ -31,23 +31,10 @@
 @end
 
 @implementation UserModel
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [Bmob registerWithAppKey:APPLICAYION_ID];
-    }
-    return self;
-}
+
 - (void)getwithObjectId:(NSString *)ObjectId {
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
     [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
-        if ([object objectForKey:@"head_portraits1"]) {
-            NSString * URL =  [NSString stringWithFormat:@"%@?t=1&a=f008d46b406baaa7eff26eba98dccd54", [object objectForKey:@"head_portraits1"]];
-            [object setObject:URL forKey:@"head_portraits1"];
-        }else {
-            [object setObject:nil forKey:@"head_portraits1"];
-        }
         self.getUserData = object;
     }];
 
@@ -90,27 +77,48 @@
     }];
 }
 
-#pragma mark -- 注册
+#pragma mark -- 注册网络请求
 - (void)registeredWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password successBlock:(void(^)(NSString *objiectId))success failBlock:(void(^)(NSError * error))fail {
-
     
-    BmobUser * User = [BmobUser objectWithClassName:@"User"];
-    [User setObject:phoneNumber forKey:@"phoneNumber"];
-    [User setObject:password forKey:@"password"];
-    [User signUpInBackgroundWithBlock:^ (BOOL isSuccessful, NSError *error){
-        if (isSuccessful){
+    BmobObject *bmobObject = [BmobObject objectWithClassName:@"User"];
+    [bmobObject setObject:phoneNumber forKey:@"phoneNumber"];
+    [bmobObject setObject:password forKey:@"password"];
+    [bmobObject setObject:@"还没取昵称哟！" forKey:@"username"];
+    [bmobObject setObject:@"无" forKey:@"age"];
+    [bmobObject setObject:@"无" forKey:@"sex"];
+    [bmobObject setObject:@"快来写上您的个性签名吧！" forKey:@"IndividualitySignature"];
+    [bmobObject saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+        if (isSuccessful) {
+            success(bmobObject.objectId);
             NSLog(@"Sign up successfully");
-        } else {
-            
+        }else{
+            fail(error);
+            NSLog(@"Sign up error:%@",error);
         }
     }];
     
-    
-    
-    
-    
 }
-
+#pragma mark --登录网路请求
+- (void)loginWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail {
+    
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
+    [bquery whereKey:@"phoneNumber" equalTo:phoneNumber];
+    [bquery whereKey:@"password" equalTo:password];
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error){
+            NSLog(@"%@", error);
+        }else {
+            if (array.count == 0) {
+                self.loginUserData = nil;
+                return;
+            }
+            BmobObject *object = array[0];
+            NSLog(@"登录成功返回的用户信息array[0] = %@",array[0]);
+            self.loginUserData = object;
+            success(object);
+        }
+    }];
+}
 
 
 - (void)VerificationCodeWithPhoneNumber:(NSString *)phoneNumber {
@@ -196,30 +204,16 @@
     }];
 }
 
-- (void)loginWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password {
-    BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
-    [bquery whereKey:@"phone_number" equalTo:phoneNumber];
-    [bquery whereKey:@"password" equalTo:password];
-    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        if (error){
-            NSLog(@"%@", error);
-        }else {
-            if (array.count == 0) {
-                self.loginUserData = nil;
-                return;
-            }
-            BmobObject *object = array[0];
-            self.loginUserData = object;
-        }
-    }];
-}
+
 
 - (void)changeUserinfoWithObjectId:(NSString *)ObjectId userName:(NSString *)userName head_portraits:(NSData *)head_portraits sex:(NSString *)sex age:(NSNumber *)age IndividualitySignature:(NSString *)IndividualitySignature {
+    
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
     [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
         }else {
+            
             if (head_portraits) {
                 UIImage * image = [[UIImage alloc] initWithData:head_portraits];
                 CGSize imagesize = image.size;
@@ -227,12 +221,14 @@
                 imagesize.width = 200;
                 image = [self imageWithImage:image scaledToSize:imagesize];
                 NSData *data = UIImagePNGRepresentation(image);
+                
                 [self uploadImageFile:data successBlock:^(NSString *url) {
-                    [object setObject:userName forKey:@"userName"];
+                    [object setObject:userName forKey:@"username"];
                     [object setObject:sex forKey:@"sex"];
                     [object setObject:age forKey:@"age"];
-                    [object setObject:url forKey:@"head_portraits1"];
+                    [object setObject:url forKey:@"head_portraits"];
                     [object setObject:IndividualitySignature forKey:@"IndividualitySignature"];
+                    
                     [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                         if (isSuccessful) {
                             //修改成功后的动作
@@ -247,13 +243,12 @@
                     NSLog(@"%@",error);
                 }];
             }else {
-                [object setObject:userName forKey:@"userName"];
+                
+                [object setObject:userName forKey:@"username"];
                 [object setObject:sex forKey:@"sex"];
                 [object setObject:age forKey:@"age"];
-                NSString *nstring = [object objectForKey:@"head_portraits1"];
-                NSArray *array = [nstring componentsSeparatedByString:@"?"];
-                [object setObject:array[0] forKey:@"head_portraits1"];
                 [object setObject:IndividualitySignature forKey:@"IndividualitySignature"];
+                
                 [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                     if (isSuccessful) {
                         //修改成功后的动作

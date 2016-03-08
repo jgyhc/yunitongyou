@@ -229,6 +229,7 @@
     }
 }
 
+
 - (void)completeRegisterEvent:(UIButton *)sender {
     [self.load show];
     if (_phoneNumberTF.text.length == 0) {
@@ -259,9 +260,8 @@
     
 
     [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
-        
         [self.load hide];
-        
+        [self.navigationController popViewControllerAnimated:YES];
     } failBlock:^(NSError *error) {
         
         

@@ -10,7 +10,6 @@
 		044F502F1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F502C1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m */; };
 		044F50301C8AC6F6002DF802 /* UIView+SDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F502E1C8AC6F6002DF802 /* UIView+SDAutoLayout.m */; };
 		044F50331C8ACD44002DF802 /* TravelsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F50321C8ACD44002DF802 /* TravelsViewController.m */; };
-		044F50361C8ACD4D002DF802 /* TravelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F50351C8ACD4D002DF802 /* TravelTableViewCell.m */; };
 		04D354281C87E84400DFCB1C /* xiangyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354271C87E84400DFCB1C /* xiangyou.png */; };
 		04D3542A1C87EC6000DFCB1C /* 测试头像1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354291C87EC6000DFCB1C /* 测试头像1.png */; };
 		04D354391C87F40900DFCB1C /* ChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354341C87F40900DFCB1C /* ChangePwViewController.m */; };
@@ -135,7 +134,6 @@
 		24780C831BD663050009A40D /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24780C821BD663050009A40D /* LoadingView.m */; };
 		24793AB41BDC86B0006491C6 /* MyCommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24793AB31BDC86B0006491C6 /* MyCommentsTableViewCell.m */; };
 		247AF9561BCDE95E00DECE79 /* AnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 247AF9551BCDE95E00DECE79 /* AnimationView.m */; };
-		247D44BE1BD24F65006F36D5 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D44B31BD24F65006F36D5 /* DetailViewController.m */; };
 		247D44BF1BD24F65006F36D5 /* PositonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D44B51BD24F65006F36D5 /* PositonViewController.m */; };
 		247D44C01BD24F65006F36D5 /* SharedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D44B71BD24F65006F36D5 /* SharedView.m */; };
 		247D455E1BD25A1F006F36D5 /* LaunchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D45221BD25A1F006F36D5 /* LaunchCollectionViewCell.m */; };
@@ -165,7 +163,6 @@
 		24BDA5831BF213D100C84CAF /* RecordDetailScrollImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA57D1BF213D000C84CAF /* RecordDetailScrollImageView.m */; };
 		24BDA5841BF213D100C84CAF /* RecordDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA57F1BF213D000C84CAF /* RecordDetailTableViewCell.m */; };
 		24BDA5851BF213D100C84CAF /* RecordDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA5811BF213D100C84CAF /* RecordDetailViewController.m */; };
-		24BDA58F1BF2144900C84CAF /* TravelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA58E1BF2144900C84CAF /* TravelCollectionView.m */; };
 		24F9F4E71BDCD96F00C722BE /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9F4E61BDCD96F00C722BE /* PersonalViewController.m */; };
 		7288E10B1C7744FC00F554D0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10A1C7744FC00F554D0 /* User.m */; };
 		7288E10E1C77455600F554D0 /* Called.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10D1C77455600F554D0 /* Called.m */; };
@@ -198,8 +195,6 @@
 		044F502E1C8AC6F6002DF802 /* UIView+SDAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDAutoLayout.m"; sourceTree = "<group>"; };
 		044F50311C8ACD44002DF802 /* TravelsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelsViewController.h; sourceTree = "<group>"; };
 		044F50321C8ACD44002DF802 /* TravelsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelsViewController.m; sourceTree = "<group>"; };
-		044F50341C8ACD4D002DF802 /* TravelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTableViewCell.h; sourceTree = "<group>"; };
-		044F50351C8ACD4D002DF802 /* TravelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTableViewCell.m; sourceTree = "<group>"; };
 		04D354271C87E84400DFCB1C /* xiangyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiangyou.png; sourceTree = "<group>"; };
 		04D354291C87EC6000DFCB1C /* 测试头像1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "测试头像1.png"; sourceTree = "<group>"; };
 		04D354331C87F40900DFCB1C /* ChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePwViewController.h; sourceTree = "<group>"; };
@@ -380,10 +375,8 @@
 		24793AB31BDC86B0006491C6 /* MyCommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCommentsTableViewCell.m; sourceTree = "<group>"; };
 		247AF9541BCDE95E00DECE79 /* AnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationView.h; sourceTree = "<group>"; };
 		247AF9551BCDE95E00DECE79 /* AnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationView.m; sourceTree = "<group>"; };
-		247D44B21BD24F65006F36D5 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		247D44B31BD24F65006F36D5 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		247D44B41BD24F65006F36D5 /* PositonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositonViewController.h; sourceTree = "<group>"; };
-		247D44B51BD24F65006F36D5 /* PositonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositonViewController.m; sourceTree = "<group>"; };
+		247D44B41BD24F65006F36D5 /* PositonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PositonViewController.h; path = ../PositonViewController.h; sourceTree = "<group>"; };
+		247D44B51BD24F65006F36D5 /* PositonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PositonViewController.m; path = ../PositonViewController.m; sourceTree = "<group>"; };
 		247D44B61BD24F65006F36D5 /* SharedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedView.h; sourceTree = "<group>"; };
 		247D44B71BD24F65006F36D5 /* SharedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedView.m; sourceTree = "<group>"; };
 		247D45211BD25A1F006F36D5 /* LaunchCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchCollectionViewCell.h; sourceTree = "<group>"; };
@@ -433,8 +426,6 @@
 		24BDA57F1BF213D000C84CAF /* RecordDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordDetailTableViewCell.m; sourceTree = "<group>"; };
 		24BDA5801BF213D000C84CAF /* RecordDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordDetailViewController.h; sourceTree = "<group>"; };
 		24BDA5811BF213D100C84CAF /* RecordDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordDetailViewController.m; sourceTree = "<group>"; };
-		24BDA58D1BF2144900C84CAF /* TravelCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelCollectionView.h; sourceTree = "<group>"; };
-		24BDA58E1BF2144900C84CAF /* TravelCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelCollectionView.m; sourceTree = "<group>"; };
 		24F9F4E51BDCD96F00C722BE /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewController.h; sourceTree = "<group>"; };
 		24F9F4E61BDCD96F00C722BE /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewController.m; sourceTree = "<group>"; };
 		34CFEACCB7830DBA9ED922F1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -739,6 +730,8 @@
 		2462C5DE1BEC9C72001714C8 /* 添加游记 */ = {
 			isa = PBXGroup;
 			children = (
+				247D44B41BD24F65006F36D5 /* PositonViewController.h */,
+				247D44B51BD24F65006F36D5 /* PositonViewController.m */,
 				2462C65F1BECD522001714C8 /* 选择照片 */,
 				24600CBC1BEDDCDC00C3C3B9 /* AddTravelViewController.h */,
 				24600CBD1BEDDCDC00C3C3B9 /* AddTravelViewController.m */,
@@ -751,8 +744,6 @@
 			children = (
 				044F50311C8ACD44002DF802 /* TravelsViewController.h */,
 				044F50321C8ACD44002DF802 /* TravelsViewController.m */,
-				044F50341C8ACD4D002DF802 /* TravelTableViewCell.h */,
-				044F50351C8ACD4D002DF802 /* TravelTableViewCell.m */,
 			);
 			name = "游记列表";
 			path = "../游记列表";
@@ -1083,14 +1074,9 @@
 		2497BA101BCCC37400251058 /* 游记 */ = {
 			isa = PBXGroup;
 			children = (
-				24BDA58C1BF2144900C84CAF /* 游记cell里的collection */,
 				24BDA5791BF213D000C84CAF /* 游记详情 */,
 				2462C5DE1BEC9C72001714C8 /* 添加游记 */,
 				2462C5E01BEC9C72001714C8 /* 游记列表cell */,
-				247D44B41BD24F65006F36D5 /* PositonViewController.h */,
-				247D44B51BD24F65006F36D5 /* PositonViewController.m */,
-				247D44B21BD24F65006F36D5 /* DetailViewController.h */,
-				247D44B31BD24F65006F36D5 /* DetailViewController.m */,
 				247D44B61BD24F65006F36D5 /* SharedView.h */,
 				247D44B71BD24F65006F36D5 /* SharedView.m */,
 			);
@@ -1172,15 +1158,6 @@
 				24BDA5811BF213D100C84CAF /* RecordDetailViewController.m */,
 			);
 			path = "游记详情";
-			sourceTree = "<group>";
-		};
-		24BDA58C1BF2144900C84CAF /* 游记cell里的collection */ = {
-			isa = PBXGroup;
-			children = (
-				24BDA58D1BF2144900C84CAF /* TravelCollectionView.h */,
-				24BDA58E1BF2144900C84CAF /* TravelCollectionView.m */,
-			);
-			path = "游记cell里的collection";
 			sourceTree = "<group>";
 		};
 		7288E1081C77444900F554D0 /* Model */ = {
@@ -1561,7 +1538,6 @@
 				24780C5A1BD5CCA10009A40D /* ImageView.m in Sources */,
 				2470A6751BDA688800CFA21C /* SearchPopWindow.m in Sources */,
 				2470A6741BDA688800CFA21C /* MyPopWindow.m in Sources */,
-				24BDA58F1BF2144900C84CAF /* TravelCollectionView.m in Sources */,
 				247D455E1BD25A1F006F36D5 /* LaunchCollectionViewCell.m in Sources */,
 				2497BA201BCCC37400251058 /* LcTabarViewController.m in Sources */,
 				24204BC11BCF664E0034B4C6 /* MyCommentsViewController.m in Sources */,
@@ -1582,8 +1558,6 @@
 				2497BA1C1BCCC37400251058 /* InitiateViewcontroller.m in Sources */,
 				245B59E41BCB8BE80003EBA7 /* main.m in Sources */,
 				244F996A1BD9D3050003E126 /* SearchResultView.m in Sources */,
-				044F50361C8ACD4D002DF802 /* TravelTableViewCell.m in Sources */,
-				247D44BE1BD24F65006F36D5 /* DetailViewController.m in Sources */,
 				7288E1141C774B7800F554D0 /* CalledComments.m in Sources */,
 				7288E1111C77496900F554D0 /* Travel.m in Sources */,
 				247D45611BD25A1F006F36D5 /* LaunchViewScrollImage.m in Sources */,

@@ -81,6 +81,7 @@
     [self.navigationController pushViewController:CFVC animated:YES];
 }
 
+#pragma mark --登录
 - (void)loginButtonAction:(UIButton *)sender {
     if (_phoneNumberTF.text.length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -92,9 +93,13 @@
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
     }else {
-   //网络请求
-        [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text];
         [self.loading show];
+   //网络请求
+        [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:^(BmobObject *object) {
+        } failBlock:^(NSError *error) {
+            
+        }];
+        
     }
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -113,9 +118,11 @@
         }
         if (self.user.loginUserData) {
             [self.loading hide];
-            [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"phone_number"] forKey:@"phoneNumber"];
+            [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"phoneNumber"] forKey:@"phoneNumber"];
             [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"password"] forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] setObject:self.user.loginUserData.objectId  forKey:@"objectId"];
+          [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"username"]  forKey:@"username"];
+            
             [[NSUserDefaults standardUserDefaults] setObject:@"in" forKey:@"loginState"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }

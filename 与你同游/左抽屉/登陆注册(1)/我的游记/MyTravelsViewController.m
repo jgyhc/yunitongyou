@@ -15,7 +15,6 @@
 
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
-#import "TravelTableViewCell.h"
 #import "MJRefresh.h"
 #import <MJRefresh.h>
 #import "CommentViewController.h"
