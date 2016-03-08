@@ -24,8 +24,4 @@
 @property (nonatomic, copy) NSString * pinglunNumber;
 @property (nonatomic, copy) NSString * shareImage;//分享
 
-
-@property (nonatomic, assign) BOOL isOpening;
-@property (nonatomic,assign,readonly) BOOL shouldShowMoreButton;
-
 @end

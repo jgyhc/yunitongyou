@@ -7,13 +7,8 @@
 //
 
 #import "BaseViewController.h"
-//#import "MyTravelNotesTableViewCell.h"
+
 
 @interface MyTravelsViewController : BaseViewController
-
-@property (nonatomic, strong) UITableView *tableView;
-
-
-
 
 @end

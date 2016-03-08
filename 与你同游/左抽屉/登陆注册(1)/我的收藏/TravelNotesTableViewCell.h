@@ -10,9 +10,16 @@
 @class TravelNotesModel;
 
 @interface TravelNotesTableViewCell : UITableViewCell
-@property (nonatomic, strong) TravelNotesModel * model;
-@property (nonatomic,strong) NSIndexPath * indexPath;
 
-@property (nonatomic, copy) void (^moreButtonClickedBlock)(NSIndexPath *indexPath);
+@property (nonatomic, strong) TravelNotesModel * model;
+
+@property (nonatomic, strong)   UIImageView * dianzanImg;
+@property (nonatomic, strong)   UIImageView * commentImg;
+@property (nonatomic, strong)   UIImageView * shareImg;
+@property (nonatomic, strong)   UILabel     * dianzanLabel;
+@property (nonatomic, strong)   UILabel     * commentLabel;
+@property (nonatomic, strong)   UILabel     * shareLabel;
+@property (nonatomic, strong)   UIView      * vline1;
+@property (nonatomic, strong)   UIView      * vline2;
 
 @end

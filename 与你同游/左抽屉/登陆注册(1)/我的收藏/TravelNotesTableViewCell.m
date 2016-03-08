@@ -26,8 +26,14 @@ const CGFloat maxContentLabelHeight = 54;
     UILabel *_timeLabel;
     UILabel *_contentLabel;
     PhotoView *_picContainerView;
-    UIButton *_moreButton;
-    BOOL _shouldOpenContentLabel;
+    
+    UIButton * _dianzanbt;
+    UIButton * _commentbt;
+    UIButton * _sharebt;
+    
+    UIView * _hline1;
+
+  
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -41,7 +47,7 @@ const CGFloat maxContentLabelHeight = 54;
 - (void)setup
 {
     
-    _shouldOpenContentLabel = NO;
+  
     
     _iconView = [UIImageView new];
     
@@ -59,19 +65,21 @@ const CGFloat maxContentLabelHeight = 54;
     _contentLabel.font = [UIFont systemFontOfSize:contentLabelFontSize];
     _contentLabel.textColor = [UIColor colorWithRed:(54 / 255.0) green:(71 / 255.0) blue:(121 / 255.0) alpha:0.9];
     
-    _moreButton = [UIButton new];
-    [_moreButton setTitle:@"显示全部" forState:UIControlStateNormal];
-    [_moreButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [_moreButton addTarget:self action:@selector(moreButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    _moreButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    
     _picContainerView = [PhotoView new];
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:13];
     _timeLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
-    NSArray *views = @[_iconView, _nameLable,_positionImg,_position, _timeLabel, _contentLabel, _moreButton, _picContainerView];
+    _dianzanbt = [UIButton new];
+    _commentbt = [UIButton new];
+
+    _sharebt = [UIButton new];
+    
+    _hline1 = [UIView new];
+    _hline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+    
+    NSArray *views = @[_iconView, _nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1];
     
     [views enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.contentView addSubview:obj];
@@ -79,7 +87,8 @@ const CGFloat maxContentLabelHeight = 54;
     
     UIView *contentView = self.contentView;
     CGFloat margin = 10;
-    
+  
+#pragma mark --自动布局
     _iconView.sd_layout
     .leftSpaceToView(contentView, margin)
     .topSpaceToView(contentView, margin)
@@ -90,57 +99,71 @@ const CGFloat maxContentLabelHeight = 54;
     
     _nameLable.sd_layout
     .leftSpaceToView(_iconView, margin)
-    .topSpaceToView(contentView,40)
+    .topSpaceToView(contentView,25)
     .heightIs(flexibleHeight(18));
-    [_nameLable setSingleLineAutoResizeWithMaxWidth:flexibleWidth(120)];
-//    _nameLable.backgroundColor = [UIColor redColor];
+    [_nameLable setSingleLineAutoResizeWithMaxWidth:flexibleWidth(200)];
+
     
     _timeLabel.sd_layout
     .topSpaceToView(contentView,40)
     .rightSpaceToView(contentView,0)
     .widthIs(flexibleWidth(60))
     .heightIs(flexibleHeight(15));
-//    _timeLabel.backgroundColor = [UIColor purpleColor];
+
     
     _positionImg.sd_layout
-    .leftSpaceToView(_nameLable,margin)
-    .topEqualToView(_nameLable)
+    .leftSpaceToView(_iconView,margin)
+    .topSpaceToView(contentView,50)
     .heightIs(flexibleHeight(20))
     .widthIs(flexibleWidth(20));
     
     _position.sd_layout
     .leftSpaceToView(_positionImg,5)
-    .topEqualToView(_nameLable)
+    .topEqualToView(_positionImg)
     .rightSpaceToView(_timeLabel,5)
     .heightIs(flexibleHeight(18));
-//    _position.backgroundColor = [UIColor orangeColor];
-    
 
-    
-    
     _contentLabel.sd_layout
     .leftEqualToView(_iconView)
     .topSpaceToView(_iconView, 5)
     .rightSpaceToView(contentView, margin)
+    .heightIs(flexibleHeight(60))
     .autoHeightRatio(0);
-    
-    // morebutton的高度在setmodel里面设置
-    _moreButton.sd_layout
-    .leftEqualToView(_contentLabel)
-    .topSpaceToView(_contentLabel, 0)
-    .widthIs(60);
-    
-    
+
     _picContainerView.sd_layout
-    .leftEqualToView(_moreButton);
+    .leftEqualToView(_contentLabel);
+    
+    _dianzanbt.sd_layout
+    .leftEqualToView(_contentLabel)
+    .topSpaceToView(_picContainerView,margin)
+    .heightIs(flexibleWidth(30))
+    .widthIs(flexibleWidth((WIDTH - 20) / 3));
+    
+    _commentbt.sd_layout
+    .leftSpaceToView(_dianzanbt,0)
+     .topSpaceToView(_picContainerView,margin)
+     .heightIs(flexibleWidth(30))
+    .widthIs(flexibleWidth(_dianzanbt.bounds.size.width));
+    
+    _sharebt.sd_layout
+    .leftSpaceToView(_commentbt,0)
+     .topSpaceToView(_picContainerView,margin)
+     .heightIs(flexibleWidth(30))
+    .widthIs(flexibleWidth(_dianzanbt.bounds.size.width));
+    
+    _hline1.sd_layout
+    .leftEqualToView(contentView)
+    .rightEqualToView(contentView)
+    .bottomSpaceToView(_dianzanbt,0)
+    .heightIs(1);
+    
+    [self setupAutoHeightWithBottomView:_dianzanbt bottomMargin:0];
 }
 
-
+#pragma mark --赋值
 - (void)setModel:(TravelNotesModel *)model
 {
     _model = model;
-    
-    _shouldOpenContentLabel = NO;
     
     _iconView.image = [UIImage imageNamed:model.iconName];
     _nameLable.text = model.name;
@@ -153,34 +176,113 @@ const CGFloat maxContentLabelHeight = 54;
     
     _picContainerView.picPathStringsArray = model.picArray;
     
-    if (model.shouldShowMoreButton) { // 如果文字高度超过60
-        _moreButton.sd_layout.heightIs(20);
-        _moreButton.hidden = NO;
-        if (model.isOpening) { // 如果需要展开
-            _contentLabel.sd_layout.maxHeightIs(MAXFLOAT);
-            [_moreButton setTitle:@"收起文字" forState:UIControlStateNormal];
-        } else {
-            _contentLabel.sd_layout.maxHeightIs(60);
-            [_moreButton setTitle:@"显示全部" forState:UIControlStateNormal];
-        }
-    } else {
-        _moreButton.sd_layout.heightIs(0);
-        _moreButton.hidden = YES;
-    }
+    self.dianzanImg.image = IMAGE_PATH(@"未点赞.png");
+    self.commentImg.image = IMAGE_PATH(@"评论.png");
+    self.shareImg.image = IMAGE_PATH(@"未分享.png");
+    self.dianzanLabel.text = @"10";
+    self.commentLabel.text = @"34";
+    self.shareLabel.text = @"分享";
+    
+       self.vline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+       self.vline2.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
     CGFloat picContainerTopMargin = 0;
     if (model.picArray.count) {
         picContainerTopMargin = 10;
     }
-    _picContainerView.sd_layout.topSpaceToView(_moreButton, picContainerTopMargin);
-    [self setupAutoHeightWithBottomView:_picContainerView bottomMargin:10];
+    _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerTopMargin);
+    
 }
 
-- (void)moreButtonClicked
-{
-    if (self.moreButtonClickedBlock) {
-        self.moreButtonClickedBlock(self.indexPath);
+#pragma mark --懒加载
+- (UIImageView *)dianzanImg{
+    if (!_dianzanImg) {
+        _dianzanImg = ({
+            UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(20, 2.5, 25, 25), NO)];
+            [_dianzanbt addSubview:imageView];
+            
+            imageView;
+            
+        });
     }
+    return _dianzanImg;
+}
+
+- (UIImageView *)commentImg{
+    if (!_commentImg) {
+        _commentImg = ({
+            UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(20, 2.5, 25, 25), NO)];
+            [_commentbt addSubview:imageView];
+            
+            imageView;
+        });
+    }
+    return _commentImg;
+}
+
+- (UIImageView *)shareImg{
+    if (!_shareImg) {
+        _shareImg = ({
+            UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(20, 2.5, 25, 25), NO)];
+            [_sharebt addSubview:imageView];
+            
+            imageView;
+
+        });
+    }
+    return _shareImg;
+}
+
+- (UILabel *)dianzanLabel{
+    if (!_dianzanLabel) {
+        _dianzanLabel = ({
+            UILabel *label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(50, 0,70, 30), NO)];
+            label.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+            label.font = [UIFont systemFontOfSize:15];
+            [_dianzanbt addSubview:label];
+            label;
+        });
+    }
+    return _dianzanLabel;
+}
+- (UILabel *)commentLabel{
+    if (!_commentLabel) {
+        _commentLabel = ({
+            UILabel *label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(50, 0,70, 30), NO)];
+            label.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+            label.font = [UIFont systemFontOfSize:15];
+            [_commentbt addSubview:label];
+            label;
+        });
+    }
+    return _commentLabel;
+}
+- (UILabel *)shareLabel{
+    if (!_shareLabel) {
+        _shareLabel = ({
+            UILabel *label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(50, 0,70, 30), NO)];
+            label.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+            label.font = [UIFont systemFontOfSize:15];
+            [_sharebt addSubview:label];
+            label;
+        });
+    }
+    return _shareLabel;
+}
+
+- (UIView *)vline1{
+    if (!_vline1) {
+        _vline1 = [[UIView alloc]initWithFrame:CGRectMake(120, 5, 1, 20)];
+        [_dianzanbt addSubview:_vline1];
+    }
+    return _vline1;
+}
+- (UIView *)vline2{
+    if (!_vline2) {
+        _vline2 = [[UIView alloc]initWithFrame:CGRectMake(120, 5, 1, 20)];
+        [_commentbt addSubview:_vline2];
+    }
+    return _vline2;
 }
 
 @end

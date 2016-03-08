@@ -46,9 +46,6 @@
     [self.userModel addObserver:self forKeyPath:@"VerificationCodeResult" options:NSKeyValueObservingOptionNew context:nil];
     [self.userModel addObserver:self forKeyPath:@"registerResult" options:NSKeyValueObservingOptionNew context:nil];
 }
-- (void)initYoyoUserInterface {
-    
-}
 
 
 - (void)initUserInterface {
@@ -68,10 +65,13 @@
     UIView *baseView = [[UIView alloc] initWithFrame:flexibleFrame(CGRectMake(160, 70, 120, 40), NO)];
     baseView.backgroundColor = [UIColor colorWithWhite:0.600 alpha:1.000];
     baseView.layer.cornerRadius = 5;
+    
     UIView *upView = [[UIView alloc] initWithFrame:flexibleFrame(CGRectMake(160, 70, 120, 40), NO)];
     upView.backgroundColor = THEMECOLOR;
     upView.layer.cornerRadius = 5;
+    
     UILabel *label = [[UILabel alloc] initWithFrame:flexibleFrame(CGRectMake(160, 70, 120, 40), NO)];
+    
     self.upview = upView;
     //手势
     UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)];
@@ -98,6 +98,7 @@
     }
     if ([keyPath isEqualToString:@"userData"]) {
         NSLog(@"%@", self.userModel.userData);
+        
         if ([self.userModel.userData objectForKey:@"objectId"]) {
             UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该账号已经注册！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
@@ -160,6 +161,7 @@
         [alertView show];
         return;
     }else {
+        
         [self.userModel VerificationCodeWithPhoneNumber:self.phoneNumberTF.text];
         self.upview.frame = flexibleFrame(CGRectMake(160, 70, 0, 40), NO);
         [UIView animateWithDuration:30 animations:^{
@@ -228,7 +230,7 @@
 }
 
 - (void)completeRegisterEvent:(UIButton *)sender {
-    
+    [self.load show];
     if (_phoneNumberTF.text.length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
@@ -254,9 +256,17 @@
         [alertView show];
         return;
     }
-    [self.userModel getWithPhoneNumber:self.phoneNumberTF.text password:nil successBlock:nil failBlock:nil];
-//    [self.userModel getWithPhoneNumber:self.phoneNumberTF.text password:nil];
-    [self.load show];
+    
+
+    [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
+        
+        [self.load hide];
+        
+    } failBlock:^(NSError *error) {
+        
+        
+    }];
+    
 }
 - (CAKeyframeAnimation *)KeyrotationAnimation {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
