@@ -35,6 +35,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
     [self initNavTitle:@"发起"];
+    [self.tableView registerClass:[LaunchTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     [self initRightButtonEvent:@selector(handleAddCalled:) Image:IMAGE_PATH(@"添加游记.png")];
     [self.calledModel addObserver:self forKeyPath:@"calledArray" options:NSKeyValueObservingOptionNew context:nil];
     [self.calledModel addObserver:self forKeyPath:@"userArray" options:NSKeyValueObservingOptionNew context:nil];
@@ -122,15 +123,8 @@
     return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifer = @"cell";
-    LaunchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifer];
-    if (cell == nil) {
-        cell = [[LaunchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
-    }else {
-        [cell removeFromSuperview];
-        cell = [[LaunchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    LaunchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LaunchTableViewCell class])];
+    
     
 //    if (self.calledArray.count == 0 || self.userArray.count == 0) {
 //        return cell;
@@ -192,15 +186,17 @@
 
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self cellHeightForIndexPath:indexPath cellContentViewWidth:[self cellContentViewWith] tableView:tableView];
+}
 //
 //    /*
 //     普通版也可实现一步设置搞定高度自适应，不再推荐使用此套方法，具体参看“UITableView+SDAutoTableViewCellHeight”头文件
 //     return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:currentClass];
 //     */
-//    
-//    
+//
+//
 //    // 推荐使用此普通简化版方法（一步设置搞定高度自适应，性能好，易用性好）
 ////    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:currentClass contentViewWidth:[self cellContentViewWith]];
 //    return 100;

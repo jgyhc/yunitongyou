@@ -30,7 +30,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [self.contentView addSubview:self.userIDLabel];
         [self.contentView addSubview:self.launchTimeLabel];
@@ -42,11 +42,12 @@
         [self.contentView addSubview:self.infoLabel];
         [self.contentView addSubview:self.sexImage];
         [self.contentView addSubview:self.ageLabel];
-//        [self.contentView addSubview:self.followerLabel];
+        [self.contentView addSubview:self.followerLabel];
         [self.contentView addSubview:self.PNumber];
         [self.contentView addSubview:self.buttonView];
+        
+        self.followerLabel.sd_layout.rightEqualToView(self.contentView).widthIs(flexibleWidth(50)).heightIs(flexibleHeight(40)).topSpaceToView(self.contentView, 0);
 //
-//        
         self.UserHeaderimageView.sd_layout.leftSpaceToView(self.contentView,flexibleWidth(15)).
         topSpaceToView(self.contentView, flexibleHeight(15)).heightIs(flexibleHeight(35)).widthIs(flexibleHeight(35));
         self.UserHeaderimageView.sd_cornerRadiusFromWidthRatio = @(0.5);
@@ -303,9 +304,20 @@
 - (BottomButtonsView *)buttonView {
 	if(_buttonView == nil) {
 		_buttonView = [[BottomButtonsView alloc] init];
-        [_buttonView updateImage:@[@"点赞", @"评论", @"未收藏"] label:@[@"赞", @"评论", @"收藏"]];
+        [_buttonView updateImage:@[@"未点赞", @"评论", @"未收藏"] label:@[@"赞", @"评论", @"收藏"]];
 	}
 	return _buttonView;
+}
+
+- (UILabel *)followerLabel {
+	if(_followerLabel == nil) {
+		_followerLabel = [[UILabel alloc] init];
+        _followerLabel.textAlignment = NSTextAlignmentCenter;
+        _followerLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
+        _followerLabel.textColor = [UIColor whiteColor];
+        _followerLabel.backgroundColor = [UIColor colorWithRed:0.141 green:0.933 blue:0.600 alpha:1.000];
+	}
+	return _followerLabel;
 }
 
 @end
