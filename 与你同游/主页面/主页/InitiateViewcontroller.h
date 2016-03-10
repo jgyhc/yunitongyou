@@ -1,5 +1,5 @@
 //
-//  IndexViewcontroller.h
+//  InitiateViewController.h
 //  与你同游
 //
 //  Created by rimi on 15/10/12.
@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface InitiateViewcontroller : BaseViewController
+@interface InitiateViewController : BaseViewController
 
 @end

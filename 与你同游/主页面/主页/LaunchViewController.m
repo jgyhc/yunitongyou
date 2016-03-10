@@ -37,35 +37,35 @@
 @implementation LaunchViewController
 
 - (void)dealloc {
-    [self.scenic removeObserver:self forKeyPath:@"scenicSpotSearchResults"];
-    [self.calledModel removeObserver:self forKeyPath:@"calledArray"];
-    [self.calledModel removeObserver:self forKeyPath:@"userArray"];
+//    [self.scenic removeObserver:self forKeyPath:@"scenicSpotSearchResults"];
+//    [self.calledModel removeObserver:self forKeyPath:@"calledArray"];
+//    [self.calledModel removeObserver:self forKeyPath:@"userArray"];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.addressArray = @[@"北京", @"上海", @"江苏" ,@"海南" ,@"四川" ,@"重庆" ,@"广西" ,@"云南"];
-    self.imageArray = @[@"北京.jpg", @"上海.jpg", @"江苏.jpg" ,@"海南.jpg" ,@"四川.jpg" ,@"重庆.jpg" ,@"广西.jpg" ,@"云南.jpg"];
-    
-    [self initPersonButton];
-    [self initRightButtonEvent:@selector(handleEventRightButton:) Image:[UIImage imageNamed:@"搜索_白色.png"]];
-//    [self.rightButton setImage:[UIImage imageNamed:@"搜索_白色.png"] forState:UIControlStateNormal];
-    [self initNavTitle:@"发现"];
-    [self.view insertSubview:self.scrollView atIndex:0];
-//    [self.scrollView addSubview:self.tableView];
-    [self.scrollView addSubview:self.scrollImageView];
-
-    self.view.backgroundColor = [UIColor colorWithWhite:0.950 alpha:1.000];
-
-    [self.scenic addObserver:self forKeyPath:@"scenicSpotSearchResults" options:NSKeyValueObservingOptionNew context:nil];
-    [self.calledModel addObserver:self forKeyPath:@"calledArray" options:NSKeyValueObservingOptionNew context:nil];
-    [self.calledModel addObserver:self forKeyPath:@"userArray" options:NSKeyValueObservingOptionNew context:nil];
-    
-
-    [self initUserInterface];
-    [self initCollectionView];
+//    self.addressArray = @[@"北京", @"上海", @"江苏" ,@"海南" ,@"四川" ,@"重庆" ,@"广西" ,@"云南"];
+//    self.imageArray = @[@"北京.jpg", @"上海.jpg", @"江苏.jpg" ,@"海南.jpg" ,@"四川.jpg" ,@"重庆.jpg" ,@"广西.jpg" ,@"云南.jpg"];
+//    
+//    [self initPersonButton];
+//    [self initRightButtonEvent:@selector(handleEventRightButton:) Image:[UIImage imageNamed:@"搜索_白色.png"]];
+////    [self.rightButton setImage:[UIImage imageNamed:@"搜索_白色.png"] forState:UIControlStateNormal];
+//    [self initNavTitle:@"发现"];
+//    [self.view insertSubview:self.scrollView atIndex:0];
+////    [self.scrollView addSubview:self.tableView];
+//    [self.scrollView addSubview:self.scrollImageView];
+//
+//    self.view.backgroundColor = [UIColor colorWithWhite:0.950 alpha:1.000];
+//
+//    [self.scenic addObserver:self forKeyPath:@"scenicSpotSearchResults" options:NSKeyValueObservingOptionNew context:nil];
+//    [self.calledModel addObserver:self forKeyPath:@"calledArray" options:NSKeyValueObservingOptionNew context:nil];
+//    [self.calledModel addObserver:self forKeyPath:@"userArray" options:NSKeyValueObservingOptionNew context:nil];
+//    
+//
+//    [self initUserInterface];
+//    [self initCollectionView];
     
 }
 

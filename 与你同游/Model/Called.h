@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
-@interface Called : NSObject
+@interface Called : BmobObject
 @property (nonatomic, strong) NSString *calledId;
 @property (nonatomic, strong) NSString *point_departure;//起点
 @property (nonatomic, strong) NSString *destination;//终点
@@ -22,7 +22,21 @@
 @property (nonatomic, strong) NSString *endTime;//到达时间
 @property (nonatomic, strong) NSArray *imageArray;//发起的图片数组
 @property (nonatomic, strong) NSString *phoneNumber;//联系电话
+/**
+ *  添加一个发起
+ *
+ *  @param userID         用户ID
+ *  @param title          主题
+ *  @param origin         起点
+ *  @param destination    目的地
+ *  @param departureTime  出发时间
+ *  @param arrivalTime    到达时间
+ *  @param NumberOfPeople 人数
+ *  @param content        内容
+ *  @param image          图片
+ */
 
++ (void)AddCalledWithUserID:(NSString *)userID title:(NSString *)title origin:(NSString *)origin destination:(NSString *)destination departureTime:(NSString *)departureTime arrivalTime:(NSString *)arrivalTime NumberOfPeople:(NSNumber *)NumberOfPeople content:(NSString *)content Success:(void (^)(NSString *calledID))success failure:(void (^)(NSError *error))failure;
 
 
 @end

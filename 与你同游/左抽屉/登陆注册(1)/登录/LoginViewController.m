@@ -82,20 +82,21 @@
 }
 
 - (void)loginButtonAction:(UIButton *)sender {
-    if (_phoneNumberTF.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-    }else if (_phoneNumberTF.text.length != 11 || [self isPureNumandCharacters:_phoneNumberTF.text] == NO || [self isMobileNumber:_phoneNumberTF.text] == NO){
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-    }else if (_passwordTF.text.length == 0 || _passwordTF.text.length < 6) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-    }else {
-   //网络请求
-        [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text];
-        [self.loading show];
-    }
+    [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text];
+//    if (_phoneNumberTF.text.length == 0) {
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        [alertView show];
+//    }else if (_phoneNumberTF.text.length != 11 || [self isPureNumandCharacters:_phoneNumberTF.text] == NO || [self isMobileNumber:_phoneNumberTF.text] == NO){
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        [alertView show];
+//    }else if (_passwordTF.text.length == 0 || _passwordTF.text.length < 6) {
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        [alertView show];
+//    }else {
+//   //网络请求
+//        [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text];
+//        [self.loading show];
+//    }
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];

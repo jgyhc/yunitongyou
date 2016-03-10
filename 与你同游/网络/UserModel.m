@@ -10,7 +10,6 @@
 #import "NetWorkingViewController.h"
 #import <BmobSDK/BmobProFile.h>
 #import <SMS_SDK/SMSSDK.h>
-#define APPLICAYION_ID @"ed38f5e8bc84d1b80a90beab61dbc07b"
 @interface UserModel ()
 @property (nonatomic, copy) NSString *phoneNumber;
 @property (nonatomic, copy) NSString *userName;
@@ -31,14 +30,7 @@
 @end
 
 @implementation UserModel
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [Bmob registerWithAppKey:APPLICAYION_ID];
-    }
-    return self;
-}
+
 - (void)getwithObjectId:(NSString *)ObjectId {
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
     [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
@@ -92,19 +84,21 @@
 
 #pragma mark -- 注册
 - (void)registeredWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password successBlock:(void(^)(NSString *objiectId))success failBlock:(void(^)(NSError * error))fail {
-
-    
-    BmobUser * User = [BmobUser objectWithClassName:@"User"];
-    [User setObject:phoneNumber forKey:@"phoneNumber"];
-    [User setObject:password forKey:@"password"];
-    [User signUpInBackgroundWithBlock:^ (BOOL isSuccessful, NSError *error){
-        if (isSuccessful){
-            NSLog(@"Sign up successfully");
-        } else {
-            
+    BmobObject *bmobObject = [BmobObject objectWithClassName:@"User"];
+    [bmobObject setObject:phoneNumber forKey:@"phoneNumber"];
+    [bmobObject setObject:password forKey:@"password"];
+    [bmobObject saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+        if (isSuccessful) {
+            success(bmobObject.objectId);
+            NSLog(@"%@", bmobObject.objectId);
+            NSLog(@"成功!");
+        }else{
+            fail(error);
+            NSLog(@"%@", error);
         }
     }];
     
+
     
     
     

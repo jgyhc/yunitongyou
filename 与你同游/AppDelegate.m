@@ -73,12 +73,12 @@
 //        
 //    } failBlock:nil];
 //
-    Register *re = [[Register alloc] init];
-    [re registeredWithPhoneNumber:@"1212" password:@"12312312" successBlock:^(NSString *objiectId) {
-        NSLog(@"%@", objiectId);
-    } failBlock:^(NSError *error) {
-        
-    }];
+//    Register *re = [[Register alloc] init];
+//    [re registeredWithPhoneNumber:@"1212" password:@"12312312" successBlock:^(NSString *objiectId) {
+//        NSLog(@"%@", objiectId);
+//    } failBlock:^(NSError *error) {
+//        
+//    }];
     
     
     
