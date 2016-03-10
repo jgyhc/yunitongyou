@@ -31,7 +31,7 @@
 @implementation RegisterViewController
 
 - (void)dealloc {
-    [self.userModel removeObserver:self forKeyPath:@"userData"];
+
     [self.userModel removeObserver:self forKeyPath:@"VerificationCode"];
     [self.userModel removeObserver:self forKeyPath:@"VerificationCodeResult"];
     [self.userModel removeObserver:self forKeyPath:@"registerResult"];
@@ -41,7 +41,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.registerResult
     [self initUserInterface];
-    [self.userModel addObserver:self forKeyPath:@"userData" options:NSKeyValueObservingOptionNew context:nil];
     [self.userModel addObserver:self forKeyPath:@"VerificationCode" options:NSKeyValueObservingOptionNew context:nil];
     [self.userModel addObserver:self forKeyPath:@"VerificationCodeResult" options:NSKeyValueObservingOptionNew context:nil];
     [self.userModel addObserver:self forKeyPath:@"registerResult" options:NSKeyValueObservingOptionNew context:nil];
@@ -96,19 +95,7 @@
     if ([keyPath isEqualToString:@"VerificationCode"]) {
         NSLog(@"%@", self.userModel.VerificationCode);
     }
-    if ([keyPath isEqualToString:@"userData"]) {
-        NSLog(@"%@", self.userModel.userData);
-        
-        if ([self.userModel.userData objectForKey:@"objectId"]) {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该账号已经注册！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-            [self.load hide];
-            return;
-        }else {
-            [self.userModel VerificationCodeWithVerificationCode:self.codeTF.text phoneNumber:self.phoneNumberTF.text];
-        }
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+    
     if ([keyPath isEqualToString:@"VerificationCodeResult"]) {
         if ([self.userModel.VerificationCodeResult isEqualToString:@"YES"]) {
             [self.userModel registeredWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:nil failBlock:nil];
@@ -161,11 +148,17 @@
         [alertView show];
         return;
     }else {
-        
-        [self.userModel VerificationCodeWithPhoneNumber:self.phoneNumberTF.text];
-        self.upview.frame = flexibleFrame(CGRectMake(160, 70, 0, 40), NO);
-        [UIView animateWithDuration:30 animations:^{
-            self.upview.frame = flexibleFrame(CGRectMake(160, 70, 120, 40), NO);
+        [self.userModel getWithPhoneNumber:self.phoneNumberTF.text password:nil successBlock:^(BmobObject *object) {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该账号已经注册！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+            
+        } failBlock:^(NSError *error) {
+            [self.userModel VerificationCodeWithPhoneNumber:self.phoneNumberTF.text];
+            self.upview.frame = flexibleFrame(CGRectMake(160, 70, 0, 40), NO);
+            [UIView animateWithDuration:30 animations:^{
+                self.upview.frame = flexibleFrame(CGRectMake(160, 70, 120, 40), NO);
+            }];
+
         }];
     }
 }

@@ -33,7 +33,6 @@
 
 @implementation PreviousForgetViewController
 - (void)dealloc {
-    [self.userModel removeObserver:self forKeyPath:@"userData"];
     [self.userModel removeObserver:self forKeyPath:@"VerificationCode"];
     [self.userModel removeObserver:self forKeyPath:@"VerificationCodeResult"];
     [self.userModel removeObserver:self forKeyPath:@"forgetPasswordResult"];
@@ -41,10 +40,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     [self initUserInterface];
-    //    [self animation];
-    [self.userModel addObserver:self forKeyPath:@"userData" options:NSKeyValueObservingOptionNew context:nil];
+
     [self.userModel addObserver:self forKeyPath:@"VerificationCode" options:NSKeyValueObservingOptionNew context:nil];
     [self.userModel addObserver:self forKeyPath:@"VerificationCodeResult" options:NSKeyValueObservingOptionNew context:nil];
     [self.userModel addObserver:self forKeyPath:@"forgetPasswordResult" options:NSKeyValueObservingOptionNew context:nil];
@@ -59,20 +57,10 @@
     if ([keyPath isEqualToString:@"VerificationCode"]) {
         NSLog(@"%@", self.userModel.VerificationCode);
     }
-    if ([keyPath isEqualToString:@"userData"]) {
-        if (!self.userModel.userData) {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该账号还未注册！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-            return;
-        }else {
-            [self.userModel VerificationCodeWithVerificationCode:self.codeTF.text phoneNumber:self.phoneNumberTF.text];
-        }
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+
     if ([keyPath isEqualToString:@"VerificationCodeResult"]) {
         NSLog(@"验证结果：%@", self.userModel.VerificationCodeResult);
         if ([self.userModel.VerificationCodeResult isEqualToString:@"YES"]) {
-//            [self.userModel registerWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text];
             [self.userModel ForgotPasswordWithPhone:self.phoneNumberTF.text newPassword:self.passwordTF.text];
         }else {
             UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"验证码错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -164,10 +152,17 @@
         return;
     }else {
 #pragma mark -- 验证码
-        [self.userModel VerificationCodeWithPhoneNumber:self.phoneNumberTF.text];
-        self.upview.frame = flexibleFrame(CGRectMake(160, 70, 0, 40), NO);
-        [UIView animateWithDuration:30 animations:^{
-            self.upview.frame = flexibleFrame(CGRectMake(160, 70, 120, 40), NO);
+        [self.userModel getWithPhoneNumber:self.phoneNumberTF.text password:nil successBlock:^(BmobObject *object) {
+           
+            [self.userModel VerificationCodeWithPhoneNumber:self.phoneNumberTF.text];
+            self.upview.frame = flexibleFrame(CGRectMake(160, 70, 0, 40), NO);
+            [UIView animateWithDuration:30 animations:^{
+                self.upview.frame = flexibleFrame(CGRectMake(160, 70, 120, 40), NO);
+            }];
+            
+        } failBlock:^(NSError *error) {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该账号还未注册！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
         }];
     }
 }
@@ -198,7 +193,7 @@
         [alertView show];
         return;
     }
-    [self.userModel getWithPhoneNumber:self.phoneNumberTF.text password:nil successBlock:nil failBlock:nil];
+    [self.userModel ForgotPasswordWithPhone:_phoneNumberTF.text newPassword:_passwordTF.text];
     [self.load  show];
 }
 

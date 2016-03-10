@@ -31,7 +31,7 @@
 @end
 
 @implementation UserModel
-
+#pragma mark --获取用户信息
 - (void)getwithObjectId:(NSString *)ObjectId {
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
     [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
@@ -40,39 +40,23 @@
 
 }
 
-
-#pragma mark --获取用户信息
+#pragma mark --查询账号是否存在
 - (void)getWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail {
+    
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
-    [bquery whereKey:@"phone_number" equalTo:phoneNumber];
-    if (password) {
-        [bquery whereKey:@"password" equalTo:password];
-    }
-    NSLog(@"%@", phoneNumber);
-    
-    
-    
-    
+    [bquery whereKey:@"phoneNumber" equalTo:phoneNumber];
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error){
             NSLog(@"error");
-            fail(error);
         }else{
-            NSLog(@"array = %@", array);
             if (array.count == 0) {
-                self.getUserData = nil;
+                self.userData = nil;
+                fail(error);
                 return;
             }
             BmobObject *object = array[0];
-            NSLog(@"%@", object);
-            if ([object objectForKey:@"head_portraits1"]) {
-                NSString * URL =  [NSString stringWithFormat:@"%@?t=1&a=f008d46b406baaa7eff26eba98dccd54", [object objectForKey:@"head_portraits1"]];
-                [object setObject:URL forKey:@"head_portraits1"];
-            }else {
-                [object setObject:nil forKey:@"head_portraits1"];
-            }
-            self.getUserData = object;
-            NSLog(@"%@", self.getUserData);
+            self.userData = object;
+            success(object);
         }
     }];
 }
@@ -109,13 +93,12 @@
             NSLog(@"%@", error);
         }else {
             if (array.count == 0) {
-                self.loginUserData = nil;
+                fail(error);
                 return;
             }
             BmobObject *object = array[0];
             NSLog(@"登录成功返回的用户信息array[0] = %@",array[0]);
             self.loginUserData = object;
-            success(object);
         }
     }];
 }
@@ -178,24 +161,30 @@
 
 
 }
-
+#pragma mark --忘记密码
 - (void)ForgotPasswordWithPhone:(NSString *)phoneNumber newPassword:(NSString *)newPassword {
-    [self getWithPhoneNumber:phoneNumber password:nil successBlock:^(BmobObject *object) {
-        [object setObject:newPassword forKey:@"password"];
-        [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-            if (isSuccessful) {
-                //修改成功后的动作
-                self.forgetPasswordResult = @"YES";
-            } else if (error){
-                NSLog(@"%@",error);
-            } else {
-                NSLog(@"UnKnow error");
-            }
-        }];
-    } failBlock:^(NSError *error) {
-        NSLog(@"%@", error);
-    }];
+    
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
+    [bquery whereKey:@"phoneNumber" equalTo:phoneNumber];
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error){
 
+        }else {
+            BmobObject *object = array[0];
+            [object setObject:newPassword forKey:@"password"];
+            [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                if (isSuccessful) {
+                    //修改成功后的动作
+                    self.forgetPasswordResult = @"YES";
+                } else if (error){
+                    NSLog(@"%@",error);
+                } else {
+                    NSLog(@"UnKnow error");
+                }
+            }];
+        }
+  
+        }];
 }
 - (void)uploadLevelWithphoneNumber:(NSString *)phoneNumber password:(NSString *)password {
     [self.netWork uploadLevelWithphoneNumber:phoneNumber password:password successBlock:^(NSString *objiectId) {
@@ -206,8 +195,9 @@
 
 
 
-- (void)changeUserinfoWithObjectId:(NSString *)ObjectId userName:(NSString *)userName head_portraits:(NSData *)head_portraits sex:(NSString *)sex age:(NSNumber *)age IndividualitySignature:(NSString *)IndividualitySignature {
+- (void)changeUserinfoWithObjectId:(NSString *)ObjectId userName:(NSString *)userName head_portraits:(NSData *)head_portraits sex:(NSString *)sex age:(NSString *)age IndividualitySignature:(NSString *)IndividualitySignature {
     
+#pragma mark --上传文件之前判断是否上传过头像，为了节约空间，我们应该删除原来的
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
     [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
         if (error) {
@@ -215,33 +205,40 @@
         }else {
             
             if (head_portraits) {
-                UIImage * image = [[UIImage alloc] initWithData:head_portraits];
-                CGSize imagesize = image.size;
-                imagesize.height = image.size.height * (200 / image.size.width);
-                imagesize.width = 200;
-                image = [self imageWithImage:image scaledToSize:imagesize];
-                NSData *data = UIImagePNGRepresentation(image);
-                
-                [self uploadImageFile:data successBlock:^(NSString *url) {
-                    [object setObject:userName forKey:@"username"];
-                    [object setObject:sex forKey:@"sex"];
-                    [object setObject:age forKey:@"age"];
-                    [object setObject:url forKey:@"head_portraits"];
-                    [object setObject:IndividualitySignature forKey:@"IndividualitySignature"];
-                    
-                    [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                        if (isSuccessful) {
-                            //修改成功后的动作
-                            self.addUserinfoResult = @"YES";
-                        } else if (error){
-                            NSLog(@"%@",error);
-                        } else {
-                            NSLog(@"UnKnow error");
-                        }
+                 [BmobProFile uploadFileWithFilename:@"headPortraint.png" fileData:head_portraits block:^(BOOL isSuccessful, NSError *error, NSString *filename, NSString *url, BmobFile *file) {
+                     if (isSuccessful) {
+                         [object setObject:userName forKey:@"username"];
+                         [object setObject:sex forKey:@"sex"];
+                         [object setObject:age forKey:@"age"];
+                         [object setObject:file.url forKey:@"head_portraits"];
+                         NSLog(@"file.url = %@",file.url);
+                         [object setObject:IndividualitySignature forKey:@"IndividualitySignature"];
+                         
+                         [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                             if (isSuccessful) {
+                                 //修改成功后的动作
+                                 self.addUserinfoResult = @"YES";
+                             } else if (error){
+                                 NSLog(@"%@",error);
+                             } else {
+                                 NSLog(@"UnKnow error");
+                             }
+                         }];
+                         
+                     }
+                     else{
+                         if(error){
+                             NSLog(@"error%@",error);
+                         }
+                     }
+
+                     
+                 } progress:^(CGFloat progress) {
+                     //上传进度，此处可编写进度条逻辑
+                     NSLog(@"progress %f",progress);
                     }];
-                } failBlock:^(NSError *error) {
-                    NSLog(@"%@",error);
-                }];
+            
+            
             }else {
                 
                 [object setObject:userName forKey:@"username"];

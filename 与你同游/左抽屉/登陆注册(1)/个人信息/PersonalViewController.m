@@ -22,9 +22,6 @@
 @property (nonatomic, strong) UIButton * saveButton;//保存按钮
 @property (nonatomic, strong) NSArray * hintArray;//提示文字
 
-@property (nonatomic,strong) UILabel * nameLabel;
-@property (nonatomic,strong) UIImageView * sexImageView;
-
 @property (nonatomic,strong) UIImageView * topView;
 @property (nonatomic,strong) UIView * backView;
 
@@ -40,7 +37,6 @@
 
 - (void)dealloc{
     [self.user removeObserver:self forKeyPath:@"addUserinfoResult"];
-//    [self.user removeObserver:self forKeyPath:@"getUserData"];
 }
 
 
@@ -50,8 +46,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
     [self.user addObserver:self forKeyPath:@"addUserinfoResult" options:NSKeyValueObservingOptionNew context:nil];
-//      [self.user addObserver:self forKeyPath:@"getUserData" options:NSKeyValueObservingOptionNew context:nil];
-//    [self.user getwithObjectId:OBJECTID];
+
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self initializedApperance];
@@ -60,33 +55,14 @@
 
 - (void)initializedApperance{
     self.hintArray = @[@"昵称", @"性别", @"年龄", @"个性签名"];
-//    NSString * nameStr;
-//    NSString * sexStr;
-//    NSString * ageStr;
-//    NSString * signatureStr;
-    NSString * ageStr = [NSString stringWithFormat:@"%@", [self.user.getUserData objectForKey:@"age"]];
-//    if ([self.user.getUserData objectForKey:@"age"]) {
-//        <#statements#>
-//    }
-    
-    
-    
-    NSArray * array = @[[self.user.getUserData objectForKey:@"username"], [self.user.getUserData objectForKey:@"sex"], ageStr, [self.user.getUserData objectForKey:@"IndividualitySignature"]];
-//    NSArray * array = @[@"提莫",@"女",@"21岁",@"岁月静好，我要你知道，在这个世界上，总有一个人是会永远等着你的。无论什么时候，无论在什么地方，总会有那么一个人。。。"];
-    
-    
+    NSArray * array = @[[self.user.getUserData objectForKey:@"username"], [self.user.getUserData objectForKey:@"sex"],[self.user.getUserData objectForKey:@"age"], [self.user.getUserData objectForKey:@"IndividualitySignature"]];
+
 
     [self.view addSubview:self.backView];
     [self.view addSubview:self.topView];
     [self.view addSubview:self.backButton];
     [self.view addSubview:self.saveButton];
     [self.view addSubview:self.headPortrait];
-    [self.view addSubview:self.nameLabel];
-    [self.view addSubview:self.sexImageView];
-    
-    
-
-  
     
     for (int i = 0; i < self.hintArray.count; i ++) {
         
@@ -123,35 +99,20 @@
 #pragma mark -- KVO 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"addUserinfoResult"]) {
-        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"修改成功！" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+//        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"修改成功！" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//            
+//        }];
+//        
+//        [alertController addAction:sureAction];
+//        
+//        [self presentViewController:alertController animated:YES completion:nil];
+//        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
             
         }];
-        
-        [alertController addAction:sureAction];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
-//    if ([keyPath isEqualToString:@"getUserData"]) {
-//        if ([self.user.getUserData objectForKey:@"username"]) {
-//            [self.userName setTitle:[self.user.getUserData objectForKey:@"username"]  forState:UIControlStateNormal];
-//            self.userName.userInteractionEnabled = NO;
-//        }else {
-//            [self.userName setTitle:[self.user.getUserData objectForKey:@"phoneNumber"]  forState:UIControlStateNormal];
-//            self.userName.userInteractionEnabled = NO;
-//        }
-//        if ([self.user.getUserData objectForKey:@"head_portraits"]) {
-//            //获取URL
-//            NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
-//            [self.icon sd_setImageWithURL:imageUrl];
-//            self.icon.clipsToBounds = YES;
-//            
-//        }
-//    }
-
 }
 
 
@@ -231,25 +192,43 @@
 
 #pragma mark --UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        self.headPortrait.image = info[UIImagePickerControllerOriginalImage];
-        self.topView.image = info[UIImagePickerControllerOriginalImage];
-        self.saveButton.hidden = NO;
-        [self.sharedView handlePress];
-        [self dismissViewControllerAnimated:YES completion:nil];
 
+    UIImage * image;
+    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     }
     else if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         //保存到相册
         UIImageWriteToSavedPhotosAlbum(info[UIImagePickerControllerEditedImage], nil, nil, nil);
         //获取编辑后的图片
-        self.headPortrait.image = info[UIImagePickerControllerEditedImage];
-        self.topView.image = info[UIImagePickerControllerEditedImage];
+        image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    }
+    
+    if ( image )
+    {
+        //压缩图片
+        //横屏
+        CGFloat width=0.f;
+        CGFloat height=0.f;
+            if (image.size.width>200.0f)
+            {
+                width=200.0f;
+            }
+            else width=image.size.width;
+            
+            if (image.size.height>300.0f)
+            {
+                height=300.0f;
+            }
+            else height=image.size.height;
+        
+        image = [self imageWithImage:image scaledToSize:CGSizeMake(width, height)];
+        self.headPortrait.image = image;
+        self.topView.image = image;
         self.saveButton.hidden = NO;
         [self.sharedView handlePress];
         [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    
+     }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
@@ -257,7 +236,15 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
+#pragma mark --压缩图片
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 
 - (void)handleBack{
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -265,18 +252,14 @@
 
 
 - (void)handleSave{
-
     UITextView * username = (UITextView *)[self.backView viewWithTag:TEXTVIEW_TAG];
     UITextView * sex = (UITextView *)[self.backView viewWithTag:TEXTVIEW_TAG + 1];
     UITextView * age = (UITextView *)[self.backView viewWithTag:TEXTVIEW_TAG + 2];
     UITextView * signature = (UITextView *)[self.backView viewWithTag:TEXTVIEW_TAG + 3];
-    NSNumber *ageNumber = [NSNumber numberWithInteger:[age.text integerValue]];
-    NSData *imageData = UIImagePNGRepresentation(self.headPortrait.image);
+
     //提交修改数据
-    [self.user changeUserinfoWithObjectId:OBJECTID userName:username.text head_portraits:imageData sex:sex.text age:ageNumber IndividualitySignature:signature.text];
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [self.user changeUserinfoWithObjectId:OBJECTID userName:username.text head_portraits: UIImagePNGRepresentation(self.headPortrait.image) sex:sex.text age:age.text IndividualitySignature:signature.text];
+
 }
 
 #pragma mark --键盘通知
@@ -315,41 +298,6 @@
 
 #pragma mark --lazy loading
 
-
-- (UILabel *)nameLabel{
-    if (!_nameLabel) {
-        _nameLabel = ({
-          
-            UILabel * nameLabel = [[UILabel alloc] initWithFrame:flexibleFrame(CGRectMake(138,190,20,20), NO) ];//这个frame是初设的，没关系，后面还会重新设置其size。
-            nameLabel.textColor = [UIColor colorWithWhite:0.098 alpha:1.000];
-            nameLabel.text = [self.user.userData objectForKey:@"userName"];
-            nameLabel.font = [UIFont systemFontOfSize:16];
-            nameLabel.textAlignment = NSTextAlignmentCenter;
-            CGSize labelsize = [nameLabel.text  sizeWithAttributes:[NSDictionary dictionaryWithObject:nameLabel.font forKey:NSFontAttributeName]];
-//            [nameLabel setFrame:flexibleFrame(CGRectMake(138,190, labelsize.width, 20), NO) ];
-            nameLabel.bounds = flexibleFrame(CGRectMake(0, 0, labelsize.width, 20), NO);
-            nameLabel.center = flexibleCenter(CGPointMake(WIDTH / 2, 200), NO);
-            nameLabel;
-        });
-    }
-    return _nameLabel;
-}
-
-- (UIImageView *)sexImageView{
-    if (!_sexImageView) {
-        _sexImageView = ({
-            UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(self.nameLabel.frame.origin.x + self.nameLabel.frame.size.width + 5, 185, 30, 30), NO)];
-            
-            imageView.image = IMAGE_PATH([[self.user.userData objectForKey:@"sex"] stringByAppendingString:@".png"] );
-            imageView;
-            
-        });
-    }
-    return _sexImageView;
-}
-
-
-
 - (UIButton *)backButton{
     if (!_backButton) {
         _backButton = ({
@@ -383,11 +331,18 @@
     if (!_headPortrait) {
         _headPortrait = ({
             UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(147.5, 100, 80, 80), NO)];
+            
             imageView.layer.cornerRadius = 0.5 * CGRectGetWidth(imageView.bounds);
+            
+            NSString * imageString =[self.user.getUserData objectForKey:@"head_portraits"];
+            if (imageString.length > 0) {
+                NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
+                [imageView sd_setImageWithURL:imageUrl];
+            }
+            else{
+                imageView.image = IMAGE_PATH(@"测试头像1.png");
+            }
             imageView.clipsToBounds = YES;
-            NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
-            [imageView sd_setImageWithURL:imageUrl];
-//            imageView.image = IMAGE_PATH(@"测试头像1.png");
             UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleGesture)];
             [imageView addGestureRecognizer:tap];
             imageView.userInteractionEnabled = YES;
@@ -417,8 +372,14 @@
     if (!_topView) {
         _topView = ({
             UIImageView *customBackgournd = [[UIImageView alloc] initWithFrame:flexibleFrame(CGRectMake(0, 0, 375, 250), NO)];
-            customBackgournd.image = IMAGE_PATH(@"测试头像1.png");
-        
+            NSString * imageString =[self.user.getUserData objectForKey:@"head_portraits"];
+            if (imageString.length > 0) {
+                NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
+                [customBackgournd sd_setImageWithURL:imageUrl];
+            }
+            else{
+                customBackgournd.image = IMAGE_PATH(@"测试头像1.png");
+            }
             UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
             visualEfView.frame = flexibleFrame(CGRectMake(0, 0, 375, 250), NO);
             visualEfView.alpha = 0.9;

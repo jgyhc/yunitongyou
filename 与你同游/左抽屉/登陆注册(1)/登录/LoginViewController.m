@@ -93,11 +93,13 @@
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
     }else {
-        [self.loading show];
    //网络请求
+         [self.loading show];
         [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:^(BmobObject *object) {
         } failBlock:^(NSError *error) {
-            
+            [self.loading hide];
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"用户名或者密码错误！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
         }];
         
     }
@@ -109,13 +111,7 @@
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"loginUserData"]) {
-        
-        if (self.user.loginUserData == nil) {
-            [self.loading hide];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"用户名或者密码错误！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-            return;
-        }
+
         if (self.user.loginUserData) {
             [self.loading hide];
             [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"phoneNumber"] forKey:@"phoneNumber"];
@@ -126,6 +122,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"in" forKey:@"loginState"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
+        
     }
 }
 - (BOOL)isPureNumandCharacters:(NSString *)string

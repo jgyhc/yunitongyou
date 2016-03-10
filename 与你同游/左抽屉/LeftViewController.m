@@ -68,20 +68,25 @@
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString*, id> *)change context:(nullable void *)context {
     
     if ([keyPath isEqualToString:@"getUserData"]) {
-        if ([self.user.getUserData objectForKey:@"username"]) {
+        if (![[self.user.getUserData objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
             [self.userName setTitle:[self.user.getUserData objectForKey:@"username"]  forState:UIControlStateNormal];
             self.userName.userInteractionEnabled = NO;
         }else {
             [self.userName setTitle:[self.user.getUserData objectForKey:@"phoneNumber"]  forState:UIControlStateNormal];
             self.userName.userInteractionEnabled = NO;
         }
-        if ([self.user.getUserData objectForKey:@"head_portraits"]) {
-            //获取URL
+        NSString * imageString =[self.user.getUserData objectForKey:@"head_portraits"];
+        if (imageString.length > 0) {
             NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
             [self.icon sd_setImageWithURL:imageUrl];
-            self.icon.clipsToBounds = YES;
-            
         }
+        else{
+            self.icon.image = IMAGE_PATH(@"测试头像1.png");
+        }
+         self.icon.clipsToBounds = YES;
+        
+            
+        
     }
 }
 

@@ -9,6 +9,7 @@
 #import "ChangePwViewController.h"
 #import "AnimationView.h"
 #import "UserModel.h"
+#import "LoadingView.h"
 
 
 #define THEMECOLORLINE [UIColor colorWithWhite:0.728 alpha:1.000]
@@ -22,16 +23,37 @@
 @property (nonatomic, strong) UIButton *completeButton;
 @property (nonatomic, strong) AnimationView *animationView;
 @property (nonatomic, strong) UIView *downView;
-
+@property (nonatomic, strong) LoadingView *load;
 @property (nonatomic, strong) UserModel *userModel;
 
 @end
 @implementation ChangePwViewController
+- (void)dealloc {
 
+    [self.userModel removeObserver:self forKeyPath:@"forgetPasswordResult"];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+     [self.userModel addObserver:self forKeyPath:@"forgetPasswordResult" options:NSKeyValueObservingOptionNew context:nil];
     [self initUserInterface];
+}
+
+#pragma mark --KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"forgetPasswordResult"]) {
+        if ([self.userModel.forgetPasswordResult isEqualToString:@"YES"]) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"密码修改成功，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+             [[NSUserDefaults standardUserDefaults] setObject:@"out" forKey:@"loginState"];
+        }
+        else {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"密码修改失败！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
+        [self.load hide];
+    }
+    
 }
 - (void)initUserInterface {
     [self initBackButton];
@@ -40,7 +62,6 @@
     [self.view addSubview:self.downView];
     [self.downView addSubview:self.animationView];
     [self.animationView addSubview:self.textView];
-    //    [self.textView addSubview:self.usernameTF];
     [self.textView addSubview:self.aNewpasswordTF];
     [self.textView addSubview:self.oldpasswordTF];
     [self.textView addSubview:self.newPassword];
@@ -89,6 +110,10 @@
         [alertView show];
         return;
     }
+    
+    [self.userModel ForgotPasswordWithPhone:PHONE_NUMBER newPassword:self.newPassword.text];
+    [self.load  show];
+    
 }
 
 - (CAKeyframeAnimation *)KeyrotationAnimation {
@@ -232,6 +257,17 @@
     }
     return _downView;
 }
-
+- (LoadingView *)load {
+    if (!_load) {
+        _load = [[LoadingView alloc] init];
+    }
+    return _load;
+}
+- (UserModel *)userModel {
+    if (!_userModel) {
+        _userModel = [[UserModel alloc] init];
+    }
+    return _userModel;
+}
 
 @end
