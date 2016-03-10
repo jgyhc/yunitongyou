@@ -10,6 +10,7 @@
 #import "SharedView.h"
 
 #import "LoadingView.h"
+#import "UIImageView+WebCache.h"
 
 #define TEXTVIEW_TAG 100
 #define BUTTON_TAG 200
@@ -39,6 +40,7 @@
 
 - (void)dealloc{
     [self.user removeObserver:self forKeyPath:@"addUserinfoResult"];
+//    [self.user removeObserver:self forKeyPath:@"getUserData"];
 }
 
 
@@ -48,6 +50,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
     [self.user addObserver:self forKeyPath:@"addUserinfoResult" options:NSKeyValueObservingOptionNew context:nil];
+//      [self.user addObserver:self forKeyPath:@"getUserData" options:NSKeyValueObservingOptionNew context:nil];
+//    [self.user getwithObjectId:OBJECTID];
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self initializedApperance];
@@ -56,9 +60,19 @@
 
 - (void)initializedApperance{
     self.hintArray = @[@"昵称", @"性别", @"年龄", @"个性签名"];
-//    NSString * ageStr = [NSString stringWithFormat:@"%@", [self.user.getUserData objectForKey:@"age"]];
-//    NSArray * array = @[[self.user.getUserData objectForKey:@"userName"], [self.user.getUserData objectForKey:@"sex"], ageStr, [self.user.getUserData objectForKey:@"IndividualitySignature"]];
-    NSArray * array = @[@"提莫",@"女",@"21岁",@"岁月静好，我要你知道，在这个世界上，总有一个人是会永远等着你的。无论什么时候，无论在什么地方，总会有那么一个人。。。"];
+//    NSString * nameStr;
+//    NSString * sexStr;
+//    NSString * ageStr;
+//    NSString * signatureStr;
+    NSString * ageStr = [NSString stringWithFormat:@"%@", [self.user.getUserData objectForKey:@"age"]];
+//    if ([self.user.getUserData objectForKey:@"age"]) {
+//        <#statements#>
+//    }
+    
+    
+    
+    NSArray * array = @[[self.user.getUserData objectForKey:@"username"], [self.user.getUserData objectForKey:@"sex"], ageStr, [self.user.getUserData objectForKey:@"IndividualitySignature"]];
+//    NSArray * array = @[@"提莫",@"女",@"21岁",@"岁月静好，我要你知道，在这个世界上，总有一个人是会永远等着你的。无论什么时候，无论在什么地方，总会有那么一个人。。。"];
     
     
 
@@ -120,6 +134,23 @@
         [self presentViewController:alertController animated:YES completion:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
+    
+//    if ([keyPath isEqualToString:@"getUserData"]) {
+//        if ([self.user.getUserData objectForKey:@"username"]) {
+//            [self.userName setTitle:[self.user.getUserData objectForKey:@"username"]  forState:UIControlStateNormal];
+//            self.userName.userInteractionEnabled = NO;
+//        }else {
+//            [self.userName setTitle:[self.user.getUserData objectForKey:@"phoneNumber"]  forState:UIControlStateNormal];
+//            self.userName.userInteractionEnabled = NO;
+//        }
+//        if ([self.user.getUserData objectForKey:@"head_portraits"]) {
+//            //获取URL
+//            NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
+//            [self.icon sd_setImageWithURL:imageUrl];
+//            self.icon.clipsToBounds = YES;
+//            
+//        }
+//    }
 
 }
 
@@ -139,10 +170,25 @@
 - (void)handleSelecte:(UIButton *)sender{
     if (sender.tag == BUTTON_TAG) {
         
-        UIImagePickerController * pickerController = [[UIImagePickerController alloc]init];
-        pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        pickerController.delegate = self;
-        [self presentViewController:pickerController animated:YES completion:nil];
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+        {
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:picker animated:YES completion:nil];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"访问图片库错误"
+                                  message:@""
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK!"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    
+
     }
     else if (sender.tag == BUTTON_TAG + 1){
         [self handleTakePhoto];
@@ -157,30 +203,29 @@
 
 //照相机
 - (void)handleTakePhoto{
-     UIImagePickerController * picker = [[UIImagePickerController alloc]init];
-       UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        UIImagePickerController * picker = [[UIImagePickerController alloc]init];
+        //前置摄像头
+        //    picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+        //拍照模式
+//        picker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+        picker.delegate = self;
+        picker.allowsEditing = YES;//设置可编辑
+         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
-        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"该设备不支持拍照" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self.sharedView handlePress];
-            
-        }];
+            [self presentViewController:picker animated:YES completion:nil];
         
-        [alertController addAction:sureAction];
-            
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-    picker.sourceType = sourceType;
-    //前置摄像头
-    picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-    //拍照模式
-    picker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
-    picker.delegate = self;
-    picker.allowsEditing = YES;//设置可编辑
-    [self presentViewController:picker animated:YES completion:nil];
 
-    
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"不可使用摄像功能"
+                              message:@""
+                              delegate:nil
+                              cancelButtonTitle:@"OK!"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 
@@ -340,10 +385,9 @@
             UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(147.5, 100, 80, 80), NO)];
             imageView.layer.cornerRadius = 0.5 * CGRectGetWidth(imageView.bounds);
             imageView.clipsToBounds = YES;
-//            NSString * url = [self.user.getUserData objectForKey:@"head_portraits1"];
-//            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-//            imageView.image = [UIImage imageWithData:data];
-            imageView.image = IMAGE_PATH(@"测试头像1.png");
+            NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
+            [imageView sd_setImageWithURL:imageUrl];
+//            imageView.image = IMAGE_PATH(@"测试头像1.png");
             UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleGesture)];
             [imageView addGestureRecognizer:tap];
             imageView.userInteractionEnabled = YES;
@@ -373,10 +417,6 @@
     if (!_topView) {
         _topView = ({
             UIImageView *customBackgournd = [[UIImageView alloc] initWithFrame:flexibleFrame(CGRectMake(0, 0, 375, 250), NO)];
-            
-//            NSString * url = [self.user.getUserData objectForKey:@"head_portraits1"];
-//            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-//            customBackgournd.image = [UIImage imageWithData:data];
             customBackgournd.image = IMAGE_PATH(@"测试头像1.png");
         
             UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];

@@ -21,7 +21,7 @@
 #import "TravelModel.h"
 #import <BmobSDK/Bmob.h>
 #import "MJRefresh.h"
-#import "TravelTableViewCell.h"
+#import "TravelNotesTableViewCell.h"
 #import "SharedView.h"
 #define SIZEHEIGHT frame.size.height
 
@@ -46,7 +46,7 @@
 
 @property (nonatomic,strong) UIActivityIndicatorView * indicatorView;
 
-@property (nonatomic,strong) TravelTableViewCell * travelCell;
+@property (nonatomic,strong) TravelNotesTableViewCell * travelCell;
 
 @property (nonatomic, strong) SharedView *sharedView;
 @property (nonatomic,assign) CGFloat keyboardHeight;
@@ -350,26 +350,26 @@
 
 - (void)getButton{
     
-    self.travelCell.thumbUpButton.frame = flexibleFrame(CGRectMake(7.5, 627,120, 40), NO);
-    self.travelCell.commentsButton.frame = flexibleFrame(CGRectMake(127, 627,120, 40), NO);
-    self.travelCell.shareButton.frame = flexibleFrame(CGRectMake(246.5, 627,120, 40), NO);
+//    self.travelCell.thumbUpButton.frame = flexibleFrame(CGRectMake(7.5, 627,120, 40), NO);
+//    self.travelCell.commentsButton.frame = flexibleFrame(CGRectMake(127, 627,120, 40), NO);
+//    self.travelCell.shareButton.frame = flexibleFrame(CGRectMake(246.5, 627,120, 40), NO);
+//    
+//    self.travelCell.thumbUpButton.backgroundColor = [UIColor whiteColor];
+//    self.travelCell.commentsButton.backgroundColor = [UIColor whiteColor];
+//    self.travelCell.shareButton.backgroundColor = [UIColor whiteColor];
+//    
+//    [self.view addSubview:self.travelCell.thumbUpButton];
+//    [self.view addSubview:self.travelCell.commentsButton];
+//    [self.view addSubview:self.travelCell.shareButton];
     
-    self.travelCell.thumbUpButton.backgroundColor = [UIColor whiteColor];
-    self.travelCell.commentsButton.backgroundColor = [UIColor whiteColor];
-    self.travelCell.shareButton.backgroundColor = [UIColor whiteColor];
-    
-    [self.view addSubview:self.travelCell.thumbUpButton];
-    [self.view addSubview:self.travelCell.commentsButton];
-    [self.view addSubview:self.travelCell.shareButton];
-    
-    [self.travelCell.thumbUpButton addTarget:self action:@selector(handleThumbUp:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.travelCell.commentsButton addTarget:self action:@selector(handleComment:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.travelCell.shareButton addTarget:self action:@selector(handleShare:) forControlEvents:UIControlEventTouchUpInside];
-    
-    ((UILabel *)[self.travelCell.thumbUpButton subviews][1]).text = [NSString stringWithFormat:@"%@",[self.object objectForKey:@"number_of_thumb_up"]];
-    ((UILabel *)[self.travelCell.commentsButton subviews][1]).text = [NSString stringWithFormat:@"%@",[self.object objectForKey:@"comments_number"]];
+//    [self.travelCell.thumbUpButton addTarget:self action:@selector(handleThumbUp:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.travelCell.commentsButton addTarget:self action:@selector(handleComment:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.travelCell.shareButton addTarget:self action:@selector(handleShare:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    ((UILabel *)[self.travelCell.thumbUpButton subviews][1]).text = [NSString stringWithFormat:@"%@",[self.object objectForKey:@"number_of_thumb_up"]];
+//    ((UILabel *)[self.travelCell.commentsButton subviews][1]).text = [NSString stringWithFormat:@"%@",[self.object objectForKey:@"comments_number"]];
     
     
 }
@@ -669,11 +669,11 @@
     return _recipientArray;
 }
 
-- (TravelTableViewCell *)travelCell{
+- (TravelNotesTableViewCell *)travelCell{
     if (!_travelCell) {
         _travelCell = ({
             
-            TravelTableViewCell * cell = [[TravelTableViewCell alloc]init];
+            TravelNotesTableViewCell * cell = [[TravelNotesTableViewCell alloc]init];
             cell;
             
         });

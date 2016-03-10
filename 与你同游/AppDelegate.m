@@ -37,8 +37,6 @@
 
     
         self.window.rootViewController = controllerManager.rootViewController;
-
-    
        return YES;
 }
 

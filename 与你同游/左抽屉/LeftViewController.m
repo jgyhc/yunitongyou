@@ -22,6 +22,8 @@
 
 #import "PersonalViewController.h"
 
+#import "UIImageView+WebCache.h"//图片缓存，第三方提供（不是系统的，也不是自己写的，这里是网上提供的图片）
+
 
 
 
@@ -66,19 +68,19 @@
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString*, id> *)change context:(nullable void *)context {
     
     if ([keyPath isEqualToString:@"getUserData"]) {
-        if ([self.user.getUserData objectForKey:@"userName"]) {
-            [self.userName setTitle:[self.user.getUserData objectForKey:@"userName"]  forState:UIControlStateNormal];
+        if ([self.user.getUserData objectForKey:@"username"]) {
+            [self.userName setTitle:[self.user.getUserData objectForKey:@"username"]  forState:UIControlStateNormal];
             self.userName.userInteractionEnabled = NO;
         }else {
             [self.userName setTitle:[self.user.getUserData objectForKey:@"phoneNumber"]  forState:UIControlStateNormal];
-            self.userName.userInteractionEnabled = YES;
+            self.userName.userInteractionEnabled = NO;
         }
-        if ([self.user.getUserData objectForKey:@"head_portraits1"]) {
-            NSString *strUrl = [self.user.getUserData objectForKey:@"head_portraits1"];
-            NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:strUrl]];
-            UIImage *image = [UIImage imageWithData:data];
+        if ([self.user.getUserData objectForKey:@"head_portraits"]) {
+            //获取URL
+            NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
+            [self.icon sd_setImageWithURL:imageUrl];
             self.icon.clipsToBounds = YES;
-            self.icon.image = image;
+            
         }
     }
 }
@@ -182,7 +184,7 @@
             UIImageView *view = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(100, 100, 100, 100), YES)];
             view.backgroundColor = [UIColor whiteColor];
             view.image = IMAGE_NAME(@"用户未登录.png");
-            view.layer.cornerRadius = 50;
+            view.layer.cornerRadius = flexibleWidth(50);
             view.userInteractionEnabled = YES;
             UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoTapped)];
             [view addGestureRecognizer:singleTap];

@@ -229,6 +229,7 @@
     }
 }
 
+
 - (void)completeRegisterEvent:(UIButton *)sender {
     [self.load show];
     NSLog(@"%@", _phoneNumberTF.text);
@@ -268,6 +269,13 @@
         return;
     }
     
+    [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
+        [self.load hide];
+        [self.navigationController popViewControllerAnimated:YES];
+    } failBlock:^(NSError *error) {
+        
+        
+    }];
 
 }
 - (CAKeyframeAnimation *)KeyrotationAnimation {

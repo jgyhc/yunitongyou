@@ -82,7 +82,7 @@
  *  @param phoneNumber 电话
  *  @param password    密码 （必传）
  */
-- (void)loginWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password;
+- (void)loginWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail;
 
 /**
  *  上传个人信息
