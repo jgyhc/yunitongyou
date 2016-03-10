@@ -9,7 +9,7 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 #import <BmobSDK/Bmob.h>
-#import <YYModel.h>
+#import "YYModel.h"
 #import "UIView+SDAutoLayout.h"
 #define THEMECOLOR [UIColor colorWithRed:0.211 green:0.921 blue:0.722 alpha:1.000]
 #define PHONE_NUMBER [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]

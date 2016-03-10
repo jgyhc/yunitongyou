@@ -13,7 +13,6 @@
 #import "AddActivityViewController.h"
 #import <BmobSDK/Bmob.h>
 #import "MJRefresh.h"
-#import <MJRefresh.h>
 #import "CalledModel.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
 @interface InitiateViewcontroller ()<UITableViewDelegate, UITableViewDataSource>

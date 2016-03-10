@@ -17,7 +17,6 @@
 #import "TravelModel.h"
 #import "TravelTableViewCell.h"
 #import "MJRefresh.h"
-#import <MJRefresh.h>
 #import "CommentViewController.h"
 
 @interface MyTravelsViewController ()

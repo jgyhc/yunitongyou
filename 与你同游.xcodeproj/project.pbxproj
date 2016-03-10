@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		044F502F1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F502C1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m */; };
 		044F50301C8AC6F6002DF802 /* UIView+SDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F502E1C8AC6F6002DF802 /* UIView+SDAutoLayout.m */; };
+		0480FB4E1C910BB10059D712 /* tabar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB451C910BB10059D712 /* tabar.png */; };
+		0480FB4F1C910BB10059D712 /* 发起未选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB461C910BB10059D712 /* 发起未选中.png */; };
+		0480FB501C910BB10059D712 /* 发起选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB471C910BB10059D712 /* 发起选中.png */; };
+		0480FB511C910BB10059D712 /* 左抽屉按钮.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB481C910BB10059D712 /* 左抽屉按钮.png */; };
+		0480FB521C910BB10059D712 /* 游记未选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB491C910BB10059D712 /* 游记未选中.png */; };
+		0480FB531C910BB10059D712 /* 游记选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB4A1C910BB10059D712 /* 游记选中.png */; };
+		0480FB541C910BB10059D712 /* 返回_白色.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB4B1C910BB10059D712 /* 返回_白色.png */; };
+		0480FB551C910BB10059D712 /* 首页.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB4C1C910BB10059D712 /* 首页.png */; };
+		0480FB561C910BB10059D712 /* 首页选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480FB4D1C910BB10059D712 /* 首页选中.png */; };
 		04D354281C87E84400DFCB1C /* xiangyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354271C87E84400DFCB1C /* xiangyou.png */; };
 		04D3542A1C87EC6000DFCB1C /* 测试头像1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354291C87EC6000DFCB1C /* 测试头像1.png */; };
 		04D354391C87F40900DFCB1C /* ChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354341C87F40900DFCB1C /* ChangePwViewController.m */; };
@@ -49,15 +58,6 @@
 		24600CB11BED88D400C3C3B9 /* 选照片.png in Resources */ = {isa = PBXBuildFile; fileRef = 24600CB01BED88D400C3C3B9 /* 选照片.png */; };
 		24600CB71BED8BAB00C3C3B9 /* 照片选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 24600CB61BED8BAB00C3C3B9 /* 照片选中.png */; };
 		2461393F1BEF4F5A00E52E08 /* 删除照片.png in Resources */ = {isa = PBXBuildFile; fileRef = 2461393E1BEF4F5A00E52E08 /* 删除照片.png */; };
-		2462C61F1BECA99A001714C8 /* tabar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5E41BECA99A001714C8 /* tabar.png */; };
-		2462C6201BECA99A001714C8 /* 发起未选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5E51BECA99A001714C8 /* 发起未选中.png */; };
-		2462C6211BECA99A001714C8 /* 发起选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5E61BECA99A001714C8 /* 发起选中.png */; };
-		2462C6221BECA99A001714C8 /* 左抽屉按钮.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5E71BECA99A001714C8 /* 左抽屉按钮.png */; };
-		2462C6231BECA99A001714C8 /* 游记未选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5E81BECA99A001714C8 /* 游记未选中.png */; };
-		2462C6241BECA99A001714C8 /* 游记选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5E91BECA99A001714C8 /* 游记选中.png */; };
-		2462C6251BECA99A001714C8 /* 返回_白色.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5EA1BECA99A001714C8 /* 返回_白色.png */; };
-		2462C6261BECA99A001714C8 /* 首页.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5EB1BECA99A001714C8 /* 首页.png */; };
-		2462C6271BECA99A001714C8 /* 首页选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5EC1BECA99A001714C8 /* 首页选中.png */; };
 		2462C6281BECA99A001714C8 /* 个人信息壁纸.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5EE1BECA99A001714C8 /* 个人信息壁纸.png */; };
 		2462C6291BECA99A001714C8 /* 我的加入.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5EF1BECA99A001714C8 /* 我的加入.png */; };
 		2462C62A1BECA99A001714C8 /* 我的发起.png in Resources */ = {isa = PBXBuildFile; fileRef = 2462C5F01BECA99A001714C8 /* 我的发起.png */; };
@@ -198,6 +198,15 @@
 		044F502C1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+SDAutoTableViewCellHeight.m"; sourceTree = "<group>"; };
 		044F502D1C8AC6F6002DF802 /* UIView+SDAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SDAutoLayout.h"; sourceTree = "<group>"; };
 		044F502E1C8AC6F6002DF802 /* UIView+SDAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDAutoLayout.m"; sourceTree = "<group>"; };
+		0480FB451C910BB10059D712 /* tabar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabar.png; sourceTree = "<group>"; };
+		0480FB461C910BB10059D712 /* 发起未选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发起未选中.png"; sourceTree = "<group>"; };
+		0480FB471C910BB10059D712 /* 发起选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发起选中.png"; sourceTree = "<group>"; };
+		0480FB481C910BB10059D712 /* 左抽屉按钮.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "左抽屉按钮.png"; sourceTree = "<group>"; };
+		0480FB491C910BB10059D712 /* 游记未选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "游记未选中.png"; sourceTree = "<group>"; };
+		0480FB4A1C910BB10059D712 /* 游记选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "游记选中.png"; sourceTree = "<group>"; };
+		0480FB4B1C910BB10059D712 /* 返回_白色.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回_白色.png"; sourceTree = "<group>"; };
+		0480FB4C1C910BB10059D712 /* 首页.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "首页.png"; sourceTree = "<group>"; };
+		0480FB4D1C910BB10059D712 /* 首页选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "首页选中.png"; sourceTree = "<group>"; };
 		04D354271C87E84400DFCB1C /* xiangyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiangyou.png; sourceTree = "<group>"; };
 		04D354291C87EC6000DFCB1C /* 测试头像1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "测试头像1.png"; sourceTree = "<group>"; };
 		04D354331C87F40900DFCB1C /* ChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePwViewController.h; sourceTree = "<group>"; };
@@ -267,15 +276,6 @@
 		24600CB01BED88D400C3C3B9 /* 选照片.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "选照片.png"; sourceTree = "<group>"; };
 		24600CB61BED8BAB00C3C3B9 /* 照片选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "照片选中.png"; sourceTree = "<group>"; };
 		2461393E1BEF4F5A00E52E08 /* 删除照片.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "删除照片.png"; sourceTree = "<group>"; };
-		2462C5E41BECA99A001714C8 /* tabar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabar.png; sourceTree = "<group>"; };
-		2462C5E51BECA99A001714C8 /* 发起未选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发起未选中.png"; sourceTree = "<group>"; };
-		2462C5E61BECA99A001714C8 /* 发起选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发起选中.png"; sourceTree = "<group>"; };
-		2462C5E71BECA99A001714C8 /* 左抽屉按钮.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "左抽屉按钮.png"; sourceTree = "<group>"; };
-		2462C5E81BECA99A001714C8 /* 游记未选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "游记未选中.png"; sourceTree = "<group>"; };
-		2462C5E91BECA99A001714C8 /* 游记选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "游记选中.png"; sourceTree = "<group>"; };
-		2462C5EA1BECA99A001714C8 /* 返回_白色.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回_白色.png"; sourceTree = "<group>"; };
-		2462C5EB1BECA99A001714C8 /* 首页.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "首页.png"; sourceTree = "<group>"; };
-		2462C5EC1BECA99A001714C8 /* 首页选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "首页选中.png"; sourceTree = "<group>"; };
 		2462C5EE1BECA99A001714C8 /* 个人信息壁纸.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "个人信息壁纸.png"; sourceTree = "<group>"; };
 		2462C5EF1BECA99A001714C8 /* 我的加入.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的加入.png"; sourceTree = "<group>"; };
 		2462C5F01BECA99A001714C8 /* 我的发起.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的发起.png"; sourceTree = "<group>"; };
@@ -516,6 +516,22 @@
 			path = YOYOSDAutoLayout;
 			sourceTree = "<group>";
 		};
+		0480FB441C910BB10059D712 /*  标签栏 */ = {
+			isa = PBXGroup;
+			children = (
+				0480FB451C910BB10059D712 /* tabar.png */,
+				0480FB461C910BB10059D712 /* 发起未选中.png */,
+				0480FB471C910BB10059D712 /* 发起选中.png */,
+				0480FB481C910BB10059D712 /* 左抽屉按钮.png */,
+				0480FB491C910BB10059D712 /* 游记未选中.png */,
+				0480FB4A1C910BB10059D712 /* 游记选中.png */,
+				0480FB4B1C910BB10059D712 /* 返回_白色.png */,
+				0480FB4C1C910BB10059D712 /* 首页.png */,
+				0480FB4D1C910BB10059D712 /* 首页选中.png */,
+			);
+			path = " 标签栏";
+			sourceTree = "<group>";
+		};
 		04D3542B1C87F38A00DFCB1C /* 我的加入 */ = {
 			isa = PBXGroup;
 			children = (
@@ -743,7 +759,7 @@
 				2494D1D81BF05A3300049B03 /* 15.jpg */,
 				2462C6551BECBDF0001714C8 /* icon.png */,
 				2462C6561BECBDF0001714C8 /* logo.png */,
-				2462C5E31BECA99A001714C8 /*  标签栏 */,
+				0480FB441C910BB10059D712 /*  标签栏 */,
 				2462C5ED1BECA99A001714C8 /* 个人中心 */,
 				2462C5F91BECA99A001714C8 /* 发现 */,
 				2462C6091BECA99A001714C8 /* 发起 */,
@@ -751,22 +767,6 @@
 				2462C61A1BECA99A001714C8 /* 箭头 */,
 			);
 			path = "图片";
-			sourceTree = "<group>";
-		};
-		2462C5E31BECA99A001714C8 /*  标签栏 */ = {
-			isa = PBXGroup;
-			children = (
-				2462C5E41BECA99A001714C8 /* tabar.png */,
-				2462C5E51BECA99A001714C8 /* 发起未选中.png */,
-				2462C5E61BECA99A001714C8 /* 发起选中.png */,
-				2462C5E71BECA99A001714C8 /* 左抽屉按钮.png */,
-				2462C5E81BECA99A001714C8 /* 游记未选中.png */,
-				2462C5E91BECA99A001714C8 /* 游记选中.png */,
-				2462C5EA1BECA99A001714C8 /* 返回_白色.png */,
-				2462C5EB1BECA99A001714C8 /* 首页.png */,
-				2462C5EC1BECA99A001714C8 /* 首页选中.png */,
-			);
-			path = " 标签栏";
 			sourceTree = "<group>";
 		};
 		2462C5ED1BECA99A001714C8 /* 个人中心 */ = {
@@ -1397,20 +1397,19 @@
 				2462C6321BECA99A001714C8 /* 删除.png in Resources */,
 				2462C6471BECA99A001714C8 /* 已分享.png in Resources */,
 				2462C6461BECA99A001714C8 /* weixin.png in Resources */,
-				2462C6261BECA99A001714C8 /* 首页.png in Resources */,
 				2462C64B1BECA99A001714C8 /* 添加游记.png in Resources */,
 				2494D1DD1BF05A3300049B03 /* 15.jpg in Resources */,
+				0480FB531C910BB10059D712 /* 游记选中.png in Resources */,
 				2462C63A1BECA99A001714C8 /* 四川.jpg in Resources */,
 				2462C6501BECA99A001714C8 /* 向右箭头.png in Resources */,
-				2462C6251BECA99A001714C8 /* 返回_白色.png in Resources */,
 				2462C6441BECA99A001714C8 /* qq.png in Resources */,
-				2462C6221BECA99A001714C8 /* 左抽屉按钮.png in Resources */,
 				2462C6381BECA99A001714C8 /* 云南.jpg in Resources */,
 				2462C63E1BECA99A001714C8 /* 重庆.jpg in Resources */,
 				2462C6431BECA99A001714C8 /* 男.png in Resources */,
 				2462C6281BECA99A001714C8 /* 个人信息壁纸.png in Resources */,
 				2462C6341BECA99A001714C8 /* 定位选中.png in Resources */,
 				04D354521C8830C600DFCB1C /* portraint3.png in Resources */,
+				0480FB4E1C910BB10059D712 /* tabar.png in Resources */,
 				2462C6311BECA99A001714C8 /* 相机_白色.png in Resources */,
 				2462C6571BECBDF0001714C8 /* icon.png in Resources */,
 				2494D1D91BF05A3300049B03 /* 11.jpg in Resources */,
@@ -1420,29 +1419,30 @@
 				2462C63F1BECA99A001714C8 /* 空白图片.jpg in Resources */,
 				2462C6491BECA99A001714C8 /* 未分享.png in Resources */,
 				2462C6301BECA99A001714C8 /* 相机_灰色.png in Resources */,
+				0480FB551C910BB10059D712 /* 首页.png in Resources */,
 				2462C63D1BECA99A001714C8 /* 海南.jpg in Resources */,
 				2462C6421BECA99A001714C8 /* 未收藏.png in Resources */,
 				2462C6401BECA99A001714C8 /* 女.png in Resources */,
 				2462C6291BECA99A001714C8 /* 我的加入.png in Resources */,
+				0480FB561C910BB10059D712 /* 首页选中.png in Resources */,
 				24600CB11BED88D400C3C3B9 /* 选照片.png in Resources */,
+				0480FB541C910BB10059D712 /* 返回_白色.png in Resources */,
 				2462C64A1BECA99A001714C8 /* 未点赞.png in Resources */,
-				2462C6211BECA99A001714C8 /* 发起选中.png in Resources */,
 				24B320D11BD77B2E00FB622A /* SMS_SDKLocalizable.strings in Resources */,
 				2494D1DB1BF05A3300049B03 /* 13.jpg in Resources */,
 				24600CB71BED8BAB00C3C3B9 /* 照片选中.png in Resources */,
 				2462C6511BECA99A001714C8 /* 朝上箭头.png in Resources */,
 				04D3544C1C88308900DFCB1C /* portraint0.png in Resources */,
-				2462C6231BECA99A001714C8 /* 游记未选中.png in Resources */,
 				2462C62A1BECA99A001714C8 /* 我的发起.png in Resources */,
 				2462C62D1BECA99A001714C8 /* 我的评论.png in Resources */,
 				04D354501C8830A900DFCB1C /* portraint2.png in Resources */,
-				2462C61F1BECA99A001714C8 /* tabar.png in Resources */,
 				2462C6451BECA99A001714C8 /* weibo.png in Resources */,
 				04D354281C87E84400DFCB1C /* xiangyou.png in Resources */,
 				04D3542A1C87EC6000DFCB1C /* 测试头像1.png in Resources */,
 				2462C62E1BECA99A001714C8 /* 用户未登录.png in Resources */,
-				2462C6271BECA99A001714C8 /* 首页选中.png in Resources */,
+				0480FB511C910BB10059D712 /* 左抽屉按钮.png in Resources */,
 				2462C6351BECA99A001714C8 /* 搜索_白色.png in Resources */,
+				0480FB501C910BB10059D712 /* 发起选中.png in Resources */,
 				2462C63C1BECA99A001714C8 /* 江苏.jpg in Resources */,
 				245B59ED1BCB8BE80003EBA7 /* Main.storyboard in Resources */,
 				2461393F1BEF4F5A00E52E08 /* 删除照片.png in Resources */,
@@ -1456,12 +1456,12 @@
 				2462C6521BECA99A001714C8 /* 朝下箭头.png in Resources */,
 				04D354541C8830F300DFCB1C /* portraint4.png in Resources */,
 				2462C6541BECB3ED001714C8 /* 设置.png in Resources */,
+				0480FB521C910BB10059D712 /* 游记未选中.png in Resources */,
 				245B59EF1BCB8BE80003EBA7 /* Images.xcassets in Resources */,
 				2462C6581BECBDF0001714C8 /* logo.png in Resources */,
 				2494D1DC1BF05A3300049B03 /* 14.jpg in Resources */,
-				2462C6241BECA99A001714C8 /* 游记选中.png in Resources */,
+				0480FB4F1C910BB10059D712 /* 发起未选中.png in Resources */,
 				2462C6361BECA99A001714C8 /* 放大镜.png in Resources */,
-				2462C6201BECA99A001714C8 /* 发起未选中.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

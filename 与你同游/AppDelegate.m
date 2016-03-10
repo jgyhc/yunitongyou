@@ -25,18 +25,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-//    [Bmob registerWithAppKey:@"fa40b7c9510579d713ad9dd286fbdf68"];
-//    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"_User"];
-//    [bquery whereKey:@"username" equalTo:@"小明"];
-//    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-//        if (error){
-//            NSLog(@"error");
-//        }else{
-//
-//            NSLog(@"%@", array);
-//            }
-//    }];
+
     [Bmob registerWithAppKey:APPLICAYION_ID];
 
     [SMSSDK registerApp:APPKEY withSecret:APPSECRET];
@@ -45,42 +34,10 @@
     [self.window makeKeyWindow];
     
     ControllerManager *controllerManager = [ControllerManager shareControllerManager];
-    
-//    FirstView * firstView = [[FirstView alloc]initWithFrame:flexibleFrame(self.window.bounds, NO)];
-//    firstView.alpha = 0;
-//    [self.window addSubview:firstView];
-    
-//    [UIView animateWithDuration:6 animations:^{
-//        
-//        firstView.alpha = 1;
-//        
-//    } completion:^(BOOL finished) {
-//        
-//        
-//        [firstView removeFromSuperview];
+
     
         self.window.rootViewController = controllerManager.rootViewController;
-// 
-//    }];
-    
-//    NetWorking *net = [[NetWorking alloc] init];
-//    [net adddataWithTableName:@"User" data:@"timo" listName:@"username" successBlock:^(BmobObject *object) {
-//        
-//    } failBlock:^(NSError *error) {
-//        
-//    }];
-//    [net addDataWithTableName:@"User" dic:@{@"username":@"mumu",@"phoneNumber":@"15923459231"} successBlock:^(BmobObject *object) {
-//        
-//    } failBlock:nil];
-//
-//    Register *re = [[Register alloc] init];
-//    [re registeredWithPhoneNumber:@"1212" password:@"12312312" successBlock:^(NSString *objiectId) {
-//        NSLog(@"%@", objiectId);
-//    } failBlock:^(NSError *error) {
-//        
-//    }];
-    
-    
+
     
        return YES;
 }

@@ -8,7 +8,7 @@
 
 #import "ScenicViewController.h"
 #import "LaunchViewScrollImage.h"
-#import <SDWebImage/SDWebImageManager.h>
+#import "SDWebImage/SDWebImageManager.h"
 #import "LoadingView.h"
 #import "InsetsLabel.h"
 #import "AddActivityViewController.h"

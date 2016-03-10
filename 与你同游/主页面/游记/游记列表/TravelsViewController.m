@@ -14,7 +14,7 @@
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
 #import "TravelTableViewCell.h"
-#import <MJRefresh.h>
+#import "MJRefresh.h"
 #import "CommentViewController.h"
 #define BUTTON_TAG 100
 #define LABEL_TAG 200
