@@ -50,7 +50,7 @@
     
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loginState"] isEqualToString:@"in"]) {
         
-        [self.user getwithObjectId:OBJECTID];
+        [self.user getwithObjectId:OBJECTID successBlock:nil failBlock:nil];
         
     }else {
         self.icon.image = IMAGE_NAME(@"用户未登录.png");

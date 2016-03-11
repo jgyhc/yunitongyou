@@ -224,28 +224,18 @@
 
 #pragma mark --获取用户信息
 - (void)getWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail {
+    
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
-    [bquery whereKey:@"phone_number" equalTo:phoneNumber];
-    if (password) {
-        [bquery whereKey:@"password" equalTo:password];
-    }
+    [bquery whereKey:@"phoneNumber" equalTo:phoneNumber];
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error){
             NSLog(@"error");
             fail(error);
         }else{
             if (array.count == 0) {
-                success(nil);
                 return;
             }
-//            BmobObject *object = [BmobObject objectWithClassName:@"User"];
             BmobObject *object = array[0];
-            if ([object objectForKey:@"head_portraits1"]) {
-                NSString * URL =  [NSString stringWithFormat:@"%@?t=1&a=f008d46b406baaa7eff26eba98dccd54", [object objectForKey:@"head_portraits1"]];
-                [object setObject:URL forKey:@"head_portraits1"];
-            }else {
-                [object setObject:nil forKey:@"head_portraits1"];
-            }
             success(object);
         }
     }];
@@ -272,7 +262,6 @@
                     //创建一个游记信息
                     BmobObject  *travel = [BmobObject objectWithClassName:@"travel"];
                     [travel setObject:sightSpot forKey:@"sight_spot"];
-                    [travel setObject:[self CurrentTime] forKey:@"travel_date"];
                     [travel setObject:content forKey:@"content"];
                     [travel setObject:url forKey:@"image"];
                     [travel setObject:[object objectForKey:@"phone_number"] forKey:@"phone_number"];
@@ -335,7 +324,6 @@
                 //创建一个游记信息
                 BmobObject  *travel = [BmobObject objectWithClassName:@"travel"];
                 [travel setObject:sightSpot forKey:@"sight_spot"];
-                [travel setObject:[self CurrentTime] forKey:@"travel_date"];
                 [travel setObject:content forKey:@"content"];
                 
                 [travel setObject:[object objectForKey:@"phone_number"] forKey:@"phone_number"];
@@ -539,39 +527,31 @@
         }
     }];
 }
+
+#pragma mark --查询所有游记
 - (void)queryTheTravelListWithskip:(NSInteger)skip SuccessBlock:(void(^)(NSMutableArray *objectArray))success failBlock:(void(^)(NSError * error))fail {
-    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"travel"];
-    bquery.limit = 3;
-    bquery.skip = skip;
-    [bquery orderByDescending:@"travel_date"];
+    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"Travel"];
+    bquery.limit = 3;//每页3条
+    bquery.skip = skip;//跳过查询的前多少条数据来实现分页查询的功能。
+    [bquery orderByDescending:@"createdAt"];
     //查找travel表的数据
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-//        for (BmobObject *obj in array) {
-        NSMutableArray *objectArray = [NSMutableArray array];
-        for (int i = 0; i < array.count; i ++) {
-            BmobObject *travelObject = array[i];
-            if (![travelObject objectForKey:@"image"]) {
-                [travelObject setObject:nil forKey:@"image"];
-            }else {
-                
-                NSString * URL =  [NSString stringWithFormat:@"%@?t=1&a=f008d46b406baaa7eff26eba98dccd54", [travelObject objectForKey:@"image"]];
-                [travelObject setObject:URL forKey:@"image"];
-            }
-            [objectArray addObject:travelObject];
+        if (error) {
+            NSLog(@"游记查询失败:%@",error);
         }
-        success(objectArray);
+        else{
+            
+            NSMutableArray *objectArray = [NSMutableArray array];
+            for (int i = 0; i < array.count; i ++) {
+                BmobObject *travelObject = array[i];
+                [objectArray addObject:travelObject];
+            }
+            success(objectArray);
+        }
     }];
-
+        
 }
 
-#pragma mark -- 获取当前时间
-- (NSString *)CurrentTime {
-    NSDate *  senddate = [NSDate date];
-    NSDateFormatter  *dateformatter = [[NSDateFormatter alloc] init];
-    [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *  locationString = [dateformatter stringFromDate:senddate];
-    return locationString;
-}
 #pragma mark --压缩图片
 -(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
 {

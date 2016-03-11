@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
-@interface Travel : NSObject
+@interface Travel : BmobObject
 @property (nonatomic, strong) NSString *travelID;
 @property (nonatomic, strong) User *master;//发表游记的人
 @property (nonatomic, strong) NSString *content;//内容

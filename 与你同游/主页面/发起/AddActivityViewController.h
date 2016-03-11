@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface AddActivityViewController : BaseViewController
-
+@property (nonatomic, strong) NSString *destinationString;
 @end

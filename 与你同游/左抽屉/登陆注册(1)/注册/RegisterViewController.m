@@ -225,6 +225,17 @@
 
 - (void)completeRegisterEvent:(UIButton *)sender {
     [self.load show];
+    NSLog(@"%@", _phoneNumberTF.text);
+    NSLog(@"%@", _passwordTF.text);
+    [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
+        
+        [self.load hide];
+        
+    } failBlock:^(NSError *error) {
+        
+        
+    }];
+    
     if (_phoneNumberTF.text.length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
@@ -251,7 +262,6 @@
         return;
     }
     
-
     [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
         [self.load hide];
         [self.navigationController popViewControllerAnimated:YES];
@@ -259,7 +269,7 @@
         
         
     }];
-    
+
 }
 - (CAKeyframeAnimation *)KeyrotationAnimation {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];

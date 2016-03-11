@@ -19,13 +19,8 @@
 @property (nonatomic, copy, readonly) NSString *VerificationCodeResult;
 @property (nonatomic, copy, readonly) NSString *registerResult;
 @property (nonatomic, copy, readonly) NSString *forgetPasswordResult;
-@property (nonatomic, strong, readonly) NSMutableArray *travelListArray;
-@property (nonatomic, copy, readonly) NSString *addTravelResult;
-@property (nonatomic, copy, readonly) NSString *travelContents;
-@property (nonatomic, copy, readonly) NSString *travelTime;
-@property (nonatomic, copy, readonly) NSString *travelSight_spot;
-@property (nonatomic, strong, readonly) UIImage *image;
-@property (nonatomic, strong, readonly) NSMutableArray *travelUser;
+
+
 
 
 /**
@@ -44,7 +39,7 @@
  *
  *  @param ObjectId id
  */
-- (void)getwithObjectId:(NSString *)ObjectId;
+- (void)getwithObjectId:(NSString *)ObjectId  successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail ;
 
 /**
  *  注册
@@ -101,51 +96,4 @@
  *  @param newPassword 密码
  */
 - (void)ForgotPasswordWithPhone:(NSString *)phoneNumber newPassword:(NSString *)newPassword;
-/**
- *  添加一个游记
- *
- *  @param ObjectId  id
- *  @param sightSpot 景点
- *  @param images    图片
- *  @param content   内容
- */
-
-- (void)addTravelWithObejectId:(NSString *)ObjectId sightSpot:(NSArray *)sightSpot imagesArray:(NSArray *)imagesArray content:(NSString *)content;
-
-/**
- *  查询一个用户的游记列表
- *
- *  @param phoneNumber 电话号码
- *  @param password    密码
- */
-- (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password;
-- (void)queryTravelWithObejectId:(NSString *)ObjectId;
-/**
- *  查询一条游记
- *
- *  @param phoneNumber 用户名
- *  @param password    密码
- *  @param travel_date 游记发布时间
- */
-- (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password travel_date:(NSString *)travel_date;
-
-/**
- *  删除一条游记
- *
- *  @param phoneNumber 电话
- *  @param password    密码
- *  @param travel_date 游记发布时间
- */
-- (void)deleteTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password travel_date:(NSString *)travel_date;
-
-/**
- *  获取游记列表
- *
- *  @param success
- *  @param fail
- */
-- (void)queryTheTravelListSkip:(NSInteger)skip;
-
-
-
 @end

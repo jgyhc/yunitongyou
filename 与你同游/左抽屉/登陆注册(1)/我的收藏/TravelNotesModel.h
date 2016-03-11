@@ -12,16 +12,12 @@
 
 @property (nonatomic, copy) NSString * iconName;//头像
 @property (nonatomic, copy) NSString * name;//名字
-@property (nonatomic, copy) NSString * localImage;
 @property (nonatomic, copy) NSString * position;//地点
 @property (nonatomic, copy) NSString * time;//时间
 @property (nonatomic, copy) NSString * content;//内容
 @property (nonatomic, strong) NSArray * picArray;//图片
 
-@property (nonatomic, copy) NSString * dianzanImage;//点赞
 @property (nonatomic, copy) NSString * dianzanNumber;
-@property (nonatomic, copy) NSString * pinglunImage;//评论
 @property (nonatomic, copy) NSString * pinglunNumber;
-@property (nonatomic, copy) NSString * shareImage;//分享
 
 @end

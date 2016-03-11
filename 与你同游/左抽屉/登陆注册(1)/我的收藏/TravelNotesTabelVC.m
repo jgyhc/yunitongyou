@@ -27,6 +27,7 @@ static NSString * const identifier = @"CELL";
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
     [self creatModelsWithCount:10];
+    [self setupRefresh];
 }
 
 - (void)setupRefresh
@@ -35,6 +36,11 @@ static NSString * const identifier = @"CELL";
     header.stateLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
     self.tableView.mj_header = header;
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView.mj_footer endRefreshing];
+        });
+    }];
 }
 
 - (void)loadNewData {

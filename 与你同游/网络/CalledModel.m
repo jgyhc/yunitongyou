@@ -113,6 +113,7 @@
         static int flag = 0;
         for (int i = 0; i < self.calledArray.count; i ++) {
             BmobObject *calledObject = array[i];
+            
             [self.network getWithPhoneNumber:[calledObject objectForKey:@"phone_number"] password:nil successBlock:^(BmobObject *object) {
                 [calledarray replaceObjectAtIndex:i withObject:object];
                 flag ++;

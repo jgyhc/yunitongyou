@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface User : NSObject
+@interface User : BmobObject
 @property (nonatomic, strong) NSString *phoneNumber;//电话号码
 @property (nonatomic, strong) NSString *password;//密码
 @property (nonatomic, assign) NSInteger *age;//年龄

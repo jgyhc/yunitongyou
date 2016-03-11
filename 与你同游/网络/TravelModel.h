@@ -8,13 +8,79 @@
 
 #import <Foundation/Foundation.h>
 #import <BmobSDK/Bmob.h>
+#import <BmobSDK/BmobProFile.h>
+#import "NetWorkingViewController.h"
 @interface TravelModel : NSObject
+
+@property (nonatomic, strong) NetWorkingViewController *netWork;
+
+@property (nonatomic, strong) NSMutableArray *travelListArray;
+@property (nonatomic, copy) NSString *addTravelResult;
+@property (nonatomic, copy) NSString *travelContents;
+@property (nonatomic, copy) NSString *travelTime;
+@property (nonatomic, copy) NSString *travelSight_spot;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSMutableArray *travelUser;
+
+
+
 @property (nonatomic, strong, readonly) NSString *createTCommentResult;
 @property (nonatomic, strong) NSArray *travelCommentArray;
 @property (nonatomic, strong) NSMutableArray *speakerArray;
 @property (nonatomic, strong) NSMutableArray *recipientArray;
 @property (nonatomic, strong) BmobObject *speaker;
 @property (nonatomic, strong) BmobObject *recipient;
+
+
+
+/**
+ *  添加一个游记
+ *
+ *  @param ObjectId  id
+ *  @param sightSpot 景点
+ *  @param images    图片
+ *  @param content   内容
+ */
+
+- (void)addTravelWithObejectId:(NSString *)ObjectId sightSpot:(NSArray *)sightSpot imagesArray:(NSArray *)imagesArray content:(NSString *)content;
+
+/**
+ *  查询一个用户的游记列表
+ *
+ *  @param phoneNumber 电话号码
+ *  @param password    密码
+ */
+- (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password;
+- (void)queryTravelWithObejectId:(NSString *)ObjectId;
+/**
+ *  查询一条游记
+ *
+ *  @param phoneNumber 用户名
+ *  @param password    密码
+ *  @param travel_date 游记发布时间
+ */
+- (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password travel_date:(NSString *)travel_date;
+
+/**
+ *  删除一条游记
+ *
+ *  @param phoneNumber 电话
+ *  @param password    密码
+ *  @param travel_date 游记发布时间
+ */
+- (void)deleteTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password travel_date:(NSString *)travel_date;
+
+/**
+ *  获取游记列表
+ *
+ *  @param success
+ *  @param fail
+ */
+- (void)queryTheTravelListSkip:(NSInteger)skip;
+
+
+
+
 /**
  *  创一条游记评论
  *

@@ -9,7 +9,7 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 #import <BmobSDK/Bmob.h>
-#import <YYModel.h>
+#import "YYModel.h"
 #import "UIView+SDAutoLayout.h"
 #define THEMECOLOR [UIColor colorWithRed:0.211 green:0.921 blue:0.722 alpha:1.000]
 #define PHONE_NUMBER [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]
@@ -19,7 +19,7 @@
 #define WIDTH 375.0
 #define HEIGHT 667.0
 
-
+#define UserID @"44d6e1886b"
 #import "AdaptScreenHelp.h"
 
 // Include any system framework and library headers here that should be included in all compilation units.

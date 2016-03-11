@@ -11,7 +11,7 @@
 #import "SearchPopWindow.h"
 #import "CalledModel.h"
 #import "LoadingView.h"
-
+#import "Called.h"
 #define BUTTON_TAG 200
 #define TEXTFIELD_TAG  300
 
@@ -24,7 +24,7 @@
 @property (nonatomic, strong ) UILabel         * label;
 @property (nonatomic, strong ) SearchPopWindow * timePopWindow;//弹出日期选择
 @property (nonatomic, strong ) CalledModel     *addActivities;
-@property (nonatomic, strong) LoadingView *load;
+@property (nonatomic, strong ) LoadingView *load;
 
 @end
 
@@ -132,6 +132,7 @@
         UIButton * button = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(15 + i * 90, 360, 70, 40), NO)];
         [button setTitle:array[i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithWhite:0.147 alpha:1.000] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         button.titleLabel.font = [UIFont systemFontOfSize:16];
         button.backgroundColor = [UIColor whiteColor];
         button.layer.cornerRadius = 10;
@@ -148,8 +149,7 @@
     
     self.sharedView.textView.delegate = self;
     
-    self.sharedView.importPhotoButton.frame = flexibleFrame(CGRectMake(20, 645, 60, 60), NO);
-    [self.sharedView.importPhotoButton addTarget:self action:@selector(handleImport) forControlEvents:UIControlEventTouchUpInside];
+  
     [self.backView addSubview:self.sharedView.importPhotoButton];
     [self.backView addSubview:self.sharedView.textView];
     
@@ -172,7 +172,6 @@
 }
 
 
-#pragma mark --相片导入方法
 
 - (void)handleImport{
     [self.view addSubview:self.sharedView.maskButton];
@@ -204,39 +203,6 @@
 }
 
 
-//照相机
-- (void)handleTakePhoto{
-    
-    //先设定sourceType为照相机，判断照相机是否可用（ipod无相机,不可用则将sourceType设定为相片库
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        //UIImagePickerControllerSourceTypePhotoLibrary为图片库，UIImagePickerControllerSourceTypeCamera为照相机， UIImagePickerControllerSourceTypeSavedPhotosAlbum为保存的相片
-        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
-    UIImagePickerController * picker = [[UIImagePickerController alloc]init];
-    //    picker.delegate = self;
-    picker.allowsEditing = YES;//设置可编辑
-    picker.sourceType = sourceType;
-    [self presentViewController:picker animated:YES completion:nil];
-    
-}
-
-
-#pragma mark --UIImagePickerControllerDelegate
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    self.sharedView.photoImageView.frame = flexibleFrame(CGRectMake(15, 599, 60, 60), NO);
-    self.sharedView.photoImageView.image = info[UIImagePickerControllerOriginalImage];
-    [self.view addSubview:self.sharedView.photoImageView];
-    [self.sharedView handlePress];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    [self.sharedView handlePress];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-
 
 #pragma mark --键盘通知
 - (void)keyboardWillShow:(NSNotification *)notif{
@@ -246,7 +212,7 @@
     
 }
 
-#warning  --网络请求
+#pragma mark  --网络请求
 - (void)handleLaunch{
 
     UITextField *originTextField = (UITextField *)[self.backView viewWithTag:TEXTFIELD_TAG];
@@ -255,7 +221,6 @@
     UITextField *arrivalTimeTextField = (UITextField *)[self.backView viewWithTag:TEXTFIELD_TAG + 3];
     UITextField *numberTextField = (UITextField *)[self.backView viewWithTag:TEXTFIELD_TAG + 4];
     
-    NSData *imageData = UIImagePNGRepresentation(self.sharedView.photoImageView.image);
     NSNumber *number = [NSNumber numberWithInteger:[numberTextField.text intValue]];
     
     if ([originTextField.text  isEqual: @""] || [destinationTextField.text  isEqual: @""] || [departureTimeTextField.text  isEqual: @""] || [arrivalTimeTextField.text  isEqual: @""] || [number  isEqual: @""]) {
@@ -264,8 +229,13 @@
         return;
     }
     [self.load show];
-    [self.addActivities AddCalledWithPhoneNumber:PHONE_NUMBER password:PASSWORD title:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text image:imageData];
-    
+//    [self.addActivities AddCalledWithPhoneNumber:PHONE_NUMBER password:PASSWORD title:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text image:imageData];
+//    
+    [Called AddCalledWithUserID:UserID title:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text Success:^(NSString *calledID) {
+        [self.load hide];
+    } failure:^(NSError *error) {
+        
+    }];
     //提交数据
 }
 

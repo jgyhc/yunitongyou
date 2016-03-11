@@ -71,7 +71,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     NSMutableArray *imageArray = [NSMutableArray array];
     ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
     if (self.selectedArrayUrl.count == 0) {
-        [self.travel addTravelWithObejectId:OBJECTID sightSpot:@[self.positionLabel.text] imagesArray:nil content:self.contentView.text];
+//        [self.travel addTravelWithObejectId:OBJECTID sightSpot:@[self.positionLabel.text] imagesArray:nil content:self.contentView.text];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         return;
     }
@@ -81,7 +81,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
             [imageArray addObject:image];
             if (i == self.selectedArrayUrl.count - 1) {
                 NSLog(@"%@", OBJECTID);
-                [self.travel addTravelWithObejectId:OBJECTID sightSpot:@[self.positionLabel.text] imagesArray:imageArray content:self.contentView.text];
+//                [self.travel addTravelWithObejectId:OBJECTID sightSpot:@[self.positionLabel.text] imagesArray:imageArray content:self.contentView.text];
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             }
         } failureBlock:^(NSError *error) {
@@ -101,11 +101,11 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 #pragma mark -- KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"addTravelResult"]) {
-        if ([self.travel.addTravelResult isEqualToString:@"YES"]) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"发送成功！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-        }
+//        if ([self.travel.addTravelResult isEqualToString:@"YES"]) {
+//            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+//            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"发送成功！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//            [alertView show];
+//        }
         
     }
 }
@@ -266,7 +266,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
         [_positionButton addSubview:positionView];
         
         UILabel * positionLabel = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(50, 15,300, 20), NO)];
-        positionLabel.text = @"长江师范学院";
+        positionLabel.text = @"请选择地点";
         self.positionLabel = positionLabel;
         positionLabel.font = [UIFont systemFontOfSize:14];
         [_positionButton addSubview:positionLabel];
@@ -284,6 +284,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
             textView.textColor = [UIColor grayColor];
             textView.font = [UIFont systemFontOfSize:14];
             textView.delegate = self;
+            textView.backgroundColor = [UIColor redColor];
             textView;
         });
     }

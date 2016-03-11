@@ -31,11 +31,11 @@
             fail(error);
         }else{
             
-            BmobObject *object = array[0];
-            if (![[object objectForKey:@"signFlag"] isEqualToString:@"in"]) {
-                NSLog(@"请登录");
-                return ;
-            }
+//            BmobObject *object = array[0];
+//            if (![[object objectForKey:@"signFlag"] isEqualToString:@"in"]) {
+//                NSLog(@"请登录");
+//                return ;
+//            }
             
             [self uploadImageFile:image successBlock:^(NSString *url) {
                 BmobObject *object = array[0];

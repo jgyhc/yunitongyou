@@ -10,5 +10,13 @@
 
 @implementation User
 
+- (id)initWithClassName:(NSString *)className {
+   self = [super initWithClassName:className];
+    if (self) {
+        self.className = @"User";
+    }
+    return self;
+}
+
 
 @end
