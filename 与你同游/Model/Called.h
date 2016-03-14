@@ -35,8 +35,8 @@
  *  @param content        内容
  *  @param image          图片
  */
++ (void)AddCalledWithTitle:(NSString *)title origin:(NSString *)origin destination:(NSString *)destination departureTime:(NSString *)departureTime arrivalTime:(NSString *)arrivalTime NumberOfPeople:(NSNumber *)NumberOfPeople content:(NSString *)content Success:(void (^)(NSString *calledID))success failure:(void (^)(NSError *error))failure;
 
-+ (void)AddCalledWithUserID:(NSString *)userID title:(NSString *)title origin:(NSString *)origin destination:(NSString *)destination departureTime:(NSString *)departureTime arrivalTime:(NSString *)arrivalTime NumberOfPeople:(NSNumber *)NumberOfPeople content:(NSString *)content Success:(void (^)(NSString *calledID))success failure:(void (^)(NSError *error))failure;
-
-
+//查询活动列表（包括user字段下包含的作者信息）（未测试）
++ (void)getcalledListSuccess:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error1))failure;
 @end

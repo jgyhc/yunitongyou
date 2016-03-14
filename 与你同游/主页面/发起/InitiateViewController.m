@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import "CalledModel.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
+#import "Called.h"
 @interface InitiateViewcontroller ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -31,6 +32,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    [Called getcalledListSuccess:^(NSArray *calleds) {
+        for (BmobObject *obj in calleds) {
+            BmobObject *user = [obj objectForKey:@"user"];
+            NSLog(@"username : %@", [user objectForKey:@"username"]);
+            NSLog(@"%@", [obj objectForKey:@"content"]);
+        }
+    } failure:^(NSError *error1) {
+        
+    }];
+    
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
     [self initNavTitle:@"发起"];
@@ -52,6 +65,7 @@
     [self initPersonButton];
     
 }
+
 
 
 - (void)loadNewData {

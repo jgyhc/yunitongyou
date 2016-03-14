@@ -231,7 +231,7 @@
     [self.load show];
 //    [self.addActivities AddCalledWithPhoneNumber:PHONE_NUMBER password:PASSWORD title:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text image:imageData];
 //    
-    [Called AddCalledWithUserID:UserID title:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text Success:^(NSString *calledID) {
+    [Called AddCalledWithTitle:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text Success:^(NSString *calledID) {
         [self.load hide];
     } failure:^(NSError *error) {
         

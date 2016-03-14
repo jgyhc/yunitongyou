@@ -17,7 +17,7 @@
     return self;
 }
 
-+ (void)AddCalledWithUserID:(NSString *)userID title:(NSString *)title origin:(NSString *)origin destination:(NSString *)destination departureTime:(NSString *)departureTime arrivalTime:(NSString *)arrivalTime NumberOfPeople:(NSNumber *)NumberOfPeople content:(NSString *)content Success:(void (^)(NSString *calledID))success failure:(void (^)(NSError *error))failure {
++ (void)AddCalledWithTitle:(NSString *)title origin:(NSString *)origin destination:(NSString *)destination departureTime:(NSString *)departureTime arrivalTime:(NSString *)arrivalTime NumberOfPeople:(NSNumber *)NumberOfPeople content:(NSString *)content Success:(void (^)(NSString *calledID))success failure:(void (^)(NSError *error))failure {
     //创建一个游记信息
     BmobObject  *called = [BmobObject objectWithClassName:@"Called"];
     [called setObject:title forKey:@"title"];
@@ -28,32 +28,29 @@
     [called setObject:arrivalTime forKey:@"arrival_time"];
     [called setObject:NumberOfPeople forKey:@"number_Of_people"];
     [called setObject:content forKey:@"content"];
+    
+    //把发表这条活动的作者 放在called表的user字段下（为了满足通过查找活动找到该条活动的作者）(这里的关系是Pointer)
+    BmobObject *user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:UserID];
+    [called setObject:user forKey:@"user"];
+    
+    //新建relation对象  (把这条活动放进User表下的calleds字段下)（方便通过这个人找到他所有的活动）（这里的关系是relation）
+    BmobRelation *relation = [BmobRelation relation];
+    [relation addObject:called];
+    //添加关联关系到calleds列中
+    [user addRelation:relation forKey:@"calleds"];
+    [user updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+        if (isSuccessful) {
+            NSLog(@"successful");
+            success(user.objectId);
+        }else{
+            NSLog(@"error %@",[error description]);
+        }
+    }];
+
     //异步保存
     [called saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
         if (isSuccessful) {
-            //打印objectId
-            //                    self.objectId = called.objectId;
-            NSLog(@"objectid :%@",called.objectId);
-            //将游记信息放在该用户表中
-            //获取要添加关联关系的User
-            BmobObject *user1 = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:userID];
-            
-            //新建relation对象
-            BmobRelation *relation = [[BmobRelation alloc] init];
-            [relation addObject:[BmobObject objectWithoutDatatWithClassName:@"Called" objectId:called.objectId]];
-            
-            //添加关联关系到calleds列中
-            [user1 addRelation:relation forKey:@"calleds"];
-            
-            [user1 updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                if (isSuccessful) {
-                    NSLog(@"successful");
-                    success(called.objectId);
-                }else{
-                    NSLog(@"error %@",[error description]);
-                }
-            }];
-            
+
         } else if (error){
             //发生错误后的动作
             NSLog(@"%@",error);
@@ -63,6 +60,55 @@
     }];
 
 }
+//查找一个用户表下所有的活动（未测试）
++ (void)getCalledsSuccess:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error))failure {
+    //关联对象表
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"Called"];
+    //需要查询的列
+    BmobObject *user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:UserID];
+    [bquery whereObjectKey:@"calleds" relatedTo:user];
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSLog(@"%@",error);
+        } else {
+            success(array);
+//            for (BmobObject *user in array) {
+//                NSLog(@"%@",[user objectForKey:@"username"]);
+//            }
+        }
+    }];
+}
+
+//通过一条活动找到这条活动对应的作者（未测试）
++ (void)getUserCalledID:(NSString *)calledID Success:(void (^)(BmobObject *user))success failure:(void (^)(NSError *error1))failure {
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"Called"];
+    [bquery includeKey:@"user"];//声明查询Called的时候  把表里面user字段的数据查出来
+    [bquery getObjectInBackgroundWithId:calledID block:^(BmobObject *object, NSError *error) {
+        if (error) {
+            failure(error);
+            NSLog(@"%@",error);
+        }else {
+            BmobObject *called = object;
+            BmobObject *user = [called objectForKey:@"user"];
+            success(user);
+        }
+
+    }];
+
+}
+//查询活动列表（包括user字段下包含的作者信息）（已测试）
++ (void)getcalledListSuccess:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error1))failure {
+    BmobQuery  *bquery = [BmobQuery queryWithClassName:@"Called"];
+    [bquery includeKey:@"user"];////声明查询Called的时候  把表里面user字段的数据查出来
+    //查找Called表的数据
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        success(array);
+    }];
+}
+
+
+
+
 
 
 #pragma mark -- 获取当前时间
