@@ -34,14 +34,14 @@
 
 
 /**
- *  添加一个游记
+ *  添加游记
  *
- *  @param ObjectId  id
- *  @param sightSpot 景点
- *  @param images    图片
- *  @param content   内容
+ *  @param ObjectId    用户唯一标识
+ *  @param content     游记内容
+ *  @param imagesArray 游记图片
+ *  @param location    定位
  */
-
+- (void)addTravelNoteWithObejectId:(NSString *)ObjectId content:(NSString *)content imagesArray:(NSArray *)imagesArray location:(NSString *)location;
 - (void)addTravelWithObejectId:(NSString *)ObjectId sightSpot:(NSArray *)sightSpot imagesArray:(NSArray *)imagesArray content:(NSString *)content;
 
 /**

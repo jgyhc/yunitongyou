@@ -15,7 +15,7 @@
 #define  BUTTON_TAG 200
 static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCellIndentfier";
 
-@interface AddTravelViewController ()<UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ChooseImageListViewControllerDelegate, ChooseImageListCollectionViewCellDelegate>
+@interface AddTravelViewController ()<UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate,UIImagePickerControllerDelegate,ChooseImageListViewControllerDelegate, ChooseImageListCollectionViewCellDelegate>
 @property (nonatomic, strong) UserModel *travel;
 @property (nonatomic, strong) LoadingView *load;
 @property (nonatomic, strong) UITextView *contentView;
@@ -39,7 +39,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.collectionViewY = 50;
+    self.collectionViewY = 125;
     [self initUserDataSource];
     [self initializedApperance];
     [self.travel addObserver:self forKeyPath:@"addTravelResult" options:NSKeyValueObservingOptionNew context:nil];
@@ -62,8 +62,8 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     [self initRightButtonEvent:@selector(handleComplete) title:@"完成"];
     [self.view addSubview:self.contentView];
     [self.contentView addSubview:self.label];
-    [self.contentView addSubview:self.collectionView];
-    [self.contentView addSubview:self.positionButton];
+    [self.view addSubview:self.collectionView];
+    [self.view addSubview:self.positionButton];
   
 }
 #pragma mark -- 完成按钮事件
@@ -140,8 +140,8 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
         cell.photoImageView.image = [UIImage imageWithData:self.dataSource[indexPath.row]];
         [cell.selectedButton setBackgroundImage:IMAGE_PATH(@"删除照片.png") forState:UIControlStateNormal];
     }
-    collectionView.frame = flexibleFrame(CGRectMake(0, self.collectionViewY, 355, self.collectionViewHight), NO);
-    self.positionButton.frame = flexibleFrame(CGRectMake(-1, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 378, 50), NO);
+    collectionView.frame = flexibleFrame(CGRectMake(10, self.collectionViewY, 355, self.collectionViewHight), NO);
+    self.positionButton.frame = flexibleFrame(CGRectMake(10, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 356, 50), NO);
     return cell;
 }
 #pragma mark -- 弹出框按钮处理事件
@@ -157,7 +157,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
         [self.popView removeFromSuperview];
     }
     else if (sender.tag == BUTTON_TAG + 1){
-        
+         [self handleTakePhoto];
 
     }
     else{
@@ -169,6 +169,88 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     
 }
 
+//照相机
+- (void)handleTakePhoto{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        UIImagePickerController * picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        [self presentViewController:picker animated:YES completion:nil];
+        
+        
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"不可使用摄像功能"
+                              message:@""
+                              delegate:nil
+                              cancelButtonTitle:@"OK!"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+#pragma mark --UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage * image;
+
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        //保存到相册
+        UIImageWriteToSavedPhotosAlbum(info[UIImagePickerControllerEditedImage], nil, nil, nil);
+        //获取编辑后的图片
+        image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    }
+    
+    if ( image )
+    {
+        //压缩图片
+        //横屏
+        CGFloat width=0.f;
+        CGFloat height=0.f;
+        if (image.size.width>200.0f)
+        {
+            width=200.0f;
+        }
+        else width=image.size.width;
+        
+        if (image.size.height>300.0f)
+        {
+            height=300.0f;
+        }
+        else height=image.size.height;
+        
+        image = [self imageWithImage:image scaledToSize:CGSizeMake(width, height)];
+        [self.dataSource addObject:image];
+        [self initUserDataSource];
+        [self.collectionView reloadData];
+        [UIView animateWithDuration:0.5 animations:^{
+            self.popView.frame = flexibleFrame(CGRectMake(10, 667, 355, 140), NO);
+        }];
+        [self.popView removeFromSuperview];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.popView.frame = flexibleFrame(CGRectMake(10, 667, 355, 140), NO);
+    }];
+    [self.popView removeFromSuperview];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark --压缩图片
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.dataSource.count < 9) {
@@ -196,11 +278,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 }
 #pragma mark -- 选择地点
 - (void)handlePosition{
-    //    PositonViewController * positionVC = [[PositonViewController alloc]init];
-    //    [self.navigationController pushViewController:positionVC animated:YES];
-    UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"请选择景点" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消",nil];
-    [alertview setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [alertview show];
+
 }
 
 #pragma mark --文本自适应
@@ -222,17 +300,32 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 - (void)textViewDidChange:(UITextView *)textView {
     float height = [self heightForString:textView.text fontSize:14 andWidth:355];
     if (height > 50) {
-        self.collectionView.frame = flexibleFrame(CGRectMake(0, height + 25, 355, self.collectionViewHight), NO);
-        self.positionButton.frame = flexibleFrame(CGRectMake(-1, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 378, 50), NO);
-        self.collectionViewY = height + 25;
+         self.collectionViewY = height + 110;
+           [textView setFrame:flexibleFrame(CGRectMake(10,65, 355,height + 20), NO)];
+        self.collectionView.frame = flexibleFrame(CGRectMake(10,  self.collectionViewY, 355, self.collectionViewHight), NO);
+        self.positionButton.frame = flexibleFrame(CGRectMake(10, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 356, 50), NO);
+        textView.scrollEnabled = YES;
+       
     }else {
-        self.collectionView.frame = flexibleFrame(CGRectMake(0, 50, 355, self.collectionViewHight), NO);
-        self.positionButton.frame = flexibleFrame(CGRectMake(-1, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 378, 50), NO);
-        self.collectionViewY = 50;
+         self.collectionViewY = 125;
+          [textView setFrame:flexibleFrame(CGRectMake(10,65, 355,50), NO)];
+        self.collectionView.frame = flexibleFrame(CGRectMake(10, self.collectionViewY, 355, self.collectionViewHight), NO);
+        self.positionButton.frame = flexibleFrame(CGRectMake(10, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 356, 50), NO);
+        textView.scrollEnabled = NO;
+       
     }
     if (textView.text.length >= 140) {
         textView.text = [textView.text substringToIndex:140];
     }
+}
+//return键回收键盘
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
@@ -258,18 +351,21 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 }
 - (UIButton *)positionButton{
     if (!_positionButton) {
-        _positionButton = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(-1, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 378, 50), NO)];
+        _positionButton = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(10, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 356, 50), NO)];
         [_positionButton addTarget:self action:@selector(handlePosition) forControlEvents:UIControlEventTouchUpInside];
         _positionButton.selected = NO;
-        UIImageView * positionView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(20, 15, 20, 20), NO)];
-        positionView.image = IMAGE_PATH(@"定位选中.png");
+        UIImageView * positionView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(5, 15, 20, 20), NO)];
+        positionView.image = IMAGE_PATH(@"未定位.png");
         [_positionButton addSubview:positionView];
         
-        UILabel * positionLabel = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(50, 15,300, 20), NO)];
-        positionLabel.text = @"请选择地点";
+        UILabel * positionLabel = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(30, 15,300, 20), NO)];
+        positionLabel.text = @"定位";
         self.positionLabel = positionLabel;
         positionLabel.font = [UIFont systemFontOfSize:14];
+        positionLabel.textColor = [UIColor colorWithWhite:0.828 alpha:1.000];
         [_positionButton addSubview:positionLabel];
+        
+        _positionButton.backgroundColor = [UIColor whiteColor];
         
     }
     return _positionButton;
@@ -279,12 +375,12 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     if (!_contentView) {
         _contentView = ({
             UITextView *textView = [[UITextView alloc] init];
-            textView.frame = flexibleFrame(CGRectMake(10,65, 355, 594), NO);
+            textView.frame = flexibleFrame(CGRectMake(10,65, 355,50), NO);
             textView.showsVerticalScrollIndicator = NO;
             textView.textColor = [UIColor grayColor];
             textView.font = [UIFont systemFontOfSize:14];
             textView.delegate = self;
-            textView.backgroundColor = [UIColor redColor];
+            textView.backgroundColor = [UIColor clearColor];
             textView;
         });
     }
@@ -297,7 +393,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
             UILabel *label = [[UILabel alloc] init];
             label.text = @"哟，发一条游记吧！";
             label.textColor = [UIColor colorWithWhite:0.828 alpha:1.000];
-            label.frame = flexibleFrame(CGRectMake(10, 10, 260, 20), NO);
+            label.frame = flexibleFrame(CGRectMake(5, 10, 260, 20), NO);
             label.font = [UIFont systemFontOfSize:14];
             label;
         });
@@ -317,7 +413,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
             layout.minimumInteritemSpacing = 10;
             //cell大小
             layout.itemSize = CGSizeMake(110, 110);
-            UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:flexibleFrame(CGRectMake(0, self.collectionViewY, 355, self.collectionViewHight), NO) collectionViewLayout:layout];
+            UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:flexibleFrame(CGRectMake(10, self.collectionViewY, 355, self.collectionViewHight), NO) collectionViewLayout:layout];
             [collectionView registerClass:[ChooseImageListCollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIndentifier];
             collectionView.backgroundColor = [UIColor whiteColor];
             collectionView.delegate = self;
