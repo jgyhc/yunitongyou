@@ -1,4 +1,5 @@
 PODS:
+  - AMapLocation (1.2.0)
   - BmobSDK (1.6.6)
   - MJRefresh (3.1.0)
   - SDWebImage (3.7.5):
@@ -7,12 +8,14 @@ PODS:
   - YYModel (1.0.1)
 
 DEPENDENCIES:
+  - AMapLocation
   - BmobSDK
   - MJRefresh
   - SDWebImage
   - YYModel
 
 SPEC CHECKSUMS:
+  AMapLocation: 6d72a8f1c5f2a29a736fcaca3a85173ba3dc5f56
   BmobSDK: c896d4ff3986f2b4fc8406fb2b801230f7419878
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461

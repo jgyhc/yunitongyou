@@ -58,8 +58,8 @@
             NSLog(@"Unknow error");
         }
     }];
-
 }
+
 //查找一个用户表下所有的活动（未测试）
 + (void)getCalledsSuccess:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error))failure {
     //关联对象表
@@ -106,8 +106,26 @@
     }];
 }
 
+//查询一条发起的详情
++ (void)getCommentsWithCalledsID:(NSString *)calledID Success:(void (^)(BmobObject *called))success failure:(void (^)(NSError *error1))failure {
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"Called"];
+    [bquery includeKey:@"user"];//声明查询Called的时候  把表里面user字段的数据查出来
+    [bquery includeKey:@"comments"];//声明查询Called的时候  把表里面comments字段的数据查出来
+    [bquery getObjectInBackgroundWithId:calledID block:^(BmobObject *object, NSError *error) {
+        if (error) {
+            failure(error);
+            NSLog(@"%@",error);
+        }else {
+//            BmobObject *called = object;
+//            BmobObject *user = [called objectForKey:@"user"];
+//            BmobObject *comment = [called objectForKey:@"comments"];
+            success(object);
+        }
+        
+    }];
 
 
+}
 
 
 

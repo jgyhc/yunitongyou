@@ -11,14 +11,16 @@
 #import <BmobSDK/Bmob.h>
 #import <SMS_SDK/SMSSDK.h>
 #import "Register.h"
+#import "Comments.h"
 //#import "FirstView.h"
 #import "NetWorking.h"
 #define APPKEY @"affe299f48c2"
 #define APPSECRET @"1d94d057d830f3a18a404527ac49e9ee"
 //连接Bmob
 #define APPLICAYION_ID @"ed38f5e8bc84d1b80a90beab61dbc07b"
+#import "AMapLocationKit.h"
 @interface AppDelegate ()
-
+@property (nonatomic, strong) AMapLocationManager *locationManager;
 @end
 
 @implementation AppDelegate
@@ -34,9 +36,36 @@
     [self.window makeKeyWindow];
     
     ControllerManager *controllerManager = [ControllerManager shareControllerManager];
-
+    self.window.rootViewController = controllerManager.rootViewController;
     
-        self.window.rootViewController = controllerManager.rootViewController;
+    [Comments addComentWithContent:@"测试" userID:@"dc23c0cdf4" type:0 objID:@"791b3496d7" success:^(NSString *commentID) {
+        
+    } failure:^(NSError *error1) {
+        
+    }];
+//
+//    [AMapLocationServices sharedServices].apiKey = @"d5adbafffb8ac86b9eacf7f6437f9ca0";
+//    self.locationManager = [[AMapLocationManager alloc] init];
+//    // 带逆地理（返回坐标和地址信息）
+//    [self.locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+//        
+//        if (error)
+//        {
+//            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+//            
+////            if (error.code == AMapLocatingErrorLocateFailed)
+////            {
+////                return;
+////            }
+//        }
+//        
+//        NSLog(@"location:%@", location);
+//        
+//        if (regeocode)
+//        {
+//            NSLog(@"reGeocode:%@", regeocode);
+//        }
+//    }];
        return YES;
 }
 

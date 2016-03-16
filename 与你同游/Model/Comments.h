@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 #import "Called.h"
-@class CalledComments;
-@interface CalledComments : NSObject
+@class Comments;
+@interface Comments : NSObject
 @property (nonatomic, strong) User *master;//评论者
 @property (nonatomic, strong) Called *called;//被评论发起
 @property (nonatomic, strong) NSString *contents;//内容
 @property (nonatomic, strong) NSString *commentsTime;//评论时间
-@property (nonatomic, strong) CalledComments *reply;//回复
+@property (nonatomic, strong) Comments *reply;//回复
+
++ (void)addComentWithContent:(NSString *)content userID:(NSString *)userID type:(long)type objID:(NSString *)objID success:(void (^)(NSString *commentID))success failure:(void (^)(NSError *error1))failure;
 @end

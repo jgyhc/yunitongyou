@@ -168,7 +168,7 @@
 		7288E10B1C7744FC00F554D0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10A1C7744FC00F554D0 /* User.m */; };
 		7288E10E1C77455600F554D0 /* Called.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10D1C77455600F554D0 /* Called.m */; };
 		7288E1111C77496900F554D0 /* Travel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1101C77496900F554D0 /* Travel.m */; };
-		7288E1141C774B7800F554D0 /* CalledComments.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1131C774B7800F554D0 /* CalledComments.m */; };
+		7288E1141C774B7800F554D0 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1131C774B7800F554D0 /* Comments.m */; };
 		7288E1171C774CAA00F554D0 /* TravelComments.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1161C774CAA00F554D0 /* TravelComments.m */; };
 		72B517361C7495390089CE97 /* RetrievePassword.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B517351C7495390089CE97 /* RetrievePassword.m */; };
 		72C1C6561C734CA1002317FE /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C1C6551C734CA1002317FE /* NetWorking.m */; };
@@ -439,8 +439,8 @@
 		7288E10D1C77455600F554D0 /* Called.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Called.m; sourceTree = "<group>"; };
 		7288E10F1C77496900F554D0 /* Travel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Travel.h; sourceTree = "<group>"; };
 		7288E1101C77496900F554D0 /* Travel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Travel.m; sourceTree = "<group>"; };
-		7288E1121C774B7800F554D0 /* CalledComments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalledComments.h; sourceTree = "<group>"; };
-		7288E1131C774B7800F554D0 /* CalledComments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalledComments.m; sourceTree = "<group>"; };
+		7288E1121C774B7800F554D0 /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
+		7288E1131C774B7800F554D0 /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
 		7288E1151C774CAA00F554D0 /* TravelComments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelComments.h; sourceTree = "<group>"; };
 		7288E1161C774CAA00F554D0 /* TravelComments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelComments.m; sourceTree = "<group>"; };
 		72B517341C7495390089CE97 /* RetrievePassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetrievePassword.h; sourceTree = "<group>"; };
@@ -1152,8 +1152,8 @@
 				7288E10D1C77455600F554D0 /* Called.m */,
 				7288E10F1C77496900F554D0 /* Travel.h */,
 				7288E1101C77496900F554D0 /* Travel.m */,
-				7288E1121C774B7800F554D0 /* CalledComments.h */,
-				7288E1131C774B7800F554D0 /* CalledComments.m */,
+				7288E1121C774B7800F554D0 /* Comments.h */,
+				7288E1131C774B7800F554D0 /* Comments.m */,
 				7288E1151C774CAA00F554D0 /* TravelComments.h */,
 				7288E1161C774CAA00F554D0 /* TravelComments.m */,
 			);
@@ -1541,7 +1541,7 @@
 				245B59E41BCB8BE80003EBA7 /* main.m in Sources */,
 				0480FB761C9118AB0059D712 /* LaunchViewController.m in Sources */,
 				0480FB621C9118370059D712 /* InitiateDetailViewController.m in Sources */,
-				7288E1141C774B7800F554D0 /* CalledComments.m in Sources */,
+				7288E1141C774B7800F554D0 /* Comments.m in Sources */,
 				7288E1111C77496900F554D0 /* Travel.m in Sources */,
 				7288E10E1C77455600F554D0 /* Called.m in Sources */,
 				24780C6F1BD628550009A40D /* TravelModel.m in Sources */,
@@ -1699,7 +1699,7 @@
 				INFOPLIST_FILE = "与你同游/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mac.yoyou;
+				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
@@ -1722,7 +1722,7 @@
 				INFOPLIST_FILE = "与你同游/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mac.yoyou;
+				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";

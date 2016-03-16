@@ -27,6 +27,13 @@
 
 @implementation LaunchTableViewCell
 
+
+- (void)injected{
+    NSLog(@"I've been injected: %@", self);
+    
+    
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -145,7 +152,7 @@
             UILabel *label = [[UILabel alloc]init];
             label.font = [UIFont systemFontOfSize:flexibleHeight(12)];
             label.textColor = [UIColor colorWithWhite:0.500 alpha:1.000];
-            label.text = @"阿斯顿撒点哦埃及的";
+            label.text = @"jgyhc";
             label;
         });
 	}
