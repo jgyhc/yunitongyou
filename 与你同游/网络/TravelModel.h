@@ -15,12 +15,14 @@
 @property (nonatomic, strong) NetWorkingViewController *netWork;
 
 @property (nonatomic, strong) NSMutableArray *travelListArray;
+@property (nonatomic, strong) NSMutableArray *travelUser;
+
 @property (nonatomic, copy) NSString *addTravelResult;
 @property (nonatomic, copy) NSString *travelContents;
 @property (nonatomic, copy) NSString *travelTime;
 @property (nonatomic, copy) NSString *travelSight_spot;
 @property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) NSMutableArray *travelUser;
+
 
 
 
@@ -42,7 +44,6 @@
  *  @param location    定位
  */
 - (void)addTravelNoteWithObejectId:(NSString *)ObjectId content:(NSString *)content imagesArray:(NSArray *)imagesArray location:(NSString *)location;
-//- (void)addTravelWithObejectId:(NSString *)ObjectId sightSpot:(NSArray *)sightSpot imagesArray:(NSArray *)imagesArray content:(NSString *)content;
 
 /**
  *  查询一个用户的游记列表
@@ -76,8 +77,7 @@
  *  @param success
  *  @param fail
  */
-- (void)queryTheTravelListSkip:(NSInteger)skip;
-
+- (void)queryTheTravelListSuccessBlock:(void(^)(NSMutableArray *objectArray))success failBlock:(void(^)(NSError * error))fail;
 
 
 

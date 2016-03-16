@@ -23,6 +23,7 @@
 		0480FB771C9118AB0059D712 /* LaunchViewScrollImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480FB731C9118AB0059D712 /* LaunchViewScrollImage.m */; };
 		0480FB7C1C9118CB0059D712 /* SearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480FB791C9118CB0059D712 /* SearchResultView.m */; };
 		0480FB7D1C9118CB0059D712 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480FB7B1C9118CB0059D712 /* SearchViewController.m */; };
+		049E7B9B1C980BAB00D01E5B /* WGS84TOGCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = 049E7B9A1C980BAB00D01E5B /* WGS84TOGCJ02.m */; };
 		04D354281C87E84400DFCB1C /* xiangyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354271C87E84400DFCB1C /* xiangyou.png */; };
 		04D3542A1C87EC6000DFCB1C /* 测试头像1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354291C87EC6000DFCB1C /* 测试头像1.png */; };
 		04D354391C87F40900DFCB1C /* ChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354341C87F40900DFCB1C /* ChangePwViewController.m */; };
@@ -222,6 +223,8 @@
 		0480FB791C9118CB0059D712 /* SearchResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultView.m; sourceTree = "<group>"; };
 		0480FB7A1C9118CB0059D712 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		0480FB7B1C9118CB0059D712 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		049E7B991C980BAB00D01E5B /* WGS84TOGCJ02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGS84TOGCJ02.h; sourceTree = "<group>"; };
+		049E7B9A1C980BAB00D01E5B /* WGS84TOGCJ02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGS84TOGCJ02.m; sourceTree = "<group>"; };
 		04D354271C87E84400DFCB1C /* xiangyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiangyou.png; sourceTree = "<group>"; };
 		04D354291C87EC6000DFCB1C /* 测试头像1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "测试头像1.png"; sourceTree = "<group>"; };
 		04D354331C87F40900DFCB1C /* ChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePwViewController.h; sourceTree = "<group>"; };
@@ -734,6 +737,8 @@
 				2462C65F1BECD522001714C8 /* 选择照片 */,
 				24600CBC1BEDDCDC00C3C3B9 /* AddTravelViewController.h */,
 				24600CBD1BEDDCDC00C3C3B9 /* AddTravelViewController.m */,
+				049E7B991C980BAB00D01E5B /* WGS84TOGCJ02.h */,
+				049E7B9A1C980BAB00D01E5B /* WGS84TOGCJ02.m */,
 			);
 			path = "添加游记";
 			sourceTree = "<group>";
@@ -1526,6 +1531,7 @@
 				24204BC11BCF664E0034B4C6 /* MyCommentsViewController.m in Sources */,
 				247D44C01BD24F65006F36D5 /* SharedView.m in Sources */,
 				2497BA1A1BCCC37400251058 /* ControllerManager.m in Sources */,
+				049E7B9B1C980BAB00D01E5B /* WGS84TOGCJ02.m in Sources */,
 				04D354631C88380600DFCB1C /* SDWaitingView.m in Sources */,
 				246FB4571BD472CC001EA853 /* InsetsLabel.m in Sources */,
 				72B517361C7495390089CE97 /* RetrievePassword.m in Sources */,

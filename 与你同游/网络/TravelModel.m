@@ -23,79 +23,82 @@
 
 @implementation TravelModel
 
-#pragma mark --上传一条游记  多张图片的
-- (void)addTravelWithObejectId:(NSString *)ObjectId sightSpot:(NSArray *)sightSpot imagesArray:(NSArray *)imagesArray content:(NSString *)content {
-    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"User"];
-    [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
-        if (error) {
-            NSLog(@"%@", error);
-        }else {
-            [self uploadImagesArray:[self thumbnailArray:imagesArray] successBlock:^(NSArray *urlArray) {
-                [self uploadImagesArray:[self ImageToDic:imagesArray] successBlock:^(NSArray *thumbnailurlArray) {
-                    BmobObject  *travel = [BmobObject objectWithClassName:@"travel"];
-                    [travel setObject:sightSpot forKey:@"sight_spot"];
-                    [travel setObject:content forKey:@"content"];
-                    [travel setObject:object.objectId forKey:@"userObjectid"];
-                    [travel setObject:[NSNumber numberWithInt:0] forKey:@"number_of_thumb_up"];
-                    [travel setObject:[NSNumber numberWithInt:0] forKey:@"comments_number"];
-                    [travel setObject:urlArray forKey:@"images"];
-                    [travel setObject:thumbnailurlArray forKey:@"thumbnailImages"];
-                    [travel saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                        if (isSuccessful) {
-                            //将游记信息放在该用户表中
-                            BmobObject *user1 = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:object.objectId];
-                            BmobRelation *relation = [[BmobRelation alloc] init];
-                            [relation addObject:[BmobObject objectWithoutDatatWithClassName:@"travel" objectId:travel.objectId]];
-                            [user1 addRelation:relation forKey:@"travels"];
-                            [user1 updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                                if (isSuccessful) {
-                                    self.addTravelResult = @"YES";
-                                }else{
-                                    NSLog(@"error %@",[error description]);
-                                }
-                            }];
-                        }
-                    }];
-                } progressBlock:^(NSUInteger index, CGFloat returnProgress) {
-                    NSLog(@"第%ld张，进度：%f", index, returnProgress);
-                } failBlock:^(NSError *error) {
-                    NSLog(@"%@", error);
+#pragma mark --上传一条游记
+
+- (void)addTravelNoteWithObejectId:(NSString *)ObjectId content:(NSString *)content imagesArray:(NSArray *)imagesArray location:(NSString *)location{
+    
+    BmobObject * travel = [BmobObject objectWithClassName:@"Travel"];
+
+    [self uploadImagesArray:[self thumbnailArray:imagesArray] successBlock:^(NSArray *urlArray) {
+  
+            [travel setObject:location forKey:@"position"];
+            [travel setObject:content forKey:@"content"];
+            [travel setObject:urlArray forKey:@"urlArray"];
+            [travel setObject:[NSNumber numberWithInt:0] forKey:@"number_of_thumb_up"];
+            [travel setObject:[NSNumber numberWithInt:0] forKey:@"comments_number"];
+        
+        //pointer关系
+        BmobObject * user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:ObjectId];
+        [travel setObject:user forKey:@"userId"];
+        
+        
+        [travel saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+            if (isSuccessful) {
+              
+                //relation关系
+                BmobRelation * relation = [[BmobRelation alloc]init];
+                [relation addObject:travel];
+                [user addRelation:relation forKey:@"travels"];
+                
+                [user updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                    if (isSuccessful) {
+                         self.addTravelResult = @"YES";
+                    }else{
+                        NSLog(@"error %@",[error description]);
+                    }
                 }];
-            } progressBlock:^(NSUInteger index, CGFloat returnProgress) {
-                NSLog(@"%f", returnProgress);
-            } failBlock:^(NSError *error) {
-                NSLog(@"%@", error);
-            }];
-        }
-    }];
-}
-- (NSMutableArray *)ImageToDic:(NSArray *)imageArray {
-    NSMutableArray *array = [NSMutableArray array];
-    for (int i = 0; i < imageArray.count; i ++) {
-        NSData *data = UIImagePNGRepresentation(imageArray[i]);
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject:data forKey:@"data"];
-        [dic setObject:[NSString stringWithFormat:@"%d.jpg", i ] forKey:@"filename"];
-        [array addObject:dic];
-    }
-    return array;
+
+            } else if (error){
+                NSLog(@"%@",error);
+            } else {
+                NSLog(@"Unknow error");
+            }
+        }];
+        
+        } progressBlock:^(NSUInteger index, CGFloat returnProgress) {
+            NSLog(@"第%ld张，进度：%f", index, returnProgress);
+        } failBlock:^(NSError *error) {
+            NSLog(@"%@", error);
+        }];
 }
 
-#pragma mark --上传一组图片
+#pragma mark --上传图片
 - (void)uploadImagesArray:(NSArray *)imagesArray successBlock:(void(^)(NSArray *urlArray))success progressBlock:(void(^)(NSUInteger index,CGFloat returnProgress))returnProgress failBlock:(void(^)(NSError * error))fail {
     if (imagesArray.count == 0) {
         success(nil);
         return;
     }else {
+        
         [BmobProFile uploadFilesWithDatas:imagesArray resultBlock:^(NSArray *filenameArray, NSArray *urlArray, NSArray *bmobFileArray, NSError *error) {
-            success(urlArray);
+            if (error) {
+                NSLog(@"%@",error);
+            } else {
+                
+                NSMutableArray * TravelUrlArray = [NSMutableArray array];
+                
+                for (BmobFile* bmobFile in bmobFileArray ) {
+                    [TravelUrlArray addObject:bmobFile.url];
+                }
+                success(TravelUrlArray);
+            }
         } progress:^(NSUInteger index, CGFloat progress) {
+             NSLog(@"index %lu progress %f",(unsigned long)index,progress);
             returnProgress(index, progress);
         }];
     }
     
 }
-#pragma mark -- 将一组图片压缩  返回压缩后的data和文件名的数组
+#pragma mark -- 压缩封装图片
 - (NSMutableArray *)thumbnailArray:(NSArray *)thumbnails {
     NSMutableArray *thumailsArray = [NSMutableArray array];
     for (int i = 0; i < thumbnails.count; i ++) {
@@ -117,25 +120,8 @@
     }
     return thumailsArray;
 }
-#pragma mark --上传文件
-- (void)uploadImageFile:(NSData *)data successBlock:(void(^)(NSString *url))success failBlock:(void(^)(NSError * error))fail {
-    if (data == nil) {
-        success(nil);
-        return;
-    }
-    [BmobProFile uploadFileWithFilename:@"image.png" fileData:data block:^(BOOL isSuccessful, NSError *error, NSString *filename, NSString *url,BmobFile *bmobFile) {
-        if (isSuccessful) {
-            success(url);
-        } else {
-            if (error) {
-                NSLog(@"error %@",error);
-            }
-        }
-    } progress:^(CGFloat progress) {
-        //上传进度，此处可编写进度条逻辑
-        NSLog(@"progress %f",progress);
-    }];
-}
+
+
 
 - (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password {
     [self.netWork queryTravelWithPhoneNumber:phoneNumber password:password successBlock:^(NSMutableArray *array) {
@@ -197,25 +183,36 @@
 }
 
 #pragma mark --查询所有游记
-- (void)queryTheTravelListSkip:(NSInteger)skip {
-    [self.netWork queryTheTravelListWithskip:skip SuccessBlock:^(NSMutableArray *objectArray) {
-        
-        self.travelListArray = [objectArray mutableCopy];
-        
-        for (int i = 0; i < objectArray.count; i ++) {
-            
-            BmobObject *travelObject = objectArray[i];
-            [self.userModel getwithObjectId:[travelObject objectForKey:@"userID"] successBlock:^(BmobObject *object) {
-                [self.travelUser addObject:object];
-            } failBlock:^(NSError *error) {
-                
-            }];
+- (void)queryTheTravelListSuccessBlock:(void(^)(NSMutableArray *objectArray))success failBlock:(void(^)(NSError * error))fail {
+    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"Travel"];
+//    bquery.limit = 10;//每页10条
+//    bquery.skip = 3;//跳过查询的前多少条数据来实现分页查询的功能。
+    [bquery orderByDescending:@"createdAt"];
+    //声明该次查询需要将userId关联的对象信息一并查询出来
+    [bquery includeKey:@"userId"];
+    //查找travel表的数据
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSLog(@"游记查询失败:%@",error);
         }
-        
-    } failBlock:^(NSError *error) {
-        NSLog(@"%@", error);
+        else{
+
+            for (BmobObject * obj in array) {
+                
+                [self.travelListArray addObject:obj];
+                BmobObject * user = [obj objectForKey:@"userId"];
+                [self.travelUser addObject:user];
+//                NSLog(@"content11 = %@",[self.travelListArray[0] objectForKey:@"content"]);
+//                NSLog(@"content22 = %@",[obj objectForKey:@"content"]);
+//                NSLog(@"phoneNumber11 = %@",[self.travelUser[0] objectForKey:@"phoneNumber"]);
+//                NSLog(@"phoneNumber22 = %@",[user objectForKey:@"phoneNumber"]);
+            }
+        }
     }];
+    
 }
+
+
 #pragma mark --压缩图片
 -(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
 {

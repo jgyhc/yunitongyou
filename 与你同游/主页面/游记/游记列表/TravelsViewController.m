@@ -46,11 +46,15 @@ static NSString * const identifier = @"CELL";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.travelModel queryTheTravelListSuccessBlock:^(NSMutableArray *objectArray) {
+        
+    } failBlock:^(NSError *error) {
+        
+    }];
+     [self initalizedInterface];
     [self.travelModel addObserver:self forKeyPath:@"travelListArray" options:NSKeyValueObservingOptionNew context:nil];
     [self.travelModel addObserver:self forKeyPath:@"travelUser" options:NSKeyValueObservingOptionNew context:nil];
-    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
     
-      [self initalizedInterface];
 }
 - (void)initalizedInterface{
     
@@ -58,15 +62,11 @@ static NSString * const identifier = @"CELL";
     [self initPersonButton];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initRightButtonEvent:@selector(handleTravelNotes:) Image:[UIImage imageNamed:@"添加游记"]];
-     [self setupRefresh];
-     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
+     [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
+    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
     [self.view addSubview:self.tableView];
-    //    TravelNotesTabelVC * travelVC = [[TravelNotesTabelVC alloc]init];
-    //    CGRect frame = travelVC.tableView.frame;
-    //    frame = flexibleFrame(CGRectMake(0, flexibleHeight(64), WIDTH, HEIGHT - flexibleHeight(64)), NO);
-    //    travelVC.tableView.frame = frame;
-    //    [self addChildViewController:travelVC];
-    //    [self.view addSubview:travelVC.tableView];
+    
+     [self setupRefresh];
 }
 #pragma mark --刷新
 - (void)setupRefresh
@@ -75,7 +75,7 @@ static NSString * const identifier = @"CELL";
     header.stateLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
     self.tableView.mj_header = header;
-    
+  
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView.mj_footer endRefreshing];
@@ -84,15 +84,16 @@ static NSString * const identifier = @"CELL";
 }
 
 - (void)loadNewData {
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header endRefreshing];
+        [self.tableView reloadData];
     });
     
 }
 #pragma mark -- KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"travelListArray"]) {
-        
         self.travelArray = self.travelModel.travelListArray;
     }
     if ([keyPath isEqualToString:@"travelUser"]) {
@@ -104,7 +105,10 @@ static NSString * const identifier = @"CELL";
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+        NSLog(@"self.travelArray = %@",self.travelArray);
+    NSLog(@"self.travelModel.travelListArray = %@",self.travelModel.travelListArray);
     return self.travelArray.count;
+
     
 }
 
@@ -158,6 +162,11 @@ static NSString * const identifier = @"CELL";
 }
 
 - (void)handleTravelNotes:(UIButton *)sender {
+    if (!OBJECTID) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        return;
+    }
     AddTravelViewController * addVC = [[AddTravelViewController alloc]init];
     [self.navigationController pushViewController:addVC animated:YES];
 }
