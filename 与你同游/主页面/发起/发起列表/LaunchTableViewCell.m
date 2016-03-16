@@ -28,11 +28,7 @@
 @implementation LaunchTableViewCell
 
 
-- (void)injected{
-    NSLog(@"I've been injected: %@", self);
-    
-    
-}
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
