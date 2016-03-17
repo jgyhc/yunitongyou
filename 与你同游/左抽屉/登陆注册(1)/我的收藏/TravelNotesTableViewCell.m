@@ -7,7 +7,6 @@
 //
 
 #import "TravelNotesTableViewCell.h"
-#import "UIView+SDAutoLayout.h"
 #import "PhotoView.h"
 #import "UIImageView+WebCache.h"
 

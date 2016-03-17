@@ -38,11 +38,11 @@
     ControllerManager *controllerManager = [ControllerManager shareControllerManager];
     self.window.rootViewController = controllerManager.rootViewController;
     
-    [Comments addComentWithContent:@"测试" userID:@"dc23c0cdf4" type:0 objID:@"791b3496d7" success:^(NSString *commentID) {
-        
-    } failure:^(NSError *error1) {
-        
-    }];
+//    [Comments addComentWithContent:@"测试" userID:@"dc23c0cdf4" type:0 objID:@"791b3496d7" success:^(NSString *commentID) {
+//        
+//    } failure:^(NSError *error1) {
+//        
+//    }];
 //
 //    [AMapLocationServices sharedServices].apiKey = @"d5adbafffb8ac86b9eacf7f6437f9ca0";
 //    self.locationManager = [[AMapLocationManager alloc] init];

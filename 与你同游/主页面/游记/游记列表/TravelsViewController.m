@@ -22,7 +22,7 @@
 #import "UITableView+SDAutoTableViewCellHeight.h"//cell高度自适应
 
 
-static NSString * const identifier = @"CELL";
+
 
 @interface TravelsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -40,24 +40,27 @@ static NSString * const identifier = @"CELL";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    [self initalizedInterface];
     [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
         [self.travelArray addObjectsFromArray:objectArray];
+        NSLog(@"%@", self.travelArray);
         [self.tableView reloadData];
         
     } failBlock:^(NSError *error) {
         
     }];
-    [self initalizedInterface];
 }
-- (void)initalizedInterface{
+- (void)initalizedInterface {
     
     [self initNavTitle:@"游记"];
     [self initPersonButton];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initRightButtonEvent:@selector(handleTravelNotes:) Image:[UIImage imageNamed:@"添加游记"]];
-    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
-    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
     [self.view addSubview:self.tableView];
+    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
+    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
+    
     
     [self setupRefresh];
 }
@@ -96,12 +99,9 @@ static NSString * const identifier = @"CELL";
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[TravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
+    TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
     BmobObject * object = self.travelArray[indexPath.section];
+    
     //注意是section,若是numberOfRows returnself.modelArray.count，则是row
     cell.info = object;
     return cell;
