@@ -215,8 +215,8 @@
 		04D354431C882A0D00DFCB1C /* TravelNotesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelNotesModel.m; sourceTree = "<group>"; };
 		04D354451C882D0B00DFCB1C /* TravelNotesTabelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelNotesTabelVC.h; sourceTree = "<group>"; };
 		04D354461C882D0B00DFCB1C /* TravelNotesTabelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelNotesTabelVC.m; sourceTree = "<group>"; };
-		04D354481C882D4C00DFCB1C /* TravelNotesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelNotesTableViewCell.h; sourceTree = "<group>"; };
-		04D354491C882D4C00DFCB1C /* TravelNotesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelNotesTableViewCell.m; sourceTree = "<group>"; };
+		04D354481C882D4C00DFCB1C /* TravelNotesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TravelNotesTableViewCell.h; path = "../../左抽屉/登陆注册(1)/我的收藏/TravelNotesTableViewCell.h"; sourceTree = "<group>"; };
+		04D354491C882D4C00DFCB1C /* TravelNotesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TravelNotesTableViewCell.m; path = "../../左抽屉/登陆注册(1)/我的收藏/TravelNotesTableViewCell.m"; sourceTree = "<group>"; };
 		04D3544B1C88308900DFCB1C /* portraint0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portraint0.png; sourceTree = "<group>"; };
 		04D3544D1C88309600DFCB1C /* portraint1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portraint1.png; sourceTree = "<group>"; };
 		04D3544F1C8830A900DFCB1C /* portraint2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portraint2.png; sourceTree = "<group>"; };
@@ -617,8 +617,6 @@
 				04D354431C882A0D00DFCB1C /* TravelNotesModel.m */,
 				04D354451C882D0B00DFCB1C /* TravelNotesTabelVC.h */,
 				04D354461C882D0B00DFCB1C /* TravelNotesTabelVC.m */,
-				04D354481C882D4C00DFCB1C /* TravelNotesTableViewCell.h */,
-				04D354491C882D4C00DFCB1C /* TravelNotesTableViewCell.m */,
 				04D354551C88375300DFCB1C /* PhotoView.h */,
 				04D354561C88375300DFCB1C /* PhotoView.m */,
 			);
@@ -1001,6 +999,8 @@
 			children = (
 				044F50311C8ACD44002DF802 /* TravelsViewController.h */,
 				044F50321C8ACD44002DF802 /* TravelsViewController.m */,
+				04D354481C882D4C00DFCB1C /* TravelNotesTableViewCell.h */,
+				04D354491C882D4C00DFCB1C /* TravelNotesTableViewCell.m */,
 				24BDA5791BF213D000C84CAF /* 游记详情 */,
 				2462C5DE1BEC9C72001714C8 /* 添加游记 */,
 				247D44B61BD24F65006F36D5 /* SharedView.h */,

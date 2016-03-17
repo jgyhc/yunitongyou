@@ -5,7 +5,7 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
-  - YYModel (1.0.1)
+  - YYModel (1.0.2)
 
 DEPENDENCIES:
   - AMapLocation
@@ -19,6 +19,6 @@ SPEC CHECKSUMS:
   BmobSDK: c896d4ff3986f2b4fc8406fb2b801230f7419878
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  YYModel: 794f0820a9a9703615bc166aa8e336abaf422c2b
+  YYModel: 7a467eff45ae3641c33efb136c262d33b6f48c1a
 
 COCOAPODS: 0.39.0

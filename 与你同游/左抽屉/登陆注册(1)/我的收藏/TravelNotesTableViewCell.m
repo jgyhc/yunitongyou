@@ -7,14 +7,24 @@
 //
 
 #import "TravelNotesTableViewCell.h"
-#import "TravelNotesModel.h"
-
 #import "UIView+SDAutoLayout.h"
-
 #import "PhotoView.h"
+#import "UIImageView+WebCache.h"
 
 const CGFloat contentLabelFontSize = 15;
 const CGFloat maxContentLabelHeight = 54;
+@interface TravelNotesTableViewCell ()
+
+@property (nonatomic, strong)   UIImageView * dianzanImg;
+@property (nonatomic, strong)   UIImageView * commentImg;
+@property (nonatomic, strong)   UIImageView * shareImg;
+@property (nonatomic, strong)   UILabel     * dianzanLabel;
+@property (nonatomic, strong)   UILabel     * commentLabel;
+@property (nonatomic, strong)   UILabel     * shareLabel;
+@property (nonatomic, strong)   UIView      * vline1;
+@property (nonatomic, strong)   UIView      * vline2;
+
+@end
 
 @implementation TravelNotesTableViewCell
 
@@ -32,8 +42,8 @@ const CGFloat maxContentLabelHeight = 54;
     UIButton * _sharebt;
     
     UIView * _hline1;
-
-  
+    
+    
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -46,8 +56,8 @@ const CGFloat maxContentLabelHeight = 54;
 
 - (void)setup
 {
+    self.backgroundColor = [UIColor orangeColor];
     
-  
     
     _iconView = [UIImageView new];
     
@@ -73,7 +83,7 @@ const CGFloat maxContentLabelHeight = 54;
     
     _dianzanbt = [UIButton new];
     _commentbt = [UIButton new];
-
+    
     _sharebt = [UIButton new];
     
     _hline1 = [UIView new];
@@ -87,7 +97,7 @@ const CGFloat maxContentLabelHeight = 54;
     
     UIView *contentView = self.contentView;
     CGFloat margin = 10;
-  
+    
 #pragma mark --自动布局
     _iconView.sd_layout
     .leftSpaceToView(contentView, margin)
@@ -102,14 +112,14 @@ const CGFloat maxContentLabelHeight = 54;
     .topSpaceToView(contentView,25)
     .heightIs(flexibleHeight(18));
     [_nameLable setSingleLineAutoResizeWithMaxWidth:flexibleWidth(200)];
-
+    
     
     _timeLabel.sd_layout
     .topSpaceToView(contentView,40)
     .rightSpaceToView(contentView,0)
     .widthIs(flexibleWidth(60))
     .heightIs(flexibleHeight(15));
-
+    
     
     _positionImg.sd_layout
     .leftSpaceToView(_iconView,margin)
@@ -122,14 +132,14 @@ const CGFloat maxContentLabelHeight = 54;
     .topEqualToView(_positionImg)
     .rightSpaceToView(_timeLabel,5)
     .heightIs(flexibleHeight(18));
-
+    
     _contentLabel.sd_layout
     .leftEqualToView(_iconView)
     .topSpaceToView(_iconView, 5)
     .rightSpaceToView(contentView, margin)
     .heightIs(flexibleHeight(60))
     .autoHeightRatio(0);
-
+    
     _picContainerView.sd_layout
     .leftEqualToView(_contentLabel);
     
@@ -141,14 +151,14 @@ const CGFloat maxContentLabelHeight = 54;
     
     _commentbt.sd_layout
     .leftSpaceToView(_dianzanbt,0)
-     .topSpaceToView(_picContainerView,margin)
-     .heightIs(flexibleWidth(30))
+    .topSpaceToView(_picContainerView,margin)
+    .heightIs(flexibleWidth(30))
     .widthIs(flexibleWidth(_dianzanbt.bounds.size.width));
     
     _sharebt.sd_layout
     .leftSpaceToView(_commentbt,0)
-     .topSpaceToView(_picContainerView,margin)
-     .heightIs(flexibleWidth(30))
+    .topSpaceToView(_picContainerView,margin)
+    .heightIs(flexibleWidth(30))
     .widthIs(flexibleWidth(_dianzanbt.bounds.size.width));
     
     _hline1.sd_layout
@@ -158,41 +168,69 @@ const CGFloat maxContentLabelHeight = 54;
     .heightIs(1);
     
     [self setupAutoHeightWithBottomView:_dianzanbt bottomMargin:0];
+    _contentLabel.text = @"srejrtgife";
 }
 
 #pragma mark --赋值
-- (void)setModel:(TravelNotesModel *)model
-{
-    _model = model;
+- (void)setInfo:(BmobObject *)info{
+    _info = info;
+    BmobObject * user =  [info objectForKey:@"userId"];
+    [_iconView sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"head_portraits"]]];
+    _nameLable.text = [user objectForKey:@"username"];
+    //    // 防止单行文本label在重用时宽度计算不准的问题
+        [_nameLable sizeToFit];
+        _positionImg.image = IMAGE_PATH(@"定位选中.png");
+        _position.text = [info objectForKey:@"position"];
     
-    _iconView.image = [UIImage imageNamed:model.iconName];
-    _nameLable.text = model.name;
-    // 防止单行文本label在重用时宽度计算不准的问题
-    [_nameLable sizeToFit];
-    _positionImg.image = IMAGE_PATH(@"定位选中.png");
-    _position.text = @"长江师范学院";
-    _contentLabel.text = model.content;
-    _timeLabel.text = model.time;
+    NSDate * date = [user objectForKey:@"createdAt"];
     
-    _picContainerView.picPathStringsArray = model.picArray;
+//        _timeLabel.text = [self compareCurrentTime:date];
     
-    self.dianzanImg.image = IMAGE_PATH(@"未点赞.png");
-    self.commentImg.image = IMAGE_PATH(@"评论.png");
-    self.shareImg.image = IMAGE_PATH(@"未分享.png");
-    self.dianzanLabel.text = @"10";
-    self.commentLabel.text = @"34";
-    self.shareLabel.text = @"分享";
+     NSArray * pictureArray = (NSArray *)[info objectForKey:@"urlArray"];
+        _picContainerView.picPathStringsArray = pictureArray;
     
-       self.vline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
-       self.vline2.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
-    
-    CGFloat picContainerTopMargin = 0;
-    if (model.picArray.count) {
-        picContainerTopMargin = 10;
-    }
-    _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerTopMargin);
-    
+        self.dianzanImg.image = IMAGE_PATH(@"未点赞.png");
+        self.commentImg.image = IMAGE_PATH(@"评论.png");
+        self.shareImg.image = IMAGE_PATH(@"未分享.png");
+        self.dianzanLabel.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"number_of_thumb_up"]];
+        self.commentLabel.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"comments_number"]];
+        self.shareLabel.text = @"分享";
+        self.vline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+        self.vline2.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+        CGFloat picContainerTopMargin = 0;
+        if (pictureArray.count) {
+            picContainerTopMargin = 10;
+        }
+        _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerTopMargin);
 }
+
+//- (NSString *) compareCurrentTime:(NSDate *) compareDate {
+//    NSTimeInterval  timeInterval = [compareDate timeIntervalSinceNow];
+//    timeInterval = - timeInterval;
+//    long temp = 0;
+//    NSString *result = nil;
+//    if (timeInterval < 60) {
+//        result = [NSString stringWithFormat:@"刚刚"];
+//    }
+//    else if((temp = timeInterval / 60) < 60){
+//        result = [NSString stringWithFormat:@"%ld分前", temp];
+//    }
+//    else if((temp = temp / 60) < 24){
+//        result = [NSString stringWithFormat:@"%ld小时前", temp];
+//    }
+//    else if((temp = temp / 24) < 30){
+//        result = [NSString stringWithFormat:@"%ld天前", temp];
+//    }
+//    else if((temp = temp / 30) < 12){
+//        result = [NSString stringWithFormat:@"%ld月前", temp];
+//    }
+//    else{
+//        temp = temp / 12;
+//        result = [NSString stringWithFormat:@"%ld年前", temp];
+//    }
+//    
+//    return  result;
+//}
 
 #pragma mark --懒加载
 - (UIImageView *)dianzanImg{
@@ -227,7 +265,7 @@ const CGFloat maxContentLabelHeight = 54;
             [_sharebt addSubview:imageView];
             
             imageView;
-
+            
         });
     }
     return _shareImg;
