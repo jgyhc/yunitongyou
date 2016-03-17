@@ -36,7 +36,7 @@
     } failure:^(NSError *error1) {
         
     }];
-    // Do any additional setup after loading the view.
+    
     self.view.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
     [self initNavTitle:@"发起"];
     [self.tableView registerClass:[LaunchTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LaunchTableViewCell class])];
