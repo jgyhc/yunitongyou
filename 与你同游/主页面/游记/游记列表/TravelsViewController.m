@@ -7,23 +7,19 @@
 //
 
 #import "TravelsViewController.h"
-
 #import "TravelNotesTableViewCell.h"
 #import "SharedView.h"
+
 #import "RecordDetailViewController.h"
 #import "AddTravelViewController.h"
 
 #import "OtherInfoViewController.h"
+
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
 #import "MJRefresh.h"
 #import "CommentViewController.h"
-#import "TravelNotesTabelVC.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"//cell高度自适应
-
-//#define BUTTON_TAG 100
-//#define LABEL_TAG 200
-//#define IMAGE_TAG 300
 
 
 static NSString * const identifier = @"CELL";
@@ -40,21 +36,18 @@ static NSString * const identifier = @"CELL";
 @end
 
 @implementation TravelsViewController
-- (void)dealloc {
-    [self.travelModel removeObserver:self forKeyPath:@"travelListArray"];
-    [self.travelModel removeObserver:self forKeyPath:@"travelUser"];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.travelModel queryTheTravelListSuccessBlock:^(NSMutableArray *objectArray) {
+    
+    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
+        [self.travelArray addObjectsFromArray:objectArray];
+        [self.tableView reloadData];
         
     } failBlock:^(NSError *error) {
         
     }];
-     [self initalizedInterface];
-    [self.travelModel addObserver:self forKeyPath:@"travelListArray" options:NSKeyValueObservingOptionNew context:nil];
-    [self.travelModel addObserver:self forKeyPath:@"travelUser" options:NSKeyValueObservingOptionNew context:nil];
-    
+    [self initalizedInterface];
 }
 - (void)initalizedInterface{
     
@@ -62,11 +55,11 @@ static NSString * const identifier = @"CELL";
     [self initPersonButton];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initRightButtonEvent:@selector(handleTravelNotes:) Image:[UIImage imageNamed:@"添加游记"]];
-     [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
+    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
     [self.view addSubview:self.tableView];
     
-     [self setupRefresh];
+    [self setupRefresh];
 }
 #pragma mark --刷新
 - (void)setupRefresh
@@ -75,7 +68,7 @@ static NSString * const identifier = @"CELL";
     header.stateLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
     self.tableView.mj_header = header;
-  
+    
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView.mj_footer endRefreshing];
@@ -91,24 +84,9 @@ static NSString * const identifier = @"CELL";
     });
     
 }
-#pragma mark -- KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"travelListArray"]) {
-        self.travelArray = self.travelModel.travelListArray;
-    }
-    if ([keyPath isEqualToString:@"travelUser"]) {
-        self.userArray = self.travelModel.travelUser;
-        [self.tableView reloadData];
-        [self.tableView.mj_header endRefreshing];
-    }
-}
-
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-        NSLog(@"self.travelArray = %@",self.travelArray);
-    NSLog(@"self.travelModel.travelListArray = %@",self.travelModel.travelListArray);
+    
     return self.travelArray.count;
-
     
 }
 
@@ -123,8 +101,9 @@ static NSString * const identifier = @"CELL";
     if (!cell) {
         cell = [[TravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    BmobObject * object = self.travelArray[indexPath.section];
     //注意是section,若是numberOfRows returnself.modelArray.count，则是row
-    cell.model = self.travelArray[indexPath.section];
+    cell.info = object;
     return cell;
 }
 
@@ -136,19 +115,17 @@ static NSString * const identifier = @"CELL";
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * bcView = [[UIView alloc]init];
     bcView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
-    
     return bcView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // >>>>>>>>>>>>>>>>>>>>> * cell自适应 * >>>>>>>>>>>>>>>>>>>>>>>>
-    id model = self.travelArray[indexPath.section];//注意是section
-    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[TravelNotesTableViewCell class] contentViewWidth:[self cellContentViewWith]];
+    //    id model = self.travelArray[indexPath.section];//注意是section
+    //    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[TravelNotesTableViewCell class] contentViewWidth:[self cellContentViewWith]];//如果self.travelArray[indexPath.section]是BmobObject类型，就会崩溃
+    
+    return [self cellHeightForIndexPath:indexPath cellContentViewWidth:[self cellContentViewWith] tableView:tableView];
     
 }
-
-
-
 
 - (CGFloat)cellContentViewWith
 {

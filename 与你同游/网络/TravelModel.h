@@ -1,10 +1,3 @@
-//
-//  TravelModel.h
-//  BmobSDK网络测试
-//
-//  Created by rimi on 15/10/19.
-//  Copyright (c) 2015年 LiuCong. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #import <BmobSDK/Bmob.h>
@@ -74,10 +67,10 @@
 /**
  *  获取游记列表
  *
- *  @param success
- *  @param fail
+ *  @param success 成功获得游记信息
+ *  @param fail    失败原因
  */
-- (void)queryTheTravelListSuccessBlock:(void(^)(NSMutableArray *objectArray))success failBlock:(void(^)(NSError * error))fail;
+- (void)queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success   failBlock:(void(^)(NSError * error))fail;
 
 
 

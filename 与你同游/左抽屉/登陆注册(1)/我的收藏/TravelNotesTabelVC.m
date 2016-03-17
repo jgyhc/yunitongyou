@@ -87,7 +87,7 @@ static NSString * const identifier = @"CELL";
                                      @"海南.jpg",
                                      @"云南.jpg"
                                      ];
-  
+    
     for (int i = 0; i < count; i++) {
         int iconRandomIndex = arc4random_uniform(5);
         int nameRandomIndex = arc4random_uniform(5);
@@ -115,7 +115,7 @@ static NSString * const identifier = @"CELL";
         
         [self.modelArray addObject:model];
     }
-
+    
     
 }
 
@@ -124,7 +124,7 @@ static NSString * const identifier = @"CELL";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.modelArray.count;
-
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -136,30 +136,28 @@ static NSString * const identifier = @"CELL";
     
     TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-                cell = [[TravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[TravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     //注意是section,若是numberOfRows returnself.modelArray.count，则是row
-        cell.model = self.modelArray[indexPath.section];
+    cell.info = self.modelArray[indexPath.section];
     return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-     return 5;
+    return 5;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * bcView = [[UIView alloc]init];
     bcView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
-
+    
     return bcView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // >>>>>>>>>>>>>>>>>>>>> * cell自适应 * >>>>>>>>>>>>>>>>>>>>>>>>
-    id model = self.modelArray[indexPath.section];//注意是section
-    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[TravelNotesTableViewCell class] contentViewWidth:[self cellContentViewWith]];
-
+    return [self cellHeightForIndexPath:indexPath cellContentViewWidth:[self cellContentViewWith] tableView:tableView];
+    
 }
 
 

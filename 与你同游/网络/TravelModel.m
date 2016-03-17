@@ -28,14 +28,14 @@
 - (void)addTravelNoteWithObejectId:(NSString *)ObjectId content:(NSString *)content imagesArray:(NSArray *)imagesArray location:(NSString *)location{
     
     BmobObject * travel = [BmobObject objectWithClassName:@"Travel"];
-
+    
     [self uploadImagesArray:[self thumbnailArray:imagesArray] successBlock:^(NSArray *urlArray) {
-  
-            [travel setObject:location forKey:@"position"];
-            [travel setObject:content forKey:@"content"];
-            [travel setObject:urlArray forKey:@"urlArray"];
-            [travel setObject:[NSNumber numberWithInt:0] forKey:@"number_of_thumb_up"];
-            [travel setObject:[NSNumber numberWithInt:0] forKey:@"comments_number"];
+        
+        [travel setObject:location forKey:@"position"];
+        [travel setObject:content forKey:@"content"];
+        [travel setObject:urlArray forKey:@"urlArray"];
+        [travel setObject:[NSNumber numberWithInt:0] forKey:@"number_of_thumb_up"];
+        [travel setObject:[NSNumber numberWithInt:0] forKey:@"comments_number"];
         
         //pointer关系
         BmobObject * user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:ObjectId];
@@ -44,7 +44,7 @@
         
         [travel saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
             if (isSuccessful) {
-              
+                
                 //relation关系
                 BmobRelation * relation = [[BmobRelation alloc]init];
                 [relation addObject:travel];
@@ -52,12 +52,12 @@
                 
                 [user updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                     if (isSuccessful) {
-                         self.addTravelResult = @"YES";
+                        self.addTravelResult = @"YES";
                     }else{
                         NSLog(@"error %@",[error description]);
                     }
                 }];
-
+                
             } else if (error){
                 NSLog(@"%@",error);
             } else {
@@ -65,11 +65,11 @@
             }
         }];
         
-        } progressBlock:^(NSUInteger index, CGFloat returnProgress) {
-            NSLog(@"第%ld张，进度：%f", index, returnProgress);
-        } failBlock:^(NSError *error) {
-            NSLog(@"%@", error);
-        }];
+    } progressBlock:^(NSUInteger index, CGFloat returnProgress) {
+        NSLog(@"第%ld张，进度：%f", index, returnProgress);
+    } failBlock:^(NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 #pragma mark --上传图片
@@ -92,7 +92,7 @@
                 success(TravelUrlArray);
             }
         } progress:^(NSUInteger index, CGFloat progress) {
-             NSLog(@"index %lu progress %f",(unsigned long)index,progress);
+            NSLog(@"index %lu progress %f",(unsigned long)index,progress);
             returnProgress(index, progress);
         }];
     }
@@ -183,10 +183,10 @@
 }
 
 #pragma mark --查询所有游记
-- (void)queryTheTravelListSuccessBlock:(void(^)(NSMutableArray *objectArray))success failBlock:(void(^)(NSError * error))fail {
+- (void)queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success   failBlock:(void(^)(NSError * error))fail {
     BmobQuery   *bquery = [BmobQuery queryWithClassName:@"Travel"];
-//    bquery.limit = 10;//每页10条
-//    bquery.skip = 3;//跳过查询的前多少条数据来实现分页查询的功能。
+        bquery.limit = 10;//每页10条
+    //    bquery.skip = 3;//跳过查询的前多少条数据来实现分页查询的功能。
     [bquery orderByDescending:@"createdAt"];
     //声明该次查询需要将userId关联的对象信息一并查询出来
     [bquery includeKey:@"userId"];
@@ -196,17 +196,15 @@
             NSLog(@"游记查询失败:%@",error);
         }
         else{
+            success(array);
+            
+//            for (BmobObject * obj in array) {
+//                
+//                [self.travelListArray addObject:obj];
+//                BmobObject * user = [obj objectForKey:@"userId"];
+//                [self.travelUser addObject:user];
+//            }
 
-            for (BmobObject * obj in array) {
-                
-                [self.travelListArray addObject:obj];
-                BmobObject * user = [obj objectForKey:@"userId"];
-                [self.travelUser addObject:user];
-//                NSLog(@"content11 = %@",[self.travelListArray[0] objectForKey:@"content"]);
-//                NSLog(@"content22 = %@",[obj objectForKey:@"content"]);
-//                NSLog(@"phoneNumber11 = %@",[self.travelUser[0] objectForKey:@"phoneNumber"]);
-//                NSLog(@"phoneNumber22 = %@",[user objectForKey:@"phoneNumber"]);
-            }
         }
     }];
     
@@ -246,7 +244,7 @@
 
 - (void)findTravelCommentSpearkerWithPhoneNumber:(NSString *)phoneNumber Password:(NSString *)password travel_date:(NSString *)travel_date travel_comments_time:(NSString *)travel_comments_time userType:(NSString *)userType index:(NSInteger)index {
     [self.travelCommentsNetWork findTravelCommentSpearkerWithPhoneNumber:phoneNumber Password:password travel_date:travel_date travel_comments_time:travel_comments_time userType:userType successBlock:^(BmobObject *userObject) {
-
+        
         if (![[userObject objectForKey:@"head_portraits1"] isEqualToString:@""]) {
             NSString * URL =  [NSString stringWithFormat:@"%@?t=1&a=f008d46b406baaa7eff26eba98dccd54", [userObject objectForKey:@"head_portraits1"]];
             NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:URL]];
@@ -302,7 +300,7 @@
     } failBlock:^(NSError *error) {
         
     }];
-
+    
 }
 
 - (NSMutableArray *)travelListArray {
