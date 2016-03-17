@@ -97,9 +97,11 @@
 
 }
 //查询活动列表（包括user字段下包含的作者信息）（已测试）
-+ (void)getcalledListSuccess:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error1))failure {
++ (void)getcalledListWithLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error1))failure {
     BmobQuery  *bquery = [BmobQuery queryWithClassName:@"Called"];
     [bquery includeKey:@"user"];////声明查询Called的时候  把表里面user字段的数据查出来
+    bquery.limit = limit;
+    bquery.skip = skip;
     //查找Called表的数据
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         success(array);

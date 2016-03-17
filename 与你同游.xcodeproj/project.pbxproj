@@ -161,11 +161,7 @@
 		72657E1B1C99906B00CC08AD /* InitiateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DF81C99906B00CC08AD /* InitiateDetailViewController.m */; };
 		72657E1C1C99906B00CC08AD /* ScenicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DFB1C99906B00CC08AD /* ScenicViewController.m */; };
 		72657E1D1C99906B00CC08AD /* AddActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DFE1C99906B00CC08AD /* AddActivityViewController.m */; };
-		72657E1E1C99906B00CC08AD /* AddActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E011C99906B00CC08AD /* AddActivityViewController.m */; };
-		72657E1F1C99906B00CC08AD /* ImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E031C99906B00CC08AD /* ImageView.m */; };
-		72657E201C99906B00CC08AD /* InitiateViewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E051C99906B00CC08AD /* InitiateViewcontroller.m */; };
 		72657E211C99906B00CC08AD /* LaunchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E071C99906B00CC08AD /* LaunchCollectionViewCell.m */; };
-		72657E221C99906B00CC08AD /* LaunchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E091C99906B00CC08AD /* LaunchTableViewCell.m */; };
 		72657E231C99906B00CC08AD /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E0B1C99906B00CC08AD /* LaunchViewController.m */; };
 		72657E241C99906B00CC08AD /* LaunchViewScrollImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E0D1C99906B00CC08AD /* LaunchViewScrollImage.m */; };
 		72657E251C99906B00CC08AD /* SearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E0F1C99906B00CC08AD /* SearchResultView.m */; };
@@ -429,16 +425,8 @@
 		72657DFB1C99906B00CC08AD /* ScenicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenicViewController.m; sourceTree = "<group>"; };
 		72657DFD1C99906B00CC08AD /* AddActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddActivityViewController.h; sourceTree = "<group>"; };
 		72657DFE1C99906B00CC08AD /* AddActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddActivityViewController.m; sourceTree = "<group>"; };
-		72657E001C99906B00CC08AD /* AddActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddActivityViewController.h; sourceTree = "<group>"; };
-		72657E011C99906B00CC08AD /* AddActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddActivityViewController.m; sourceTree = "<group>"; };
-		72657E021C99906B00CC08AD /* ImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageView.h; sourceTree = "<group>"; };
-		72657E031C99906B00CC08AD /* ImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageView.m; sourceTree = "<group>"; };
-		72657E041C99906B00CC08AD /* InitiateViewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitiateViewcontroller.h; sourceTree = "<group>"; };
-		72657E051C99906B00CC08AD /* InitiateViewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitiateViewcontroller.m; sourceTree = "<group>"; };
 		72657E061C99906B00CC08AD /* LaunchCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchCollectionViewCell.h; sourceTree = "<group>"; };
 		72657E071C99906B00CC08AD /* LaunchCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchCollectionViewCell.m; sourceTree = "<group>"; };
-		72657E081C99906B00CC08AD /* LaunchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchTableViewCell.h; sourceTree = "<group>"; };
-		72657E091C99906B00CC08AD /* LaunchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchTableViewCell.m; sourceTree = "<group>"; };
 		72657E0A1C99906B00CC08AD /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
 		72657E0B1C99906B00CC08AD /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
 		72657E0C1C99906B00CC08AD /* LaunchViewScrollImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewScrollImage.h; sourceTree = "<group>"; };
@@ -1168,16 +1156,8 @@
 		72657DFF1C99906B00CC08AD /* 主页 */ = {
 			isa = PBXGroup;
 			children = (
-				72657E001C99906B00CC08AD /* AddActivityViewController.h */,
-				72657E011C99906B00CC08AD /* AddActivityViewController.m */,
-				72657E021C99906B00CC08AD /* ImageView.h */,
-				72657E031C99906B00CC08AD /* ImageView.m */,
-				72657E041C99906B00CC08AD /* InitiateViewcontroller.h */,
-				72657E051C99906B00CC08AD /* InitiateViewcontroller.m */,
 				72657E061C99906B00CC08AD /* LaunchCollectionViewCell.h */,
 				72657E071C99906B00CC08AD /* LaunchCollectionViewCell.m */,
-				72657E081C99906B00CC08AD /* LaunchTableViewCell.h */,
-				72657E091C99906B00CC08AD /* LaunchTableViewCell.m */,
 				72657E0A1C99906B00CC08AD /* LaunchViewController.h */,
 				72657E0B1C99906B00CC08AD /* LaunchViewController.m */,
 				72657E0C1C99906B00CC08AD /* LaunchViewScrollImage.h */,
@@ -1521,7 +1501,6 @@
 				24793AB41BDC86B0006491C6 /* MyCommentsTableViewCell.m in Sources */,
 				72657E251C99906B00CC08AD /* SearchResultView.m in Sources */,
 				04D354391C87F40900DFCB1C /* ChangePwViewController.m in Sources */,
-				72657E201C99906B00CC08AD /* InitiateViewcontroller.m in Sources */,
 				24600CBE1BEDDCDC00C3C3B9 /* AddTravelViewController.m in Sources */,
 				247AF9561BCDE95E00DECE79 /* AnimationView.m in Sources */,
 				04D354571C88375300DFCB1C /* PhotoView.m in Sources */,
@@ -1577,7 +1556,6 @@
 				72B517361C7495390089CE97 /* RetrievePassword.m in Sources */,
 				04D354401C87F50900DFCB1C /* MyJoinsView.m in Sources */,
 				245B59E71BCB8BE80003EBA7 /* AppDelegate.m in Sources */,
-				72657E1F1C99906B00CC08AD /* ImageView.m in Sources */,
 				24780C831BD663050009A40D /* LoadingView.m in Sources */,
 				72C1C6561C734CA1002317FE /* NetWorking.m in Sources */,
 				24780C701BD628550009A40D /* UserModel.m in Sources */,
@@ -1589,10 +1567,8 @@
 				7288E1141C774B7800F554D0 /* Comments.m in Sources */,
 				7288E1111C77496900F554D0 /* Travel.m in Sources */,
 				7288E10E1C77455600F554D0 /* Called.m in Sources */,
-				72657E1E1C99906B00CC08AD /* AddActivityViewController.m in Sources */,
 				24780C6F1BD628550009A40D /* TravelModel.m in Sources */,
 				246A91231BDB168200B76514 /* MyActivitiesView.m in Sources */,
-				72657E221C99906B00CC08AD /* LaunchTableViewCell.m in Sources */,
 				24780C6C1BD628550009A40D /* CalledNetWorking.m in Sources */,
 				24780C801BD661610009A40D /* TFIndicatorView.m in Sources */,
 				04D3544A1C882D4C00DFCB1C /* TravelNotesTableViewCell.m in Sources */,

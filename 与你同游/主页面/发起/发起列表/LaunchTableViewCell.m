@@ -8,6 +8,7 @@
 
 #import "LaunchTableViewCell.h"
 #import "BottomButtonsView.h"
+#import <UIButton+WebCache.h>
 @interface LaunchTableViewCell ()
 @property (nonatomic, strong)UILabel *userIDLabel; //用户ID
 @property (nonatomic, strong)UILabel *launchTimeLabel;//发起时间
@@ -81,67 +82,11 @@
         
         [self setupAutoHeightWithBottomView:self.buttonView bottomMargin:0];
         
-        
-//        UIView *addressLine = [[UIView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, 15, 1), NO)];
-//        addressLine.center =  flexibleCenter(CGPointMake(243, 24),NO);
-//        addressLine.backgroundColor = [UIColor colorWithWhite:0.298 alpha:1.000];
-//        [self.contentView addSubview:addressLine];
     }
     return self;
 }
 
 
-
-- (void)PositionTheReset {
-   
-    UIView *bottomLineView = [[UIView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, WIDTH, 1), NO)];
-    
-    bottomLineView.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
-    [self.contentView addSubview:bottomLineView];
-    
-    UIView *bottomLine = [[UIView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, 1, 38), NO)];
-    bottomLine.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
-    [self.contentView addSubview:bottomLine];
-    
-    UIView *bottomLine2 = [[UIView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, 1, 38), NO)];
-    bottomLine2.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
-    [self.contentView addSubview:bottomLine2];
-
-}
-
-
-- (void)initUserHeaderImage:(UIImage *)image userID:(NSString *)userID userLV:(NSString *)userLV launchTime:(NSString *)launchTime launchDate:(NSString *)launchDate {
-    [_UserHeaderimageView setImage:image forState:UIControlStateNormal];
-    _userIDLabel.text = userID;
-    _launchTimeLabel.text = launchTime;
-//    _launchDateLabel.text = launchDate;
-}
-
-- (void)initDeparture:(NSString *)departure destination:(NSString *)destination starting:(NSString *)starting reture:(NSString *)reture info:(NSString *)info {
-    _departureLabel.text = departure;
-    _startingLabel.text = starting;
-    _retureLabel.text = reture;
-    
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc]initWithString:info];
-    
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
-    style.headIndent = 0;
-    style.firstLineHeadIndent = 25;
-    style.lineSpacing = 0;
-    [text addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, text.length)];
-    
-    _infoLabel.attributedText = text;
-}
-
-- (void)initSave:(NSString *)save comment:(NSString *)comment follower:(NSString *)follower {
-   
-}
-
-
-- (void)eventActive:(UIButton *)sender {
-    sender.selected = !sender.selected;
-}
-                              
 - (UILabel *)userIDLabel {
 	if(_userIDLabel == nil) {
         _userIDLabel = ({
@@ -155,7 +100,18 @@
 	return _userIDLabel;
 }
 
-
+- (void)setObj:(BmobObject *)obj {
+    _obj = obj;
+    BmobObject *user = [obj objectForKey:@"user"];
+    self.userIDLabel.text = [user objectForKey:@"username"];
+    self.ageLabel.text = [user objectForKey:@"age"];
+    [self.UserHeaderimageView sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"head_portraits"]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"]];
+    self.launchTimeLabel.text = [obj objectForKey:@"called_date"];
+    self.departureLabel.text = [NSString stringWithFormat:@"%@  ---->   %@", [obj objectForKey:@"point_of_departure"], [obj objectForKey:@"destination"]];
+    self.startingLabel.text = [NSString stringWithFormat:@"%@        %@", [obj objectForKey:@"departure_time"], [obj objectForKey:@"arrival_time"]];
+    self.infoLabel.text = [obj objectForKey:@"content"];
+    self.PNumber.text = [NSString stringWithFormat:@"%@", [obj objectForKey:@"number_Of_people"]];
+}
 
 - (UILabel *)launchTimeLabel {
 	if(_launchTimeLabel == nil) {

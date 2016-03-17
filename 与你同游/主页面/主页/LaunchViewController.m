@@ -248,9 +248,6 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    [cell initUserHeaderImage:IMAGE_PATH(@"拍照.png") userID:@"userID" userLV:@"userLV" launchTime:@"18:39" launchDate:@"2015.08.30"];
-    [cell initDeparture:@"重庆" destination:@"涪陵" starting:@"08.31" reture:@"09.03" info:@"大家好,在此特意召唤小伙伴，喜欢有意的小伙伴踊跃跟团"];
-    [cell initSave:@"0" comment:@"3" follower:@"3"];
 //    tableView.rowHeight = flexibleHeight(225 + [self heightForString:@"大家好,在此特意召唤小伙伴，喜欢有意的小伙伴踊跃跟团" fontSize:14 andWidth:350]);
 //    cell.infoLabel.frame = flexibleFrame(CGRectMake(10, 80, 335, [self heightForString:@"大家好,在此特意召唤小伙伴，喜欢有意的小伙伴踊跃跟团" fontSize:14 andWidth:335]), NO);
 //    
@@ -269,9 +266,7 @@
 //    
 //    center = cell.followerButton.center;
 //    center.y = tableView.rowHeight - flexibleHeight(15);
-//    cell.followerButton.center = center;
-    [cell PositionTheReset];
-    
+//    cell.followerButton.center = center;    
     
     CGRect frame = tableView.frame;
     frame.size.height = tableView.rowHeight * 2 + 20;

@@ -65,7 +65,7 @@
 //    center.y = tableView.rowHeight - flexibleHeight(15);
 //    cell.followerButton.center = center;
     
-    [cell PositionTheReset];
+
     
     return cell;
 }
