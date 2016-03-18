@@ -90,6 +90,9 @@
     LaunchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     BmobObject *obj = self.dataSource[indexPath.section];
     cell.obj = obj;
+    [cell setThumbUpBlock:^(NSIndexPath *index) {
+        NSLog(@"点的第%ld个", index.section);
+    }];
     return cell;
 }
 

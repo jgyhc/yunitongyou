@@ -29,6 +29,9 @@
         [self addSubview:self.view1];
         [self addSubview:self.view2];
         [self addSubview:self.view3];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
+        [self.view3 addGestureRecognizer:tap];
+        
         [self.view1 addSubview:self.label1];
         [self.view2 addSubview:self.label2];
         [self.view3 addSubview:self.label3];
@@ -81,6 +84,13 @@
     return self;
 }
 
+- (void)handldTapEvent:(UITapGestureRecognizer *)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(handldTapEvent:)]) {
+        [self.delegate handldTapEvent:sender];
+    }
+
+}
+
 - (void)updateImage:(NSArray *)imageArray label:(NSArray *)lableString {
     self.label1.text = lableString[0];
     self.label2.text = lableString[1];
@@ -97,6 +107,8 @@
 - (UIImageView *)imgaeView3 {
 	if(_imgaeView3 == nil) {
 		_imgaeView3 = [[UIImageView alloc] init];
+
+        
 	}
 	return _imgaeView3;
 }

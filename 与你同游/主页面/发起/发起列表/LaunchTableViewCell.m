@@ -9,7 +9,7 @@
 #import "LaunchTableViewCell.h"
 #import "BottomButtonsView.h"
 #import "UIButton+WebCache.h"
-@interface LaunchTableViewCell ()
+@interface LaunchTableViewCell ()<BottomButtonsViewDelegate>
 @property (nonatomic, strong)UILabel *userIDLabel; //用户ID
 @property (nonatomic, strong)UILabel *launchTimeLabel;//发起时间
 @property (nonatomic, strong)UILabel *departureLabel;//出发地点
@@ -86,6 +86,12 @@
     return self;
 }
 
+
+- (void)handldTapEvent:(UITapGestureRecognizer *)sender {
+    if (_ThumbUpBlock) {
+        _ThumbUpBlock(self.indexPath);
+    }
+}
 
 - (UILabel *)userIDLabel {
 	if(_userIDLabel == nil) {
@@ -264,6 +270,7 @@
 	if(_buttonView == nil) {
 		_buttonView = [[BottomButtonsView alloc] init];
         [_buttonView updateImage:@[@"未点赞", @"评论", @"未收藏"] label:@[@"赞", @"评论", @"收藏"]];
+        _buttonView.delegate = self;
 	}
 	return _buttonView;
 }

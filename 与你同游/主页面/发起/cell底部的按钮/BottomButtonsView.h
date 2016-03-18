@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BottomButtonsViewDelegate <NSObject>
+
+- (void)handldTapEvent:(UITapGestureRecognizer *)sender;
+
+@end
+
 @interface BottomButtonsView : UIView
 - (void)updateImage:(NSArray *)imageArray label:(NSArray *)lableString;
+@property (nonatomic, assign) id <BottomButtonsViewDelegate>delegate;
 @end
