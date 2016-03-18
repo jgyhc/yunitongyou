@@ -177,6 +177,10 @@
 		72C1C6591C735661002317FE /* Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C1C6581C735661002317FE /* Register.m */; };
 		72C1C65C1C735807002317FE /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C1C65B1C735807002317FE /* Login.m */; };
 		72DCD1F51C058C6900BFDB6D /* BaseGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */; };
+		72E8C5961C9ADFF900C57A24 /* JoinInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C5951C9ADFF900C57A24 /* JoinInView.m */; };
+		72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C5981C9AE0F600C57A24 /* JoinInCell.m */; };
+		72E8C59C1C9AEA4000C57A24 /* ICommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C59B1C9AEA4000C57A24 /* ICommentsView.m */; };
+		72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */; };
 		818282CFDFFDDFF1283A59A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC4622076ADF4F0085F643B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -457,6 +461,14 @@
 		72C1C65B1C735807002317FE /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
 		72DCD1F31C058C6900BFDB6D /* BaseGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseGradientView.h; sourceTree = "<group>"; };
 		72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseGradientView.m; sourceTree = "<group>"; };
+		72E8C5941C9ADFF900C57A24 /* JoinInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinInView.h; sourceTree = "<group>"; };
+		72E8C5951C9ADFF900C57A24 /* JoinInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinInView.m; sourceTree = "<group>"; };
+		72E8C5971C9AE0F600C57A24 /* JoinInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinInCell.h; sourceTree = "<group>"; };
+		72E8C5981C9AE0F600C57A24 /* JoinInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinInCell.m; sourceTree = "<group>"; };
+		72E8C59A1C9AEA4000C57A24 /* ICommentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICommentsView.h; sourceTree = "<group>"; };
+		72E8C59B1C9AEA4000C57A24 /* ICommentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICommentsView.m; sourceTree = "<group>"; };
+		72E8C59D1C9AEB0700C57A24 /* ICommentsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICommentsCell.h; sourceTree = "<group>"; };
+		72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICommentsCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1123,6 +1135,8 @@
 		72657DF01C99906B00CC08AD /* 发起详情页面 */ = {
 			isa = PBXGroup;
 			children = (
+				72E8C5921C9ADFB000C57A24 /* 评论 */,
+				72E8C5931C9ADFB000C57A24 /* 已加入的小伙伴 */,
 				72657DF11C99906B00CC08AD /* InitiateDetailCommentView.h */,
 				72657DF21C99906B00CC08AD /* InitiateDetailCommentView.m */,
 				72657DF31C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.h */,
@@ -1245,6 +1259,28 @@
 				72C1C6581C735661002317FE /* Register.m */,
 			);
 			path = "注册";
+			sourceTree = "<group>";
+		};
+		72E8C5921C9ADFB000C57A24 /* 评论 */ = {
+			isa = PBXGroup;
+			children = (
+				72E8C59A1C9AEA4000C57A24 /* ICommentsView.h */,
+				72E8C59B1C9AEA4000C57A24 /* ICommentsView.m */,
+				72E8C59D1C9AEB0700C57A24 /* ICommentsCell.h */,
+				72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */,
+			);
+			path = "评论";
+			sourceTree = "<group>";
+		};
+		72E8C5931C9ADFB000C57A24 /* 已加入的小伙伴 */ = {
+			isa = PBXGroup;
+			children = (
+				72E8C5941C9ADFF900C57A24 /* JoinInView.h */,
+				72E8C5951C9ADFF900C57A24 /* JoinInView.m */,
+				72E8C5971C9AE0F600C57A24 /* JoinInCell.h */,
+				72E8C5981C9AE0F600C57A24 /* JoinInCell.m */,
+			);
+			path = "已加入的小伙伴";
 			sourceTree = "<group>";
 		};
 		D516993C0A2549935C6841C1 /* Frameworks */ = {
@@ -1506,7 +1542,9 @@
 				04D354571C88375300DFCB1C /* PhotoView.m in Sources */,
 				245B59EA1BCB8BE80003EBA7 /* ViewController.m in Sources */,
 				72657E261C99906B00CC08AD /* SearchResultViewController.m in Sources */,
+				72E8C59C1C9AEA4000C57A24 /* ICommentsView.m in Sources */,
 				72657E231C99906B00CC08AD /* LaunchViewController.m in Sources */,
+				72E8C5961C9ADFF900C57A24 /* JoinInView.m in Sources */,
 				72657E271C99906B00CC08AD /* SearchViewController.m in Sources */,
 				24780C6E1BD628550009A40D /* TravelCommentsNetWorking.m in Sources */,
 				248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */,
@@ -1555,6 +1593,8 @@
 				246FB4571BD472CC001EA853 /* InsetsLabel.m in Sources */,
 				72B517361C7495390089CE97 /* RetrievePassword.m in Sources */,
 				04D354401C87F50900DFCB1C /* MyJoinsView.m in Sources */,
+				72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */,
+				72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */,
 				245B59E71BCB8BE80003EBA7 /* AppDelegate.m in Sources */,
 				24780C831BD663050009A40D /* LoadingView.m in Sources */,
 				72C1C6561C734CA1002317FE /* NetWorking.m in Sources */,

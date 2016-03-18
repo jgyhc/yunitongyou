@@ -35,6 +35,6 @@
 - (void)alertControllerShow:(NSString *)message;
 
 
-
+- (NSString *) compareCurrentTime:(NSDate *) compareDate;
 
 @end
