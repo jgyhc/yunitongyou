@@ -43,29 +43,6 @@
 //    } failure:^(NSError *error1) {
 //        
 //    }];
-//
-//    [AMapLocationServices sharedServices].apiKey = @"d5adbafffb8ac86b9eacf7f6437f9ca0";
-//    self.locationManager = [[AMapLocationManager alloc] init];
-//    // 带逆地理（返回坐标和地址信息）
-//    [self.locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-//        
-//        if (error)
-//        {
-//            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-//            
-////            if (error.code == AMapLocatingErrorLocateFailed)
-////            {
-////                return;
-////            }
-//        }
-//        
-//        NSLog(@"location:%@", location);
-//        
-//        if (regeocode)
-//        {
-//            NSLog(@"reGeocode:%@", regeocode);
-//        }
-//    }];
        return YES;
 }
 

@@ -7,17 +7,11 @@
 
 @property (nonatomic, strong) NetWorkingViewController *netWork;
 
-@property (nonatomic, strong) NSMutableArray *travelListArray;
-@property (nonatomic, strong) NSMutableArray *travelUser;
-
 @property (nonatomic, copy) NSString *addTravelResult;
 @property (nonatomic, copy) NSString *travelContents;
 @property (nonatomic, copy) NSString *travelTime;
 @property (nonatomic, copy) NSString *travelSight_spot;
 @property (nonatomic, strong) UIImage *image;
-
-
-
 
 @property (nonatomic, strong, readonly) NSString *createTCommentResult;
 @property (nonatomic, strong) NSArray *travelCommentArray;
@@ -39,13 +33,24 @@
 - (void)addTravelNoteWithObejectId:(NSString *)ObjectId content:(NSString *)content imagesArray:(NSArray *)imagesArray location:(NSString *)location;
 
 /**
- *  查询一个用户的游记列表
+ *  获取游记列表
  *
- *  @param phoneNumber 电话号码
- *  @param password    密码
+ *  @param success 成功获得游记信息
+ *  @param fail    失败原因
  */
-- (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password;
-- (void)queryTravelWithObejectId:(NSString *)ObjectId;
+- (void)queryTheTravelListSuccessBlock:(void(^)(NSArray * travelArray))success thumbInfoBlock:(void(^)(NSMutableArray * thumbArray))thumbInfo   failBlock:(void(^)(NSError * error))fail ;
+
+/**
+ *  查询一个人发表的所有游记
+ *
+ *  @param success  成功获得游记信息
+ *  @param failure 失败原因
+ */
+- (void)getMyTravelNotesSuccess:(void (^)(NSArray * mytravels))success failure:(void (^)(NSError *error))failure;
+
+
+
+
 /**
  *  查询一条游记
  *
@@ -64,13 +69,7 @@
  */
 - (void)deleteTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password travel_date:(NSString *)travel_date;
 
-/**
- *  获取游记列表
- *
- *  @param success 成功获得游记信息
- *  @param fail    失败原因
- */
-- (void)queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success   failBlock:(void(^)(NSError * error))fail;
+
 
 
 

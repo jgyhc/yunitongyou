@@ -9,6 +9,7 @@
 #import "PhotoView.h"
 #import "UIView+SDAutoLayout.h"
 #import "SDPhotoBrowser.h"
+#import "UIImageView+WebCache.h"
 
 @interface PhotoView ()<SDPhotoBrowserDelegate>
 @property (nonatomic, strong) NSArray *imageViewsArray;
@@ -60,6 +61,7 @@
     CGFloat itemW = [self itemWidthForPicPathArray:_picPathStringsArray];
     CGFloat itemH = 0;
     if (_picPathStringsArray.count == 1) {
+        
         UIImage *image = [UIImage imageNamed:_picPathStringsArray.firstObject];
         if (image.size.width) {
             itemH = image.size.height / image.size.width * itemW;
@@ -75,7 +77,7 @@
         long rowIndex = idx / perRowItemCount;
         UIImageView *imageView = [_imageViewsArray objectAtIndex:idx];
         imageView.hidden = NO;
-        imageView.image = [UIImage imageNamed:obj];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:obj]];
         imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);
     }];
     

@@ -17,6 +17,7 @@
 
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
+#import "ThumbUp.h"
 #import "MJRefresh.h"
 #import "CommentViewController.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"//cell高度自适应
@@ -27,7 +28,7 @@
 @interface TravelsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *travelArray;//数据
-@property (nonatomic, strong) NSMutableArray *userArray;//用户
+@property (nonatomic, strong) NSMutableArray *thumbArray;//用户
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) SharedView *sharedView;
@@ -39,14 +40,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     [self initalizedInterface];
-    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
-        [self.travelArray addObjectsFromArray:objectArray];
-        NSLog(@"%@", self.travelArray);
-        [self.tableView reloadData];
-        
+
+}
+- (void)viewWillAppear:(BOOL)animated{
+    
+//    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
+//        [self.travelArray addObjectsFromArray:objectArray];
+////        NSLog(@"%@", self.travelArray);
+//        [self.tableView reloadData];
+//        
+//    } failBlock:^(NSError *error) {
+//        
+//    }];
+    
+    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *travelArray) {
+        [self.travelArray addObjectsFromArray:travelArray];
+         [self.tableView reloadData];
+    } thumbInfoBlock:^(NSMutableArray *thumbArray) {
+//        [self.thumbArray addObjectsFromArray:thumbArray];
+//        [self.tableView reloadData];
     } failBlock:^(NSError *error) {
         
     }];
@@ -59,9 +72,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self initRightButtonEvent:@selector(handleTravelNotes:) Image:[UIImage imageNamed:@"添加游记"]];
 
-    [self.view addSubview:self.tableView];
     [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
-    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
+    
+#warning 这两步的顺序不能改,因为需要先把视图放上才能布局。
+    [self.view addSubview:self.tableView];
+    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(10));
+
     
     [self setupRefresh];
 }
@@ -104,6 +120,18 @@
     BmobObject * object = self.travelArray[indexPath.section];
     //注意是section,若是numberOfRows returnself.modelArray.count，则是row
     cell.info = object;
+//    cell.thumbNumber = (NSNumber *)self.thumbArray[indexPath.section];
+   [cell buttonPress:^{
+       [ThumbUp thumUpWithID:[object objectForKey:@"objectId"] type:1 success:^(NSString *commentID) {
+           
+       } failure:^(NSError *error1) {
+           
+       } ];
+       
+       
+         }];
+    
+   
     return cell;
 }
 
@@ -140,7 +168,7 @@
 
 - (void)handleTravelNotes:(UIButton *)sender {
     if (!OBJECTID) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
         return;
     }
@@ -175,10 +203,10 @@
     return _travelArray;
 }
 
-- (NSMutableArray *)userArray {
-    if (!_userArray) {
-        _userArray = [NSMutableArray array];
+- (NSMutableArray *)thumbArray {
+    if (!_thumbArray) {
+        _thumbArray = [NSMutableArray array];
     }
-    return _userArray;
+    return _thumbArray;
 }
 @end

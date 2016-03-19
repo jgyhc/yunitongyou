@@ -148,6 +148,12 @@
 #pragma mark --进入
 - (void)handleEventUserCenter:(UIButton * )sender
 {
+    if (!OBJECTID) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        return;
+    }
+
     if (sender.tag == 100)
     {
         MyCollectionViewController *MCVC = [[MyCollectionViewController alloc] init];

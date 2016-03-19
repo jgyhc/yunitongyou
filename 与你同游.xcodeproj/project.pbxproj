@@ -10,6 +10,8 @@
 		044F502F1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F502C1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m */; };
 		044F50301C8AC6F6002DF802 /* UIView+SDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F502E1C8AC6F6002DF802 /* UIView+SDAutoLayout.m */; };
 		044F50331C8ACD44002DF802 /* TravelsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F50321C8ACD44002DF802 /* TravelsViewController.m */; };
+		0473E8F91C9D16B500BC9702 /* ThumbUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473E8F81C9D16B500BC9702 /* ThumbUp.m */; };
+		049169781C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 049169771C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m */; };
 		049E7B9B1C980BAB00D01E5B /* WGS84TOGCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = 049E7B9A1C980BAB00D01E5B /* WGS84TOGCJ02.m */; };
 		04D354281C87E84400DFCB1C /* xiangyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354271C87E84400DFCB1C /* xiangyou.png */; };
 		04D3542A1C87EC6000DFCB1C /* 测试头像1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D354291C87EC6000DFCB1C /* 测试头像1.png */; };
@@ -18,7 +20,6 @@
 		04D3543B1C87F40900DFCB1C /* SuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354381C87F40900DFCB1C /* SuggestionViewController.m */; };
 		04D354401C87F50900DFCB1C /* MyJoinsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3543D1C87F50900DFCB1C /* MyJoinsView.m */; };
 		04D354411C87F50900DFCB1C /* MyJoinsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3543F1C87F50900DFCB1C /* MyJoinsViewController.m */; };
-		04D354441C882A0D00DFCB1C /* TravelNotesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354431C882A0D00DFCB1C /* TravelNotesModel.m */; };
 		04D354471C882D0B00DFCB1C /* TravelNotesTabelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354461C882D0B00DFCB1C /* TravelNotesTabelVC.m */; };
 		04D3544A1C882D4C00DFCB1C /* TravelNotesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354491C882D4C00DFCB1C /* TravelNotesTableViewCell.m */; };
 		04D3544C1C88308900DFCB1C /* portraint0.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D3544B1C88308900DFCB1C /* portraint0.png */; };
@@ -171,7 +172,6 @@
 		7288E10E1C77455600F554D0 /* Called.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10D1C77455600F554D0 /* Called.m */; };
 		7288E1111C77496900F554D0 /* Travel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1101C77496900F554D0 /* Travel.m */; };
 		7288E1141C774B7800F554D0 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1131C774B7800F554D0 /* Comments.m */; };
-		7288E1171C774CAA00F554D0 /* TravelComments.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1161C774CAA00F554D0 /* TravelComments.m */; };
 		72B517361C7495390089CE97 /* RetrievePassword.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B517351C7495390089CE97 /* RetrievePassword.m */; };
 		72C1C6561C734CA1002317FE /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C1C6551C734CA1002317FE /* NetWorking.m */; };
 		72C1C6591C735661002317FE /* Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C1C6581C735661002317FE /* Register.m */; };
@@ -201,6 +201,10 @@
 		044F502E1C8AC6F6002DF802 /* UIView+SDAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDAutoLayout.m"; sourceTree = "<group>"; };
 		044F50311C8ACD44002DF802 /* TravelsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TravelsViewController.h; path = "游记列表/TravelsViewController.h"; sourceTree = "<group>"; };
 		044F50321C8ACD44002DF802 /* TravelsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TravelsViewController.m; path = "游记列表/TravelsViewController.m"; sourceTree = "<group>"; };
+		0473E8F71C9D16B500BC9702 /* ThumbUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbUp.h; sourceTree = "<group>"; };
+		0473E8F81C9D16B500BC9702 /* ThumbUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbUp.m; sourceTree = "<group>"; };
+		049169761C9A8E4F00B8824B /* MyCollectionActivityTabelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionActivityTabelVC.h; sourceTree = "<group>"; };
+		049169771C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionActivityTabelVC.m; sourceTree = "<group>"; };
 		049E7B991C980BAB00D01E5B /* WGS84TOGCJ02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGS84TOGCJ02.h; sourceTree = "<group>"; };
 		049E7B9A1C980BAB00D01E5B /* WGS84TOGCJ02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGS84TOGCJ02.m; sourceTree = "<group>"; };
 		04D354271C87E84400DFCB1C /* xiangyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiangyou.png; sourceTree = "<group>"; };
@@ -215,8 +219,6 @@
 		04D3543D1C87F50900DFCB1C /* MyJoinsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyJoinsView.m; sourceTree = "<group>"; };
 		04D3543E1C87F50900DFCB1C /* MyJoinsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyJoinsViewController.h; sourceTree = "<group>"; };
 		04D3543F1C87F50900DFCB1C /* MyJoinsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyJoinsViewController.m; sourceTree = "<group>"; };
-		04D354421C882A0D00DFCB1C /* TravelNotesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelNotesModel.h; sourceTree = "<group>"; };
-		04D354431C882A0D00DFCB1C /* TravelNotesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelNotesModel.m; sourceTree = "<group>"; };
 		04D354451C882D0B00DFCB1C /* TravelNotesTabelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelNotesTabelVC.h; sourceTree = "<group>"; };
 		04D354461C882D0B00DFCB1C /* TravelNotesTabelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelNotesTabelVC.m; sourceTree = "<group>"; };
 		04D354481C882D4C00DFCB1C /* TravelNotesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TravelNotesTableViewCell.h; path = "../../左抽屉/登陆注册(1)/我的收藏/TravelNotesTableViewCell.h"; sourceTree = "<group>"; };
@@ -449,8 +451,6 @@
 		7288E1101C77496900F554D0 /* Travel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Travel.m; sourceTree = "<group>"; };
 		7288E1121C774B7800F554D0 /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
 		7288E1131C774B7800F554D0 /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
-		7288E1151C774CAA00F554D0 /* TravelComments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelComments.h; sourceTree = "<group>"; };
-		7288E1161C774CAA00F554D0 /* TravelComments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelComments.m; sourceTree = "<group>"; };
 		72B517341C7495390089CE97 /* RetrievePassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetrievePassword.h; sourceTree = "<group>"; };
 		72B517351C7495390089CE97 /* RetrievePassword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetrievePassword.m; sourceTree = "<group>"; };
 		72C1C6541C734CA1002317FE /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
@@ -625,10 +625,10 @@
 			children = (
 				24204BC21BCF66730034B4C6 /* MyCollectionViewController.h */,
 				24204BC31BCF66730034B4C6 /* MyCollectionViewController.m */,
-				04D354421C882A0D00DFCB1C /* TravelNotesModel.h */,
-				04D354431C882A0D00DFCB1C /* TravelNotesModel.m */,
 				04D354451C882D0B00DFCB1C /* TravelNotesTabelVC.h */,
 				04D354461C882D0B00DFCB1C /* TravelNotesTabelVC.m */,
+				049169761C9A8E4F00B8824B /* MyCollectionActivityTabelVC.h */,
+				049169771C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m */,
 				04D354551C88375300DFCB1C /* PhotoView.h */,
 				04D354561C88375300DFCB1C /* PhotoView.m */,
 			);
@@ -1197,8 +1197,8 @@
 				7288E1101C77496900F554D0 /* Travel.m */,
 				7288E1121C774B7800F554D0 /* Comments.h */,
 				7288E1131C774B7800F554D0 /* Comments.m */,
-				7288E1151C774CAA00F554D0 /* TravelComments.h */,
-				7288E1161C774CAA00F554D0 /* TravelComments.m */,
+				0473E8F71C9D16B500BC9702 /* ThumbUp.h */,
+				0473E8F81C9D16B500BC9702 /* ThumbUp.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1549,7 +1549,6 @@
 				24780C6E1BD628550009A40D /* TravelCommentsNetWorking.m in Sources */,
 				248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */,
 				72657E1A1C99906B00CC08AD /* InitiateDetailFollowerView.m in Sources */,
-				7288E1171C774CAA00F554D0 /* TravelComments.m in Sources */,
 				24780C6A1BD628550009A40D /* CalledCommentsNetWorking.m in Sources */,
 				24204BB21BCF65440034B4C6 /* LoginViewController.m in Sources */,
 				2497BA1B1BCCC37400251058 /* DrawerViewController.m in Sources */,
@@ -1576,7 +1575,6 @@
 				72657E1D1C99906B00CC08AD /* AddActivityViewController.m in Sources */,
 				24204BB51BCF65440034B4C6 /* RegisterViewController.m in Sources */,
 				72657E171C99906B00CC08AD /* LaunchTableViewCell.m in Sources */,
-				04D354441C882A0D00DFCB1C /* TravelNotesModel.m in Sources */,
 				2462C6661BECD559001714C8 /* ChooseImageListCollectionViewCell.m in Sources */,
 				24600CBB1BEDA1D300C3C3B9 /* ReloadImagesFromLibrary.m in Sources */,
 				24780C6D1BD628550009A40D /* NetWorkingViewController.m in Sources */,
@@ -1597,6 +1595,7 @@
 				72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */,
 				245B59E71BCB8BE80003EBA7 /* AppDelegate.m in Sources */,
 				24780C831BD663050009A40D /* LoadingView.m in Sources */,
+				049169781C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m in Sources */,
 				72C1C6561C734CA1002317FE /* NetWorking.m in Sources */,
 				24780C701BD628550009A40D /* UserModel.m in Sources */,
 				044F50331C8ACD44002DF802 /* TravelsViewController.m in Sources */,
@@ -1610,6 +1609,7 @@
 				24780C6F1BD628550009A40D /* TravelModel.m in Sources */,
 				246A91231BDB168200B76514 /* MyActivitiesView.m in Sources */,
 				24780C6C1BD628550009A40D /* CalledNetWorking.m in Sources */,
+				0473E8F91C9D16B500BC9702 /* ThumbUp.m in Sources */,
 				24780C801BD661610009A40D /* TFIndicatorView.m in Sources */,
 				04D3544A1C882D4C00DFCB1C /* TravelNotesTableViewCell.m in Sources */,
 			);
