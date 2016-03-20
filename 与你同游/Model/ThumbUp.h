@@ -9,9 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface ThumbUp : NSObject
-
+//点赞
 + (void)thumUpWithID:(NSString *)travelOrCalledId type:(int)type  success:(void (^)(NSString *commentID))success failure:(void (^)(NSError *error1))failure;
 
 
-+ (void)getThumbUpInfo:(NSString *)travelOrCalledId success:(void (^)(int thumbNumber))success failure:(void (^)(NSError *error1))failure;
++ (void)getThumbUpInfo:(NSString *)travelOrCalledId success:(void (^)(NSArray * thumbArray))success failure:(void (^)(NSError *error1))failure;
+
+//取消点赞
++ (void)cancelThumUpWithID:(NSString *)thumbUpId  type:(int)type success:(void (^)(NSString *commentID))success failure:(void (^)(NSError *error1))failure;
 @end

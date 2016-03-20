@@ -125,7 +125,7 @@
 }
 
 #pragma mark --查询所有游记
-- (void)queryTheTravelListSuccessBlock:(void(^)(NSArray * travelArray))success thumbInfoBlock:(void(^)(NSMutableArray * thumbArray))thumbInfo   failBlock:(void(^)(NSError * error))fail {
+- (void) queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success failBlock:(void(^)(NSError * error))fail {
     BmobQuery   *bquery = [BmobQuery queryWithClassName:@"Travel"];
     bquery.limit = 10;//每页10条
     //    bquery.skip = 3;//跳过查询的前多少条数据来实现分页查询的功能。
@@ -138,14 +138,6 @@
             NSLog(@"游记查询失败:%@",error);
         }
         else{
-//            for (BmobObject * obj in array) {
-//                [ThumbUp getThumbUpInfo:obj.objectId success:^(int thumbNumber) {
-//                    [self.thumbArray addObject:[NSNumber numberWithInt:thumbNumber]];
-//                } failure:^(NSError *error1) {
-//                    
-//                }];
-//            }
-//            thumbInfo(self.thumbArray);
             success(array);
         }
     }];

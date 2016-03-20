@@ -38,7 +38,7 @@
  *  @param success 成功获得游记信息
  *  @param fail    失败原因
  */
-- (void)queryTheTravelListSuccessBlock:(void(^)(NSArray * travelArray))success thumbInfoBlock:(void(^)(NSMutableArray * thumbArray))thumbInfo   failBlock:(void(^)(NSError * error))fail ;
+- (void) queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success failBlock:(void(^)(NSError * error))fail ;
 
 /**
  *  查询一个人发表的所有游记

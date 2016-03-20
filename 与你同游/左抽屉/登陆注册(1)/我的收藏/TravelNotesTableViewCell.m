@@ -23,7 +23,14 @@ const CGFloat maxContentLabelHeight = 54;
 @property (nonatomic, strong)   UIView      * vline1;
 @property (nonatomic, strong)   UIView      * vline2;
 
-@property (nonatomic,copy) thumbUp callblock;//为block声明属性（copy修饰）
+@property (nonatomic, assign) int thumbNumber;
+@property (nonatomic, assign) int commentNumber;
+
+@property (nonatomic,copy) thumbUp thumbUpblock;//为block声明属性（copy修饰）
+
+@property (nonatomic,copy) share  sharedblock;
+
+@property (nonatomic,copy) comment commentblock;
 
 @end
 
@@ -85,6 +92,8 @@ const CGFloat maxContentLabelHeight = 54;
     _sharebt = [UIButton new];
     
     [_dianzanbt addTarget:self action:@selector(handleThumbUp:) forControlEvents:UIControlEventTouchUpInside];
+    [_commentbt addTarget:self action:@selector(handleComment) forControlEvents:UIControlEventTouchUpInside];
+    [_sharebt addTarget:self action:@selector(handleShared) forControlEvents:UIControlEventTouchUpInside];
     
     _hline1 = [UIView new];
     _hline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
@@ -198,8 +207,8 @@ const CGFloat maxContentLabelHeight = 54;
         self.commentImg.image = IMAGE_PATH(@"评论.png");
         self.shareImg.image = IMAGE_PATH(@"未分享.png");
     
-    
-        self.dianzanLabel.text = [NSString stringWithFormat:@"%@",self.thumbNumber];
+
+        self.dianzanLabel.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"number_of_thumb_up"]];
         self.commentLabel.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"comments_number"]];
     
     
@@ -242,11 +251,15 @@ const CGFloat maxContentLabelHeight = 54;
 }
 
 - (void)handleThumbUp:(UIButton *)sender{
+    if (!OBJECTID) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        return;
+    }
     if (!sender.selected) {
         self.dianzanImg.image = IMAGE_PATH(@"点赞.png");
-        self.dianzanLabel.text = @"1";
-        if (self.callblock) {
-            self.callblock();
+        if (self.thumbUpblock) {
+            self.thumbUpblock();
         }
     }
     else{
@@ -257,9 +270,33 @@ const CGFloat maxContentLabelHeight = 54;
     sender.selected = !sender.selected;
 }
 
-- (void) buttonPress:(thumbUp)block
-{
-    self.callblock = block;//对block进行持有
+- (void)buttonthumbUp:(thumbUp)firstblock{
+    self.thumbUpblock = firstblock;//对block进行持有
+}
+
+- (void)handleComment{
+    if (!OBJECTID) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        return;
+    }
+    if (self.commentblock) {
+        self.commentblock();
+    }
+}
+
+- (void)buttoncomment:(comment)secondblock{
+    self.commentblock = secondblock;
+}
+
+- (void)handleShared{
+    if (self.sharedblock) {
+        self.sharedblock();
+    }
+}
+
+- (void)buttonshared:(share)thirdblock{
+    self.sharedblock = thirdblock;
 }
 
 #pragma mark --懒加载

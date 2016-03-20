@@ -28,7 +28,7 @@
 @interface TravelsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *travelArray;//数据
-@property (nonatomic, strong) NSMutableArray *thumbArray;//用户
+@property (nonatomic, strong) NSMutableArray *thumbArray;
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) SharedView *sharedView;
@@ -45,24 +45,37 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     
-//    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
-//        [self.travelArray addObjectsFromArray:objectArray];
-////        NSLog(@"%@", self.travelArray);
-//        [self.tableView reloadData];
-//        
-//    } failBlock:^(NSError *error) {
-//        
-//    }];
-    
-    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *travelArray) {
-        [self.travelArray addObjectsFromArray:travelArray];
-         [self.tableView reloadData];
-    } thumbInfoBlock:^(NSMutableArray *thumbArray) {
-//        [self.thumbArray addObjectsFromArray:thumbArray];
-//        [self.tableView reloadData];
+    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
+        [self.travelArray addObjectsFromArray:objectArray];
+        [self.tableView reloadData];
+        
     } failBlock:^(NSError *error) {
         
     }];
+    
+//    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *travelArray) {
+//        
+//        [self.travelArray addObjectsFromArray:travelArray];
+//        for (BmobObject * obj in self.travelArray) {
+//          
+//            [ThumbUp getThumbUpInfo:obj.objectId success:^(int thumbNumber) {
+//                
+//                [self.thumbArray addObject:[NSNumber numberWithInt:thumbNumber]];
+//                [self.tableView reloadData];
+//                
+//            } failure:^(NSError *error1) {
+//                
+//            }];
+//        }
+//        
+//       
+//        
+//    } thumbInfoBlock:^(NSMutableArray *thumbArray) {
+////        [self.thumbArray addObjectsFromArray:thumbArray];
+////        [self.tableView reloadData];
+//    } failBlock:^(NSError *error) {
+//        
+//    }];
 
 }
 - (void)initalizedInterface {
@@ -116,22 +129,23 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
-    BmobObject * object = self.travelArray[indexPath.section];
-    //注意是section,若是numberOfRows returnself.modelArray.count，则是row
-    cell.info = object;
-//    cell.thumbNumber = (NSNumber *)self.thumbArray[indexPath.section];
-   [cell buttonPress:^{
-       [ThumbUp thumUpWithID:[object objectForKey:@"objectId"] type:1 success:^(NSString *commentID) {
-           
-       } failure:^(NSError *error1) {
-           
-       } ];
-       
-       
-         }];
     
-   
+     TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
+    
+      //注意是section,若是numberOfRows returnself.modelArray.count，则是row
+    BmobObject * object = self.travelArray[indexPath.section];
+   cell.info = object;
+    [cell buttonthumbUp:^{
+        
+        [ThumbUp thumUpWithID:object.objectId type:1 success:^(NSString *commentID) {
+
+        } failure:^(NSError *error1) {
+            
+        }];
+        
+        
+    }];
+    
     return cell;
 }
 
