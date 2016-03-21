@@ -23,8 +23,8 @@ const CGFloat maxContentLabelHeight = 54;
 @property (nonatomic, strong)   UIView      * vline1;
 @property (nonatomic, strong)   UIView      * vline2;
 
-@property (nonatomic, assign) int thumbNumber;
-@property (nonatomic, assign) int commentNumber;
+@property (nonatomic, assign)   int     thumbNumber;
+
 
 @property (nonatomic,copy) thumbUp thumbUpblock;//为block声明属性（copy修饰）
 
@@ -185,12 +185,23 @@ const CGFloat maxContentLabelHeight = 54;
 - (void)setInfo:(BmobObject *)info{
     _info = info;
     BmobObject * user =  [info objectForKey:@"userId"];
-    [_iconView sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"head_portraits"]]];
+    
+    
+    NSString * imageString =[user objectForKey:@"head_portraits"];
+    if (imageString.length > 0) {
+        NSURL * imageUrl = [NSURL URLWithString:imageString];
+        [_iconView sd_setImageWithURL:imageUrl];
+    }
+    else{
+        _iconView.image = IMAGE_PATH(@"无头像.png");
+    }
+
+    
+    
     _nameLable.text = [user objectForKey:@"username"];
     //    // 防止单行文本label在重用时宽度计算不准的问题
         [_nameLable sizeToFit];
     _contentLabel.text = [info objectForKey:@"content"];
-    
         _positionImg.image = IMAGE_PATH(@"定位选中.png");
         _position.text = [info objectForKey:@"position"];
     
@@ -200,19 +211,36 @@ const CGFloat maxContentLabelHeight = 54;
     NSDate * mydate = [formatter dateFromString:[info objectForKey:@"createdAt"]];
     _timeLabel.text = [self compareCurrentTime:mydate];
     
+    
+    
      NSArray * pictureArray = (NSArray *)[info objectForKey:@"urlArray"];
         _picContainerView.picPathStringsArray = pictureArray;
     
-        self.dianzanImg.image = IMAGE_PATH(@"未点赞.png");
+    
+    
+    NSArray * thumbArray = (NSArray *)[info objectForKey:@"thumbArray"];
+    for (NSString * userId in thumbArray) {
+        if ([userId isEqualToString:OBJECTID]) {
+           self.dianzanImg.image = IMAGE_PATH(@"点赞.png");
+            self.dianzanLabel.textColor = [UIColor colorWithRed:0.2353 green:0.7569 blue:0.0275 alpha:1.0];
+            _dianzanbt.selected = YES;
+        }
+        else{
+            self.dianzanImg.image = IMAGE_PATH(@"未点赞.png");
+            self.dianzanLabel.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+             _dianzanbt.selected = NO;
+        }
+    }
+    
         self.commentImg.image = IMAGE_PATH(@"评论.png");
         self.shareImg.image = IMAGE_PATH(@"未分享.png");
     
-
-        self.dianzanLabel.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"number_of_thumb_up"]];
+    
+        self.thumbNumber = [(NSNumber *)[info objectForKey:@"number_of_thumb_up"] intValue];
+        self.dianzanLabel.text = [NSString stringWithFormat:@"%d",self.thumbNumber];
         self.commentLabel.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"comments_number"]];
-    
-    
         self.shareLabel.text = @"分享";
+    
         self.vline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
         self.vline2.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
         CGFloat picContainerTopMargin = 0;
@@ -258,13 +286,21 @@ const CGFloat maxContentLabelHeight = 54;
     }
     if (!sender.selected) {
         self.dianzanImg.image = IMAGE_PATH(@"点赞.png");
+        self.dianzanLabel.textColor = [UIColor colorWithRed:0.2353 green:0.7569 blue:0.0275 alpha:1.0];
+        self.dianzanLabel.text = [NSString stringWithFormat:@"%d",(++self.thumbNumber)];
+        
         if (self.thumbUpblock) {
-            self.thumbUpblock();
+            self.thumbUpblock(1);
         }
     }
     else{
         self.dianzanImg.image = IMAGE_PATH(@"未点赞.png");
-        self.dianzanLabel.text = @"0";
+        self.dianzanLabel.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+        self.dianzanLabel.text = [NSString stringWithFormat:@"%d",(--self.thumbNumber)];
+        if (self.thumbUpblock) {
+            self.thumbUpblock(0);
+        }
+        
     }
     
     sender.selected = !sender.selected;

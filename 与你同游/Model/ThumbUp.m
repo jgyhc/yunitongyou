@@ -24,16 +24,11 @@
     
     BmobObject * obj;
     if (type == 0) {
-        obj = [BmobObject objectWithClassName:@"Called"];
+        obj = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:travelOrCalledId];
     }
     else if (type == 1){
-        obj = [BmobObject objectWithClassName:@"Travel"];
+        obj = [BmobObject objectWithoutDatatWithClassName:@"Travel" objectId:travelOrCalledId];
     }
-    
-    obj.objectId = travelOrCalledId;
-    //添加点赞数量
-    int  number = [(NSNumber *)[obj objectForKey:@"number_of_thumb_up"] intValue];
-    [obj setObject:@(number++) forKey:@"number_of_thumb_up"];
     //该pointer跳到该条点赞的travel或则called表
     [thumb setObject:obj forKey:@"obj"];
     //异步保存
@@ -56,9 +51,17 @@
             BmobRelation * relation1 = [BmobRelation relation];
             [relation1 addObject:thumb];
             [obj addRelation:relation1 forKey:@"thumbUp"];
+            
+            //添加点赞数量,原子增加
+            [obj incrementKey:@"number_of_thumb_up"];
+            //添加数组中该点赞人id
+            [obj addUniqueObjectsFromArray:@[OBJECTID] forKey:@"thumbArray"];
+            
+            
+            
             [obj updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                 if (isSuccessful) {
-                    NSLog(@"successful");
+                    success(@"点赞成功");
                 }else{
                     NSLog(@"error %@",[error description]);
                 }
@@ -94,7 +97,7 @@
                     
                     if (isSuccessful) {
                         //删除成功后的动作
-                        NSLog(@"取消点赞成功！");
+                        success(@"取消点赞成功！");
                     } else if (error){
                         NSLog(@"%@",error);
                     } else {
@@ -113,19 +116,11 @@
     else if (type == 1){
         obj = [BmobObject objectWithoutDatatWithClassName:@"Travel" objectId:thumbUpId];
     }
-    int  number = [(NSNumber *)[obj objectForKey:@"number_of_thumb_up"] intValue];
-    [obj setObject:@(number--) forKey:@"number_of_thumb_up"];
-//
-//    BmobRelation *relation = [[BmobRelation alloc] init];
-//    [relation removeObject:[BmobObject objectWithoutDatatWithClassName:@"ThumbUp" objectId:OBJECTID]];
-//    
-//    //添加关联关系到thumbUp列中
-//    [obj addRelation:relation forKey:@"thumbUp"];
-//    
-//    BmobObject * userObj = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:OBJECTID];
-//    [userObj addRelation:relation forKey:@"thumbUp"];
-//    
-//    //异步更新obj的数据
+   //原子计数器（原子减少）
+   [obj decrementKey:@"number_of_thumb_up"];
+    //删除数组中该点赞人id
+    [obj removeObjectsInArray:@[OBJECTID] forKey:@"thumbArray"];
+    //异步更新obj的数据
     [obj updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
         if (isSuccessful) {
             NSLog(@"successful");
@@ -133,15 +128,6 @@
             NSLog(@"error %@",[error description]);
         }
     }];
-//
-//    [userObj updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-//        if (isSuccessful) {
-//            NSLog(@"successful");
-//        }else{
-//            NSLog(@"error %@",[error description]);
-//        }
-//    }];
-
 }
 
 #pragma mark --获取点赞信息

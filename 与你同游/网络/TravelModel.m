@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSString *createTCommentResult;
 @property (nonatomic, strong) BmobObject *userData;
 
-@property (nonatomic, strong) NSMutableArray * thumbArray;
+@property (nonatomic, strong) NSMutableArray * userIdArray;
 @end
 
 @implementation TravelModel
@@ -39,7 +39,7 @@
         [travel setObject:urlArray forKey:@"urlArray"];
         [travel setObject:[NSNumber numberWithInt:0] forKey:@"number_of_thumb_up"];
         [travel setObject:[NSNumber numberWithInt:0] forKey:@"comments_number"];
-        
+        [travel addObjectsFromArray:self.userIdArray forKey:@"thumbArray"];
         //pointer关系
         BmobObject * user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:ObjectId];
         [travel setObject:user forKey:@"userId"];
@@ -274,11 +274,11 @@
     
 }
 
-- (NSMutableArray *)thumbArray {
-    if (!_thumbArray) {
-        _thumbArray = [[NSMutableArray alloc] init];
+- (NSMutableArray *)userIdArray {
+    if (!_userIdArray) {
+        _userIdArray = [[NSMutableArray alloc] init];
     }
-    return _thumbArray;
+    return _userIdArray;
 }
 
 

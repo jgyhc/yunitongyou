@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^thumbUp)(void);//区别名
+typedef void (^thumbUp)(int type);//区别名
 typedef void (^share)(void);
 typedef void (^comment)(void);
 

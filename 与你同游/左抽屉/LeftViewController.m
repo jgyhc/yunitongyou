@@ -81,7 +81,7 @@
             [self.icon sd_setImageWithURL:imageUrl];
         }
         else{
-            self.icon.image = IMAGE_PATH(@"测试头像1.png");
+            self.icon.image = IMAGE_PATH(@"无头像.png");
         }
          self.icon.clipsToBounds = YES;
         

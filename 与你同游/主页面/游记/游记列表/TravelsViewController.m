@@ -44,6 +44,13 @@
 
 }
 - (void)viewWillAppear:(BOOL)animated{
+    [self getData];
+}
+
+- (void)getData{
+    if (self.travelArray.count > 0) {
+        [self.travelArray removeAllObjects];
+    }
     
     [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
         [self.travelArray addObjectsFromArray:objectArray];
@@ -52,30 +59,6 @@
     } failBlock:^(NSError *error) {
         
     }];
-    
-//    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *travelArray) {
-//        
-//        [self.travelArray addObjectsFromArray:travelArray];
-//        for (BmobObject * obj in self.travelArray) {
-//          
-//            [ThumbUp getThumbUpInfo:obj.objectId success:^(int thumbNumber) {
-//                
-//                [self.thumbArray addObject:[NSNumber numberWithInt:thumbNumber]];
-//                [self.tableView reloadData];
-//                
-//            } failure:^(NSError *error1) {
-//                
-//            }];
-//        }
-//        
-//       
-//        
-//    } thumbInfoBlock:^(NSMutableArray *thumbArray) {
-////        [self.thumbArray addObjectsFromArray:thumbArray];
-////        [self.tableView reloadData];
-//    } failBlock:^(NSError *error) {
-//        
-//    }];
 
 }
 - (void)initalizedInterface {
@@ -135,15 +118,22 @@
       //注意是section,若是numberOfRows returnself.modelArray.count，则是row
     BmobObject * object = self.travelArray[indexPath.section];
    cell.info = object;
-    [cell buttonthumbUp:^{
-        
-        [ThumbUp thumUpWithID:object.objectId type:1 success:^(NSString *commentID) {
 
-        } failure:^(NSError *error1) {
-            
-        }];
-        
-        
+    [cell buttonthumbUp:^(int type) {
+        if (type == 1) {
+            //点赞
+            [ThumbUp thumUpWithID:object.objectId type:1 success:^(NSString *commentID) {
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
+        else if (type == 0){
+            //取消点赞
+            [ThumbUp cancelThumUpWithID:object.objectId type:1 success:^(NSString *commentID) {
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
     }];
     
     return cell;

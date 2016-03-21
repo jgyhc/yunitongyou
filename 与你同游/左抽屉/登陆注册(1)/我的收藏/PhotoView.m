@@ -60,15 +60,8 @@
     
     CGFloat itemW = [self itemWidthForPicPathArray:_picPathStringsArray];
     CGFloat itemH = 0;
-    if (_picPathStringsArray.count == 1) {
-        
-        UIImage *image = [UIImage imageNamed:_picPathStringsArray.firstObject];
-        if (image.size.width) {
-            itemH = image.size.height / image.size.width * itemW;
-        }
-    } else {
-        itemH = itemW;
-    }
+
+    itemH = itemW;
     long perRowItemCount = [self perRowItemCountForPicPathArray:_picPathStringsArray];
     CGFloat margin = 10;
     
