@@ -74,7 +74,7 @@
 
 - (void)setCalledID:(NSString *)calledID {
     _calledID = calledID;
-    [Called getcalledListWithLimit:10 skip:0 Success:^(NSArray *calleds) {
+    [Called getCommentsWithLimit:_limit skip:_skip CalledsID:calledID Success:^(NSArray *commentArray) {
         
     } failure:^(NSError *error1) {
         

@@ -8,6 +8,7 @@
 
 #import "MyCollectionViewController.h"
 #import "TravelNotesTabelVC.h"
+#import "MyCollectionActivityTabelVC.h"
 
 
 @interface MyCollectionViewController ()
@@ -18,6 +19,7 @@
 @property (nonatomic, strong)UIButton *rightsideButton;
 
 @property (nonatomic, strong) TravelNotesTabelVC * travelVC;
+@property (nonatomic, strong) MyCollectionActivityTabelVC * activityVC;
 
 @end
 
@@ -30,6 +32,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [self.travelVC removeFromParentViewController];
+    [self.activityVC removeFromParentViewController];
 }
 - (void)initUserInterface {
     [self initBackButton];
@@ -48,25 +51,29 @@
 
 - (void)buttonClickEvent:(UIButton *)sender {
     if (sender == _leftsideButton) {
-//        if (self.joinsView) {
-//            [self.joinsView removeFromSuperview];
-//            
-//        }
+        if (self.activityVC.tableView) {
+            [self.activityVC.tableView removeFromSuperview];
+            
+        }
         [UIView animateWithDuration:0.5 animations:^{
             _separatationLineView.center = CGPointMake(WIDTH / 4, flexibleHeight(104));
         }];
-//        [self.view insertSubview:self.activitiesView atIndex:0];
+        [self addChildViewController:self.travelVC];
+        [self.view addSubview:self.travelVC.tableView];
         _leftsideButton.selected = YES;
         _rightsideButton.selected = NO;
     }
     
     else if (sender == _rightsideButton) {
-//        if (self.activitiesView) {
-//            [self.activitiesView removeFromSuperview];
-//        }
+        if (self.travelVC.tableView) {
+            [self.travelVC.tableView removeFromSuperview];
+        }
         [UIView animateWithDuration:0.5 animations:^{
             _separatationLineView.center = CGPointMake(WIDTH / 4 * 3, flexibleHeight(104));
         }];
+        
+        [self addChildViewController:self.travelVC];
+        [self.view addSubview:self.activityVC.tableView];
 //        [self.view insertSubview:self.joinsView atIndex:0];
         _leftsideButton.selected = NO;
         _rightsideButton.selected = YES;
@@ -83,6 +90,17 @@
         _travelVC.tableView.frame = frame;
     }
     return _travelVC;
+}
+
+- (MyCollectionActivityTabelVC *)activityVC{
+    if (!_activityVC) {
+        _activityVC = [[MyCollectionActivityTabelVC alloc]init];
+        
+        CGRect frame = _activityVC.tableView.frame;
+        frame = flexibleFrame(CGRectMake(0, flexibleHeight(104), WIDTH, HEIGHT - flexibleHeight(104)), NO);
+        _activityVC.tableView.frame = frame;
+    }
+    return _activityVC;
 }
 
 - (UIView *)separatationLineView {

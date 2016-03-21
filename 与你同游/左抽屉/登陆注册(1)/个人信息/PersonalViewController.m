@@ -340,7 +340,7 @@
                 [imageView sd_setImageWithURL:imageUrl];
             }
             else{
-                imageView.image = IMAGE_PATH(@"测试头像1.png");
+                imageView.image = IMAGE_PATH(@"无头像.png");
             }
             imageView.clipsToBounds = YES;
             UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleGesture)];
@@ -378,7 +378,7 @@
                 [customBackgournd sd_setImageWithURL:imageUrl];
             }
             else{
-                customBackgournd.image = IMAGE_PATH(@"测试头像1.png");
+                customBackgournd.image = IMAGE_PATH(@"无头像.png");
             }
             UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
             visualEfView.frame = flexibleFrame(CGRectMake(0, 0, 375, 250), NO);

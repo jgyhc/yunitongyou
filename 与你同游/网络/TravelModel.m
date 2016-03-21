@@ -9,6 +9,7 @@
 #import "TravelModel.h"
 #import "TravelCommentsNetWorking.h"
 #import "UserModel.h"
+#import "ThumbUp.h"
 
 @interface TravelModel ()
 
@@ -19,6 +20,8 @@
 @property (nonatomic, strong) NSMutableArray *CommentsArray;
 @property (nonatomic, strong) NSString *createTCommentResult;
 @property (nonatomic, strong) BmobObject *userData;
+
+@property (nonatomic, strong) NSMutableArray * userIdArray;
 @end
 
 @implementation TravelModel
@@ -36,7 +39,7 @@
         [travel setObject:urlArray forKey:@"urlArray"];
         [travel setObject:[NSNumber numberWithInt:0] forKey:@"number_of_thumb_up"];
         [travel setObject:[NSNumber numberWithInt:0] forKey:@"comments_number"];
-        
+        [travel addObjectsFromArray:self.userIdArray forKey:@"thumbArray"];
         //pointer关系
         BmobObject * user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:ObjectId];
         [travel setObject:user forKey:@"userId"];
@@ -121,50 +124,45 @@
     return thumailsArray;
 }
 
-
-
-- (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password {
-    [self.netWork queryTravelWithPhoneNumber:phoneNumber password:password successBlock:^(NSMutableArray *array) {
-        NSMutableArray *arr = self.travelListArray;
-        [arr addObjectsFromArray:array];
-        self.travelListArray = arr;
-    } failBlock:^(NSError *error) {
-        NSLog(@"%@", error);
-    }];
-}
-- (void)queryTravelWithObejectId:(NSString *)ObjectId {
-    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"User"];
-    [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
-        BmobQuery *travel = [BmobQuery queryWithClassName:@"travel"];
-        //需要查询的列
-        BmobObject *user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:object.objectId];
-        [travel whereObjectKey:@"travels" relatedTo:user];
-        [travel findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-            if (error) {
-                NSLog(@"%@",error);
-            } else {
-                NSMutableArray *objectArray = [NSMutableArray array];
-                for (int i = 0; i < array.count; i ++) {
-                    BmobObject *travelObject = array[i];
-                    if (![travelObject objectForKey:@"thumbnailImages"]) {
-                        [travelObject setObject:nil forKey:@"thumbnailImages"];
-                    }else {
-                        NSMutableArray *array  = [travelObject objectForKey:@"thumbnailImages"];
-                        for (int i = 0; i < array.count; i ++) {
-                            NSString * URL = [NSString stringWithFormat:@"%@?t=1&a=f008d46b406baaa7eff26eba98dccd54", array[i]];
-                            [array replaceObjectAtIndex:i withObject:URL];
-                            NSLog(@"%@", URL);
-                        }
-                        [travelObject setObject:array forKey:@"thumbnailImages"];
-                    }
-                    [objectArray addObject:travelObject];
-                }
-                self.travelListArray = objectArray;
-            }
-        }];
+#pragma mark --查询所有游记
+- (void) queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success failBlock:(void(^)(NSError * error))fail {
+    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"Travel"];
+    bquery.limit = 10;//每页10条
+    //    bquery.skip = 3;//跳过查询的前多少条数据来实现分页查询的功能。
+    [bquery orderByDescending:@"createdAt"];
+    //声明该次查询需要将userId关联的对象信息一并查询出来
+    [bquery includeKey:@"userId"];
+    //查找travel表的数据
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSLog(@"游记查询失败:%@",error);
+        }
+        else{
+            success(array);
+        }
     }];
     
 }
+#pragma mark -- 查询一个人发表的所有游记
+- (void)getMyTravelNotesSuccess:(void (^)(NSArray *mytravels))success failure:(void (^)(NSError *error))failure{
+
+    BmobQuery * bquery = [BmobQuery queryWithClassName:@"Travel"];
+    //构造约束条件
+    BmobQuery * inQuery = [BmobQuery queryWithClassName:@"User"];
+    [inQuery whereKey:@"objectId" equalTo:OBJECTID];
+    //匹配查询
+    [bquery whereKey:@"userId" matchesQuery:inQuery];
+    [bquery orderByDescending:@"createdAt"];
+    [bquery includeKey:@"userId"];
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSLog(@"%@",error);
+        } else {
+            success(array);
+        }
+    }];
+}
+
 
 - (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password travel_date:(NSString *)travel_date {
     [self.netWork queryTravelWithPhoneNumber:phoneNumber password:password travel_date:travel_date successBlock:^(BmobObject *object) {
@@ -182,33 +180,6 @@
     }];
 }
 
-#pragma mark --查询所有游记
-- (void)queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success   failBlock:(void(^)(NSError * error))fail {
-    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"Travel"];
-        bquery.limit = 10;//每页10条
-    //    bquery.skip = 3;//跳过查询的前多少条数据来实现分页查询的功能。
-    [bquery orderByDescending:@"createdAt"];
-    //声明该次查询需要将userId关联的对象信息一并查询出来
-    [bquery includeKey:@"userId"];
-    //查找travel表的数据
-    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        if (error) {
-            NSLog(@"游记查询失败:%@",error);
-        }
-        else{
-            success(array);
-            
-//            for (BmobObject * obj in array) {
-//                
-//                [self.travelListArray addObject:obj];
-//                BmobObject * user = [obj objectForKey:@"userId"];
-//                [self.travelUser addObject:user];
-//            }
-
-        }
-    }];
-    
-}
 
 
 #pragma mark --压缩图片
@@ -303,19 +274,13 @@
     
 }
 
-- (NSMutableArray *)travelListArray {
-    if (!_travelListArray) {
-        _travelListArray = [[NSMutableArray alloc] init];
+- (NSMutableArray *)userIdArray {
+    if (!_userIdArray) {
+        _userIdArray = [[NSMutableArray alloc] init];
     }
-    return _travelListArray;
+    return _userIdArray;
 }
 
-- (NSMutableArray *)travelUser {
-    if (!_travelUser) {
-        _travelUser = [NSMutableArray array];
-    }
-    return _travelUser;
-}
 
 - (UserModel *)userModel{
     if (!_userModel) {
