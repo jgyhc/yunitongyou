@@ -11,6 +11,9 @@
 #import "InitiateDetailFollowerView.h"
 #import "InitiateDetailCommentView.h"
 #import "JoinInView.h"
+#import "Called.h"
+#import <UIImageView+WebCache.h>
+#import "ICommentsView.h"
 #define SIZEHEIGHT frame.size.height
 
 @interface InitiateDetailViewController ()<UIScrollViewDelegate>
@@ -29,52 +32,72 @@
 
 @property (nonatomic, strong)UIScrollView *scrollView;//
 
-@property (nonatomic, strong)InitiateDetailFollowerView *followerView;
-@property (nonatomic, strong)InitiateDetailCommentView *commentView;
-
 @property (nonatomic, strong)UIView *separatationLineView;
 @property (nonatomic, strong)UIButton *leftsideButton;
 @property (nonatomic, strong)UIButton *rightsideButton;
 @property (nonatomic, strong) JoinInView *joinInView;
-
+@property (nonatomic, strong) ICommentsView *commentsView;
+@property (nonatomic, assign) long limit;
+@property (nonatomic, assign) long skip;
 @end
 
 @implementation InitiateDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self initBackButton];
+    [self initNavTitle:@"发起详情"];
     [self initUserInterface];
-//    [self setInterfaceSetting];
-    
     self.view.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)setUserObject:(BmobObject *)userObject {
+    _userObject = userObject;
+    self.userIDLabel.text = [userObject objectForKey:@"username"];
+    [self.userHeaderImageView sd_setImageWithURL:[NSURL URLWithString:[userObject objectForKey:@"head_portraits"]] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [self.scrollView layoutSubviews];
+
+}
+
+- (void)setCalledObject:(BmobObject *)calledObject {
+    _calledObject = calledObject;
+    self.initiateTimeLabel.text = [calledObject objectForKey:@"called_date"];
+    self.departureLabel.text = [calledObject objectForKey:@"point_of_departure"];
+    self.destinationLabel.text = [calledObject objectForKey:@"destination"];
+    self.startingLabel.text = [calledObject objectForKey:@"departure_time"];
+    self.returnLabel.text = [calledObject objectForKey:@"arrival_time"];
+    self.infoLabel.text = [calledObject objectForKey:@"content"];
+    self.followerNumLabel.text = [NSString stringWithFormat:@"%@", [calledObject objectForKey:@"number_Of_people"]];
+    [self.scrollView layoutSubviews];
+}
+
+
+- (void)setCalledID:(NSString *)calledID {
+    _calledID = calledID;
+    [Called getcalledListWithLimit:10 skip:0 Success:^(NSArray *calleds) {
+        
+    } failure:^(NSError *error1) {
+        
+    }];
 
 }
 
 - (void)initUserInterface {
-    [self initBackButton];
-    [self initNavTitle:@"发起详情"];
+
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.scrollView];
     self.scrollView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomEqualToView(self.view);
     
     [self.scrollView addSubview:self.userHeaderImageView];
     [self.scrollView addSubview:self.userIDLabel];
-    self.userIDLabel.text = @"name";
     [self.scrollView addSubview:self.initiateTimeLabel];
-    self.initiateTimeLabel.text = @"刚刚";
     [self.scrollView addSubview:self.sexImageView];
     
     [self.scrollView addSubview:self.followerNumLabel];
-    self.followerNumLabel.text = @"12";
     [self.scrollView addSubview:self.departureLabel];
-    self.departureLabel.text  = @"就这";
     [self.scrollView addSubview:self.destinationLabel];
-    self.destinationLabel.text = @"到那";
     [self.scrollView addSubview:self.startingLabel];
-    self.startingLabel.text = @"今天";
     [self.scrollView addSubview:self.returnLabel];
-    self.returnLabel.text = @"明天";
     [self.scrollView addSubview:self.infoLabel];
     [self.scrollView addSubview:self.leftsideButton];
     [self.scrollView addSubview:self.rightsideButton];
@@ -126,65 +149,22 @@
     [self.scrollView setupAutoContentSizeWithBottomView:self.joinInView bottomMargin:0];
 }
 
-- (void)setInterfaceSetting {
-//    _userHeaderImageView.image = [self.userObject objectForKey:@"head_portraits1"];
-//    if ([self.userObject objectForKey:@"sex"]) {
-//        if ([[self.userObject objectForKey:@"sex"]  isEqualToString:@"男"]) {
-//            self.sexImageView.image = IMAGE_PATH(@"男.png");
-//        }else {
-//            self.sexImageView.image = IMAGE_PATH(@"女.png");
-//        }
-//    }else {
-//        self.sexImageView.image = IMAGE_PATH(@"男.png");
-//    }
-//    if ([self.userObject objectForKey:@"userName"]) {
-//        _userIDLabel.text = [self.userObject objectForKey:@"userName"];
-//    }else {
-//        _userIDLabel.text = [self.userObject objectForKey:@"phone_number"];
-//    }
-//
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *date = [dateFormatter dateFromString:[self.calledObject objectForKey:@"called_date"]];
-//
-//    _initiateTimeLabel.text = [self compareCurrentTime:date];
-//    _followerNumLabel.text = [NSString stringWithFormat:@"%@人\n跟团", [self.calledObject objectForKey:@"number_Of_people"]];
-//    _departureLabel.text = [self.calledObject objectForKey:@"point_of_departure"];
-//    _destinationLabel.text = [self.calledObject objectForKey:@"destination"];
-//    _startingLabel.text = [self.calledObject objectForKey:@"departure_time"];
-//    _returnLabel.text = [self.calledObject objectForKey:@"arrival_time"];
-//    
-//#pragma mark --infoLabel
-//    NSString *string = [self.calledObject objectForKey:@"content"];
-//    _infoLabel.text = string;
-//    float labelHeight = [self heightForString:string fontSize:14 andWidth:flexibleHeight(WIDTH - 20)];
-//    _infoLabel.frame = CGRectMake(0, _startingLabel.frame.origin.y + _startingLabel.SIZEHEIGHT, CGRectGetMaxX(self.view.frame) - flexibleHeight(10), labelHeight);
-//    
-//#pragma mark --infoImageView
-//    
-//    
-//    [self.scrollView addSubview:self.leftsideButton];
-//    [self.scrollView addSubview:self.rightsideButton];
-//    [self.scrollView addSubview:self.separatationLineView];
-//    [self.scrollView insertSubview:self.followerView atIndex:0];
-//    
-//    [self setObjectLocation];
-}
-
-
-
 
 - (void)buttonClickEvent:(UIButton *)sender {
     if (sender == self.leftsideButton) {
-        
+        [self.commentsView removeFromSuperview];
+        [self.scrollView addSubview:self.joinInView];
         [UIView animateWithDuration:0.3 animations:^{
             self.separatationLineView.sd_layout.centerXIs(flexibleWidth(WIDTH / 4));
             [self.separatationLineView updateLayout];
             [self.scrollView updateLayout];
         }];
-
     }
+    
     if (sender == self.rightsideButton) {
+        [self.scrollView addSubview:self.commentsView];
+        self.commentsView.sd_layout.leftEqualToView(self.scrollView).rightEqualToView(self.scrollView).topSpaceToView(self.separatationLineView, 0).heightIs(flexibleHeight(10 * flexibleHeight(50)));
+        [self.joinInView removeFromSuperview];
         [UIView animateWithDuration:0.3 animations:^{
             self.separatationLineView.sd_layout.centerXIs(flexibleWidth(WIDTH / 4 * 3));
             [self.scrollView updateLayout];
@@ -192,18 +172,6 @@
         }];
     }
 }
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (UIImageView *)userHeaderImageView {
     if (!_userHeaderImageView) {
@@ -351,25 +319,7 @@
     return _scrollView;
 }
 
-- (InitiateDetailFollowerView *)followerView {
-    if (!_followerView) {
-        _followerView = [[InitiateDetailFollowerView alloc]init];
-        CGRect frame = _followerView.frame;
-        frame.origin.y = self.leftsideButton.frame.origin.y + self.leftsideButton.SIZEHEIGHT;
-        _followerView.frame = frame;
-    }
-    return _followerView;
-}
 
-- (InitiateDetailCommentView *)commentView {
-    if (!_commentView) {
-        _commentView = [[InitiateDetailCommentView alloc] init];
-        CGRect frame = _commentView.frame;
-        frame.origin.y = self.leftsideButton.frame.origin.y + self.leftsideButton.SIZEHEIGHT;
-        _commentView.frame = frame;
-    }
-    return _commentView;
-}
 
 - (UIView *)separatationLineView {
     if (!_separatationLineView) {
@@ -419,6 +369,13 @@
 		_joinInView = [[JoinInView alloc] init];
 	}
 	return _joinInView;
+}
+
+- (ICommentsView *)commentsView {
+	if(_commentsView == nil) {
+		_commentsView = [[ICommentsView alloc] init];
+	}
+	return _commentsView;
 }
 
 @end

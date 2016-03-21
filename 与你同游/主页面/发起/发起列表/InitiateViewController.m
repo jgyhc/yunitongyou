@@ -75,6 +75,7 @@
 }
 
 - (void)handleAddCalled:(UIButton *)sender {
+    
     AddActivityViewController *AAVC = [[AddActivityViewController alloc] init];
     [self.navigationController pushViewController:AAVC animated:YES];
 
@@ -91,7 +92,7 @@
     BmobObject *obj = self.dataSource[indexPath.section];
     cell.obj = obj;
     [cell setThumbUpBlock:^(NSIndexPath *index) {
-        NSLog(@"点的第%ld个", index.section);
+        NSLog(@"点的第%ld个", (long)index.section);
     }];
     return cell;
 }
@@ -166,8 +167,12 @@
     return view;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BmobObject *obj = self.dataSource[indexPath.section];
     InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
-    
+    IVC.calledID = obj.objectId;
+    BmobObject *user = [obj objectForKey:@"user"];
+    IVC.userObject = user;
+    IVC.calledObject = obj;
     [self.navigationController pushViewController:IVC animated:YES];
 }
 #pragma mark --getter

@@ -39,4 +39,17 @@
 
 //查询活动列表（包括user字段下包含的作者信息）（未测试）
 + (void)getcalledListWithLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error1))failure;
+
+
+
+/**
+ *  查询一条发起的所有评论
+ *
+ *  @param limit    最大条数
+ *  @param skip     跳到多少条
+ *  @param calledID id
+ *  @param success
+ *  @param failure  
+ */
++ (void)getCommentsWithLimit:(NSInteger)limit skip:(NSInteger)skip CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure;
 @end

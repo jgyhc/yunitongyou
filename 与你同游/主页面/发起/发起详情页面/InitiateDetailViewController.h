@@ -11,4 +11,5 @@
 @interface InitiateDetailViewController : BaseViewController
 @property (nonatomic, strong) BmobObject *userObject;
 @property (nonatomic, strong) BmobObject *calledObject;
+@property (nonatomic, strong) NSString *calledID;
 @end

@@ -108,25 +108,26 @@
     }];
 }
 
-//查询一条发起的详情
-+ (void)getCommentsWithCalledsID:(NSString *)calledID Success:(void (^)(BmobObject *called))success failure:(void (^)(NSError *error1))failure {
-    BmobQuery *bquery = [BmobQuery queryWithClassName:@"Called"];
-    [bquery includeKey:@"user"];//声明查询Called的时候  把表里面user字段的数据查出来
-    [bquery includeKey:@"comments"];//声明查询Called的时候  把表里面comments字段的数据查出来
-    [bquery getObjectInBackgroundWithId:calledID block:^(BmobObject *object, NSError *error) {
+//查询一条发起的评论列表
++ (void)getCommentsWithLimit:(NSInteger)limit skip:(NSInteger)skip CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure {
+    //关联对象表
+    BmobQuery *bqueryCommont = [BmobQuery queryWithClassName:@"Comment"];
+    bqueryCommont.limit = limit;
+    bqueryCommont.skip = skip;
+    //需要查询的列
+    BmobObject *called = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
+    [bqueryCommont whereObjectKey:@"comments" relatedTo:called];
+    [bqueryCommont findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
-            failure(error);
             NSLog(@"%@",error);
-        }else {
-//            BmobObject *called = object;
-//            BmobObject *user = [called objectForKey:@"user"];
-//            BmobObject *comment = [called objectForKey:@"comments"];
-            success(object);
+        } else {
+            for (BmobObject *user in array) {
+                NSLog(@"%@",[user objectForKey:@"username"]);
+            }
         }
-        
     }];
-
-
+    
+    
 }
 
 
