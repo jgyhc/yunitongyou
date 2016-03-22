@@ -70,13 +70,12 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.tableView];
     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, 0);
-    __weak typeof(self) weakSelf = self;
-    self.headerView.frameBlock = ^(CGFloat h) {
-        weakSelf.headerView.frame = CGRectMake(0, 0, 0, h);
-        [weakSelf.tableView layoutSubviews];
-    };
     self.tableView.tableHeaderView = self.headerView;
-    
+    [self.view layoutSubviews];
+//    self.headerView.didFinishAutoLayoutBlock = ^(CGRect frame){
+//        weakSelf.headerView.frame = CGRectMake(0, 0, 0, weakSelf.headerView.frame.size.height);
+//        [weakSelf.view updateLayout];
+//    };
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

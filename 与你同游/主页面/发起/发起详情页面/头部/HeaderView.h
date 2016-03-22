@@ -11,5 +11,5 @@
 @interface HeaderView : UIView
 @property (nonatomic, strong) BmobObject *userObject;
 @property (nonatomic, strong) BmobObject *calledObject;
-@property (nonatomic, strong) void (^frameBlock)(CGFloat h);
+@property (nonatomic, assign) CGFloat h;
 @end

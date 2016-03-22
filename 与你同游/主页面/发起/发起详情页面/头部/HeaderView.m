@@ -76,16 +76,8 @@
         
         self.infoLabel.sd_layout.leftSpaceToView(self, flexibleWidth(15)).rightSpaceToView(self, flexibleWidth(15)).topSpaceToView(self.startingLabel, flexibleHeight(10)).autoHeightRatio(0);
         
-        [self setupAutoHeightWithBottomView:self.infoLabel bottomMargin:flexibleHeight(10)];
-        [self updateLayout];
-
+        [self setupAutoHeightWithBottomView:self.infoLabel bottomMargin:0];
         
-        __weak typeof(self) weakSelf = self;
-        [self setDidFinishAutoLayoutBlock:^(CGRect frame) {
-            NSLog(@"%f", weakSelf.bounds.size.height);
-            CGFloat h = weakSelf.bounds.size.height;
-            weakSelf.frameBlock(h);
-        }];
     }
     return self;
 }
@@ -107,7 +99,11 @@
     self.returnLabel.text = [calledObject objectForKey:@"arrival_time"];
     self.infoLabel.text = [calledObject objectForKey:@"content"];
     self.followerNumLabel.text = [NSString stringWithFormat:@"%@", [calledObject objectForKey:@"number_Of_people"]];
-    [self layoutSubviews];
+    [self.followerNumLabel layoutSubviews];
+    [self.startingLabel layoutSubviews];
+    [self.destinationLabel layoutSubviews];
+    [self.infoLabel layoutSubviews];
+
 }
 
 
