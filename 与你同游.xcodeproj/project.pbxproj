@@ -147,13 +147,12 @@
 		24BDA5841BF213D100C84CAF /* RecordDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA57F1BF213D000C84CAF /* RecordDetailTableViewCell.m */; };
 		24BDA5851BF213D100C84CAF /* RecordDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA5811BF213D100C84CAF /* RecordDetailViewController.m */; };
 		24F9F4E71BDCD96F00C722BE /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9F4E61BDCD96F00C722BE /* PersonalViewController.m */; };
+		720F67551CA02DF500312A2C /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 720F67541CA02DF500312A2C /* HeaderView.m */; };
+		720F67581CA0305D00312A2C /* HeaderButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 720F67571CA0305D00312A2C /* HeaderButtonView.m */; };
 		72657E141C99906B00CC08AD /* BottomButtonsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DE81C99906B00CC08AD /* BottomButtonsView.m */; };
 		72657E151C99906B00CC08AD /* ImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DEA1C99906B00CC08AD /* ImageView.m */; };
 		72657E161C99906B00CC08AD /* InitiateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DED1C99906B00CC08AD /* InitiateViewController.m */; };
 		72657E171C99906B00CC08AD /* LaunchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DEF1C99906B00CC08AD /* LaunchTableViewCell.m */; };
-		72657E181C99906B00CC08AD /* InitiateDetailCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DF21C99906B00CC08AD /* InitiateDetailCommentView.m */; };
-		72657E191C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DF41C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.m */; };
-		72657E1A1C99906B00CC08AD /* InitiateDetailFollowerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DF61C99906B00CC08AD /* InitiateDetailFollowerView.m */; };
 		72657E1B1C99906B00CC08AD /* InitiateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DF81C99906B00CC08AD /* InitiateDetailViewController.m */; };
 		72657E1C1C99906B00CC08AD /* ScenicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DFB1C99906B00CC08AD /* ScenicViewController.m */; };
 		72657E1D1C99906B00CC08AD /* AddActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DFE1C99906B00CC08AD /* AddActivityViewController.m */; };
@@ -401,6 +400,10 @@
 		34CFEACCB7830DBA9ED922F1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		3BC4622076ADF4F0085F643B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BA2AD9CDA8EED50A1306C8F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		720F67531CA02DF500312A2C /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		720F67541CA02DF500312A2C /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
+		720F67561CA0305D00312A2C /* HeaderButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderButtonView.h; sourceTree = "<group>"; };
+		720F67571CA0305D00312A2C /* HeaderButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderButtonView.m; sourceTree = "<group>"; };
 		72657DE71C99906B00CC08AD /* BottomButtonsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomButtonsView.h; sourceTree = "<group>"; };
 		72657DE81C99906B00CC08AD /* BottomButtonsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomButtonsView.m; sourceTree = "<group>"; };
 		72657DE91C99906B00CC08AD /* ImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageView.h; sourceTree = "<group>"; };
@@ -409,12 +412,6 @@
 		72657DED1C99906B00CC08AD /* InitiateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitiateViewController.m; sourceTree = "<group>"; };
 		72657DEE1C99906B00CC08AD /* LaunchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchTableViewCell.h; sourceTree = "<group>"; };
 		72657DEF1C99906B00CC08AD /* LaunchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchTableViewCell.m; sourceTree = "<group>"; };
-		72657DF11C99906B00CC08AD /* InitiateDetailCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitiateDetailCommentView.h; sourceTree = "<group>"; };
-		72657DF21C99906B00CC08AD /* InitiateDetailCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitiateDetailCommentView.m; sourceTree = "<group>"; };
-		72657DF31C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitiateDetailFollowerTableViewCell.h; sourceTree = "<group>"; };
-		72657DF41C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitiateDetailFollowerTableViewCell.m; sourceTree = "<group>"; };
-		72657DF51C99906B00CC08AD /* InitiateDetailFollowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitiateDetailFollowerView.h; sourceTree = "<group>"; };
-		72657DF61C99906B00CC08AD /* InitiateDetailFollowerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitiateDetailFollowerView.m; sourceTree = "<group>"; };
 		72657DF71C99906B00CC08AD /* InitiateDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitiateDetailViewController.h; sourceTree = "<group>"; };
 		72657DF81C99906B00CC08AD /* InitiateDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitiateDetailViewController.m; sourceTree = "<group>"; };
 		72657DFA1C99906B00CC08AD /* ScenicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenicViewController.h; sourceTree = "<group>"; };
@@ -1083,6 +1080,17 @@
 			path = "游记详情";
 			sourceTree = "<group>";
 		};
+		720F67521CA02DC300312A2C /* 头部 */ = {
+			isa = PBXGroup;
+			children = (
+				720F67531CA02DF500312A2C /* HeaderView.h */,
+				720F67541CA02DF500312A2C /* HeaderView.m */,
+				720F67561CA0305D00312A2C /* HeaderButtonView.h */,
+				720F67571CA0305D00312A2C /* HeaderButtonView.m */,
+			);
+			path = "头部";
+			sourceTree = "<group>";
+		};
 		72657DE51C99906B00CC08AD /* 发起 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1120,14 +1128,9 @@
 		72657DF01C99906B00CC08AD /* 发起详情页面 */ = {
 			isa = PBXGroup;
 			children = (
+				720F67521CA02DC300312A2C /* 头部 */,
 				72E8C5921C9ADFB000C57A24 /* 评论 */,
 				72E8C5931C9ADFB000C57A24 /* 已加入的小伙伴 */,
-				72657DF11C99906B00CC08AD /* InitiateDetailCommentView.h */,
-				72657DF21C99906B00CC08AD /* InitiateDetailCommentView.m */,
-				72657DF31C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.h */,
-				72657DF41C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.m */,
-				72657DF51C99906B00CC08AD /* InitiateDetailFollowerView.h */,
-				72657DF61C99906B00CC08AD /* InitiateDetailFollowerView.m */,
 				72657DF71C99906B00CC08AD /* InitiateDetailViewController.h */,
 				72657DF81C99906B00CC08AD /* InitiateDetailViewController.m */,
 			);
@@ -1507,7 +1510,6 @@
 				72C1C6591C735661002317FE /* Register.m in Sources */,
 				24F9F4E71BDCD96F00C722BE /* PersonalViewController.m in Sources */,
 				72DCD1F51C058C6900BFDB6D /* BaseGradientView.m in Sources */,
-				72657E181C99906B00CC08AD /* InitiateDetailCommentView.m in Sources */,
 				24204BC71BCF66A10034B4C6 /* MyTravelsViewController.m in Sources */,
 				248D84C11BDF9B50008C3419 /* OtherInfoViewController.m in Sources */,
 				04D354471C882D0B00DFCB1C /* TravelNotesTabelVC.m in Sources */,
@@ -1528,9 +1530,9 @@
 				72657E271C99906B00CC08AD /* SearchViewController.m in Sources */,
 				24780C6E1BD628550009A40D /* TravelCommentsNetWorking.m in Sources */,
 				248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */,
-				72657E1A1C99906B00CC08AD /* InitiateDetailFollowerView.m in Sources */,
 				24780C6A1BD628550009A40D /* CalledCommentsNetWorking.m in Sources */,
 				24204BB21BCF65440034B4C6 /* LoginViewController.m in Sources */,
+				720F67551CA02DF500312A2C /* HeaderView.m in Sources */,
 				2497BA1B1BCCC37400251058 /* DrawerViewController.m in Sources */,
 				72657E241C99906B00CC08AD /* LaunchViewScrollImage.m in Sources */,
 				72C1C65C1C735807002317FE /* Login.m in Sources */,
@@ -1577,12 +1579,12 @@
 				24780C831BD663050009A40D /* LoadingView.m in Sources */,
 				049169781C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m in Sources */,
 				72C1C6561C734CA1002317FE /* NetWorking.m in Sources */,
+				720F67581CA0305D00312A2C /* HeaderButtonView.m in Sources */,
 				24780C701BD628550009A40D /* UserModel.m in Sources */,
 				044F50331C8ACD44002DF802 /* TravelsViewController.m in Sources */,
 				04D354611C88380600DFCB1C /* SDBrowserImageView.m in Sources */,
 				24B320D61BD7A50E00FB622A /* ScenicSpotmodei.m in Sources */,
 				245B59E41BCB8BE80003EBA7 /* main.m in Sources */,
-				72657E191C99906B00CC08AD /* InitiateDetailFollowerTableViewCell.m in Sources */,
 				7288E1141C774B7800F554D0 /* Comments.m in Sources */,
 				7288E1111C77496900F554D0 /* Travel.m in Sources */,
 				7288E10E1C77455600F554D0 /* Called.m in Sources */,

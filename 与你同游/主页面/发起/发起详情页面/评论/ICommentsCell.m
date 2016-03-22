@@ -28,18 +28,29 @@
 - (void)setCommont:(BmobObject *)commont {
     _commont = commont;
     [self.contentView addSubview:self.nameLabel];
+    [self.contentView addSubview:self.contenLabel];
     self.nameLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).heightIs(flexibleHeight(14)).topSpaceToView(self.contentView, flexibleHeight(10));
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:200];
     if ([commont objectForKey:@"Ruser"]) {
+        BmobObject *Ruser = [commont objectForKey:@"Ruser"];
+        
         [self.contentView addSubview:self.repaly];
         self.repaly.sd_layout.leftSpaceToView(self.nameLabel, 0).heightIs(flexibleHeight(14)).topEqualToView(self.nameLabel);
         [self.repaly setSingleLineAutoResizeWithMaxWidth:100];
+
         
         [self.contentView addSubview:self.repalyLabel];
         self.repalyLabel.sd_layout.leftSpaceToView(self.repaly, 0).heightIs(flexibleHeight(14)).topEqualToView(self.nameLabel);
         [self.repalyLabel setSingleLineAutoResizeWithMaxWidth:200];
+        self.repalyLabel.text = [Ruser objectForKey:@"username"];
     }
-    self.contenLabel.sd_layout.leftEqualToView(self.nameLabel).topSpaceToView(self.nameLabel, flexibleHeight(10)).autoHeightRatio(0).rightSpaceToView(self.contenLabel, flexibleWidth(15));
+    self.contenLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.nameLabel, flexibleHeight(10)).autoHeightRatio(0).rightSpaceToView(self.contentView, flexibleWidth(15));
+    BmobObject *user = [commont objectForKey:@"user"];
+    self.nameLabel.text = [user objectForKey:@"username"];
+    self.contenLabel.text = [commont objectForKey:@"content"];
+    NSLog(@"%@", [commont objectForKey:@"content"]);
+    [self.contenLabel sizeToFit];
+    
     [self setupAutoHeightWithBottomView:self.contenLabel bottomMargin:flexibleHeight(10)];
     
 }

@@ -9,7 +9,7 @@
 #import "JoinInView.h"
 #import "JoinInCell.h"
 @interface JoinInView ()<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation JoinInView
@@ -39,6 +39,7 @@
 		_tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.scrollEnabled = NO;
         _tableView.rowHeight = flexibleHeight(50);
 	}
 	return _tableView;

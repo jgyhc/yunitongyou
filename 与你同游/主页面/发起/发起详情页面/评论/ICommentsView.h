@@ -10,4 +10,5 @@
 
 @interface ICommentsView : UIView
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) UITableView *tableView;
 @end

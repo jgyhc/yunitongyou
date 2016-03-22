@@ -11,7 +11,7 @@
 #import "ICommentsCell.h"
 #import "Called.h"
 @interface ICommentsView ()<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UITableView *tableView;
+
 
 @end
 @implementation ICommentsView
@@ -26,12 +26,19 @@
     return self;
 }
 
+- (void)setDataSource:(NSMutableArray *)dataSource {
+    _dataSource = dataSource;
+    [self.tableView reloadData];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ICommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ICommentsCell class])];
+    BmobObject *comment = self.dataSource[indexPath.row];
+    cell.commont = comment;
     return cell;
 }
 
@@ -55,17 +62,13 @@
         _tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.scrollEnabled = NO;
         _tableView.rowHeight = flexibleHeight(50);
     }
     return _tableView;
 }
 
 
-- (NSMutableArray *)dataSource {
-    if(_dataSource == nil) {
-        _dataSource = [[NSMutableArray alloc] init];
-    }
-    return _dataSource;
-}
+
 
 @end
