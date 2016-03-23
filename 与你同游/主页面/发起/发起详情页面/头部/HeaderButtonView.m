@@ -75,7 +75,7 @@
         _leftsideButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [button setTitle:@"加入的小伙伴" forState:UIControlStateNormal];
+            [button setTitle:@"评论的小伙伴" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor colorWithWhite:0.298 alpha:1.000] forState:UIControlStateNormal];
             [button setBackgroundColor:[UIColor whiteColor]];
             [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
@@ -92,7 +92,7 @@
         _rightsideButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [button setTitle:@"评论的小伙伴" forState:UIControlStateNormal];
+            [button setTitle:@"加入的小伙伴" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor colorWithWhite:0.298 alpha:1.000] forState:UIControlStateNormal];
             [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
             [button setBackgroundColor:[UIColor whiteColor]];

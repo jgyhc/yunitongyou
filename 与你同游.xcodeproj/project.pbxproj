@@ -162,6 +162,9 @@
 		72657E251C99906B00CC08AD /* SearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E0F1C99906B00CC08AD /* SearchResultView.m */; };
 		72657E261C99906B00CC08AD /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E111C99906B00CC08AD /* SearchResultViewController.m */; };
 		72657E271C99906B00CC08AD /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657E131C99906B00CC08AD /* SearchViewController.m */; };
+		7275C6381CA2C4BC00BD81FF /* 我要加入未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 7275C6361CA2C4BC00BD81FF /* 我要加入未选.png */; };
+		7275C6391CA2C4BC00BD81FF /* 我要加入已选.png in Resources */ = {isa = PBXBuildFile; fileRef = 7275C6371CA2C4BC00BD81FF /* 我要加入已选.png */; };
+		7275C63D1CA2C4F700BD81FF /* LBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7275C63C1CA2C4F700BD81FF /* LBottomView.m */; };
 		7288E10B1C7744FC00F554D0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10A1C7744FC00F554D0 /* User.m */; };
 		7288E10E1C77455600F554D0 /* Called.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10D1C77455600F554D0 /* Called.m */; };
 		7288E1111C77496900F554D0 /* Travel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1101C77496900F554D0 /* Travel.m */; };
@@ -171,9 +174,7 @@
 		72C1C6591C735661002317FE /* Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C1C6581C735661002317FE /* Register.m */; };
 		72C1C65C1C735807002317FE /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C1C65B1C735807002317FE /* Login.m */; };
 		72DCD1F51C058C6900BFDB6D /* BaseGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */; };
-		72E8C5961C9ADFF900C57A24 /* JoinInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C5951C9ADFF900C57A24 /* JoinInView.m */; };
 		72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C5981C9AE0F600C57A24 /* JoinInCell.m */; };
-		72E8C59C1C9AEA4000C57A24 /* ICommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C59B1C9AEA4000C57A24 /* ICommentsView.m */; };
 		72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */; };
 		818282CFDFFDDFF1283A59A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC4622076ADF4F0085F643B /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -430,6 +431,10 @@
 		72657E111C99906B00CC08AD /* SearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
 		72657E121C99906B00CC08AD /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		72657E131C99906B00CC08AD /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		7275C6361CA2C4BC00BD81FF /* 我要加入未选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我要加入未选.png"; sourceTree = "<group>"; };
+		7275C6371CA2C4BC00BD81FF /* 我要加入已选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我要加入已选.png"; sourceTree = "<group>"; };
+		7275C63B1CA2C4F700BD81FF /* LBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBottomView.h; sourceTree = "<group>"; };
+		7275C63C1CA2C4F700BD81FF /* LBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBottomView.m; sourceTree = "<group>"; };
 		7288E1091C7744FC00F554D0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		7288E10A1C7744FC00F554D0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		7288E10C1C77455600F554D0 /* Called.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Called.h; sourceTree = "<group>"; };
@@ -448,12 +453,8 @@
 		72C1C65B1C735807002317FE /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
 		72DCD1F31C058C6900BFDB6D /* BaseGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseGradientView.h; sourceTree = "<group>"; };
 		72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseGradientView.m; sourceTree = "<group>"; };
-		72E8C5941C9ADFF900C57A24 /* JoinInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinInView.h; sourceTree = "<group>"; };
-		72E8C5951C9ADFF900C57A24 /* JoinInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinInView.m; sourceTree = "<group>"; };
 		72E8C5971C9AE0F600C57A24 /* JoinInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinInCell.h; sourceTree = "<group>"; };
 		72E8C5981C9AE0F600C57A24 /* JoinInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinInCell.m; sourceTree = "<group>"; };
-		72E8C59A1C9AEA4000C57A24 /* ICommentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICommentsView.h; sourceTree = "<group>"; };
-		72E8C59B1C9AEA4000C57A24 /* ICommentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICommentsView.m; sourceTree = "<group>"; };
 		72E8C59D1C9AEB0700C57A24 /* ICommentsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICommentsCell.h; sourceTree = "<group>"; };
 		72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICommentsCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -835,6 +836,8 @@
 		2462C6091BECA99A001714C8 /* 发起 */ = {
 			isa = PBXGroup;
 			children = (
+				7275C6361CA2C4BC00BD81FF /* 我要加入未选.png */,
+				7275C6371CA2C4BC00BD81FF /* 我要加入已选.png */,
 				2462C60A1BECA99A001714C8 /* 女.png */,
 				2462C60B1BECA99A001714C8 /* 已收藏.png */,
 				2462C60C1BECA99A001714C8 /* 未收藏.png */,
@@ -1128,6 +1131,7 @@
 		72657DF01C99906B00CC08AD /* 发起详情页面 */ = {
 			isa = PBXGroup;
 			children = (
+				7275C63A1CA2C4D000BD81FF /* 底部按钮View */,
 				720F67521CA02DC300312A2C /* 头部 */,
 				72E8C5921C9ADFB000C57A24 /* 评论 */,
 				72E8C5931C9ADFB000C57A24 /* 已加入的小伙伴 */,
@@ -1172,6 +1176,15 @@
 				72657E131C99906B00CC08AD /* SearchViewController.m */,
 			);
 			path = "主页";
+			sourceTree = "<group>";
+		};
+		7275C63A1CA2C4D000BD81FF /* 底部按钮View */ = {
+			isa = PBXGroup;
+			children = (
+				7275C63B1CA2C4F700BD81FF /* LBottomView.h */,
+				7275C63C1CA2C4F700BD81FF /* LBottomView.m */,
+			);
+			path = "底部按钮View";
 			sourceTree = "<group>";
 		};
 		7288E1081C77444900F554D0 /* Model */ = {
@@ -1252,8 +1265,6 @@
 		72E8C5921C9ADFB000C57A24 /* 评论 */ = {
 			isa = PBXGroup;
 			children = (
-				72E8C59A1C9AEA4000C57A24 /* ICommentsView.h */,
-				72E8C59B1C9AEA4000C57A24 /* ICommentsView.m */,
 				72E8C59D1C9AEB0700C57A24 /* ICommentsCell.h */,
 				72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */,
 			);
@@ -1263,8 +1274,6 @@
 		72E8C5931C9ADFB000C57A24 /* 已加入的小伙伴 */ = {
 			isa = PBXGroup;
 			children = (
-				72E8C5941C9ADFF900C57A24 /* JoinInView.h */,
-				72E8C5951C9ADFF900C57A24 /* JoinInView.m */,
 				72E8C5971C9AE0F600C57A24 /* JoinInCell.h */,
 				72E8C5981C9AE0F600C57A24 /* JoinInCell.m */,
 			);
@@ -1374,6 +1383,7 @@
 				2462C64D1BECA99A001714C8 /* 点赞.png in Resources */,
 				2462C6331BECA99A001714C8 /* 定位.png in Resources */,
 				2462C6411BECA99A001714C8 /* 已收藏.png in Resources */,
+				7275C6391CA2C4BC00BD81FF /* 我要加入已选.png in Resources */,
 				2462C64E1BECA99A001714C8 /* 评论.png in Resources */,
 				2462C6321BECA99A001714C8 /* 删除.png in Resources */,
 				2462C6471BECA99A001714C8 /* 已分享.png in Resources */,
@@ -1384,6 +1394,7 @@
 				2462C63A1BECA99A001714C8 /* 四川.jpg in Resources */,
 				2462C6501BECA99A001714C8 /* 向右箭头.png in Resources */,
 				2462C6251BECA99A001714C8 /* 返回_白色.png in Resources */,
+				7275C6381CA2C4BC00BD81FF /* 我要加入未选.png in Resources */,
 				2462C6441BECA99A001714C8 /* qq.png in Resources */,
 				2462C6221BECA99A001714C8 /* 左抽屉按钮.png in Resources */,
 				2462C6381BECA99A001714C8 /* 云南.jpg in Resources */,
@@ -1524,9 +1535,7 @@
 				04D354571C88375300DFCB1C /* PhotoView.m in Sources */,
 				245B59EA1BCB8BE80003EBA7 /* ViewController.m in Sources */,
 				72657E261C99906B00CC08AD /* SearchResultViewController.m in Sources */,
-				72E8C59C1C9AEA4000C57A24 /* ICommentsView.m in Sources */,
 				72657E231C99906B00CC08AD /* LaunchViewController.m in Sources */,
-				72E8C5961C9ADFF900C57A24 /* JoinInView.m in Sources */,
 				72657E271C99906B00CC08AD /* SearchViewController.m in Sources */,
 				24780C6E1BD628550009A40D /* TravelCommentsNetWorking.m in Sources */,
 				248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */,
@@ -1583,6 +1592,7 @@
 				24780C701BD628550009A40D /* UserModel.m in Sources */,
 				044F50331C8ACD44002DF802 /* TravelsViewController.m in Sources */,
 				04D354611C88380600DFCB1C /* SDBrowserImageView.m in Sources */,
+				7275C63D1CA2C4F700BD81FF /* LBottomView.m in Sources */,
 				24B320D61BD7A50E00FB622A /* ScenicSpotmodei.m in Sources */,
 				245B59E41BCB8BE80003EBA7 /* main.m in Sources */,
 				7288E1141C774B7800F554D0 /* Comments.m in Sources */,

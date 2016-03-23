@@ -31,10 +31,18 @@
         self.nameLabel.sd_layout.centerYEqualToView(self.contentView).leftSpaceToView(self.iconImage, flexibleWidth(5)).heightIs(flexibleHeight(12));
         [self.nameLabel setSingleLineAutoResizeWithMaxWidth:200];
         
-        self.switchButton.sd_layout.rightSpaceToView(self.contentView, flexibleWidth(15)).centerYEqualToView(self.contentView).widthIs(flexibleWidth(60)).heightIs(flexibleHeight(40));
+        self.switchButton.sd_layout.rightSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.contentView, flexibleHeight(5)).widthIs(flexibleWidth(60)).heightIs(flexibleHeight(40));
         
+        [self setupAutoHeightWithBottomView:self.switchButton bottomMargin:flexibleHeight(5)];
     }
     return self;
+}
+
+- (void)setModel:(BmobObject *)model {
+    _model = model;
+    BmobObject *juser = [model objectForKey:@"joinUser"];
+    self.nameLabel.text = [juser objectForKey:@"username"];
+    [self.nameLabel sizeToFit];
 }
 
 - (UILabel *)nameLabel {

@@ -7,25 +7,28 @@
 //
 
 #import "InitiateDetailViewController.h"
-#import "JoinInView.h"
 #import "Called.h"
-#import "ICommentsView.h"
 #import "HeaderView.h"
+#import "JoinInCell.h"
 #import "ICommentsCell.h"
 #import "HeaderButtonView.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
+#import "LBottomView.h"
 #define SIZEHEIGHT frame.size.height
 
-@interface InitiateDetailViewController ()<UITableViewDelegate, UITableViewDataSource, HeaderButtonViewDelegate>
+@interface InitiateDetailViewController ()<UITableViewDelegate, UITableViewDataSource, HeaderButtonViewDelegate, LBottomViewDelegate>
 
-@property (nonatomic, strong) JoinInView *joinInView;
-@property (nonatomic, strong) ICommentsView *commentsView;
 @property (nonatomic, assign) long limit;
 @property (nonatomic, assign) long skip;
+@property (nonatomic, assign) long Jskip;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) HeaderView *headerView;
 @property (nonatomic, strong) HeaderButtonView *buttonView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *commentArray;
+@property (nonatomic, strong) NSMutableArray *userArray;
+@property (nonatomic, strong) LBottomView *bottomView;
+@property (nonatomic, assign) long type;
 
 @end
 
@@ -35,6 +38,7 @@
     [super viewDidLoad];
     [self initBackButton];
     [self initNavTitle:@"发起详情"];
+    _type = 0;
     [self initUserInterface];
     self.view.backgroundColor = [UIColor whiteColor];
 }
@@ -43,15 +47,18 @@
 
 - (void)setCalledID:(NSString *)calledID {
     _calledID = calledID;
+    _skip = 0;
+    _Jskip = 0;
     _limit = 15;
     [Called getCommentsWithLimit:_limit?_limit:10 skip:_skip?_skip:0 CalledsID:calledID Success:^(NSArray *commentArray) {
-        [self.dataSource addObjectsFromArray:commentArray];
+        [self.commentArray addObjectsFromArray:commentArray];
         _skip = _skip + _limit;
+        self.dataSource = self.commentArray;
         [self.tableView reloadData];
     } failure:^(NSError *error1) {
         
     }];
-
+    [self getjoinList];
 }
 
 - (void)setUserObject:(BmobObject *)userObject {
@@ -59,12 +66,27 @@
     self.headerView.userObject = userObject;
 }
 
+- (void)getjoinList {
+    [Called getJoinWithLimit:_limit?_limit:10 skip:_Jskip?_Jskip:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
+        [self.userArray addObjectsFromArray:commentArray];
+        _Jskip = _Jskip + _limit;
+    } failure:^(NSError *error1) {
+        
+    }];
+}
+
+- (void)joinCalled {
+//    [Called joinInCalledWithCalledID:_calledID791b3496d7 Success:^(BOOL isSuccess) {
+//        
+//    } failure:^(NSError *error) {
+//        
+//    }];
+}
 
 - (void)setCalledObject:(BmobObject *)calledObject {
     _calledObject = calledObject;
     __weak typeof(self) weakSelf = self;
     [self.headerView.infoLabel setDidFinishAutoLayoutBlock:^(CGRect frame) {
-        NSLog(@"%f   %f", frame.size.height, frame.origin.y);
         weakSelf.headerView.frame = CGRectMake(0, 0, 0, 200);
         weakSelf.tableView.tableHeaderView = weakSelf.headerView;
     }];
@@ -72,26 +94,13 @@
 }
 
 - (void)initUserInterface {
-
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.tableView registerClass:[ICommentsCell class] forCellReuseIdentifier:NSStringFromClass([ICommentsCell class])];
+    [self.tableView registerClass:[JoinInCell class] forCellReuseIdentifier:NSStringFromClass([JoinInCell class])];
     [self.view addSubview:self.tableView];
-    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, 0);
-//    [self.headerView layoutSubviews];
-//    self.headerView.frame = CGRectMake(0, 0, 0, 200);
-
-
-
-    
-    NSLog(@"%f", self.headerView.h);
-
-//    [self.headerView setDidFinishAutoLayoutBlock:^(CGRect frame) {
-//        weakSelf.headerView.frame = CGRectMake(0, 0, 0, weakSelf.headerView.h);
-//    }];
-
-//    self.headerView.didFinishAutoLayoutBlock = ^(CGRect frame){
-//        weakSelf.headerView.frame = CGRectMake(0, 0, 0, weakSelf.headerView.frame.size.height);
-//        [weakSelf.view updateLayout];
-//    };
+    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(50));
+    [self.view addSubview:self.bottomView];
+    self.bottomView.sd_layout.leftEqualToView(self.view).bottomSpaceToView(self.view, 0).rightEqualToView(self.view).heightIs(flexibleHeight(50));
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -99,11 +108,14 @@
 
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    [self.tableView registerClass:[ICommentsCell class] forCellReuseIdentifier:NSStringFromClass([ICommentsCell class])];
-    ICommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ICommentsCell class])];
-    BmobObject *comment = self.dataSource[indexPath.row];
-    cell.commont = comment;
+    Class currentClass = [ICommentsCell class];
+    ICommentsCell *cell = nil;
+    if (_type == 1) {
+        currentClass = [JoinInCell class];
+    }
+    cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
+    BmobObject *model = self.dataSource[indexPath.row];
+    cell.model = model;
     return cell;
 }
 
@@ -134,17 +146,22 @@
 
 - (void)buttonClickEvent:(UIButton *)sender {
     if (sender == self.buttonView.rightsideButton) {
+        self.dataSource = self.userArray;
+        _type = 1;
+        [self.tableView reloadData];
         
     }else {
-    
-    
+        self.dataSource = self.commentArray;
+        _type = 0;
+        [self.tableView reloadData];
+        
     }
-
 }
 
 - (UITableView *)tableView {
 	if(_tableView == nil) {
 		_tableView = [[UITableView alloc] init];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
 	}
@@ -172,6 +189,28 @@
 		_dataSource = [[NSMutableArray alloc] init];
 	}
 	return _dataSource;
+}
+
+- (NSMutableArray *)userArray {
+	if(_userArray == nil) {
+		_userArray = [[NSMutableArray alloc] init];
+	}
+	return _userArray;
+}
+
+- (NSMutableArray *)commentArray {
+	if(_commentArray == nil) {
+		_commentArray = [[NSMutableArray alloc] init];
+	}
+	return _commentArray;
+}
+
+- (LBottomView *)bottomView {
+	if(_bottomView == nil) {
+		_bottomView = [[LBottomView alloc] init];
+        _bottomView.delegate = self;
+	}
+	return _bottomView;
 }
 
 @end

@@ -83,7 +83,7 @@
 
     BmobQuery * bquery = [BmobQuery queryWithClassName:@"ThumbUp"];
     NSDictionary * condiction1 = @{@"user":@{@"__type":@"Pointer",@"className":@"User",@"objectId":OBJECTID}};
-   NSDictionary *condiction2= @{@"obj":@{@"__type":@"Pointer",@"className":@"Travel",@"objectId":thumbUpId}};
+    NSDictionary *condiction2= @{@"obj":@{@"__type":@"Pointer",@"className":@"Travel",@"objectId":thumbUpId}};
     
     NSArray *condictionArray = @[condiction1,condiction2];
     [bquery addTheConstraintByAndOperationWithArray:condictionArray];

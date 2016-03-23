@@ -40,4 +40,24 @@
  *  @param failure  
  */
 + (void)getCommentsWithLimit:(NSInteger)limit skip:(NSInteger)skip CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure;
+
+/**
+ *  参加一条发起
+ *
+ *  @param calledID 发起ID
+ *  @param success
+ *  @param failure
+ */
++ (void)joinInCalledWithCalledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure;
+
+/**
+ *  查询一条发起报名的人
+ *
+ *  @param limit    最大条数
+ *  @param skip     跳到多少条
+ *  @param calledID id
+ *  @param success
+ *  @param failure  
+ */
++ (void)getJoinWithLimit:(NSInteger)limit skip:(NSInteger)skip CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure ;
 @end

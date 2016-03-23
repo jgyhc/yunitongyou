@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ICommentsCell : UITableViewCell
-@property (nonatomic, strong) BmobObject *commont;
+@property (nonatomic, strong) BmobObject *model;
 @end

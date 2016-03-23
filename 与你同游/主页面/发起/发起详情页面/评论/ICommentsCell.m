@@ -20,19 +20,19 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
 
-- (void)setCommont:(BmobObject *)commont {
-    _commont = commont;
+- (void)setModel:(BmobObject *)model {
+    _model = model;
     [self.contentView addSubview:self.nameLabel];
     [self.contentView addSubview:self.contenLabel];
     self.nameLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).heightIs(flexibleHeight(14)).topSpaceToView(self.contentView, flexibleHeight(10));
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:200];
-    if ([commont objectForKey:@"Ruser"]) {
-        BmobObject *Ruser = [commont objectForKey:@"Ruser"];
+    if ([model objectForKey:@"Ruser"]) {
+        BmobObject *Ruser = [model objectForKey:@"Ruser"];
         
         [self.contentView addSubview:self.repaly];
         self.repaly.sd_layout.leftSpaceToView(self.nameLabel, 0).heightIs(flexibleHeight(14)).topEqualToView(self.nameLabel);
@@ -45,11 +45,14 @@
         self.repalyLabel.text = [Ruser objectForKey:@"username"];
     }
     self.contenLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.nameLabel, flexibleHeight(10)).autoHeightRatio(0).rightSpaceToView(self.contentView, flexibleWidth(15));
-    BmobObject *user = [commont objectForKey:@"user"];
+    BmobObject *user = [model objectForKey:@"user"];
     self.nameLabel.text = [user objectForKey:@"username"];
-    self.contenLabel.text = [commont objectForKey:@"content"];
-    NSLog(@"%@", [commont objectForKey:@"content"]);
+    self.contenLabel.text = [model objectForKey:@"content"];
     [self.contenLabel sizeToFit];
+    
+    UIView *line = [[UIView alloc] init];
+    line.backgroundColor = [UIColor grayColor];
+    line.sd_layout.leftEqualToView(self.contentView).rightEqualToView(self.contentView).heightIs(flexibleHeight(1)).topSpaceToView(self.contenLabel, flexibleHeight(10));
     
     [self setupAutoHeightWithBottomView:self.contenLabel bottomMargin:flexibleHeight(10)];
     
@@ -87,8 +90,8 @@
 - (UILabel *)nameLabel {
 	if(_nameLabel == nil) {
 		_nameLabel = [[UILabel alloc] init];
-        _repalyLabel.textColor = [UIColor colorWithRed:0.000 green:0.470 blue:1.000 alpha:1.000];
-        _repalyLabel.font = [UIFont systemFontOfSize:flexibleHeight(14)];
+        _nameLabel.textColor = [UIColor colorWithRed:0.000 green:0.470 blue:1.000 alpha:1.000];
+        _nameLabel.font = [UIFont systemFontOfSize:flexibleHeight(14)];
 	}
 	return _nameLabel;
 }

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JoinInCell : UITableViewCell
-
+@property (nonatomic, strong) BmobObject *model;
 @end

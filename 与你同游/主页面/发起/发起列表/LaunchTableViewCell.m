@@ -9,6 +9,7 @@
 #import "LaunchTableViewCell.h"
 #import "BottomButtonsView.h"
 #import "UIButton+WebCache.h"
+
 @interface LaunchTableViewCell ()<BottomButtonsViewDelegate>
 @property (nonatomic, strong)UILabel *userIDLabel; //用户ID
 @property (nonatomic, strong)UILabel *launchTimeLabel;//发起时间
@@ -23,6 +24,7 @@
 @property (nonatomic, strong)UILabel *ageLabel;//年龄
 @property (nonatomic, strong)UILabel *followerLabel;
 @property (nonatomic, strong)UILabel *PNumber;
+
 @property (nonatomic, strong) BottomButtonsView *buttonView;
 @end
 
