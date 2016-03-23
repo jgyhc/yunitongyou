@@ -9,11 +9,9 @@
 #import "BaseViewController.h"
 #import <BmobSDK/Bmob.h>
 @interface RecordDetailViewController : BaseViewController
-@property (nonatomic, strong) BmobObject *userobject;//数据
-@property (nonatomic, strong) BmobObject *object;
 
+@property (nonatomic, strong) BmobObject * travelObject;
 
-
-
+@property (nonatomic, strong) BmobObject * userObject;
 
 @end

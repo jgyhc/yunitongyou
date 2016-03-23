@@ -12,9 +12,28 @@
 #import <SMS_SDK/SMSSDK.h>
 #import "Register.h"
 #import "Comments.h"
+<<<<<<< HEAD
 #import "Called.h"
 //#import "FirstView.h"
+=======
+>>>>>>> a68c13820b6fb2f267f9d28a78e63039ebd84340
 #import "NetWorking.h"
+
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+
+//腾讯开放平台（对应QQ和QQ空间）SDK头文件
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+
+//微信SDK头文件
+#import "WXApi.h"
+
+//新浪微博SDK头文件
+#import "WeiboSDK.h"
+
+
+
 #define APPKEY @"affe299f48c2"
 #define APPSECRET @"1d94d057d830f3a18a404527ac49e9ee"
 //连接Bmob
@@ -30,14 +49,71 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [Bmob registerWithAppKey:APPLICAYION_ID];
-
     [SMSSDK registerApp:APPKEY withSecret:APPSECRET];
+    
+    /**
+     *  设置ShareSDK的appKey
+     *  方法中的第二个第三个参数为需要连接社交平台SDK时触发，
+     *  在此事件中写入连接代码。第四个参数则为配置本地社交平台时触发，根据返回的平台类型来配置平台信息。
+     *  如果您使用的时服务端托管平台信息时，第二、四项参数可以传入nil，第三项参数则根据服务端托管平台来决定要连接的社交SDK。
+     */
+    [ShareSDK registerApp:@"10c313f92e96c"
+     
+          activePlatforms:@[
+                            @(SSDKPlatformTypeSinaWeibo),
+                            @(SSDKPlatformTypeWechat),
+                            @(SSDKPlatformTypeQQ)]
+                 onImport:^(SSDKPlatformType platformType)
+     {
+         switch (platformType)
+         {
+             case SSDKPlatformTypeWechat:
+                 [ShareSDKConnector connectWeChat:[WXApi class]];
+                 break;
+             case SSDKPlatformTypeQQ:
+                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                 break;
+             case SSDKPlatformTypeSinaWeibo:
+                 [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                 break;
+             default:
+                 break;
+         }
+     }
+          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
+     {
+         
+         switch (platformType)
+         {
+             case SSDKPlatformTypeSinaWeibo:
+                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
+                 [appInfo SSDKSetupSinaWeiboByAppKey:@"3260457771"
+                                           appSecret:@"d7ff96331c1abb629919e77a97727b37"
+                                         redirectUri:@"https://itunes.apple.com/cn/genre/yin-le/id34"
+                                            authType:SSDKAuthTypeBoth];
+                 break;
+             case SSDKPlatformTypeWechat:
+                 [appInfo SSDKSetupWeChatByAppId:@"wx39d23b21ba20b23e"
+                                       appSecret:@"248491df77d696b9b6038c5217f5cfda"];
+                 break;
+             case SSDKPlatformTypeQQ:
+                 [appInfo SSDKSetupQQByAppId:@"1105203553"
+                                      appKey:@"NKxmRM0wN8q1nSrZ"
+                                    authType:SSDKAuthTypeBoth];
+                 break;
+            default:
+                 break;
+         }
+     }];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyWindow];
     
     ControllerManager *controllerManager = [ControllerManager shareControllerManager];
     self.window.rootViewController = controllerManager.rootViewController;
+<<<<<<< HEAD
 //    NSArray *arra = @[@"再次相见时，是在一个冷雨飘飞的冬天，她穿着一条浅色的牛仔裤，一件他送的水红色大衣。没有伞，如丝的细雨簌簌地飘满她的发，她的衣，他还是第一次见到这么晶莹剔透的她，他震撼于她的美。", @"　　岁月不饶人，她似乎没能逃过岁月的磨蚀，有些憔悴了，他惊诧于她的沧桑。只不过，她还是那样的矜持，那样的温柔，唯一变化的是眉宇间已经没有了往日的忧伤。她显得那么坚强，好像在这离别的日子里，什么也没有发生，她似乎要告诉他：一切安好。", @"他走了，随他而去的还有那属于他们的过去。人走楼也空、人去茶也凉。一直以为，她自己会陷入黑暗的深渊。谁也没有料到，他们的故事还是续写了下去，这多少有些让她措手不及。她已知道，距离再远也阻挡不了那两颗炽热的心，他已根植于她的世界，她已嵌入他的心扉。", @"也不知道有多少个夜晚，在夜深人静的时候，依然独坐床头，痴痴地、傻傻地等待，等待那跳动的、专属于他的音符，即便等到的总是失望，却也还是那样天真执着。为了不错过那让她魂牵梦萦的声音，放在床边的电话，铃声总是越调越大，直至没法再大。也不知道有多少次，在绝望的等待中睡着了。可她知道，他有他的难处，一个人在遥远的他乡也不是一件易事。她相信，两颗彼此牵挂的心总有相聚时。", @"　一个人的城市，多少有些孤单，一切都是那样单调乏味。工作，还是工作；生活，还是生活。没有忧伤，没有眼泪，没有失落，还是那样出的出类拔萃，没有人知道为什么，除了她自己。也许这一份牵挂总在激励她前行。“海上生明月，天涯共此时”.曾经总是固执的认为，他一直在她身边，从未走远。", @"　一个人的城市，多少有些孤单，一切都是那样单调乏味。工作，还是工作；生活，还是生活。没有忧伤，没有眼泪，没有失落，还是那样出的出类拔萃，没有人知道为什么，除了她自己。也许这一份牵挂总在激励她前行。“海上生明月，天涯共此时”.曾经总是固执的认为，他一直在她身边，从未走远。", @"　　岁月无声，但却已留痕，沧桑已写在他们脸上。“人生若只如初见，何事秋风悲画扇”?对于走过千山万水，经历重重考验的他们，沧桑早非羁绊。"];
 //    for (int i = 0; i < arra.count; i ++) {
 //        [Comments addComentWithContent:arra[i] userID:@"dc23c0cdf4" type:0 objID:@"791b3496d7" success:^(NSString *commentID) {
@@ -53,6 +129,9 @@
 //    }];
 
        return YES;
+=======
+           return YES;
+>>>>>>> a68c13820b6fb2f267f9d28a78e63039ebd84340
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

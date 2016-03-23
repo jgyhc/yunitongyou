@@ -1,24 +1,40 @@
 PODS:
   - AMapLocation (1.2.0)
-  - BmobSDK (1.6.6)
+  - BmobSDK (1.6.7)
   - MJRefresh (3.1.0)
+  - MOBFoundation (1.5.1)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
+  - ShareSDK3 (3.2.3):
+    - ShareSDK3/ShareSDK (= 3.2.3)
+  - ShareSDK3/ShareSDK (3.2.3)
+  - ShareSDK3/ShareSDKPlatforms/QQ (3.2.3)
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo (3.2.3)
+  - ShareSDK3/ShareSDKPlatforms/WeChat (3.2.3)
+  - ShareSDK3/ShareSDKUI (3.2.3)
   - YYModel (1.0.2)
 
 DEPENDENCIES:
   - AMapLocation
   - BmobSDK
   - MJRefresh
+  - MOBFoundation
   - SDWebImage
+  - ShareSDK3
+  - ShareSDK3/ShareSDKPlatforms/QQ
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo
+  - ShareSDK3/ShareSDKPlatforms/WeChat
+  - ShareSDK3/ShareSDKUI
   - YYModel
 
 SPEC CHECKSUMS:
   AMapLocation: 6d72a8f1c5f2a29a736fcaca3a85173ba3dc5f56
-  BmobSDK: c896d4ff3986f2b4fc8406fb2b801230f7419878
+  BmobSDK: ae6abd7f08a8150668687c880ac9ec93f1bf25b6
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  MOBFoundation: 79efc94db961fe5a08cf32de69166f6a29a3b2b5
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  ShareSDK3: 76a2b7bee33fc7360fbc9670adb3e9e06534ee82
   YYModel: 7a467eff45ae3641c33efb136c262d33b6f48c1a
 
 COCOAPODS: 0.39.0
