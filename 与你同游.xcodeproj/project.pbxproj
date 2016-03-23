@@ -128,11 +128,6 @@
 		247D44C01BD24F65006F36D5 /* SharedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D44B71BD24F65006F36D5 /* SharedView.m */; };
 		248D84C11BDF9B50008C3419 /* OtherInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D84C01BDF9B50008C3419 /* OtherInfoViewController.m */; };
 		248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D84C31BDFA4EF008C3419 /* FirstView.m */; };
-		2494D1D91BF05A3300049B03 /* 11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2494D1D41BF05A3300049B03 /* 11.jpg */; };
-		2494D1DA1BF05A3300049B03 /* 12.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2494D1D51BF05A3300049B03 /* 12.JPG */; };
-		2494D1DB1BF05A3300049B03 /* 13.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2494D1D61BF05A3300049B03 /* 13.jpg */; };
-		2494D1DC1BF05A3300049B03 /* 14.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2494D1D71BF05A3300049B03 /* 14.jpg */; };
-		2494D1DD1BF05A3300049B03 /* 15.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2494D1D81BF05A3300049B03 /* 15.jpg */; };
 		2497BA191BCCC37400251058 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2497BA021BCCC37400251058 /* BaseViewController.m */; };
 		2497BA1A1BCCC37400251058 /* ControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2497BA051BCCC37400251058 /* ControllerManager.m */; };
 		2497BA1B1BCCC37400251058 /* DrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2497BA081BCCC37400251058 /* DrawerViewController.m */; };
@@ -366,11 +361,6 @@
 		248D84C01BDF9B50008C3419 /* OtherInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherInfoViewController.m; sourceTree = "<group>"; };
 		248D84C21BDFA4EF008C3419 /* FirstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstView.h; sourceTree = "<group>"; };
 		248D84C31BDFA4EF008C3419 /* FirstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstView.m; sourceTree = "<group>"; };
-		2494D1D41BF05A3300049B03 /* 11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 11.jpg; sourceTree = "<group>"; };
-		2494D1D51BF05A3300049B03 /* 12.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12.JPG; sourceTree = "<group>"; };
-		2494D1D61BF05A3300049B03 /* 13.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 13.jpg; sourceTree = "<group>"; };
-		2494D1D71BF05A3300049B03 /* 14.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 14.jpg; sourceTree = "<group>"; };
-		2494D1D81BF05A3300049B03 /* 15.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 15.jpg; sourceTree = "<group>"; };
 		2497BA011BCCC37400251058 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		2497BA021BCCC37400251058 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		2497BA041BCCC37400251058 /* ControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControllerManager.h; sourceTree = "<group>"; };
@@ -743,11 +733,6 @@
 		2462C5E21BECA99A001714C8 /* 图片 */ = {
 			isa = PBXGroup;
 			children = (
-				2494D1D41BF05A3300049B03 /* 11.jpg */,
-				2494D1D51BF05A3300049B03 /* 12.JPG */,
-				2494D1D61BF05A3300049B03 /* 13.jpg */,
-				2494D1D71BF05A3300049B03 /* 14.jpg */,
-				2494D1D81BF05A3300049B03 /* 15.jpg */,
 				2462C6551BECBDF0001714C8 /* icon.png */,
 				2462C6561BECBDF0001714C8 /* logo.png */,
 				2462C5E31BECA99A001714C8 /*  标签栏 */,
@@ -1336,7 +1321,6 @@
 				TargetAttributes = {
 					245B59DD1BCB8BE80003EBA7 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 7224X3X442;
 					};
 					245B59F61BCB8BE80003EBA7 = {
 						CreatedOnToolsVersion = 6.3;
@@ -1369,7 +1353,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2494D1DA1BF05A3300049B03 /* 12.JPG in Resources */,
 				2462C64F1BECA99A001714C8 /* 向下箭头.png in Resources */,
 				2462C64D1BECA99A001714C8 /* 点赞.png in Resources */,
 				2462C6331BECA99A001714C8 /* 定位.png in Resources */,
@@ -1380,7 +1363,6 @@
 				2462C6461BECA99A001714C8 /* weixin.png in Resources */,
 				2462C6261BECA99A001714C8 /* 首页.png in Resources */,
 				2462C64B1BECA99A001714C8 /* 添加游记.png in Resources */,
-				2494D1DD1BF05A3300049B03 /* 15.jpg in Resources */,
 				2462C63A1BECA99A001714C8 /* 四川.jpg in Resources */,
 				2462C6501BECA99A001714C8 /* 向右箭头.png in Resources */,
 				2462C6251BECA99A001714C8 /* 返回_白色.png in Resources */,
@@ -1394,7 +1376,6 @@
 				2462C6341BECA99A001714C8 /* 定位选中.png in Resources */,
 				2462C6311BECA99A001714C8 /* 相机_白色.png in Resources */,
 				2462C6571BECBDF0001714C8 /* icon.png in Resources */,
-				2494D1D91BF05A3300049B03 /* 11.jpg in Resources */,
 				2462C63B1BECA99A001714C8 /* 广西.jpg in Resources */,
 				2462C62F1BECA99A001714C8 /* 登录背景图.jpg in Resources */,
 				2462C6371BECA99A001714C8 /* 上海.jpg in Resources */,
@@ -1409,7 +1390,6 @@
 				2462C64A1BECA99A001714C8 /* 未点赞.png in Resources */,
 				2462C6211BECA99A001714C8 /* 发起选中.png in Resources */,
 				24B320D11BD77B2E00FB622A /* SMS_SDKLocalizable.strings in Resources */,
-				2494D1DB1BF05A3300049B03 /* 13.jpg in Resources */,
 				24600CB71BED8BAB00C3C3B9 /* 照片选中.png in Resources */,
 				04DC2E791C9698A800B01E42 /* 未定位.png in Resources */,
 				2462C6511BECA99A001714C8 /* 朝上箭头.png in Resources */,
@@ -1435,7 +1415,6 @@
 				2462C6541BECB3ED001714C8 /* 设置.png in Resources */,
 				245B59EF1BCB8BE80003EBA7 /* Images.xcassets in Resources */,
 				2462C6581BECBDF0001714C8 /* logo.png in Resources */,
-				2494D1DC1BF05A3300049B03 /* 14.jpg in Resources */,
 				2462C6241BECA99A001714C8 /* 游记选中.png in Resources */,
 				2462C6361BECA99A001714C8 /* 放大镜.png in Resources */,
 				046719F21C9FB8E6003CE05B /* 无头像.png in Resources */,

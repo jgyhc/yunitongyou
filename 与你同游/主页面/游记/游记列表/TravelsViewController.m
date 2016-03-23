@@ -15,6 +15,9 @@
 
 #import "OtherInfoViewController.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
 #import "ThumbUp.h"
@@ -119,6 +122,8 @@
     BmobObject * object = self.travelArray[indexPath.section];
    cell.info = object;
 
+    
+#pragma mark --点赞
     [cell buttonthumbUp:^(int type) {
         if (type == 1) {
             //点赞
@@ -136,9 +141,100 @@
         }
     }];
     
+#pragma mark --评论
+    [cell buttoncomment:^{
+        //评论
+    }];
+    
+#pragma mark --分享
+    [cell buttonshared:^{
+       //分享
+        NSArray * imageArray;
+        if ([object objectForKey:@"urlArray"]) {
+            imageArray = [object objectForKey:@"urlArray"];
+        }
+        else{
+            imageArray = nil;
+        }
+
+        NSLog(@"imageArray = %@",imageArray);
+        
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        
+        [shareParams SSDKSetupShareParamsByText:[object objectForKey:@"content"]
+                                         images:imageArray
+                                            url:[NSURL URLWithString:@"http://mob.com"]
+                                          title:@"与你同游，一款小型的旅游app"
+                                           type:SSDKContentTypeAuto];
+#pragma mark -- 跳过分享的编辑界面
+        SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:nil
+                                                                         items:nil
+                                                                   shareParams:shareParams
+                                                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                                                               switch (state) {
+                                                                   case SSDKResponseStateSuccess:
+                                                                       NSLog(@"分享成功!");
+                                                                       break;
+                                                                   case SSDKResponseStateFail:
+                                                                       NSLog(@"分享失败%@",error);
+                                                                       break;
+                                                                   case SSDKResponseStateCancel:
+                                                                       NSLog(@"分享已取消");
+                                                                       break;
+                                                                   default:
+                                                                       break;
+                                                               }
+                                                           }];
+        [sheet.directSharePlatforms addObject:@(SSDKPlatformTypeSinaWeibo)];
+        
+#pragma mark -- 分享（可以弹出我们的分享菜单和编辑界面）
+//        [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
+//                                 items:@[@(SSDKPlatformTypeWechat),@(SSDKPlatformTypeQQ),@(SSDKPlatformTypeSinaWeibo)]
+//                           shareParams:shareParams
+//                   onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//                       
+//                       switch (state) {
+//                           case SSDKResponseStateSuccess:
+//                           {
+//                               UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+//                                                                                   message:nil
+//                                                                                  delegate:nil
+//                                                                         cancelButtonTitle:@"确定"
+//                                                                         otherButtonTitles:nil];
+//                               [alertView show];
+//                               break;
+//                           }
+//                           case SSDKResponseStateFail:
+//                           {
+//                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+//                                                                               message:[NSString stringWithFormat:@"%@",error]
+//                                                                              delegate:nil
+//                                                                     cancelButtonTitle:@"OK"
+//                                                                     otherButtonTitles:nil, nil];
+//                               [alert show];
+//                               break;
+//                           }
+//                           default:
+//                               break;
+//                       }
+//                       
+//            }];
+    }];
+    
+    
+    
     return cell;
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+     BmobObject *obj = self.travelArray[indexPath.section];
+    RecordDetailViewController * detail = [[RecordDetailViewController alloc]init];
+    detail.travelObject = obj;
+    BmobObject * user = [obj objectForKey:@"userId"];
+    detail.userObject = user;
+    [self.navigationController pushViewController:detail animated:YES];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 5;
@@ -180,6 +276,8 @@
     [self.navigationController pushViewController:addVC animated:YES];
 }
 
+
+#pragma mark --lazy loading
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = ({
