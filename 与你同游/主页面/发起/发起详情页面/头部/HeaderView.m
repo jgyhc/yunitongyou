@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) UILabel *startingLabel;//开始时间按
 @property (nonatomic, strong) UILabel *returnLabel;//返回时间
-@property (nonatomic, strong) UILabel *infoLabel;//简介
+
 
 @end
 @implementation HeaderView
@@ -87,7 +87,7 @@
     _userObject = userObject;
     self.userIDLabel.text = [userObject objectForKey:@"username"];
     [self.userHeaderImageView sd_setImageWithURL:[NSURL URLWithString:[userObject objectForKey:@"head_portraits"]] placeholderImage:[UIImage imageNamed:@"logo"]];
-    [self layoutSubviews];
+
 }
 
 - (void)setCalledObject:(BmobObject *)calledObject {
@@ -97,12 +97,18 @@
     self.destinationLabel.text = [calledObject objectForKey:@"destination"];
     self.startingLabel.text = [calledObject objectForKey:@"departure_time"];
     self.returnLabel.text = [calledObject objectForKey:@"arrival_time"];
-    self.infoLabel.text = [calledObject objectForKey:@"content"];
     self.followerNumLabel.text = [NSString stringWithFormat:@"%@", [calledObject objectForKey:@"number_Of_people"]];
-    [self.followerNumLabel layoutSubviews];
-    [self.startingLabel layoutSubviews];
-    [self.destinationLabel layoutSubviews];
-    [self.infoLabel layoutSubviews];
+    self.infoLabel.text = [calledObject objectForKey:@"content"];
+    [self.startingLabel updateLayout];
+    [self.infoLabel updateLayout];
+//    __weak typeof(self) weakSelf = self;
+//    [self.infoLabel setDidFinishAutoLayoutBlock:^(CGRect frame) {
+////        [self layoutSubviews];
+//        weakSelf.h = frame.size.height + frame.origin.y;
+//        NSLog(@"%f   %f", frame.size.height, frame.origin.y);
+//    }];
+    
+//    _h = self.frame.size.height;
 
 }
 

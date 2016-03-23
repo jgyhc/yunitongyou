@@ -9,6 +9,8 @@
 #import "Called.h"
 
 @implementation Called
+
+
 - (id)initWithClassName:(NSString *)className {
     self = [super initWithClassName:className];
     if (self) {
@@ -94,7 +96,6 @@
         }
 
     }];
-
 }
 //查询活动列表（包括user字段下包含的作者信息）（已测试）
 + (void)getcalledListWithLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error1))failure {
@@ -125,8 +126,6 @@
             success(array);
         }
     }];
-    
-    
 }
 
 

@@ -62,6 +62,12 @@
 
 - (void)setCalledObject:(BmobObject *)calledObject {
     _calledObject = calledObject;
+    __weak typeof(self) weakSelf = self;
+    [self.headerView.infoLabel setDidFinishAutoLayoutBlock:^(CGRect frame) {
+        NSLog(@"%f   %f", frame.size.height, frame.origin.y);
+        weakSelf.headerView.frame = CGRectMake(0, 0, 0, 200);
+        weakSelf.tableView.tableHeaderView = weakSelf.headerView;
+    }];
     self.headerView.calledObject = calledObject;
 }
 
@@ -70,8 +76,18 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.tableView];
     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, 0);
-    self.tableView.tableHeaderView = self.headerView;
-    [self.view layoutSubviews];
+//    [self.headerView layoutSubviews];
+//    self.headerView.frame = CGRectMake(0, 0, 0, 200);
+
+
+
+    
+    NSLog(@"%f", self.headerView.h);
+
+//    [self.headerView setDidFinishAutoLayoutBlock:^(CGRect frame) {
+//        weakSelf.headerView.frame = CGRectMake(0, 0, 0, weakSelf.headerView.h);
+//    }];
+
 //    self.headerView.didFinishAutoLayoutBlock = ^(CGRect frame){
 //        weakSelf.headerView.frame = CGRectMake(0, 0, 0, weakSelf.headerView.frame.size.height);
 //        [weakSelf.view updateLayout];

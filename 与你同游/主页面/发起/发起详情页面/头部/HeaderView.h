@@ -12,4 +12,5 @@
 @property (nonatomic, strong) BmobObject *userObject;
 @property (nonatomic, strong) BmobObject *calledObject;
 @property (nonatomic, assign) CGFloat h;
+@property (nonatomic, strong) UILabel *infoLabel;//简介
 @end
