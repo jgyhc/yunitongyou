@@ -18,6 +18,6 @@
 + (void)cancelCollectionWithID:(NSString *)thumbUpId  type:(int)type success:(void (^)(NSString *commentID))success failure:(void (^)(NSError *error1))failure;
 
 //查询某个用户的收藏
-+ (void)getCollectionSuccess:(void (^)(NSArray *collections))success failure:(void (^)(NSError *error))failure;
++ (void)getCollectionSuccess:(void (^)(NSArray *collections))success  type:(int)type failure:(void (^)(NSError *error))failure ;
 
 @end

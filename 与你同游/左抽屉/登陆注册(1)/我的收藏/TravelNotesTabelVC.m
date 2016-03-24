@@ -52,16 +52,12 @@
     }
     
     [Collection getCollectionSuccess:^(NSArray *collections) {
-        for (BmobObject * obj in collections) {
-            if([[obj objectForKey:@"type"] isEqualToNumber:@(1)]){
-                [self.travelArray addObject:obj];
-                [self.tableView reloadData];
-            }
-        }
-        
-    } failure:^(NSError *error) {
-        
-    }];
+        [self.travelArray addObjectsFromArray:collections];
+        [self.tableView reloadData];      
+    
+     } type:1 failure:^(NSError *error) {
+    
+     }];
 }
 - (void)initalizedInterface {
     self.view.backgroundColor = [UIColor whiteColor];
