@@ -7,11 +7,11 @@
 //
 
 #import "CommentViewController.h"
-#import "TravelModel.h"
+#import "Comments.h"
 @interface CommentViewController ()<UITextViewDelegate>
 @property (nonatomic, strong) UITextView *content;
 @property (nonatomic,strong) UILabel * hintlable;
-@property (nonatomic, strong) TravelModel *TCNetWorking;
+
 @end
 
 @implementation CommentViewController
@@ -24,30 +24,29 @@
     [self initUserInterface];
     self.view.backgroundColor = [UIColor colorWithWhite:1 alpha:1.000];
 }
-- (void)dealloc {
-    [self.TCNetWorking removeObserver:self forKeyPath:@"createTCommentResult"];
-    
-    
-}
-#pragma mark --  KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    if ([keyPath isEqualToString:@"createTCommentResult"]) {
-        
-        
-    }
-}
+
 - (void)initUserInterface {
     
     
     [self.content addSubview:self.hintlable];
     [self.view addSubview:self.content];
-    
-    [self.TCNetWorking addObserver:self forKeyPath:@"createTCommentResult" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)handleCommen {
-    [self.TCNetWorking createATravelReviewsWithPhoneNumber:PHONE_NUMBER Password:PASSWORD travel_date:self.travelDate creatorPhoneNumber:self.phoneNumber contents:self.content.text];
+    if (![self.content.text isEqualToString:@""]) {
+        [Comments addComentWithContent:self.content.text userID:nil type:1 objID:self.objId success:^(NSString *commentID) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } failure:^(NSError *error1) {
+            
+        }];
+        self.content.text = @"";
+    }
+    else{
+        [self alertView:@"评论不能为空哟~" cancelButtonTitle:nil sureButtonTitle:@"确定"];
+        
+        
+    }
+
 }
 
 
@@ -94,13 +93,5 @@
     }
     return _hintlable;
 }
-
-- (TravelModel *)TCNetWorking {
-    if (!_TCNetWorking) {
-        _TCNetWorking = [[TravelModel alloc] init];
-    }
-    return _TCNetWorking;
-}
-
 @end
 

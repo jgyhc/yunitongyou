@@ -8,11 +8,14 @@
 
 #import "RecordDetailViewController.h"
 #import "MJRefresh.h"
-#import "SharedView.h"
-#import "PhotoView.h"
-#import "UIImageView+WebCache.h"
+#import "CommentView.h"
+#import "ShareView.h"
+#import "DetailTopView.h"
 #import "ICommentsView.h"
 #import <BmobSDK/Bmob.h>
+#import "ThumbUp.h"
+#import "Collection.h"
+#import "Comments.h"
 #define SIZEHEIGHT frame.size.height
 #define SIZEHEIGHT frame.size.height
 
@@ -21,16 +24,9 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 #pragma mark --上
-@property (nonatomic, strong) UIImageView *iconView;//头像
-@property (nonatomic, strong) UILabel     * nameLabel;//用户名
-@property (nonatomic, strong) UILabel     * timeLabel;//时间
-@property (nonatomic, strong) UIImageView * positionImg;
-@property (nonatomic, strong) UILabel     * positionLabel;//地址
-@property (nonatomic, strong) UILabel     * contentLabel;//内容
-@property (nonatomic, strong) PhotoView   * picContainerView;//图片
+@property (nonatomic, strong) DetailTopView * topView;
 
 #pragma mark --中
-@property (nonatomic, strong) UIView      * seperateView;
 @property (nonatomic, strong) UIView      * bottomLine;
 @property (nonatomic, strong) UIButton    * rightsideButton;
 @property (nonatomic, strong) UIButton    * leftsideButton;
@@ -41,10 +37,9 @@
 @property (nonatomic, strong) UIButton    * dianzanbt;
 @property (nonatomic, strong) UIButton    * commentbt;
 @property (nonatomic, strong) UIButton    * sharebt;
-@property (nonatomic, strong)   UIView      * vline1;
-@property (nonatomic, strong)   UIView      * vline2;
+@property (nonatomic, strong) UIButton    * collectionbt;
 
-@property (nonatomic, strong) SharedView *sharedView;
+@property (nonatomic, strong) CommentView * comment;
 @property (nonatomic,assign) CGFloat keyboardHeight;
 @property (nonatomic,assign) NSTimeInterval duration;
 
@@ -72,49 +67,33 @@
 - (void)initUserInterface {
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.view addSubview:self.scrollView];
+    [self.view insertSubview:self.scrollView atIndex:0];
     self.scrollView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomEqualToView(self.view);
 
-    [self.scrollView addSubview:self.iconView];
-    [self.scrollView addSubview:self.nameLabel];
-    [self.scrollView addSubview:self.timeLabel];
-    [self.scrollView addSubview:self.positionImg];
-    [self.scrollView addSubview:self.positionLabel];
-    [self.scrollView addSubview:self.contentLabel];
-    [self.scrollView addSubview:self.picContainerView];
-    [self.scrollView addSubview:self.seperateView];
-    [self.scrollView addSubview:self.bottomLine];
+    [self.scrollView addSubview:self.topView];
     [self.scrollView addSubview:self.leftsideButton];
     [self.scrollView addSubview:self.rightsideButton];
-    [self.scrollView addSubview:self.commentbt];
-    
+    [self.scrollView addSubview:self.bottomLine];
     [self.view addSubview:self.bottomView];
-//    [self.view addSubview:self.sharedView.inputView];
+    [self.view addSubview:self.comment.inputView];
+
     
-    self.iconView.sd_layout.leftSpaceToView(self.scrollView, 10).topSpaceToView(self.scrollView, 10).widthIs(flexibleWidth(80)).heightIs(flexibleWidth(80));
-    self.iconView.layer.cornerRadius = CGRectGetMidX(_iconView.bounds);
-    self.iconView.clipsToBounds = YES;
+    self.topView.sd_layout.topEqualToView(self.scrollView).leftEqualToView(self.scrollView).rightEqualToView(self.scrollView).heightIs(flexibleHeight(HEIGHT / 3));
     
-    self.nameLabel.sd_layout.leftSpaceToView(self.iconView, 10).topSpaceToView(self.scrollView,25).heightIs(flexibleHeight(18));
-    [self.nameLabel setSingleLineAutoResizeWithMaxWidth:flexibleWidth(200)];
-    
-    self.timeLabel.sd_layout.topSpaceToView(self.scrollView,35).rightSpaceToView(self.scrollView,10).widthIs(flexibleWidth(60)).heightIs(flexibleHeight(15));
-    
-    self.positionImg.sd_layout.leftSpaceToView(self.iconView,10).topSpaceToView(self.scrollView,55).heightIs(flexibleHeight(20)).widthIs(flexibleWidth(20));
-    
-    self.positionLabel.sd_layout .leftSpaceToView(self.positionImg,5).topEqualToView(self.positionImg).rightSpaceToView(self.scrollView,10).heightIs(flexibleHeight(18));
-    
-    self.contentLabel.sd_layout .leftEqualToView(self.iconView).topSpaceToView(self.iconView, 5).rightSpaceToView(self.scrollView, 10).heightIs(flexibleHeight(60)).autoHeightRatio(0);
-    
-    self.picContainerView.sd_layout.leftEqualToView(self.contentLabel);
-    
-    self.seperateView.sd_layout.leftSpaceToView(self.scrollView,0).topSpaceToView(self.picContainerView,20).rightSpaceToView(self.scrollView,0);
-    
-    self.leftsideButton.sd_layout.leftEqualToView(self.scrollView).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topSpaceToView(self.seperateView, 0);
+    self.leftsideButton.sd_layout.leftEqualToView(self.scrollView).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topSpaceToView(self.topView, 0);
     
     self.rightsideButton.sd_layout.rightEqualToView(self.scrollView).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topEqualToView(self.leftsideButton);
     
     self.bottomLine.sd_layout.centerXIs(flexibleWidth(WIDTH / 4)).heightIs(flexibleHeight(2)).widthIs(flexibleWidth(WIDTH / 2)).topSpaceToView(self.leftsideButton, 0);
+
+    
+    self.bottomView.sd_layout.leftEqualToView(self.view).bottomEqualToView(self.view).widthIs(flexibleWidth(WIDTH)).heightIs(flexibleHeight(40));
+    
+    self.dianzanbt.sd_layout.leftSpaceToView(self.bottomView,WIDTH /4).topSpaceToView(self.bottomView,5).widthIs(flexibleWidth(30)).heightIs(flexibleHeight(30));
+    self.commentbt.sd_layout.leftSpaceToView(self.bottomView,WIDTH / 3 + 20).topSpaceToView(self.bottomView,5).widthIs(flexibleWidth(30)).heightIs(flexibleHeight(30));
+    self.sharebt.sd_layout.rightSpaceToView(self.bottomView,WIDTH / 3 + 20).topSpaceToView(self.bottomView,5).widthIs(flexibleWidth(30)).heightIs(flexibleHeight(30));
+    self.collectionbt.sd_layout.rightSpaceToView(self.bottomView,WIDTH /4).topSpaceToView(self.bottomView,5).widthIs(flexibleWidth(30)).heightIs(flexibleHeight(30));
+    
     
     
     
@@ -124,35 +103,9 @@
 - (void)setTravelObject:(BmobObject *)travelObject{
     _travelObject = travelObject;
     BmobObject * user =  [travelObject objectForKey:@"userId"];
-    
-    
-    NSString * imageString =[user objectForKey:@"head_portraits"];
-    if (imageString.length > 0) {
-        NSURL * imageUrl = [NSURL URLWithString:imageString];
-        [self.iconView sd_setImageWithURL:imageUrl];
-    }
-    else{
-        self.iconView.image = IMAGE_PATH(@"无头像.png");
-    }
-    self.nameLabel.text = [user objectForKey:@"username"];
-    //    // 防止单行文本label在重用时宽度计算不准的问题
-    [self.nameLabel sizeToFit];
-    self.contentLabel.text = [travelObject objectForKey:@"content"];
-    self.positionImg.image = IMAGE_PATH(@"定位选中.png");
-    self.positionLabel.text = [travelObject objectForKey:@"position"];
-    
-    
-    NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate * mydate = [formatter dateFromString:[travelObject objectForKey:@"createdAt"]];
-    self.timeLabel.text = [self compareCurrentTime:mydate];
-    
-    
-    
-    NSArray * pictureArray = (NSArray *)[travelObject objectForKey:@"urlArray"];
-    self.picContainerView.picPathStringsArray = pictureArray;
-    
-    
+    self.objId = travelObject.objectId;
+    self.topView.travelObject = travelObject;
+    self.topView.userObject = user;
     
     NSArray * thumbArray = (NSArray *)[travelObject objectForKey:@"thumbArray"];
     for (NSString * userId in thumbArray) {
@@ -163,41 +116,19 @@
             self.dianzanbt.selected = NO;
         }
     }
-
-    CGFloat picContainerTopMargin = 0;
-    if (pictureArray.count) {
-        picContainerTopMargin = 10;
-    }
-    self.picContainerView.sd_layout.topSpaceToView(self.contentLabel, picContainerTopMargin);
-}
-
-- (NSString *) compareCurrentTime:(NSDate *) compareDate {
-    NSTimeInterval  timeInterval = [compareDate timeIntervalSinceNow];
-    timeInterval = - timeInterval;
-    long temp = 0;
-    NSString *result = nil;
-    if (timeInterval < 60) {
-        result = [NSString stringWithFormat:@"刚刚"];
-    }
-    else if((temp = timeInterval / 60) < 60){
-        result = [NSString stringWithFormat:@"%ld分前", temp];
-    }
-    else if((temp = temp / 60) < 24){
-        result = [NSString stringWithFormat:@"%ld小时前", temp];
-    }
-    else if((temp = temp / 24) < 30){
-        result = [NSString stringWithFormat:@"%ld天前", temp];
-    }
-    else if((temp = temp / 30) < 12){
-        result = [NSString stringWithFormat:@"%ld月前", temp];
-    }
-    else{
-        temp = temp / 12;
-        result = [NSString stringWithFormat:@"%ld年前", temp];
-    }
     
-    return  result;
+    NSArray * collectionArray = (NSArray *)[travelObject objectForKey:@"collectionArray"];
+    for (NSString * userId in collectionArray) {
+        if ([userId isEqualToString:OBJECTID]) {
+            self.collectionbt.selected = YES;
+        }
+        else{
+            self.collectionbt.selected = NO;
+        }
+    }
+
 }
+
 
 
 - (void)buttonClickEvent:(UIButton *)sender {
@@ -224,14 +155,87 @@
 }
 
 - (void)handlePress:(UIButton *)sender{
+    if (!OBJECTID) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        return;
+    }
     
+    if (sender == self.collectionbt) {
+        if (!sender.selected) {
+            [Collection CollectionWithID:self.objId type:1 success:^(NSString *commentID) {
+                
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
+        else{
+            [Collection cancelCollectionWithID:self.objId type:1 success:^(NSString *commentID) {
+                
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
+
+    }
+    else if (sender == self.dianzanbt){
+        if (!sender.selected) {
+            [ThumbUp thumUpWithID:self.objId type:1 success:^(NSString *commentID) {
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
+        else{
+            //取消点赞
+            [ThumbUp cancelThumUpWithID:self.objId type:1 success:^(NSString *commentID) {
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
+
+    }
+    else if (sender == self.commentbt){
+         [self.comment.inputText becomeFirstResponder];
+    }
+    else{
+        NSArray * imageArray;
+        if ([self.travelObject objectForKey:@"urlArray"]) {
+            imageArray = [self.travelObject objectForKey:@"urlArray"];
+        }
+        else{
+            imageArray = nil;
+        }
+        [ShareView sharedWithImages:imageArray content:[self.travelObject objectForKey:@"content"]];
+        
+    }
+    
+    sender.selected = !sender.selected;
+}
+//发表评论
+- (void)handleSend{
+    
+    if (![self.comment.inputText.text isEqualToString:@""]) {
+         [Comments addComentWithContent:self.comment.inputText.text userID:nil type:1 objID:self.objId success:^(NSString *commentID) {
+             
+         } failure:^(NSError *error1) {
+             
+         }];
+        self.comment.inputText.text = @"";
+    }
+    else{
+        [self alertView:@"评论不能为空哟~" cancelButtonTitle:nil sureButtonTitle:@"确定"];
+        
+        
+    }
+    
+    self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667,375,40), NO);
 }
 - (void)keyboardWillShow:(NSNotification *)noti{
     CGRect keyboardRect =[noti.userInfo [UIKeyboardFrameEndUserInfoKey] CGRectValue];
     self.keyboardHeight = keyboardRect.size.height;
     self.duration = [noti.userInfo [UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveEaseIn  animations:^{
-        self.sharedView.inputView.frame = flexibleFrame(CGRectMake(0,667 - (CGRectGetHeight(self.sharedView.inputText.bounds)+ 10 + self.keyboardHeight),375, CGRectGetHeight(self.sharedView.inputText.bounds) + 10), NO);
+        self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667 - (CGRectGetHeight(self.comment.inputText.bounds)+ 10 + self.keyboardHeight),375, CGRectGetHeight(self.comment.inputText.bounds) + 10), NO);
         
     } completion:nil];
     NSLog(@"%f",self.keyboardHeight);
@@ -254,9 +258,9 @@
         CGSize size = [textView sizeThatFits:CGSizeMake(280,CGFLOAT_MAX)];
         
         [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
-            self.sharedView.inputText.frame = flexibleFrame(CGRectMake(20,5,280, size.height), NO);
+            self.comment.inputText.frame = flexibleFrame(CGRectMake(20,5,280, size.height), NO);
             
-            self.sharedView.inputView.frame = flexibleFrame(CGRectMake(0,667 - (size.height + 10 + self.keyboardHeight),375, size.height + 10), NO);
+            self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667 - (size.height + 10 + self.keyboardHeight),375, size.height + 10), NO);
         } completion:nil];
         
         
@@ -273,9 +277,9 @@
     CGSize size = [textView sizeThatFits:CGSizeMake(280,CGFLOAT_MAX)];
     [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         
-        self.sharedView.inputText.frame = flexibleFrame(CGRectMake(20,5,280, size.height), NO);
+        self.comment.inputText.frame = flexibleFrame(CGRectMake(20,5,280, size.height), NO);
         
-        self.sharedView.inputView.frame = flexibleFrame(CGRectMake(0,667,375, size.height + 10), NO);
+        self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667,375, size.height + 10), NO);
     } completion:nil];
     
 }
@@ -294,63 +298,11 @@
     return _scrollView;
 }
 
-- (UIImageView *)iconView{
-    if (!_iconView) {
-        _iconView = [UIImageView new];
+- (DetailTopView *)topView{
+    if (!_topView) {
+        _topView = [DetailTopView new];
     }
-    return _iconView;
-}
-- (UILabel *)nameLabel{
-    if (_nameLabel) {
-        _nameLabel = [UILabel new];
-        _nameLabel.font = [UIFont systemFontOfSize:16];
-        _nameLabel.textColor = [UIColor blackColor];
-    }
-    return _nameLabel;
-}
-- (UILabel *)timeLabel{
-    if (!_timeLabel) {
-        _timeLabel = [UILabel new];
-        _timeLabel.font = [UIFont systemFontOfSize:14];
-        _timeLabel.textAlignment = NSTextAlignmentRight;
-        _timeLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
-    }
-    return _timeLabel;
-}
-- (UIImageView *)positionImg{
-    if (!_positionImg) {
-        _positionImg = [UIImageView new];
-    }
-    return _positionImg;
-}
-- (UILabel *)positionLabel{
-    if (_positionLabel) {
-        _positionLabel = [UILabel new];
-        _positionLabel.font = [UIFont systemFontOfSize:14];
-        _positionLabel.textColor = [UIColor colorWithRed:(54 / 255.0) green:(71 / 255.0) blue:(121 / 255.0) alpha:0.9];
-    }
-    return _positionLabel;
-}
-- (UILabel *)contentLabel{
-    if (!_contentLabel) {
-        _contentLabel = [UILabel new];
-        _contentLabel.font = [UIFont systemFontOfSize:15];
-        _contentLabel.textColor = [UIColor colorWithRed:(54 / 255.0) green:(71 / 255.0) blue:(121 / 255.0) alpha:0.9];
-    }
-    return _contentLabel;
-}
-- (PhotoView *)picContainerView{
-    if (_picContainerView) {
-         _picContainerView = [PhotoView new];
-    }
-    return _picContainerView;
-}
-- (UIView *)seperateView{
-    if (!_seperateView) {
-        _seperateView = [UIView new];
-        _seperateView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
-    }
-    return _seperateView;
+    return _topView;
 }
 - (UIButton *)leftsideButton {
     if (!_leftsideButton) {
@@ -385,16 +337,28 @@
     return _rightsideButton;
 }
 
+- (UIView *)bottomLine{
+    if (!_bottomLine) {
+        _bottomLine = [UIView new];
+        _bottomLine.backgroundColor = THEMECOLOR;
+    }
+    return _bottomLine;
+}
+
 - (UIView *)bottomView{
-    if (_bottomView) {
+    if (!_bottomView) {
         _bottomView = [UIView new];
-        _bottomView.backgroundColor = [UIColor clearColor];
+        _bottomView.backgroundColor = [UIColor whiteColor];//如果是clearColor,阴影则设置无效
+        _bottomView.layer.shadowOffset = CGSizeMake(0, -1);
+        _bottomView.layer.shadowColor= [UIColor blackColor].CGColor;
+        _bottomView.layer.shadowOpacity = 0.5;
+        _bottomView.layer.shadowRadius = 2;
     }
     return _bottomView;
 }
 - (UIButton *)dianzanbt{
     if (!_dianzanbt) {
-        _dianzanbt = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0,WIDTH / 3, 40), NO)];
+        _dianzanbt = [UIButton buttonWithType:UIButtonTypeCustom];
         [_dianzanbt addTarget:self action:@selector(handlePress:) forControlEvents:UIControlEventTouchUpInside];
         [_dianzanbt setBackgroundImage:IMAGE_PATH(@"未点赞.png") forState:UIControlStateNormal];
         [_dianzanbt setBackgroundImage:IMAGE_PATH(@"点赞.png") forState:UIControlStateSelected];
@@ -404,7 +368,7 @@
 }
 - (UIButton *)commentbt{
     if (!_commentbt) {
-        _commentbt = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(WIDTH / 3, 0, WIDTH / 3, 40), NO)];
+        _commentbt = [UIButton buttonWithType:UIButtonTypeCustom];
         [_commentbt addTarget:self action:@selector(handlePress:) forControlEvents:UIControlEventTouchUpInside];
         [_commentbt setBackgroundImage:IMAGE_PATH(@"评论.png") forState:UIControlStateNormal];
         [self.bottomView addSubview:_commentbt];
@@ -414,20 +378,31 @@
 
 - (UIButton *)sharebt{
     if (!_sharebt) {
-        _sharebt = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(WIDTH - WIDTH / 3, 0, WIDTH / 3, 40), NO)];
+        _sharebt = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sharebt addTarget:self action:@selector(handlePress:) forControlEvents:UIControlEventTouchUpInside];
-        [_sharebt setBackgroundImage:IMAGE_PATH(@"未评论.png") forState:UIControlStateNormal];
+        [_sharebt setBackgroundImage:IMAGE_PATH(@"未分享.png") forState:UIControlStateNormal];
         [self.bottomView addSubview:_sharebt];
     }
     return _sharebt;
 }
+- (UIButton *)collectionbt{
+    if (!_collectionbt) {
+        _collectionbt = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_collectionbt addTarget:self action:@selector(handlePress:) forControlEvents:UIControlEventTouchUpInside];
+        [_collectionbt setBackgroundImage:IMAGE_PATH(@"未收藏.png") forState:UIControlStateNormal];
+        [_collectionbt setBackgroundImage:IMAGE_PATH(@"已收藏.png") forState:UIControlStateSelected];
+        [self.bottomView addSubview:_collectionbt];
+    }
+    return _collectionbt;
+}
 
-- (SharedView *)sharedView{
-    if (!_sharedView) {
-        _sharedView = [[SharedView alloc]init];
-        self.sharedView.inputText.delegate = self;
-           }
-    return _sharedView;
+- (CommentView *)comment{
+    if (!_comment) {
+        _comment = [[CommentView alloc]init];
+        self.comment.inputText.delegate = self;
+        [self.comment.conmmentButton addTarget:self action:@selector(handleSend) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _comment;
 }
 
 @end

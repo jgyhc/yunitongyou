@@ -103,6 +103,14 @@ static NSString * const identifier = @"CELL";
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BmobObject *obj = self.travelArray[indexPath.section];
+    RecordDetailViewController * detail = [[RecordDetailViewController alloc]init];
+    detail.travelObject = obj;
+    BmobObject * user = [obj objectForKey:@"userId"];
+    detail.userObject = user;
+    [self.navigationController pushViewController:detail animated:YES];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 5;

@@ -1,0 +1,17 @@
+//
+//  DetailTopView.h
+//  与你同游
+//
+//  Created by mac on 16/3/24.
+//  Copyright © 2016年 LiuCong. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface DetailTopView : UIView
+
+@property (nonatomic, strong) BmobObject * travelObject;
+
+@property (nonatomic, strong) BmobObject * userObject;
+
+@end

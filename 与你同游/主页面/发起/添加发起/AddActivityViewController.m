@@ -149,8 +149,7 @@
     
     self.sharedView.textView.delegate = self;
     
-  
-    [self.backView addSubview:self.sharedView.importPhotoButton];
+
     [self.backView addSubview:self.sharedView.textView];
     
     for (int i = 0; i < 3; i ++) {
@@ -182,27 +181,6 @@
     }];
 }
 
-//选择相片或拍照
-- (void)handleSelecte:(UIButton *)sender{
-    if (sender.tag == BUTTON_TAG) {
-        
-        UIImagePickerController * pickerController = [[UIImagePickerController alloc]init];
-        pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        pickerController.delegate = self;
-        [self presentViewController:pickerController animated:YES completion:nil];
-    }
-    else if (sender.tag == BUTTON_TAG + 1){
-        
-        //        [self handleTakePhoto];
-    }
-    else{
-        
-        [self.sharedView handlePress];
-        
-    }
-}
-
-
 
 #pragma mark --键盘通知
 - (void)keyboardWillShow:(NSNotification *)notif{
@@ -229,10 +207,9 @@
         return;
     }
     [self.load show];
-//    [self.addActivities AddCalledWithPhoneNumber:PHONE_NUMBER password:PASSWORD title:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text image:imageData];
-//    
+  
     [Called AddCalledWithTitle:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text Success:^(NSString *calledID) {
-        
+        [self.load hide];
     } failure:^(NSError *error) {
     
     }];

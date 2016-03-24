@@ -52,15 +52,6 @@
 
 
 /**
- *  查询一条游记
- *
- *  @param phoneNumber 用户名
- *  @param password    密码
- *  @param travel_date 游记发布时间
- */
-- (void)queryTravelWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password travel_date:(NSString *)travel_date;
-
-/**
  *  删除一条游记
  *
  *  @param phoneNumber 电话
@@ -138,21 +129,5 @@
 - (void)CreateTravelReplyReplyWithPhoneNumber:(NSString *)phoneNumber Password:(NSString *)password CTphoneNumber:(NSString *)CTphoneNumber travel_date:(NSString *)travel_date travel_comments_time:(NSString *)travel_comments_time replyContents:(NSString *)replyContents;
 
 
-/**
- *  点赞
- *
- *  @param phoneNumber   电话（点赞人的）
- *  @param password      密码
- *  @param CTphoneNumber 游记主人的电话
- *  @param travel_date   游记时间
- */
-- (void)ThumbUpWithPhoneNumber:(NSString *)phoneNumber password:(NSString *)password CTphoneNumber:(NSString *)CTphoneNumber travel_date:(NSString *)travel_date;
-/**
- *  获取点赞数
- *
- *  @param phoneNumber 电话（游记主人）
- *  @param travel_date 游记时间
- */
-- (void)getThumUpWithPhoneNumber:(NSString *)phoneNumber travel_date:(NSString *)travel_date;
 
 @end

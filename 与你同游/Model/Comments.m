@@ -73,6 +73,8 @@
             //添加关联关系到 对应的obj表中（可能是游记、活动）
             //添加关联关系到comments列中
             [obj addRelation:relation2 forKey:@"comments"];
+            
+            [obj incrementKey:@"comments_number"];
             [obj updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                 if (isSuccessful) {
                     NSLog(@"successful");

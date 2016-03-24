@@ -9,7 +9,6 @@
 #import "BaseViewController.h"
 
 @interface CommentViewController : BaseViewController
-@property (nonatomic, copy) NSString *phoneNumber;
-@property (nonatomic, copy) NSString *travelDate;
+@property (nonatomic, strong) NSString * objId;
 
 @end

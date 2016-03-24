@@ -196,10 +196,13 @@ const CGFloat maxContentLabelHeight = 54;
         _iconView.image = IMAGE_PATH(@"无头像.png");
     }
 
-    
-    
-    _nameLable.text = [user objectForKey:@"username"];
-    //    // 防止单行文本label在重用时宽度计算不准的问题
+    if (![[user objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
+        _nameLable.text = [user objectForKey:@"username"];
+    }else {
+         _nameLable.text = [user objectForKey:@"phoneNumber"];
+    }
+
+    // 防止单行文本label在重用时宽度计算不准的问题
         [_nameLable sizeToFit];
     _contentLabel.text = [info objectForKey:@"content"];
         _positionImg.image = IMAGE_PATH(@"定位选中.png");
