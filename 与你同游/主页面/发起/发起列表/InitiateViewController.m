@@ -30,14 +30,7 @@
     [super viewDidLoad];
     _skip = 0;
     _limit = 10;
-    [Called getcalledListWithLimit:_limit skip:_skip Success:^(NSArray *calleds) {
-        [self.dataSource addObjectsFromArray:calleds];
-        [self.tableView reloadData];
-    } failure:^(NSError *error1) {
-        
-    }];
-    
-    self.view.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
+       self.view.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
     [self initNavTitle:@"发起"];
     [self.tableView registerClass:[LaunchTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     [self initRightButtonEvent:@selector(handleAddCalled:) Image:IMAGE_PATH(@"添加游记.png")];
@@ -55,6 +48,20 @@
     [self initUserInterface];
     [self initPersonButton];
     
+}
+- (void)viewWillAppear:(BOOL)animated{
+    if (self.dataSource.count > 0) {
+        [self.dataSource removeAllObjects];
+    }
+    
+    [Called getcalledListWithLimit:_limit skip:_skip Success:^(NSArray *calleds) {
+        [self.dataSource addObjectsFromArray:calleds];
+        [self.tableView reloadData];
+    } failure:^(NSError *error1) {
+        
+    }];
+    
+
 }
 
 

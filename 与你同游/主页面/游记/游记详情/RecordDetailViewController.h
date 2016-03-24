@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) BmobObject * userObject;
 
+@property (nonatomic, strong) NSString * objId;
+
 @end

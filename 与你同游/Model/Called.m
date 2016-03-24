@@ -29,6 +29,8 @@
     [called setObject:departureTime forKey:@"departure_time"];
     [called setObject:arrivalTime forKey:@"arrival_time"];
     [called setObject:NumberOfPeople forKey:@"number_Of_people"];
+    [called setObject:[NSNumber numberWithInt:0] forKey:@"number_of_thumb_up"];
+    [called setObject:[NSNumber numberWithInt:0] forKey:@"comments_number"];
     [called setObject:content forKey:@"content"];
     
     //把发表这条活动的作者 放在called表的user字段下（为了满足通过查找活动找到该条活动的作者）(这里的关系是Pointer)
