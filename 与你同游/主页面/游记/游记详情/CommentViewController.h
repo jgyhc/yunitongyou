@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 
 @interface CommentViewController : BaseViewController
-@property (nonatomic, strong) NSString * objId;
-
+@property (nonatomic, copy) NSString * objId;
+@property (nonatomic, assign) long type;
+@property (nonatomic, copy) NSString *userID;
 @end

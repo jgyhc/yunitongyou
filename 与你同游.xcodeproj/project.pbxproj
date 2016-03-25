@@ -164,6 +164,7 @@
 		7275C6391CA2C4BC00BD81FF /* 我要加入已选.png in Resources */ = {isa = PBXBuildFile; fileRef = 7275C6371CA2C4BC00BD81FF /* 我要加入已选.png */; };
 		7275C63D1CA2C4F700BD81FF /* LBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7275C63C1CA2C4F700BD81FF /* LBottomView.m */; };
 		7275C6401CA2DBEC00BD81FF /* ICommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7275C63F1CA2DBEC00BD81FF /* ICommentsView.m */; };
+		7282F5211CA40A290097DAFD /* UIAlertController+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 7282F5201CA40A290097DAFD /* UIAlertController+Blocks.m */; };
 		7288E10B1C7744FC00F554D0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10A1C7744FC00F554D0 /* User.m */; };
 		7288E10E1C77455600F554D0 /* Called.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10D1C77455600F554D0 /* Called.m */; };
 		7288E1111C77496900F554D0 /* Travel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1101C77496900F554D0 /* Travel.m */; };
@@ -437,6 +438,8 @@
 		7275C63C1CA2C4F700BD81FF /* LBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBottomView.m; sourceTree = "<group>"; };
 		7275C63E1CA2DBEC00BD81FF /* ICommentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICommentsView.h; sourceTree = "<group>"; };
 		7275C63F1CA2DBEC00BD81FF /* ICommentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICommentsView.m; sourceTree = "<group>"; };
+		7282F51F1CA40A290097DAFD /* UIAlertController+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Blocks.h"; sourceTree = "<group>"; };
+		7282F5201CA40A290097DAFD /* UIAlertController+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Blocks.m"; sourceTree = "<group>"; };
 		7288E1091C7744FC00F554D0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		7288E10A1C7744FC00F554D0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		7288E10C1C77455600F554D0 /* Called.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Called.h; sourceTree = "<group>"; };
@@ -956,6 +959,8 @@
 				2497BA021BCCC37400251058 /* BaseViewController.m */,
 				72DCD1F31C058C6900BFDB6D /* BaseGradientView.h */,
 				72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */,
+				7282F51F1CA40A290097DAFD /* UIAlertController+Blocks.h */,
+				7282F5201CA40A290097DAFD /* UIAlertController+Blocks.m */,
 			);
 			path = "控制器父类";
 			sourceTree = "<group>";
@@ -1586,6 +1591,7 @@
 				72B517361C7495390089CE97 /* RetrievePassword.m in Sources */,
 				04D354401C87F50900DFCB1C /* MyJoinsView.m in Sources */,
 				72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */,
+				7282F5211CA40A290097DAFD /* UIAlertController+Blocks.m in Sources */,
 				72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */,
 				245B59E71BCB8BE80003EBA7 /* AppDelegate.m in Sources */,
 				24780C831BD663050009A40D /* LoadingView.m in Sources */,

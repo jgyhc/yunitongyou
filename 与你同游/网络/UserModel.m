@@ -104,6 +104,7 @@
             BmobObject *object = array[0];
             NSLog(@"登录成功返回的用户信息array[0] = %@",array[0]);
             self.loginUserData = object;
+            success(object);
         }
     }];
 }

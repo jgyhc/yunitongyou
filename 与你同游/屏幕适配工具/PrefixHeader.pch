@@ -19,7 +19,7 @@
 #define WIDTH 375.0
 #define HEIGHT 667.0
 
-#define UserID @"44d6e1886b"
+#define UserID [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]
 #import "AdaptScreenHelp.h"
 
 

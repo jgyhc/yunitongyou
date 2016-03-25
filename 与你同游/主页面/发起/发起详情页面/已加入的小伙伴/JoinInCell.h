@@ -10,4 +10,8 @@
 
 @interface JoinInCell : UITableViewCell
 @property (nonatomic, strong) BmobObject *model;
+/**
+ *  是否显示后面的同意按钮
+ */
+- (void)isText;
 @end

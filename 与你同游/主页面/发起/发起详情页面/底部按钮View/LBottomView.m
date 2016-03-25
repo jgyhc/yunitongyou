@@ -32,6 +32,11 @@
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
         [self.joinView addGestureRecognizer:tap];
+        UITapGestureRecognizer *comtap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
+        [self.commentView addGestureRecognizer:comtap];
+        
+        UITapGestureRecognizer *tptap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
+        [self.thumupView addGestureRecognizer:tptap];
         
         [self addSubview:self.commentView];
         [self addSubview:self.joinView];
@@ -69,9 +74,22 @@
 
 
 - (void)handldTapEvent:(UITapGestureRecognizer *)tap {
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(joinCalled)]) {
-        [self.delegate joinCalled];
+    if (tap.view == self.joinView) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(joinCalled)]) {
+            [self.delegate joinCalled];
+        }
     }
+    if (tap.view == self.commentView) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(commentCalled)]) {
+            [self.delegate commentCalled];
+        }
+    }
+    if (tap.view == self.thumupView) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(thumUpCalled)]) {
+            [self.delegate thumUpCalled];
+        }
+    }
+
 }
 
 - (UIView *)commentView {

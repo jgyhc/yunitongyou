@@ -12,6 +12,10 @@
 
 - (void)joinCalled;
 
+- (void)commentCalled;
+
+- (void)thumUpCalled;
+
 @end
 
 @interface LBottomView : UIView

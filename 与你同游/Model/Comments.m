@@ -11,12 +11,11 @@
 @implementation Comments
 //添加一条评论（已测试）如果是回复的话  userID就放回复对象的ID  不是回复就传nil
 + (void)addComentWithContent:(NSString *)content userID:(NSString *)userID type:(long)type objID:(NSString *)objID success:(void (^)(NSString *commentID))success failure:(void (^)(NSError *error1))failure {
+    NSLog(@"%@%@%ld%@", content, userID, type, objID);
     BmobObject  *comment = [BmobObject objectWithClassName:@"Comment"];
     [comment setObject:content forKey:@"content"];
     [comment setObject:[self CurrentTime] forKey:@"called_date"];
     [comment setObject:[NSNumber numberWithLong:type] forKey:@"type"];
-
-
     BmobObject *user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:UserID];
     [comment setObject:user forKey:@"user"];
     BmobObject *obj = [BmobObject new];//两种类型 对应两个表

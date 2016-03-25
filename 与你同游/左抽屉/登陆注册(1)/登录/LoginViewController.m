@@ -94,8 +94,9 @@
         [alertView show];
     }else {
    //网络请求
-         [self.loading show];
+        [self.loading show];
         [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:^(BmobObject *object) {
+            [[NSUserDefaults standardUserDefaults] setObject:object.objectId forKey:@"userID"];
         } failBlock:^(NSError *error) {
             [self.loading hide];
             UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"用户名或者密码错误！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];

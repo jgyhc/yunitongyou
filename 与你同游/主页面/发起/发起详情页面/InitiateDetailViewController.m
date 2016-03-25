@@ -14,6 +14,8 @@
 #import "HeaderButtonView.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
 #import "LBottomView.h"
+#import <MJRefresh.h>
+#import "CommentViewController.h"
 #define SIZEHEIGHT frame.size.height
 
 @interface InitiateDetailViewController ()<UITableViewDelegate, UITableViewDataSource, HeaderButtonViewDelegate, LBottomViewDelegate>
@@ -41,6 +43,16 @@
     _type = 0;
     [self initUserInterface];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if (_type == 0) {
+            [self getCommentList];
+        }else {
+            [self getjoinList];
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView.mj_footer endRefreshing];
+        });
+    }];
 }
 
 
@@ -50,7 +62,12 @@
     _skip = 0;
     _Jskip = 0;
     _limit = 15;
-    [Called getCommentsWithLimit:_limit?_limit:10 skip:_skip?_skip:0 CalledsID:calledID Success:^(NSArray *commentArray) {
+    [self getCommentList];
+    [self getjoinList];
+}
+
+- (void)getCommentList {
+    [Called getCommentsWithLimit:_limit?_limit:10 skip:_skip?_skip:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
         [self.commentArray addObjectsFromArray:commentArray];
         _skip = _skip + _limit;
         self.dataSource = self.commentArray;
@@ -58,7 +75,6 @@
     } failure:^(NSError *error1) {
         
     }];
-    [self getjoinList];
 }
 
 - (void)setUserObject:(BmobObject *)userObject {
@@ -69,6 +85,9 @@
 - (void)getjoinList {
     [Called getJoinWithLimit:_limit?_limit:10 skip:_Jskip?_Jskip:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
         [self.userArray addObjectsFromArray:commentArray];
+        if (_type == 0) {
+            [self.dataSource addObjectsFromArray:commentArray];
+        }
         _Jskip = _Jskip + _limit;
     } failure:^(NSError *error1) {
         
@@ -76,11 +95,25 @@
 }
 
 - (void)joinCalled {
-//    [Called joinInCalledWithCalledID:_calledID791b3496d7 Success:^(BOOL isSuccess) {
-//        
-//    } failure:^(NSError *error) {
-//        
-//    }];
+    [Called joinInCalledWithCalledID:_calledID Success:^(BOOL isSuccess) {
+        if (isSuccess) {
+            [self message:@"您已经报名！"];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+- (void)thumUpCalled {
+
+
+}
+
+- (void)commentCalled {
+    CommentViewController *comVC = [[CommentViewController alloc] init];
+    comVC.objId = _calledID;
+    comVC.type = 0;
+    [self.navigationController pushViewController:comVC animated:YES];
 }
 
 - (void)setCalledObject:(BmobObject *)calledObject {
@@ -128,11 +161,19 @@
     return self.buttonView;
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self cellHeightForIndexPath:indexPath cellContentViewWidth:[self cellContentViewWith] tableView:tableView];
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (_type == 0) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 50, 100, 44)];
+        view.backgroundColor = [UIColor redColor];
+    }
+
+}
+
 - (CGFloat)cellContentViewWith
 {
     CGFloat width = [UIScreen mainScreen].bounds.size.width;

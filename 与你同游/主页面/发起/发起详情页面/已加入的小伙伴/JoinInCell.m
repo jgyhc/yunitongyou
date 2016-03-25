@@ -7,7 +7,7 @@
 //
 
 #import "JoinInCell.h"
-
+#import <UIImageView+WebCache.h>
 @interface JoinInCell ()
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIImageView *iconImage;
@@ -23,7 +23,7 @@
         [self.contentView addSubview:self.nameLabel];
         self.nameLabel.text = @"name";
         [self.contentView addSubview:self.iconImage];
-        [self.contentView addSubview:self.switchButton];
+
         
         self.iconImage.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).centerYEqualToView(self.contentView).widthIs(flexibleHeight(35)).heightEqualToWidth(1);
         self.iconImage.sd_cornerRadiusFromWidthRatio = @0.5;
@@ -31,17 +31,21 @@
         self.nameLabel.sd_layout.centerYEqualToView(self.contentView).leftSpaceToView(self.iconImage, flexibleWidth(5)).heightIs(flexibleHeight(12));
         [self.nameLabel setSingleLineAutoResizeWithMaxWidth:200];
         
-        self.switchButton.sd_layout.rightSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.contentView, flexibleHeight(5)).widthIs(flexibleWidth(60)).heightIs(flexibleHeight(40));
-        
-        [self setupAutoHeightWithBottomView:self.switchButton bottomMargin:flexibleHeight(5)];
+
+        [self setupAutoHeightWithBottomView:self.iconImage bottomMargin:flexibleHeight(7.5)];
     }
     return self;
 }
 
+- (void)isText  {
+    [self.contentView addSubview:self.switchButton];
+    self.switchButton.sd_layout.rightSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.contentView, flexibleHeight(5)).widthIs(flexibleWidth(60)).heightIs(flexibleHeight(40));
+}
+
 - (void)setModel:(BmobObject *)model {
     _model = model;
-    BmobObject *juser = [model objectForKey:@"joinUser"];
-    self.nameLabel.text = [juser objectForKey:@"username"];
+    self.nameLabel.text = [model objectForKey:@"username"];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model objectForKey:@"head_portraits"]] placeholderImage:[UIImage imageNamed:@"icon"]];
     [self.nameLabel sizeToFit];
 }
 

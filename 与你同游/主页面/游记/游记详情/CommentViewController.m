@@ -26,15 +26,14 @@
 }
 
 - (void)initUserInterface {
-    
-    
     [self.content addSubview:self.hintlable];
     [self.view addSubview:self.content];
 }
 
 - (void)handleCommen {
     if (![self.content.text isEqualToString:@""]) {
-        [Comments addComentWithContent:self.content.text userID:nil type:1 objID:self.objId success:^(NSString *commentID) {
+        NSLog(@"%@", UserID);
+        [Comments addComentWithContent:self.content.text userID:_userID?_userID:nil type:_type == 0?_type:1 objID:self.objId success:^(NSString *commentID) {
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(NSError *error1) {
             
@@ -42,9 +41,7 @@
         self.content.text = @"";
     }
     else{
-        [self alertView:@"评论不能为空哟~" cancelButtonTitle:nil sureButtonTitle:@"确定"];
-        
-        
+        [self message:@"评论不能为空哟~"];
     }
 
 }

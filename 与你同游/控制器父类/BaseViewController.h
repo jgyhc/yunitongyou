@@ -34,7 +34,7 @@
 - (void)alertView:(NSString *)message cancelButtonTitle:(NSString *)cancelTitle   sureButtonTitle:(NSString *)sureTitle;
 - (void)alertControllerShow:(NSString *)message;
 
-
+- (void)message:(NSString *)message;
 - (NSString *) compareCurrentTime:(NSDate *) compareDate;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "ControllerManager.h"
+#import "UIAlertController+Blocks.h"
 @interface BaseViewController ()
 
 @property (nonatomic, strong)UILabel *navLabel;
@@ -67,6 +68,13 @@
 
 - (void)popViewController{
 //    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)message:(NSString *)message {
+    [UIAlertController showAlertInViewController:self withTitle:@"温馨提示" message:message cancelButtonTitle:@"确认" destructiveButtonTitle:nil otherButtonTitles:nil tapBlock:^(UIAlertController * _Nonnull controller, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        
+    }];
+
 }
 
 - (void)handleEventLeftAction:(UIButton *)sender {
