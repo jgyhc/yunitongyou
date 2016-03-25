@@ -40,6 +40,7 @@
  *  @param ObjectId id
  */
 - (void)getwithObjectId:(NSString *)ObjectId  successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail ;
+- (void)getInfowithObjectId:(NSString *)ObjectId  successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail ;
 
 /**
  *  注册

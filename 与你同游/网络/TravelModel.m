@@ -125,10 +125,10 @@
 }
 
 #pragma mark --查询所有游记
-- (void) queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success failBlock:(void(^)(NSError * error))fail {
+- (void) queryTheTravelListSuccessBlock:(void(^)(NSArray *objectArray))success skip:(NSInteger)skip failBlock:(void(^)(NSError * error))fail {
     BmobQuery   *bquery = [BmobQuery queryWithClassName:@"Travel"];
     bquery.limit = 10;//每页10条
-    //    bquery.skip = 3;//跳过查询的前多少条数据来实现分页查询的功能。
+    bquery.skip = skip;//跳过查询的前多少条数据来实现分页查询的功能。
     [bquery orderByDescending:@"createdAt"];
     //声明该次查询需要将userId关联的对象信息一并查询出来
     [bquery includeKey:@"userId"];

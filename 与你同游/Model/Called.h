@@ -39,7 +39,7 @@
  *  @param success
  *  @param failure  
  */
-+ (void)getCommentsWithLimit:(NSInteger)limit skip:(NSInteger)skip CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure;
++ (void)getCommentsWithLimit:(NSInteger)limit skip:(NSInteger)skip type:(int)type CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure;
 
 /**
  *  参加一条发起
