@@ -32,7 +32,6 @@
 
 - (void)handleCommen {
     if (![self.content.text isEqualToString:@""]) {
-        NSLog(@"%@", UserID);
         [Comments addComentWithContent:self.content.text userID:_userID?_userID:nil type:_type == 0?_type:1 objID:self.objId success:^(NSString *commentID) {
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(NSError *error1) {
