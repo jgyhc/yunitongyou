@@ -13,6 +13,7 @@
 @property (nonatomic, strong) UILabel *repalyLabel;
 @property (nonatomic, strong) UILabel *repaly;
 @property (nonatomic, strong) UILabel *contenLabel;
+@property (nonatomic, strong) UIButton *repalyButton;
 @end
 
 @implementation ICommentsCell
@@ -31,6 +32,10 @@
     [self.contentView addSubview:self.contenLabel];
     self.nameLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).heightIs(flexibleHeight(14)).topSpaceToView(self.contentView, flexibleHeight(10));
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    [self.contentView addSubview:self.repalyButton];
+    self.repalyButton.sd_layout.rightSpaceToView(self.contentView, flexibleWidth(15)).centerYEqualToView(self.nameLabel).heightIs(flexibleHeight(30)).widthIs(flexibleWidth(50));
+    
     if ([model objectForKey:@"Ruser"]) {
         BmobObject *Ruser = [model objectForKey:@"Ruser"];
         
@@ -40,9 +45,11 @@
 
         
         [self.contentView addSubview:self.repalyLabel];
-        self.repalyLabel.sd_layout.leftSpaceToView(self.repaly, 0).heightIs(flexibleHeight(14)).topEqualToView(self.nameLabel);
-        [self.repalyLabel setSingleLineAutoResizeWithMaxWidth:200];
+        self.repalyLabel.sd_layout.leftSpaceToView(self.repaly, 0).heightIs(flexibleHeight(14)).topEqualToView(self.nameLabel).rightSpaceToView(self.repalyButton, flexibleWidth(5));
         self.repalyLabel.text = [Ruser objectForKey:@"username"];
+        
+
+        
     }
     self.contenLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.nameLabel, flexibleHeight(10)).autoHeightRatio(0).rightSpaceToView(self.contentView, flexibleWidth(15));
     BmobObject *user = [model objectForKey:@"user"];
@@ -58,6 +65,11 @@
     
 }
 
+- (void)handRepalyEvent {
+    if (_replayBlock) {
+        self.replayBlock(_indexPath);
+    }
+}
 
 - (UILabel *)contenLabel {
 	if(_contenLabel == nil) {
@@ -94,6 +106,17 @@
         _nameLabel.font = [UIFont systemFontOfSize:flexibleHeight(14)];
 	}
 	return _nameLabel;
+}
+
+- (UIButton *)repalyButton {
+	if(_repalyButton == nil) {
+		_repalyButton = [[UIButton alloc] init];
+        [_repalyButton setTitle:@"回复" forState:UIControlStateNormal];
+        _repalyButton.titleLabel.font = [UIFont systemFontOfSize:flexibleHeight(14)];
+        [_repalyButton addTarget:self action:@selector(handRepalyEvent) forControlEvents:UIControlEventTouchUpInside];
+        [_repalyButton setTitleColor:[UIColor colorWithRed:0.000 green:0.470 blue:1.000 alpha:1.000] forState:UIControlStateNormal];
+	}
+	return _repalyButton;
 }
 
 @end

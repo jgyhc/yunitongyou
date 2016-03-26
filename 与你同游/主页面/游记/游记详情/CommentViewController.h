@@ -12,4 +12,5 @@
 @property (nonatomic, copy) NSString * objId;
 @property (nonatomic, assign) long type;
 @property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *username;
 @end

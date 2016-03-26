@@ -10,4 +10,7 @@
 
 @interface ICommentsCell : UITableViewCell
 @property (nonatomic, strong) BmobObject *model;
+
+@property (nonatomic, strong) void (^replayBlock)(NSIndexPath *indexPath);
+@property (nonatomic, strong) NSIndexPath *indexPath;
 @end

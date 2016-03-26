@@ -34,7 +34,10 @@
     obj.objectId = objID;
     [comment setObject:obj forKey:@"obj"];
 
-    
+    if (userID) {
+        BmobObject *replyUser = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:userID];
+        [comment setObject:replyUser forKey:@"Ruser"];
+    }
     //异步保存
     [comment saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
         if (isSuccessful) {

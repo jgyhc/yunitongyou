@@ -149,6 +149,16 @@
     cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
     BmobObject *model = self.dataSource[indexPath.row];
     cell.model = model;
+    cell.indexPath = indexPath;
+    [cell setReplayBlock:^(NSIndexPath *indexPath) {
+        CommentViewController *comVC = [[CommentViewController alloc] init];
+        comVC.objId = _calledID;
+        comVC.type = 0;
+        BmobObject *user = [model objectForKey:@"user"];
+        comVC.userID = user.objectId;
+        comVC.username = [user objectForKey:@"username"];
+        [self.navigationController pushViewController:comVC animated:YES];
+    }];
     return cell;
 }
 

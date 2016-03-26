@@ -10,6 +10,7 @@
 
 @interface JoinInCell : UITableViewCell
 @property (nonatomic, strong) BmobObject *model;
+@property (nonatomic, strong) NSIndexPath *indexPath;
 /**
  *  是否显示后面的同意按钮
  */

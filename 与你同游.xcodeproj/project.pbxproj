@@ -147,6 +147,7 @@
 		24F9F4E71BDCD96F00C722BE /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9F4E61BDCD96F00C722BE /* PersonalViewController.m */; };
 		720F67551CA02DF500312A2C /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 720F67541CA02DF500312A2C /* HeaderView.m */; };
 		720F67581CA0305D00312A2C /* HeaderButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 720F67571CA0305D00312A2C /* HeaderButtonView.m */; };
+		722C0D371CA5539400ADE47E /* SSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C0D361CA5539400ADE47E /* SSTextView.m */; };
 		72657E141C99906B00CC08AD /* BottomButtonsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DE81C99906B00CC08AD /* BottomButtonsView.m */; };
 		72657E151C99906B00CC08AD /* ImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DEA1C99906B00CC08AD /* ImageView.m */; };
 		72657E161C99906B00CC08AD /* InitiateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72657DED1C99906B00CC08AD /* InitiateViewController.m */; };
@@ -406,6 +407,8 @@
 		720F67541CA02DF500312A2C /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 		720F67561CA0305D00312A2C /* HeaderButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderButtonView.h; sourceTree = "<group>"; };
 		720F67571CA0305D00312A2C /* HeaderButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderButtonView.m; sourceTree = "<group>"; };
+		722C0D351CA5539400ADE47E /* SSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTextView.h; sourceTree = "<group>"; };
+		722C0D361CA5539400ADE47E /* SSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTextView.m; sourceTree = "<group>"; };
 		72657DE71C99906B00CC08AD /* BottomButtonsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomButtonsView.h; sourceTree = "<group>"; };
 		72657DE81C99906B00CC08AD /* BottomButtonsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomButtonsView.m; sourceTree = "<group>"; };
 		72657DE91C99906B00CC08AD /* ImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageView.h; sourceTree = "<group>"; };
@@ -1073,6 +1076,8 @@
 		24BDA5791BF213D000C84CAF /* 游记详情 */ = {
 			isa = PBXGroup;
 			children = (
+				722C0D351CA5539400ADE47E /* SSTextView.h */,
+				722C0D361CA5539400ADE47E /* SSTextView.m */,
 				24BDA57A1BF213D000C84CAF /* CommentViewController.h */,
 				24BDA57B1BF213D000C84CAF /* CommentViewController.m */,
 				24BDA57E1BF213D000C84CAF /* RecordDetailTableViewCell.h */,
@@ -1599,6 +1604,7 @@
 				72C1C6561C734CA1002317FE /* NetWorking.m in Sources */,
 				720F67581CA0305D00312A2C /* HeaderButtonView.m in Sources */,
 				24780C701BD628550009A40D /* UserModel.m in Sources */,
+				722C0D371CA5539400ADE47E /* SSTextView.m in Sources */,
 				044F50331C8ACD44002DF802 /* TravelsViewController.m in Sources */,
 				04D354611C88380600DFCB1C /* SDBrowserImageView.m in Sources */,
 				7275C63D1CA2C4F700BD81FF /* LBottomView.m in Sources */,

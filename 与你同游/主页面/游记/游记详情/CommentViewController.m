@@ -8,9 +8,9 @@
 
 #import "CommentViewController.h"
 #import "Comments.h"
-@interface CommentViewController ()<UITextViewDelegate>
-@property (nonatomic, strong) UITextView *content;
-@property (nonatomic,strong) UILabel * hintlable;
+#import "SSTextView.h"
+@interface CommentViewController ()
+@property (nonatomic, strong) SSTextView *content;
 
 @end
 
@@ -26,13 +26,17 @@
 }
 
 - (void)initUserInterface {
-    [self.content addSubview:self.hintlable];
     [self.view addSubview:self.content];
+}
+
+- (void)setUsername:(NSString *)username {
+    _username = username;
+    self.content.placeholder = [NSString stringWithFormat:@"回复%@:", username];
 }
 
 - (void)handleCommen {
     if (![self.content.text isEqualToString:@""]) {
-        [Comments addComentWithContent:self.content.text userID:_userID?_userID:nil type:_type == 0?_type:1 objID:self.objId success:^(NSString *commentID) {
+        [Comments addComentWithContent:self.content.text userID:_userID?_userID:nil type:_type objID:self.objId success:^(NSString *commentID) {
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(NSError *error1) {
             
@@ -46,48 +50,20 @@
 }
 
 
-- (void)textViewDidBeginEditing:(UITextView *)textView{
-    
-    self.hintlable.hidden = YES;
-    
-}
--(void)textViewDidEndEditing:(UITextView *)textView{
-    if ([textView.text isEqualToString:@""]) {
-        self.hintlable.hidden = NO;
-    }
-}
-
-
-
 #pragma mark -- getter
-- (UITextView *)content {
-    if (!_content) {
-        _content = ({
-            UITextView *textView = [[UITextView alloc] initWithFrame:flexibleFrame(CGRectMake(10, 64, 355, 594), NO)];
-            textView.layer.borderWidth = 0.5;
-            textView.layer.cornerRadius = 5;
-            textView.font = [UIFont systemFontOfSize:14];
-            textView.layer.borderColor = [UIColor colorWithWhite:0.766 alpha:1.000].CGColor;
-            textView.delegate = self;
-            textView;
-        });
-    }
-    return _content;
+
+
+- (SSTextView *)content {
+	if(_content == nil) {
+        _content = [[SSTextView alloc] initWithFrame:flexibleFrame(CGRectMake(10, 64, 355, 594), NO)];
+        _content.layer.borderWidth = 0.5;
+        _content.layer.cornerRadius = 5;
+        _content.font = [UIFont systemFontOfSize:14];
+        _content.layer.borderColor = [UIColor colorWithWhite:0.766 alpha:1.000].CGColor;
+        _content.placeholder = @"说说您的看法。。。";
+	}
+	return _content;
 }
 
-- (UILabel *)hintlable{
-    if (!_hintlable) {
-        _hintlable = ({
-            UILabel * label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(10, 10, 260, 20), NO)];
-            label.textColor = [UIColor colorWithWhite:0.666 alpha:1.000];
-            label.font = [UIFont systemFontOfSize:14];
-            label.text = @"说说您的看法...";
-            label.hidden = NO;
-            label;
-            
-        });
-    }
-    return _hintlable;
-}
 @end
 
