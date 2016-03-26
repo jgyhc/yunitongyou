@@ -10,57 +10,54 @@
 #import "TFIndicatorView.h"
 
 @interface LoadingView ()
-@property (nonatomic, strong) UIWindow *backWindow;
+@property (nonatomic, strong) UIWindow *bgWindow;
 @property (nonatomic, strong) TFIndicatorView *indicator;
 @end
 
 
 @implementation LoadingView
-- (instancetype)init{
-    self = [super init];
-    if (self) {
-        [self initializedApperance];
-        
-    }
-    return self;
-}
-- (void)initializedApperance {
-    self.center = self.backWindow.center;
-    [self.backWindow addSubview:self];
-    TFIndicatorView *indicator = [[TFIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    indicator.center = flexibleCenter(CGPointMake(WIDTH / 2, HEIGHT / 2), NO);
-    indicator.bounds = flexibleFrame(CGRectMake(0, 0, 100, 100), NO);
-    
-    [indicator startAnimating];
-    self.indicator = indicator;
-    self.frame = flexibleFrame(CGRectMake(0, 0, 375, 667), NO);
-//    self.backgroundColor = [UIColor redColor];
-    [self addSubview:indicator];
-}
 
-#pragma makr --Getter
--(UIWindow *)backWindow {
-    if (!_backWindow) {
-        _backWindow = ({
-            UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-            window.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
-//            window.backgroundColor = [UIColor redColor];
-            window.windowLevel = UIWindowLevelAlert;
+
+#pragma mark -- show
+- (void)show {
+    self.center = self.bgWindow.center;
+    [self.bgWindow addSubview:self];
+    self.frame = flexibleFrame(CGRectMake(0, 0, 375, 667), NO);
+    [self.indicator startAnimating];
+    [self addSubview:self.indicator];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.backgroundColor = [UIColor colorWithWhite:0.177 alpha:0.420];
+    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self hide];
+    });
+}
+#pragma mark -- remove
+- (void)hide {
+    [self.indicator stopAnimating];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.backgroundColor = [UIColor colorWithWhite:0.684 alpha:0.000];
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
+#pragma mark -- getter
+- (UIWindow *)bgWindow {
+    if (!_bgWindow) {
+        _bgWindow = ({
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
             window;
         });
     }
-    return _backWindow;
-    
+    return _bgWindow;
 }
-//显示弹出框
-- (void)show {
-    [self.backWindow makeKeyAndVisible];
+
+- (TFIndicatorView *)indicator {
+	if(_indicator == nil) {
+        _indicator = [[TFIndicatorView alloc] initWithFrame:CGRectMake(0, 0, flexibleHeight(50), flexibleHeight(50))];
+        _indicator.center = flexibleCenter(CGPointMake(375 / 2, 667 / 2), NO);
+	}
+	return _indicator;
 }
-//隐藏弹出框
-- (void)hide {
-    [self.indicator stopAnimating];
-    self.backWindow.hidden = YES;
-    [self.backWindow resignKeyWindow];
-    [self removeFromSuperview];
-}
+
 @end

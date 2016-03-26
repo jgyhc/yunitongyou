@@ -53,6 +53,8 @@
             [self.tableView.mj_footer endRefreshing];
         });
     }];
+
+    
 }
 
 
@@ -67,11 +69,13 @@
 }
 
 - (void)getCommentList {
-
+    
     [Called getCommentsWithLimit:_limit?_limit:10 skip:_skip?_skip:0 type:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
-        [self.commentArray addObjectsFromArray:commentArray];
         _skip = _skip + _limit;
-        self.dataSource = self.commentArray;
+        [self.commentArray addObjectsFromArray:commentArray];
+        if (_type == 0) {
+            [self.dataSource addObjectsFromArray:commentArray];
+        }
         [self.tableView reloadData];
     } failure:^(NSError *error1) {
         
@@ -86,7 +90,7 @@
 - (void)getjoinList {
     [Called getJoinWithLimit:_limit?_limit:10 skip:_Jskip?_Jskip:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
         [self.userArray addObjectsFromArray:commentArray];
-        if (_type == 0) {
+        if (_type == 1) {
             [self.dataSource addObjectsFromArray:commentArray];
         }
         _Jskip = _Jskip + _limit;
@@ -139,7 +143,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
-
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Class currentClass = [ICommentsCell class];
@@ -151,15 +155,21 @@
     BmobObject *model = self.dataSource[indexPath.row];
     cell.model = model;
     cell.indexPath = indexPath;
-    [cell setReplayBlock:^(NSIndexPath *indexPath) {
-        CommentViewController *comVC = [[CommentViewController alloc] init];
-        comVC.objId = _calledID;
-        comVC.type = 0;
-        BmobObject *user = [model objectForKey:@"user"];
-        comVC.userID = user.objectId;
-        comVC.username = [user objectForKey:@"username"];
-        [self.navigationController pushViewController:comVC animated:YES];
-    }];
+    if (_type == 0) {
+        [cell setReplayBlock:^(NSIndexPath *indexPath) {
+            CommentViewController *comVC = [[CommentViewController alloc] init];
+            comVC.objId = _calledID;
+            comVC.type = 0;
+            BmobObject *user = [model objectForKey:@"user"];
+            comVC.userID = user.objectId;
+            if (![[user objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
+                comVC.username  = [user objectForKey:@"username"];
+            }else {
+                comVC.username  = [user objectForKey:@"phoneNumber"];
+            }
+            [self.navigationController pushViewController:comVC animated:YES];
+        }];
+    }
     return cell;
 }
 

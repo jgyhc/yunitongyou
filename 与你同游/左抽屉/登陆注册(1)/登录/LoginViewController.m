@@ -96,13 +96,17 @@
    //网络请求
         [self.loading show];
         [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:^(BmobObject *object) {
+            [self.loading hide];
             [[NSUserDefaults standardUserDefaults] setObject:object.objectId forKey:@"userID"];
+            [self.navigationController popViewControllerAnimated:YES];
         } failBlock:^(NSError *error) {
             [self.loading hide];
             UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"用户名或者密码错误！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }];
-        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.loading hide];
+        });
     }
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {

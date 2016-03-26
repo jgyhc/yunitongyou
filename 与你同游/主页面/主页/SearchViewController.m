@@ -12,6 +12,7 @@
 #import "LoadingView.h"
 #import "ScenicViewController.h"
 #import "AddActivityViewController.h"
+#import "ScenicSpot.h"
 #define BUTTON_TAG 100
 
 @interface SearchViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate ,SearchResultDelegate>
@@ -35,7 +36,7 @@
 @property (nonatomic, assign) NSInteger openFLag;
 @property (nonatomic, strong) LoadingView *load;
 
-
+@property (nonatomic, strong) ScenicSpot *scenicSpot;
 @end
 
 @implementation SearchViewController
@@ -56,20 +57,35 @@
     
     if ([keyPath isEqualToString:@"scenicSpotSearchResults"]) {
 //        NSLog(@"data = %@", self.scenic.scenicSpotSearchResults[@"showapi_res_body"][@"pagebean"][@"contentlist"]);
-        self.dataSource = self.scenic.scenicSpotSearchResults[@"showapi_res_body"][@"pagebean"][@"contentlist"];
+
 //        NSLog(@"%@", self.dataSource);
-        [[NSUserDefaults standardUserDefaults]setObject:self.dataSource forKey:@"searchResult"];
+
 //        NSLog(@"%ld", self.dataSource.count);
-        [self.view addSubview:self.resultView];
-        [UIView animateWithDuration:0.7 animations:^{
-            CGRect frame = _resultView.frame;
-            frame.origin.y = flexibleHeight(64);
-            _resultView.frame = frame;
-        }];
-        [self.rightButton removeTarget:self action:@selector(handleSearch) forControlEvents:UIControlEventTouchUpInside];
-        [self initRightButtonEvent:@selector(cancelEvent) title:@"取消"];
-        [self.load hide];
+
     }
+}
+
+
+- (void)getSearch:(NSString *)keyWord {
+    [self.view addSubview:self.resultView];
+    __weak typeof(self) weakSelf = self;
+    [self.scenicSpot setSsblock:^(ScenicSpot *scenicSpot) {
+        weakSelf.resultView.list = scenicSpot.showapi_res_body.pagebean.contentlist;
+        if (weakSelf.resultView.list.count == 0) {
+            [weakSelf message:@"对不起，没有找到该景点的数据！"];
+        }else {
+            [UIView animateWithDuration:0.7 animations:^{
+                CGRect frame = weakSelf.resultView.frame;
+                frame.origin.y = flexibleHeight(64);
+                weakSelf.resultView.frame = frame;
+            }];
+            [weakSelf.rightButton removeTarget:weakSelf action:@selector(handleSearch) forControlEvents:UIControlEventTouchUpInside];
+            [weakSelf initRightButtonEvent:@selector(cancelEvent) title:@"取消"];
+        }
+        [weakSelf.load hide];
+    }];
+    [self.scenicSpot sendAsynchronizedPostRequest:keyWord];
+
 }
 
 - (void)initAllDataSource{
@@ -122,14 +138,15 @@
     if (self.openFLag == 1) {
         [self textFieldShouldReturn:self.textField];
     }
-    [self.scenic sendAsynchronizedPostRequest:self.textField.text];
+    [self getSearch:self.textField.text];
     
 }
 - (void)quickSearch:(UIButton *)sender{
     [self.load show];
     self.openFLag = 1;
     if (self.openFLag == 1){
-        [self.scenic sendAsynchronizedPostRequest:_topArray[sender.tag - BUTTON_TAG - 10]];
+        [self getSearch:_topArray[sender.tag - BUTTON_TAG - 10]];
+
     }
 }
 #warning --取消事件
@@ -237,7 +254,7 @@
        
         [array addObject:@"清除所有搜索历史"];
         self.buttomArray = [array mutableCopy];
-          self.tableView.frame = flexibleFrame(CGRectMake(0, 45, 375, self.tableView.rowHeight * self.buttomArray.count ), NO);
+        self.tableView.frame = flexibleFrame(CGRectMake(0, 45, 375, self.tableView.rowHeight * self.buttomArray.count ), NO);
          [self.view addSubview:self.buttomView];
 
     }
@@ -356,10 +373,11 @@
 }
 
 #pragma mark --SearchResultDelegate 
-- (void)pushToScenicDetailEvent:(NSMutableDictionary *)dic {
+- (void)pushToScenicDetailEvent:(SSContentlist *)list {
     ScenicViewController *scenic = [[ScenicViewController alloc]init];
+    scenic.model = list;
     [self.navigationController pushViewController:scenic animated:YES];
-    scenic.dataSource = dic;
+    
 }
 
 #pragma mark --lazy loading
@@ -444,13 +462,13 @@
 }
 
 - (SearchResultView *)resultView {
-//    if (!_resultView) {
+    if (!_resultView) {
         _resultView = [[SearchResultView alloc]init];
         _resultView.delegate = self;
         CGRect frame = _resultView.frame;
         frame.origin.y = flexibleHeight(HEIGHT);
         _resultView.frame = frame;
-//    }
+    }
     return _resultView;
 }
 
@@ -460,4 +478,11 @@
     }
     return _load;
 }
+- (ScenicSpot *)scenicSpot {
+	if(_scenicSpot == nil) {
+		_scenicSpot = [[ScenicSpot alloc] init];
+	}
+	return _scenicSpot;
+}
+
 @end

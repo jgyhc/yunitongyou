@@ -8,7 +8,6 @@
 
 #import "LaunchViewController.h"
 #import "LaunchTableViewCell.h"
-#import "LaunchViewScrollImage.h"
 #import "LaunchCollectionViewCell.h"
 #import "SearchViewController.h"
 #import "SearchResultView.h"
@@ -16,10 +15,9 @@
 #import "ScenicSpotmodei.h"
 #import "LoadingView.h"
 #import "CalledModel.h"
-@interface LaunchViewController ()<UITableViewDelegate ,UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchResultDelegate>
+#import "SDCycleScrollView.h"
+@interface LaunchViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchResultDelegate, SDCycleScrollViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) LaunchViewScrollImage *scrollImageView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) CalledModel *calledModel;
 @property (nonatomic, strong) ScenicSpotmodei *scenic;
@@ -37,36 +35,72 @@
 @implementation LaunchViewController
 
 - (void)dealloc {
-//    [self.scenic removeObserver:self forKeyPath:@"scenicSpotSearchResults"];
-//    [self.calledModel removeObserver:self forKeyPath:@"calledArray"];
-//    [self.calledModel removeObserver:self forKeyPath:@"userArray"];
+    [self.scenic removeObserver:self forKeyPath:@"scenicSpotSearchResults"];
+    [self.calledModel removeObserver:self forKeyPath:@"calledArray"];
+    [self.calledModel removeObserver:self forKeyPath:@"userArray"];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-//    self.addressArray = @[@"北京", @"上海", @"江苏" ,@"海南" ,@"四川" ,@"重庆" ,@"广西" ,@"云南"];
-//    self.imageArray = @[@"北京.jpg", @"上海.jpg", @"江苏.jpg" ,@"海南.jpg" ,@"四川.jpg" ,@"重庆.jpg" ,@"广西.jpg" ,@"云南.jpg"];
-//    
-//    [self initPersonButton];
-//    [self initRightButtonEvent:@selector(handleEventRightButton:) Image:[UIImage imageNamed:@"搜索_白色.png"]];
-////    [self.rightButton setImage:[UIImage imageNamed:@"搜索_白色.png"] forState:UIControlStateNormal];
-//    [self initNavTitle:@"发现"];
-//    [self.view insertSubview:self.scrollView atIndex:0];
-////    [self.scrollView addSubview:self.tableView];
-//    [self.scrollView addSubview:self.scrollImageView];
-//
-//    self.view.backgroundColor = [UIColor colorWithWhite:0.950 alpha:1.000];
-//
-//    [self.scenic addObserver:self forKeyPath:@"scenicSpotSearchResults" options:NSKeyValueObservingOptionNew context:nil];
-//    [self.calledModel addObserver:self forKeyPath:@"calledArray" options:NSKeyValueObservingOptionNew context:nil];
-//    [self.calledModel addObserver:self forKeyPath:@"userArray" options:NSKeyValueObservingOptionNew context:nil];
-//    
-//
-//    [self initUserInterface];
-//    [self initCollectionView];
+    self.addressArray = @[@"北京", @"上海", @"江苏" ,@"海南" ,@"四川" ,@"重庆" ,@"广西" ,@"云南"];
+    self.imageArray = @[@"北京.jpg", @"上海.jpg", @"江苏.jpg" ,@"海南.jpg" ,@"四川.jpg" ,@"重庆.jpg" ,@"广西.jpg" ,@"云南.jpg"];
     
+    [self initPersonButton];
+    [self initRightButtonEvent:@selector(handleEventRightButton:) Image:[UIImage imageNamed:@"搜索_白色.png"]];
+    [self.rightButton setImage:[UIImage imageNamed:@"搜索_白色.png"] forState:UIControlStateNormal];
+    [self initNavTitle:@"发现"];
+    [self.view insertSubview:self.scrollView atIndex:0];
+//    [self.scrollView addSubview:self.tableView];
+
+
+    self.view.backgroundColor = [UIColor colorWithWhite:0.950 alpha:1.000];
+
+    [self.scenic addObserver:self forKeyPath:@"scenicSpotSearchResults" options:NSKeyValueObservingOptionNew context:nil];
+    [self.calledModel addObserver:self forKeyPath:@"calledArray" options:NSKeyValueObservingOptionNew context:nil];
+    [self.calledModel addObserver:self forKeyPath:@"userArray" options:NSKeyValueObservingOptionNew context:nil];
+    
+
+    [self initUserInterface];
+    [self initCollectionView];
+    
+    CGFloat w = self.view.bounds.size.width;
+    
+    NSArray *imagesURLStrings = @[
+                                  @"https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a4b3d7085dee3d6d2293d48b252b5910/0e2442a7d933c89524cd5cd4d51373f0830200ea.jpg",
+                                  @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a41eb338dd33c895a62bcb3bb72e47c2/5fdf8db1cb134954a2192ccb524e9258d1094a1e.jpg",
+                                  @"http://c.hiphotos.baidu.com/image/w%3D400/sign=c2318ff84334970a4773112fa5c8d1c0/b7fd5266d0160924c1fae5ccd60735fae7cd340d.jpg"
+                                  ];
+    NSArray *titles = @[@"新建交流QQ群：185534916 ",
+                        @"感谢您的支持，如果下载的",
+                        @"如果代码在使用过程中出现问题",
+                        @"您可以发邮件到gsdios@126.com"
+                        ];
+    
+    // 网络加载 --- 创建带标题的图片轮播器
+    SDCycleScrollView *cycleScrollView2 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, w, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    
+    cycleScrollView2.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+    cycleScrollView2.titlesGroup = titles;
+    cycleScrollView2.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
+    [self.scrollView addSubview:cycleScrollView2];
+    
+    //         --- 模拟加载延迟
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        cycleScrollView2.imageURLStringsGroup = imagesURLStrings;
+    });
+    
+    
+    
+}
+
+#pragma mark - SDCycleScrollViewDelegate
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"---点击了第%ld张图片", (long)index);
+    
+    [self.navigationController pushViewController:[NSClassFromString(@"DemoVCWithXib") new] animated:YES];
 }
 
 #pragma mark -- KVO
@@ -94,7 +128,7 @@
 
 - (void)initUserInterface {
     UILabel *label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, 80, 20), NO)];
-    label.text = @"热门旅游景点";
+    label.text = @"热门旅游城市";
     label.center = flexibleCenter(CGPointMake(50, 215), NO);
     label.font = [UIFont boldSystemFontOfSize:(SCREEN_HEIGHT / 667.0) * 12];
     [self.scrollView addSubview:label];
@@ -103,7 +137,7 @@
 //    CGRect frame = senseLabel.frame;
 //    frame.origin.y = self.tableView.frame.origin.y + self.tableView.frame.size.height ;
 //    senseLabel.frame = frame;
-    senseLabel.text = @"热门旅游景点";
+    senseLabel.text = @"热门旅游城市";
     senseLabel.font = [UIFont boldSystemFontOfSize:(SCREEN_HEIGHT / 667.0) * 12];
 //    [self.scrollView addSubview:senseLabel];
     
@@ -114,9 +148,6 @@
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     flowLayout.headerReferenceSize = CGSizeMake(originWidth_, 0);
     self.collectionView = [[UICollectionView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 230, originWidth_, originHeight_ - 125), NO) collectionViewLayout:flowLayout];
-//    CGRect frame = self.collectionView.frame;
-//    frame.origin.y = self.tableView.frame.origin.y + self.tableView.frame.size.height + flexibleHeight(26);
-//    self.collectionView.frame = frame;
     //代理
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -130,7 +161,7 @@
     [self.collectionView registerClass:[LaunchCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ReusableView"];
     
-    self.scrollView.contentSize = CGSizeMake(0, self.scrollImageView.frame.size.height + self.collectionView.frame.size.height + 40);
+    [self.scrollView setupAutoContentSizeWithBottomView:self.collectionView bottomMargin:0];
 }
 #pragma mark --搜索按钮点击事件
 - (void)handleEventRightButton:(UIButton *)sender {
@@ -139,32 +170,6 @@
 
 }
 
-#pragma mark --scrollView 相关
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_scrollImageView openTimer];
-    });
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (_scrollImageView.totalNum > 1) {
-        [_scrollImageView closeTimer];
-    }
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [_scrollImageView closeTimer];
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    if (_scrollImageView.totalNum > 1) {
-        [_scrollImageView openTimer];
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////////////
 
 #pragma mark --UICollectionViewDatasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -179,9 +184,6 @@
     static NSString *identifer = @"cell";
     LaunchCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifer forIndexPath:indexPath];
     [cell sizeToFit];
-    
-    if (!cell) {
-    }
     UIImage *image = IMAGE_PATH(self.imageArray[indexPath.row]);
     cell.imageView.image = image;
     cell.addressLabel.text = self.addressArray[indexPath.row];
@@ -221,61 +223,6 @@
 }
 
 
-
-
-#pragma mark --tabelView delegete
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectio{
-    return 1;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 1;
-}
-
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"cell";
-    
-    LaunchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[LaunchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-//    tableView.rowHeight = flexibleHeight(225 + [self heightForString:@"大家好,在此特意召唤小伙伴，喜欢有意的小伙伴踊跃跟团" fontSize:14 andWidth:350]);
-//    cell.infoLabel.frame = flexibleFrame(CGRectMake(10, 80, 335, [self heightForString:@"大家好,在此特意召唤小伙伴，喜欢有意的小伙伴踊跃跟团" fontSize:14 andWidth:335]), NO);
-//    
-//    cell.ContentButton.frame = CGRectMake(20, cell.infoLabel.frame.origin.y + cell.infoLabel.bounds.size.height + 10, flexibleHeight(70), flexibleHeight(70));
-//    
-//    
-//    tableView.rowHeight = flexibleHeight(cell.saveButton.frame.size.height + cell.infoLabel.frame.size.height + cell.UserHeaderimageView.frame.origin.y + cell.ContentButton.frame.size.height);
-//    
-//    CGPoint center = cell.saveButton.center;
-//    center.y = tableView.rowHeight - flexibleHeight(15);
-//    cell.saveButton.center = center;
-//    
-//    center = cell.commentButton.center;
-//    center.y = tableView.rowHeight - flexibleHeight(15);
-//    cell.commentButton.center = center;
-//    
-//    center = cell.followerButton.center;
-//    center.y = tableView.rowHeight - flexibleHeight(15);
-//    cell.followerButton.center = center;    
-    
-    CGRect frame = tableView.frame;
-    frame.size.height = tableView.rowHeight * 2 + 20;
-    self.tableView.frame = frame;
-    
-    
-    return cell;
-}
-
 - (float) heightForString:(NSString *)value fontSize:(float)fontSize andWidth:(float)width
 {
     UITextView *detailTextView = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, width, 0)];
@@ -305,52 +252,7 @@
     [self initRightButtonEvent:@selector(handleEventRightButton:) Image:[UIImage imageNamed:@"搜索_白色.png"]];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-- (UITableView *)tableView {
-    if (!_tableView) {
-        _tableView = ({
-            UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStyleGrouped];
-            tableView.frame = flexibleFrame(CGRectMake(0, 0, WIDTH, 0), NO);
-            CGRect frame = tableView.frame;
-            frame.origin.y = self.scrollImageView.frame.origin.y + self.scrollImageView.frame.size.height + 30;
-            frame.size.height = flexibleHeight(HEIGHT / 2 + 210);
-            tableView.frame = frame;
-            tableView.dataSource = self;
-            tableView.delegate = self;
-            tableView.rowHeight = (SCREEN_HEIGHT / 667.0) * 260;
-            tableView.scrollEnabled = NO;
-            tableView.backgroundColor = [UIColor colorWithWhite:0.900 alpha:1.000];
-            tableView;
-        });
-    }
-    return _tableView;
-}
-
-- (LaunchViewScrollImage *)scrollImageView {
-    if (!_scrollImageView) {
-        _scrollImageView = ({
-            LaunchViewScrollImage *imageView = [[LaunchViewScrollImage alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, WIDTH, 200), NO) AddressArray:self.addressArray];
-            imageView.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
-            [imageView setArray:self.imageArray];
-            imageView;
-        });
-    }
-    return _scrollImageView;
-}
 
 - (UIScrollView *)scrollView {
     if (!_scrollView) {

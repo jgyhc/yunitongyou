@@ -7,7 +7,7 @@
 //
 
 #import "LaunchCollectionViewCell.h"
-
+#import <UIImageView+WebCache.h>
 @implementation LaunchCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -18,6 +18,19 @@
     }
     return self;
 }
+
+- (void)setModel:(SSContentlist *)model {
+    _model = model;
+    if (model.picList.count > 0) {
+         SSPicList *simageUrl = model.picList[0];
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:simageUrl.picUrlSmall] placeholderImage:[UIImage imageNamed:@""]];
+    }
+   
+#warning placeholderImage
+
+    self.addressLabel.text = model.name;
+}
+
 
 - (void)initCellInterface {
     self.layer.borderWidth = 1;

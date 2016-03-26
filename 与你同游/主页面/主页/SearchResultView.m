@@ -39,7 +39,7 @@
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     flowLayout.headerReferenceSize = CGSizeMake(WIDTH, 10);
-    [self arrayMethod];
+//    [self arrayMethod];
 
     self.collectionView = [[UICollectionView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, WIDTH, HEIGHT - 64), NO) collectionViewLayout:flowLayout];
     self.collectionView.delegate = self;
@@ -56,26 +56,12 @@
     
 }
 
-- (void)arrayMethod {
-    [DATASOURCE enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (obj[@"picList"] != NULL) {
-            NSMutableArray *array = obj[@"picList"];
-            if (array.count != 0) {
-                [self.dataSource addObject:obj];
-                if (obj[@"name"] == nil) {
-                    [self.nameArray addObject:@""];
-                }else {
-                    [self.nameArray addObject:obj[@"name"]];
-                }
-//                NSLog(@"seacrhResult = %@",obj[@"picList"][0][@"picUrlSmall"]);
-                if ([self getImageFromURL:obj[@"picList"][0][@"picUrlSmall"]] == NULL) {
-                    [self.imageArray addObject:IMAGE_PATH(@"空白图片.jpg")];
-                }else {
-                    [self.imageArray addObject:[self getImageFromURL:obj[@"picList"][0][@"picUrlSmall"]]];
-                }
-            }
-        }
-    }];
+
+- (void)setList:(NSArray *)list {
+    _list = list;
+    [self.dataSource removeAllObjects];
+    [self.dataSource addObjectsFromArray:list];
+    [self.collectionView reloadData];
 }
 
 
@@ -89,15 +75,11 @@
 
 #pragma mark --CollectionDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger number = self.nameArray.count;
-    return number;
+    return self.dataSource.count;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    if (self.dataSource != NULL) {
-        return 1;
-    };
-    return 0;
+     return 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,8 +87,8 @@
     
     LaunchCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     [cell sizeToFit];
-    cell.addressLabel.text = self.nameArray[indexPath.row];
-    cell.imageView.image = self.imageArray[indexPath.row];
+    cell.model = self.dataSource[indexPath.row];
+    
     return cell;
 }
 

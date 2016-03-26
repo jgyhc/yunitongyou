@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ScenicSpot.h"
 @interface LaunchCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong)UIImageView *imageView;
 @property (nonatomic, strong)UILabel *addressLabel;
-@property (nonatomic, strong)UILabel *followerLabel;
-
+@property (nonatomic, strong) SSContentlist *model;
 @end

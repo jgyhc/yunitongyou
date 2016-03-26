@@ -118,7 +118,8 @@
     BmobQuery *bqueryCommont = [BmobQuery queryWithClassName:@"Comment"];
     bqueryCommont.limit = limit;
     bqueryCommont.skip = skip;
-    [bqueryCommont includeKey:@"user"];
+    [bqueryCommont includeKey:@"Ruser,user"];
+    [bqueryCommont orderByDescending:@"createdAt"];
     //需要查询的列
     BmobObject *obj;
     if (type == 0) {
@@ -127,12 +128,12 @@
     else{
         obj = [BmobObject objectWithoutDatatWithClassName:@"Travel" objectId:calledID];
     }
-    
     [bqueryCommont whereObjectKey:@"comments" relatedTo:obj];
     [bqueryCommont findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
-            NSLog(@"%@",error);
+            NSLog(@"%@", error);
         } else {
+            NSLog(@"%@", array);
             success(array);
         }
     }];

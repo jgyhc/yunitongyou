@@ -30,7 +30,7 @@
     _model = model;
     [self.contentView addSubview:self.nameLabel];
     [self.contentView addSubview:self.contenLabel];
-    self.nameLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).heightIs(flexibleHeight(14)).topSpaceToView(self.contentView, flexibleHeight(10));
+    self.nameLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).heightIs(flexibleHeight(20)).topSpaceToView(self.contentView, flexibleHeight(10));
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     [self.contentView addSubview:self.repalyButton];
@@ -38,22 +38,27 @@
     
     if ([model objectForKey:@"Ruser"]) {
         BmobObject *Ruser = [model objectForKey:@"Ruser"];
-        
         [self.contentView addSubview:self.repaly];
-        self.repaly.sd_layout.leftSpaceToView(self.nameLabel, 0).heightIs(flexibleHeight(14)).topEqualToView(self.nameLabel);
+        self.repaly.sd_layout.leftSpaceToView(self.nameLabel, flexibleWidth(5)).heightIs(flexibleHeight(20)).topEqualToView(self.nameLabel);
         [self.repaly setSingleLineAutoResizeWithMaxWidth:100];
 
         
         [self.contentView addSubview:self.repalyLabel];
-        self.repalyLabel.sd_layout.leftSpaceToView(self.repaly, 0).heightIs(flexibleHeight(14)).topEqualToView(self.nameLabel).rightSpaceToView(self.repalyButton, flexibleWidth(5));
-        self.repalyLabel.text = [Ruser objectForKey:@"username"];
-        
+        self.repalyLabel.sd_layout.leftSpaceToView(self.repaly, flexibleWidth(5)).heightIs(flexibleHeight(20)).topEqualToView(self.nameLabel).rightSpaceToView(self.repalyButton, flexibleWidth(5));
 
-        
+        if (![[Ruser objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
+            self.repalyLabel.text = [Ruser objectForKey:@"username"];
+        }else {
+            self.repalyLabel.text = [Ruser objectForKey:@"phoneNumber"];
+        }
     }
     self.contenLabel.sd_layout.leftSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.nameLabel, flexibleHeight(10)).autoHeightRatio(0).rightSpaceToView(self.contentView, flexibleWidth(15));
     BmobObject *user = [model objectForKey:@"user"];
-    self.nameLabel.text = [user objectForKey:@"username"];
+    if (![[user objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
+        self.nameLabel.text = [user objectForKey:@"username"];
+    }else {
+        self.nameLabel.text = [user objectForKey:@"phoneNumber"];
+    }
     self.contenLabel.text = [model objectForKey:@"content"];
     [self.contenLabel sizeToFit];
     

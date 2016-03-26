@@ -34,12 +34,12 @@
         for (int i = 0; i < _numOfObjects; ++i) {//row
             UIView *sview = [[UIView alloc] init];
             sview.tag = i;
-            sview.layer.cornerRadius = 5;
+            sview.layer.cornerRadius = flexibleHeight(5);
             [sviews addObject:sview];
             [self addSubview:sview];
             
         }
-        self.objectSize = CGSizeMake(10, 10);
+        self.objectSize = flexibleSize(CGSizeMake(10, 10), YES);
         self.backgroundColor = [UIColor clearColor];
         
         animateTimer = nil;
@@ -67,7 +67,7 @@
     
 }
 
--(void)setObjectSize:(CGSize)objectSize1
+- (void)setObjectSize:(CGSize)objectSize1
 {
     _objectSize = objectSize1;
     float r = MIN(self.frame.size.width, self.frame.size.height)/2;
@@ -80,7 +80,7 @@
         
     }
 }
--(CGPoint)pointWithDistance:(float)r  Angel:(float)angel
+- (CGPoint)pointWithDistance:(float)r  Angel:(float)angel
 {
     CGPoint c = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     

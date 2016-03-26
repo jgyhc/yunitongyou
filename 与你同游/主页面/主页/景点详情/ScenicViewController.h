@@ -7,9 +7,9 @@
 //
 
 #import "BaseViewController.h"
-
+#import "ScenicSpot.h"
 @interface ScenicViewController : BaseViewController
 
 @property (nonatomic, strong) NSDictionary *dataSource;
-
+@property (nonatomic, strong) SSContentlist *model;
 @end

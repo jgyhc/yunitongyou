@@ -1,40 +1,60 @@
 //
-//  ScenicSpotmodei.m
+//  ScenicSpot.m
 //  与你同游
 //
-//  Created by rimi on 15/10/21.
-//  Copyright (c) 2015年 LiuCong. All rights reserved.
+//  Created by Zgmanhui on 16/3/26.
+//  Copyright © 2016年 LiuCong. All rights reserved.
 //
 
-#import "ScenicSpotmodei.h"
+#import "ScenicSpot.h"
 #define APPID @"10650"
 #define SIGN @"a038ca3eac044e818fafe3d659f36ec3"
 #define APIURL(T,P) [NSString stringWithFormat:@"http://route.showapi.com/268-1?showapi_appid=%@&showapi_timestamp=%@&showapi_sign=%@&keyword=%@&proId=&cityId=&areaId=&", APPID, T, SIGN, P]
 
-@interface ScenicSpotmodei ()
+@interface ScenicSpot ()
 @property (nonatomic, strong)NSMutableData *data;
 
 @end
 
-@implementation ScenicSpotmodei
+@implementation ScenicSpot
+
++ (void)addScenicSpotID:(NSString *)ScenicSpotID name:(NSString *)name content:(NSString *)content lat:(double)lat lon:(double)lon address:(NSString *)address areaName:(NSString *)areaName price:(NSNumber *)price priceList:(NSArray *)priceList picList:(NSArray *)picList success:(void (^)(BmobObject* hotWordID))success failure:(void (^)(NSError *error1))failure {
+    BmobObject  *SSobj = [BmobObject objectWithClassName:@"Scenic_spot"];
+    [SSobj setObject:ScenicSpotID forKey:@"ScenicSpotID"];
+    [SSobj setObject:name forKey:@"name"];
+    [SSobj setObject:content forKey:@"content"];
+    [SSobj setObject:@(lat) forKey:@"lat"];
+    [SSobj setObject:@(lon) forKey:@"lon"];
+    [SSobj setObject:address forKey:@"address"];
+    [SSobj setObject:areaName forKey:@"areaName"];
+    [SSobj setObject:price forKey:@"price"];
+    [SSobj setObject:priceList forKey:@"priceList"];
+    [SSobj setObject:picList forKey:@"picList"];
+       //异步保存
+    [SSobj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+        if (isSuccessful) {
+            
+        } else if (error){
+            //发生错误后的动作
+            NSLog(@"%@",error);
+        } else {
+            NSLog(@"Unknow error");
+        }
+    }];
+
+    
+    
+    
+}
 
 
-//- (void)sendAsynchronizedGetRequest {
-//    NSString *timeString = [self CurrentTime];
-//    NSLog(@"%@", timeString);
-//    NSString *placeString = @"泰山";
-//    NSString *urlString = APIURL(timeString, placeString);
-////    NSString *urlString = [NSString stringWithFormat:@"http://route.showapi.com/268-1?showapi_appid=10650&showapi_timestamp=%@&showapi_sign=a038ca3eac044e818fafe3d659f36ec3&keyword=%@&proId=&cityId=&areaId=&", timeString, placeString];
-//    //    NSString *urlString1 = [NSString stringWithFormat:@"http://route.showapi.com/268-1name=1&age=2&showapi_timestamp=%@&showapi_sign=a038ca3eac044e818fafe3d659f36ec3&showapi_appid= 10650", timeString];
-//    NSLog(@"urlString = %@",urlString);
-//    //    1.获取url
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    //2.创建请求
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-//    //发送请求
-//    [NSURLConnection connectionWithRequest:request delegate:self];
-//    
-//}
++ (void)addSearchWords:(NSString *)words success:(void (^)(BmobObject* hotWordID))success failure:(void (^)(NSError *error1))failure {
+    
+
+
+}
+
+
 
 // 异步post
 - (void)sendAsynchronizedPostRequest:(NSString *)keyword {
@@ -61,6 +81,9 @@
     NSLog(@"%@", connection);
 }
 
+
+
+
 #pragma mark --NSURLConnectionDataDelegate
 //已经收到数据
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -83,7 +106,7 @@
     NSLog(@"连接失败");
 }
 
-- (void) updataDataSourceWithObj:(id)obj {
+- (void)updataDataSourceWithObj:(id)obj {
     if ([obj [@"error_code"] intValue] == 0) {
         //说明请求成功
         //        self.dataSource = obj[@"result"][@"data"];
@@ -92,9 +115,16 @@
         //        [self.tableView reloadData];
         
         NSLog(@"obj = %@", obj);
-        self.scenicSpotSearchResults = obj;
-//        NSLog(@"%@", self.scenicSpotSearchResults);
+        ScenicSpot *scenicSpot = [ScenicSpot yy_modelWithJSON:obj];
+        //        NSLog(@"%@", self.scenicSpotSearchResults);
+        if (_ssblock) {
+            self.ssblock(scenicSpot);
+        }
+//        NSLog(@"%@", scenicSpot.showapi_res_body.pagebean.contentlist);
         
+//        SSContentlist *content = scenicSpot.showapi_res_body.pagebean.contentlist[0];
+//        SSPicList *pic = content.picList[0];
+//    NSLog(@"%@    /n %@", pic.picUrlSmall, pic.picUrl);
     }
 }
 - (id) JSONWithData:(NSData *)data {
@@ -138,5 +168,48 @@
     }
     return _data;
 }
+
+
 @end
 
+
+@implementation SSShowapi_res_body
+
+@end
+
+@implementation SSPagebean
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{
+             @"contentlist":[SSContentlist class]
+             };
+}
+@end
+
+@implementation SSContentlist
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{
+             @"picList":[SSPicList class],
+             @"priceList":[SSPriceList class],
+             };
+}
+@end
+
+@implementation SSLocation
+
+@end
+
+@implementation SSPicList
+
+@end
+
+@implementation SSPriceList
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{
+             @"entityList":[SSEntityList class],
+             };
+}
+@end
+
+@implementation SSEntityList
+
+@end

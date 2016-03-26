@@ -30,6 +30,10 @@
         
         self.separatationLineView.sd_layout.centerXIs(flexibleWidth(WIDTH / 4)).heightIs(flexibleHeight(2)).widthIs(flexibleWidth(375 / 2)).topSpaceToView(self.leftsideButton, 0);
         
+        UIView *line  = [UIView new];
+        line.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.276];
+        [self addSubview:line];
+        line.sd_layout.leftEqualToView(self).rightEqualToView(self).heightIs(1).topSpaceToView(self, 0);
         
     }
     return self;

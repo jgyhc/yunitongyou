@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ScenicSpot.h"
 @protocol SearchResultDelegate <NSObject>
 
-- (void)pushToScenicDetailEvent:(NSMutableDictionary *)dic;
+- (void)pushToScenicDetailEvent:(SSContentlist *)list;
 
 
 @end
@@ -18,5 +19,5 @@
 @interface SearchResultView : UIView
 
 @property (nonatomic, assign)id<SearchResultDelegate> delegate;
-
+@property (nonatomic, strong) NSArray *list;
 @end

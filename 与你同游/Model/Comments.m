@@ -22,17 +22,20 @@
     switch (type) {
         case 0:{
         obj.className = @"Called";
+        obj.objectId = objID;
+        [comment setObject:obj forKey:@"obj"];
         }
             break;
         case 1:{
         obj.className = @"Travel";
+        obj.objectId = objID;
+        [comment setObject:obj forKey:@"travelObj"];
         }
             break;
         default:
             break;
     }
-    obj.objectId = objID;
-    [comment setObject:obj forKey:@"obj"];
+    
 
     if (userID) {
         BmobObject *replyUser = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:userID];
