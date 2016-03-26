@@ -38,11 +38,26 @@
             else{
                 success(object);
             }
+        
         }
         
        
     }];
-
+}
+- (void)getInfowithObjectId:(NSString *)ObjectId  successBlock:(void(^)(BmobObject *object))success failBlock:(void(^)(NSError * error))fail {
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
+    [bquery getObjectInBackgroundWithId:ObjectId block:^(BmobObject *object, NSError *error) {
+        if (error){
+            NSLog(@"error");
+        }
+        else{
+                success(object);
+            
+        }
+        
+        
+    }];
+    
 }
 
 #pragma mark --查询账号是否存在

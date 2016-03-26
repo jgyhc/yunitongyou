@@ -67,7 +67,8 @@
 }
 
 - (void)getCommentList {
-    [Called getCommentsWithLimit:_limit?_limit:10 skip:_skip?_skip:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
+
+    [Called getCommentsWithLimit:_limit?_limit:10 skip:_skip?_skip:0 type:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
         [self.commentArray addObjectsFromArray:commentArray];
         _skip = _skip + _limit;
         self.dataSource = self.commentArray;

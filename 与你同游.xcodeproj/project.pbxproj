@@ -142,7 +142,6 @@
 		24B320D31BD77B2E00FB622A /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24B320CF1BD77B2E00FB622A /* SMS_SDK.framework */; };
 		24B320D61BD7A50E00FB622A /* ScenicSpotmodei.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B320D51BD7A50E00FB622A /* ScenicSpotmodei.m */; };
 		24BDA5821BF213D100C84CAF /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA57B1BF213D000C84CAF /* CommentViewController.m */; };
-		24BDA5841BF213D100C84CAF /* RecordDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA57F1BF213D000C84CAF /* RecordDetailTableViewCell.m */; };
 		24BDA5851BF213D100C84CAF /* RecordDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BDA5811BF213D100C84CAF /* RecordDetailViewController.m */; };
 		24F9F4E71BDCD96F00C722BE /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9F4E61BDCD96F00C722BE /* PersonalViewController.m */; };
 		720F67551CA02DF500312A2C /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 720F67541CA02DF500312A2C /* HeaderView.m */; };
@@ -394,8 +393,6 @@
 		24B320D51BD7A50E00FB622A /* ScenicSpotmodei.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenicSpotmodei.m; sourceTree = "<group>"; };
 		24BDA57A1BF213D000C84CAF /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		24BDA57B1BF213D000C84CAF /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
-		24BDA57E1BF213D000C84CAF /* RecordDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordDetailTableViewCell.h; sourceTree = "<group>"; };
-		24BDA57F1BF213D000C84CAF /* RecordDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordDetailTableViewCell.m; sourceTree = "<group>"; };
 		24BDA5801BF213D000C84CAF /* RecordDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordDetailViewController.h; sourceTree = "<group>"; };
 		24BDA5811BF213D100C84CAF /* RecordDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordDetailViewController.m; sourceTree = "<group>"; };
 		24F9F4E51BDCD96F00C722BE /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewController.h; sourceTree = "<group>"; };
@@ -1080,8 +1077,6 @@
 				722C0D361CA5539400ADE47E /* SSTextView.m */,
 				24BDA57A1BF213D000C84CAF /* CommentViewController.h */,
 				24BDA57B1BF213D000C84CAF /* CommentViewController.m */,
-				24BDA57E1BF213D000C84CAF /* RecordDetailTableViewCell.h */,
-				24BDA57F1BF213D000C84CAF /* RecordDetailTableViewCell.m */,
 				24BDA5801BF213D000C84CAF /* RecordDetailViewController.h */,
 				24BDA5811BF213D100C84CAF /* RecordDetailViewController.m */,
 				0480C3331CA37EEC002FEE5B /* DetailTopView.h */,
@@ -1558,7 +1553,6 @@
 				72C1C65C1C735807002317FE /* Login.m in Sources */,
 				24BDA5851BF213D100C84CAF /* RecordDetailViewController.m in Sources */,
 				72657E141C99906B00CC08AD /* BottomButtonsView.m in Sources */,
-				24BDA5841BF213D100C84CAF /* RecordDetailTableViewCell.m in Sources */,
 				24204BC41BCF66730034B4C6 /* MyCollectionViewController.m in Sources */,
 				04D354411C87F50900DFCB1C /* MyJoinsViewController.m in Sources */,
 				044F502F1C8AC6F6002DF802 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,

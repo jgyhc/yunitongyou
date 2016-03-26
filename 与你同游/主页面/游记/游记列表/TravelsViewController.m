@@ -38,12 +38,15 @@
 @property (nonatomic, strong) SharedView *sharedView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) TravelModel *travelModel;
+
+@property (nonatomic, assign) NSInteger skip;
 @end
 
 @implementation TravelsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.skip = 10;
     [self initalizedInterface];
 
 }
@@ -55,12 +58,10 @@
     if (self.travelArray.count > 0) {
         [self.travelArray removeAllObjects];
     }
-    
     [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
         [self.travelArray addObjectsFromArray:objectArray];
         [self.tableView reloadData];
-        
-    } failBlock:^(NSError *error) {
+    } skip:0 failBlock:^(NSError *error) {
         
     }];
 
@@ -90,6 +91,15 @@
     self.tableView.mj_header = header;
     
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
+            [self.travelArray addObjectsFromArray:objectArray];
+            self.skip = self.skip + 10;
+            [self.tableView reloadData];
+            
+        } skip:self.skip failBlock:^(NSError *error) {
+            
+        }];
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView.mj_footer endRefreshing];
         });
@@ -98,6 +108,7 @@
 
 - (void)loadNewData {
     
+    [self getData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];
@@ -146,6 +157,7 @@
     [cell buttoncomment:^{
         CommentViewController * commentVC = [[CommentViewController alloc]init];
         commentVC.objId = object.objectId ;
+        commentVC.type = 1;
         [self.navigationController pushViewController:commentVC animated:YES];
     }];
     

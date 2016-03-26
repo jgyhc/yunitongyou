@@ -12,17 +12,20 @@
 #import "ShareView.h"
 #import "DetailTopView.h"
 #import "ICommentsView.h"
+#import "JoinInCell.h"
+#import "ICommentsCell.h"
 #import <BmobSDK/Bmob.h>
 #import "ThumbUp.h"
 #import "Collection.h"
 #import "Comments.h"
+#import "UserModel.h"
+#import "UITableView+SDAutoTableViewCellHeight.h"
+
 #define SIZEHEIGHT frame.size.height
 #define SIZEHEIGHT frame.size.height
 
-@interface RecordDetailViewController ()<UIScrollViewDelegate,UITextViewDelegate>
-
-@property (nonatomic, strong) UIScrollView *scrollView;
-
+@interface RecordDetailViewController ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic, strong) UserModel * user;
 #pragma mark --上
 @property (nonatomic, strong) DetailTopView * topView;
 
@@ -30,6 +33,7 @@
 @property (nonatomic, strong) UIView      * bottomLine;
 @property (nonatomic, strong) UIButton    * rightsideButton;
 @property (nonatomic, strong) UIButton    * leftsideButton;
+@property (nonatomic, strong) UIView      * lineView;
 @property (nonatomic, strong) ICommentsView * commentView;
 
 #pragma mark --下
@@ -43,6 +47,13 @@
 @property (nonatomic,assign) CGFloat keyboardHeight;
 @property (nonatomic,assign) NSTimeInterval duration;
 
+@property (nonatomic, assign) long type;
+@property (nonatomic, assign) NSInteger skip;
+@property (nonatomic, strong) UITableView * tableView;
+@property (nonatomic, strong) NSMutableArray * dataSource;
+@property (nonatomic, strong) NSMutableArray * commentArray;
+@property (nonatomic, strong) NSMutableArray * userArray;
+@property (nonatomic, strong) NSArray * thumbArray;
 
 
 @end
@@ -56,35 +67,98 @@
     [super viewDidLoad];
     [self initBackButton];
     [self initNavTitle:@"游记详情"];
-    
+    self.type = 0;
+    self.skip = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initUserInterface];
+    [self setupRefresh];
+}
+#pragma mark --刷新
+- (void)setupRefresh
+{
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    header.stateLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
+    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:flexibleHeight(12)];
+    self.tableView.mj_header = header;
     
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if (self.type == 0) {
+            [self getCommentList];
+        }
+        else{
+            [self getThumbUpList];
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView.mj_footer endRefreshing];
+        });
+    }];
+}
+
+- (void)loadNewData {
     
+    if (self.type == 0) {
+        [self getCommentList];
+    }
+    else{
+        [self getThumbUpList];
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView reloadData];
+    });
+    
+}
+
+- (void)getCommentList{
+    [Called getCommentsWithLimit:10 skip:self.skip type:0 CalledsID:self.objId Success:^(NSArray *commentArray) {
+        [self.commentArray addObjectsFromArray:commentArray];
+        self.skip = self.skip + 10;
+        self.dataSource = self.commentArray;
+        [self.tableView reloadData];
+    } failure:^(NSError *error1) {
+        
+    }];
+}
+- (void)getThumbUpList{
+    for (NSString * userId in self.thumbArray) {
+        [self.user getInfowithObjectId:userId successBlock:^(BmobObject *object) {
+             [self.userArray addObject:object];
+        } failBlock:^(NSError *error) {
+            
+        }];
+    }
+    if (self.type == 1) {
+        self.dataSource = self.userArray;
+    }
 }
 
 - (void)initUserInterface {
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.view insertSubview:self.scrollView atIndex:0];
-    self.scrollView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomEqualToView(self.view);
+    [self.tableView registerClass:[ICommentsCell class] forCellReuseIdentifier:NSStringFromClass([ICommentsCell class])];
+    [self.tableView registerClass:[JoinInCell class] forCellReuseIdentifier:NSStringFromClass([JoinInCell class])];
 
-    [self.scrollView addSubview:self.topView];
-    [self.scrollView addSubview:self.leftsideButton];
-    [self.scrollView addSubview:self.rightsideButton];
-    [self.scrollView addSubview:self.bottomLine];
+    [self.view addSubview:self.topView];
+    [self.view addSubview:self.leftsideButton];
+    [self.view addSubview:self.rightsideButton];
+    [self.view addSubview:self.bottomLine];
+    [self.view addSubview:self.lineView];
+    [self.view addSubview:self.tableView];
     [self.view addSubview:self.bottomView];
     [self.view addSubview:self.comment.inputView];
 
+
     
-    self.topView.sd_layout.topEqualToView(self.scrollView).leftEqualToView(self.scrollView).rightEqualToView(self.scrollView).heightIs(flexibleHeight(HEIGHT / 3));
+    self.topView.sd_layout.topSpaceToView(self.view,64).leftEqualToView(self.view).rightEqualToView(self.view).heightIs(flexibleHeight(HEIGHT / 3));
     
-    self.leftsideButton.sd_layout.leftEqualToView(self.scrollView).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topSpaceToView(self.topView, 0);
+    self.leftsideButton.sd_layout.leftEqualToView(self.view).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topSpaceToView(self.topView, 0);
     
-    self.rightsideButton.sd_layout.rightEqualToView(self.scrollView).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topEqualToView(self.leftsideButton);
+    self.rightsideButton.sd_layout.rightEqualToView(self.view).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topEqualToView(self.leftsideButton);
     
     self.bottomLine.sd_layout.centerXIs(flexibleWidth(WIDTH / 4)).heightIs(flexibleHeight(2)).widthIs(flexibleWidth(WIDTH / 2)).topSpaceToView(self.leftsideButton, 0);
+    self.lineView.sd_layout.topSpaceToView(self.bottomLine, 0).leftEqualToView(self.view).rightEqualToView(self.view).heightIs(1);
+    self.tableView.sd_layout.topSpaceToView(self.bottomLine, 1).leftEqualToView(self.view).rightEqualToView(self.view).bottomSpaceToView(self.view,flexibleHeight(40));
 
     
     self.bottomView.sd_layout.leftEqualToView(self.view).bottomEqualToView(self.view).widthIs(flexibleWidth(WIDTH)).heightIs(flexibleHeight(40));
@@ -107,8 +181,8 @@
     self.topView.travelObject = travelObject;
     self.topView.userObject = user;
     
-    NSArray * thumbArray = (NSArray *)[travelObject objectForKey:@"thumbArray"];
-    for (NSString * userId in thumbArray) {
+    self.thumbArray = (NSArray *)[travelObject objectForKey:@"thumbArray"];
+    for (NSString * userId in self.thumbArray) {
         if ([userId isEqualToString:OBJECTID]) {
             self.dianzanbt.selected = YES;
         }
@@ -126,31 +200,33 @@
             self.collectionbt.selected = NO;
         }
     }
+    [self getCommentList];
+    [self getThumbUpList];
 
 }
 
 
 
-- (void)buttonClickEvent:(UIButton *)sender {
+- (void)buttonClick:(UIButton *)sender {
     if (sender == self.leftsideButton) {
-//        [self.commentsView removeFromSuperview];
-//        [self.scrollView addSubview:self.joinInView];
-//        [UIView animateWithDuration:0.3 animations:^{
-//            self.separatationLineView.sd_layout.centerXIs(flexibleWidth(WIDTH / 4));
-//            [self.separatationLineView updateLayout];
-//            [self.scrollView updateLayout];
-//        }];
+        self.type = 0;
+        self.dataSource = self.commentArray;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.bottomLine.sd_layout.centerXIs(flexibleWidth(WIDTH / 4));
+            [self.bottomLine updateLayout];
+        }];
+        [self.tableView reloadData];
+
     }
     
     if (sender == self.rightsideButton) {
-//        [self.scrollView addSubview:self.commentsView];
-//        self.commentsView.sd_layout.leftEqualToView(self.scrollView).rightEqualToView(self.scrollView).topSpaceToView(self.separatationLineView, 0).heightIs(flexibleHeight(10 * flexibleHeight(50)));
-//        [self.joinInView removeFromSuperview];
-//        [UIView animateWithDuration:0.3 animations:^{
-//            self.separatationLineView.sd_layout.centerXIs(flexibleWidth(WIDTH / 4 * 3));
-//            [self.scrollView updateLayout];
-//            [self.separatationLineView updateLayout];
-//        }];
+        self.type = 1;
+        self.dataSource = self.userArray;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.bottomLine.sd_layout.centerXIs(flexibleWidth(WIDTH / 4 * 3));
+            [self.bottomLine updateLayout];
+        }];
+        [self.tableView reloadData];
     }
 }
 
@@ -230,6 +306,48 @@
     
     self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667,375,40), NO);
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataSource.count;
+    
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Class currentClass = [ICommentsCell class];
+    ICommentsCell *cell = nil;
+    if (self.type == 1) {
+        currentClass = [JoinInCell class];
+    }
+    cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
+    BmobObject *model = self.dataSource[indexPath.row];
+    cell.model = model;
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 2;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView * bcView = [[UIView alloc]init];
+    bcView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
+    return bcView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self cellHeightForIndexPath:indexPath cellContentViewWidth:[self cellContentViewWith] tableView:tableView];
+}
+- (CGFloat)cellContentViewWith
+{
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    
+    // 适配ios7
+    if ([UIApplication sharedApplication].statusBarOrientation != UIInterfaceOrientationPortrait && [[UIDevice currentDevice].systemVersion floatValue] < 8) {
+        width = [UIScreen mainScreen].bounds.size.height;
+    }
+    return width;
+}
+
+#pragma mark --键盘通知与textViewDelegate
 - (void)keyboardWillShow:(NSNotification *)noti{
     CGRect keyboardRect =[noti.userInfo [UIKeyboardFrameEndUserInfoKey] CGRectValue];
     self.keyboardHeight = keyboardRect.size.height;
@@ -238,20 +356,8 @@
         self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667 - (CGRectGetHeight(self.comment.inputText.bounds)+ 10 + self.keyboardHeight),375, CGRectGetHeight(self.comment.inputText.bounds) + 10), NO);
         
     } completion:nil];
-    NSLog(@"%f",self.keyboardHeight);
+
 }
-
-#pragma mark --uiScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat alpha = 1 - scrollView.contentOffset.y / 250;
-    self.navView.alpha = alpha;
-    self.leftButton.alpha = alpha;
-}
-
-
-
-
 - (void)textViewDidChange:(UITextView *)textView{
     if (![textView.text isEqualToString:@""]) {
         
@@ -262,13 +368,8 @@
             
             self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667 - (size.height + 10 + self.keyboardHeight),375, size.height + 10), NO);
         } completion:nil];
-        
-        
-        
-        
+
     }
-    
-    
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
@@ -286,18 +387,6 @@
 
 
 #pragma mark -- getter
-- (UIScrollView *)scrollView {
-    if (!_scrollView) {
-        _scrollView = ({
-            UIScrollView *scrollView = [[UIScrollView alloc]init];
-            scrollView.delegate = self;
-            scrollView.backgroundColor = [UIColor clearColor];
-            scrollView;
-        });
-    }
-    return _scrollView;
-}
-
 - (DetailTopView *)topView{
     if (!_topView) {
         _topView = [DetailTopView new];
@@ -313,7 +402,7 @@
             [button setTitleColor:[UIColor colorWithWhite:0.298 alpha:1.000] forState:UIControlStateNormal];
             [button setBackgroundColor:[UIColor whiteColor]];
             [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-            [button addTarget:self action:@selector(buttonClickEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             
             button;
         });
@@ -330,7 +419,7 @@
             [button setTitleColor:[UIColor colorWithWhite:0.298 alpha:1.000] forState:UIControlStateNormal];
             [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
             [button setBackgroundColor:[UIColor whiteColor]];
-            [button addTarget:self action:@selector(buttonClickEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }
@@ -343,6 +432,24 @@
         _bottomLine.backgroundColor = THEMECOLOR;
     }
     return _bottomLine;
+}
+- (UIView *)lineView{
+    if (!_lineView) {
+        _lineView = [UIView new];
+        _lineView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
+    }
+    return _lineView;
+}
+
+
+- (UITableView *)tableView {
+    if(_tableView == nil) {
+        _tableView = [[UITableView alloc] init];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+    }
+    return _tableView;
 }
 
 - (UIView *)bottomView{
@@ -403,6 +510,33 @@
         [self.comment.conmmentButton addTarget:self action:@selector(handleSend) forControlEvents:UIControlEventTouchUpInside];
     }
     return _comment;
+}
+
+- (NSMutableArray *)dataSource {
+    if(_dataSource == nil) {
+        _dataSource = [[NSMutableArray alloc] init];
+    }
+    return _dataSource;
+}
+
+- (NSMutableArray *)commentArray {
+    if(_commentArray == nil) {
+        _commentArray = [[NSMutableArray alloc] init];
+    }
+    return _commentArray;
+}
+- (NSMutableArray *)userArray {
+    if(_userArray == nil) {
+        _userArray = [[NSMutableArray alloc] init];
+    }
+    return _userArray;
+}
+
+- (UserModel *)user {
+    if (!_user) {
+        _user = [[UserModel alloc] init];
+    }
+    return _user;
 }
 
 @end

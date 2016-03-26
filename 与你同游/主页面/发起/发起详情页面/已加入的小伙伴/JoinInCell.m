@@ -44,8 +44,14 @@
 
 - (void)setModel:(BmobObject *)model {
     _model = model;
-    self.nameLabel.text = [model objectForKey:@"username"];
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model objectForKey:@"head_portraits"]] placeholderImage:[UIImage imageNamed:@"icon"]];
+    
+    if (![[model objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
+        self.nameLabel.text = [model objectForKey:@"username"];
+    }else {
+        self.nameLabel.text = [model objectForKey:@"phoneNumber"];
+    }
+    
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model objectForKey:@"head_portraits"]] placeholderImage:[UIImage imageNamed:@"无头像.png"]];
     [self.nameLabel sizeToFit];
 }
 

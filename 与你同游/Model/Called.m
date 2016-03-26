@@ -113,15 +113,22 @@
 }
 
 //查询一条发起的评论列表
-+ (void)getCommentsWithLimit:(NSInteger)limit skip:(NSInteger)skip CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure {
++ (void)getCommentsWithLimit:(NSInteger)limit skip:(NSInteger)skip type:(int)type CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure {
     //关联对象表
     BmobQuery *bqueryCommont = [BmobQuery queryWithClassName:@"Comment"];
     bqueryCommont.limit = limit;
     bqueryCommont.skip = skip;
     [bqueryCommont includeKey:@"user"];
     //需要查询的列
-    BmobObject *called = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
-    [bqueryCommont whereObjectKey:@"comments" relatedTo:called];
+    BmobObject *obj;
+    if (type == 0) {
+        obj= [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
+    }
+    else{
+        obj = [BmobObject objectWithoutDatatWithClassName:@"Travel" objectId:calledID];
+    }
+    
+    [bqueryCommont whereObjectKey:@"comments" relatedTo:obj];
     [bqueryCommont findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
             NSLog(@"%@",error);
