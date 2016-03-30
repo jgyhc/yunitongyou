@@ -33,7 +33,6 @@
         [self addSubview:self.userHeaderImageView];
         [self addSubview:self.userIDLabel];
         [self addSubview:self.initiateTimeLabel];
-        [self addSubview:self.sexImageView];
         
         [self addSubview:self.followerNumLabel];
         [self addSubview:self.departureLabel];

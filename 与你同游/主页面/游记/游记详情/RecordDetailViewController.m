@@ -20,6 +20,7 @@
 #import "Comments.h"
 #import "UserModel.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
+#import "CommentViewController.h"
 
 #define SIZEHEIGHT frame.size.height
 #define SIZEHEIGHT frame.size.height
@@ -72,7 +73,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initUserInterface];
-    [self setupRefresh];
+   [self setupRefresh];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self getCommentList];
+    [self textViewDidEndEditing:self.comment.inputText];
 }
 #pragma mark --刷新
 - (void)setupRefresh
@@ -158,7 +164,8 @@
     
     self.bottomLine.sd_layout.centerXIs(flexibleWidth(WIDTH / 4)).heightIs(flexibleHeight(2)).widthIs(flexibleWidth(WIDTH / 2)).topSpaceToView(self.leftsideButton, 0);
     self.lineView.sd_layout.topSpaceToView(self.bottomLine, 0).leftEqualToView(self.view).rightEqualToView(self.view).heightIs(1);
-    self.tableView.sd_layout.topSpaceToView(self.bottomLine, 1).leftEqualToView(self.view).rightEqualToView(self.view).bottomSpaceToView(self.view,flexibleHeight(40));
+    
+    self.tableView.sd_layout.topSpaceToView(self.bottomLine, 1).leftEqualToView(self.view).rightEqualToView(self.view).bottomSpaceToView(self.view,flexibleHeight(25));
 
     
     self.bottomView.sd_layout.leftEqualToView(self.view).bottomEqualToView(self.view).widthIs(flexibleWidth(WIDTH)).heightIs(flexibleHeight(40));
@@ -291,6 +298,8 @@
 - (void)handleSend{
     
     if (![self.comment.inputText.text isEqualToString:@""]) {
+//        textViewDidEndEditing
+        [self textViewDidEndEditing:self.comment.inputText];
          [Comments addComentWithContent:self.comment.inputText.text userID:nil type:1 objID:self.objId success:^(NSString *commentID) {
              
          } failure:^(NSError *error1) {
@@ -320,6 +329,23 @@
     cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
     BmobObject *model = self.dataSource[indexPath.row];
     cell.model = model;
+    cell.indexPath = indexPath;
+    if (self.type == 0) {
+        [cell setReplayBlock:^(NSIndexPath *indexPath) {
+            CommentViewController *comVC = [[CommentViewController alloc] init];
+            comVC.objId = self.objId;
+            comVC.type = 1;
+            BmobObject *user = [model objectForKey:@"user"];
+            comVC.userID = user.objectId;
+            if (![[user objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
+                comVC.username  = [user objectForKey:@"username"];
+            }else {
+                comVC.username  = [user objectForKey:@"phoneNumber"];
+            }
+            [self.navigationController pushViewController:comVC animated:YES];
+        }];
+    }
+
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

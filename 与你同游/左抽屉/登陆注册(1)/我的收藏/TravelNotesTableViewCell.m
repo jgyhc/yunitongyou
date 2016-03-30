@@ -343,8 +343,8 @@ const CGFloat maxContentLabelHeight = 54;
     if (!_dianzanImg) {
         _dianzanImg = ({
             UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(20, 2.5, 25, 25), NO)];
+            imageView.image = IMAGE_PATH(@"未点赞.png");
             [_dianzanbt addSubview:imageView];
-            
             imageView;
             
         });
