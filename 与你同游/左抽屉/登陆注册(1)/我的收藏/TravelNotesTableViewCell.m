@@ -39,6 +39,7 @@ const CGFloat maxContentLabelHeight = 54;
 
 {
     UIImageView *_iconView;
+    UIButton * _portraintbt;
     UILabel *_nameLable;
     UIImageView * _positionImg;
     UILabel * _position;
@@ -66,8 +67,8 @@ const CGFloat maxContentLabelHeight = 54;
 - (void)setup
 {
     _iconView = [UIImageView new];
-    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handelTap)];
-    [_iconView addGestureRecognizer:tap];
+    _portraintbt = [UIButton new];
+    [_portraintbt addTarget:self action:@selector(handlePortraint) forControlEvents:UIControlEventTouchUpInside];
     
     _nameLable = [UILabel new];
     _nameLable.font = [UIFont systemFontOfSize:16];
@@ -101,7 +102,7 @@ const CGFloat maxContentLabelHeight = 54;
     _hline1 = [UIView new];
     _hline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
-    NSArray *views = @[_iconView, _nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1];
+    NSArray *views = @[_iconView, _portraintbt,_nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1];
     
     [views enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.contentView addSubview:obj];
@@ -118,6 +119,8 @@ const CGFloat maxContentLabelHeight = 54;
     .heightIs(flexibleWidth(80));
     _iconView.layer.cornerRadius = CGRectGetMidX(_iconView.bounds);
     _iconView.clipsToBounds = YES;
+    
+    _portraintbt.sd_layout.leftEqualToView(_iconView).topEqualToView(_iconView).widthIs(flexibleWidth(80)).heightIs(flexibleWidth(80));
     
     _nameLable.sd_layout
     .leftSpaceToView(_iconView, margin)
@@ -341,7 +344,7 @@ const CGFloat maxContentLabelHeight = 54;
     self.sharedblock = thirdblock;
 }
 
-- (void)handelTap{
+- (void)handlePortraint{
     if (self.personblock) {
         self.personblock();
     }

@@ -75,7 +75,7 @@
         
         self.infoLabel.sd_layout.leftSpaceToView(self, flexibleWidth(15)).rightSpaceToView(self, flexibleWidth(15)).topSpaceToView(self.startingLabel, flexibleHeight(10)).autoHeightRatio(0);
         
-        [self setupAutoHeightWithBottomView:self.infoLabel bottomMargin:0];
+        [self setupAutoHeightWithBottomView:self.infoLabel bottomMargin:20];
         
     }
     return self;

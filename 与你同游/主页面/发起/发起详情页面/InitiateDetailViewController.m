@@ -125,7 +125,6 @@
     _calledObject = calledObject;
     __weak typeof(self) weakSelf = self;
     [self.headerView.infoLabel setDidFinishAutoLayoutBlock:^(CGRect frame) {
-        weakSelf.headerView.frame = CGRectMake(0, 0, 0, 200);
         weakSelf.tableView.tableHeaderView = weakSelf.headerView;
     }];
     self.headerView.calledObject = calledObject;
@@ -175,7 +174,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return flexibleHeight(42);
+    return flexibleHeight(47);
 
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -240,7 +239,7 @@
 
 - (HeaderButtonView *)buttonView {
 	if(_buttonView == nil) {
-		_buttonView = [[HeaderButtonView alloc] init];
+		_buttonView = [[HeaderButtonView alloc] initWithType:0];
         _buttonView.delegate = self;
 	}
 	return _buttonView;

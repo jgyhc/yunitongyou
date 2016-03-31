@@ -8,9 +8,11 @@
 
 #import "MyTravelsViewController.h"
 #import "TravelNotesTableViewCell.h"
-#import "SharedView.h"
-
+#import "ShareView.h"
+#import "CommentViewController.h"
+#import "ThumbUp.h"
 #import "RecordDetailViewController.h"
+#import "PersonalViewController.h"
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
 #import "MJRefresh.h"
@@ -23,8 +25,6 @@ static NSString * const identifier = @"CELL";
 
 @property (nonatomic, strong) NSMutableArray *travelArray;//数据
 @property (nonatomic, strong) UITableView *tableView;
-
-@property (nonatomic, strong) SharedView *sharedView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) TravelModel *travelModel;
 @end
@@ -101,6 +101,53 @@ static NSString * const identifier = @"CELL";
     //注意是section,若是numberOfRows returnself.modelArray.count，则是row
     cell.info = object;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+#pragma mark --点赞
+    [cell buttonthumbUp:^(int type) {
+        if (type == 1) {
+            //点赞
+            [ThumbUp thumUpWithID:object.objectId type:1 success:^(NSString *commentID) {
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
+        else if (type == 0){
+            //取消点赞
+            [ThumbUp cancelThumUpWithID:object.objectId type:1 success:^(NSString *commentID) {
+            } failure:^(NSError *error1) {
+                
+            }];
+        }
+        
+    }];
+    
+#pragma mark --评论
+    [cell buttoncomment:^{
+        CommentViewController * commentVC = [[CommentViewController alloc]init];
+        commentVC.objId = object.objectId ;
+        commentVC.type = 1;
+        [self.navigationController pushViewController:commentVC animated:YES];
+    }];
+    
+#pragma mark --分享
+    [cell buttonshared:^{
+        //分享
+        NSArray * imageArray;
+        if ([object objectForKey:@"urlArray"]) {
+            imageArray = [object objectForKey:@"urlArray"];
+        }
+        else{
+            imageArray = nil;
+        }
+        [ShareView sharedWithImages:imageArray content:[object objectForKey:@"content"]];
+    }];
+    [cell tapPresent:^{
+        PersonalViewController *PVC = [[PersonalViewController alloc] init];
+        PVC.userInfo = [object objectForKey:@"user"];
+        PVC.type = 1;
+        [self presentViewController:PVC animated:YES completion:nil];
+    }];
+
+
     return cell;
 }
 

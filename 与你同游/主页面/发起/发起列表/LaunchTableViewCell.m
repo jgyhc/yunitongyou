@@ -24,8 +24,8 @@
 @property (nonatomic, strong)UILabel *ageLabel;//年龄
 @property (nonatomic, strong)UILabel *followerLabel;
 @property (nonatomic, strong)UILabel *PNumber;
-
 @property (nonatomic, strong) BottomButtonsView *buttonView;
+@property (nonatomic, copy)collection collectionblock;
 @end
 
 @implementation LaunchTableViewCell
@@ -87,9 +87,13 @@
 
 
 - (void)handldTapEvent:(UITapGestureRecognizer *)sender {
-    if (_ThumbUpBlock) {
-        _ThumbUpBlock(self.indexPath);
+    if (self.collectionblock) {
+        self.collectionblock(1);
     }
+}
+
+- (void)buttonCollection:(collection)collectionBlock{
+    self.collectionblock = collectionBlock;
 }
 
 - (UILabel *)userIDLabel {

@@ -16,5 +16,6 @@
 @interface HeaderButtonView : UIView
 @property (nonatomic, strong)UIButton *leftsideButton;
 @property (nonatomic, strong)UIButton *rightsideButton;
+- (instancetype)initWithType:(int)type;
 @property (nonatomic, assign) id<HeaderButtonViewDelegate> delegate;
 @end

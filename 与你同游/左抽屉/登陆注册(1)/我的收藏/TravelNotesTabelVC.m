@@ -108,7 +108,7 @@
     BmobObject * object = self.travelArray[indexPath.section];
     cell.info = object;
      cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    NSLog(@"object = %@",object);
 #pragma mark --点赞
     [cell buttonthumbUp:^(int type) {
         if (type == 1) {
