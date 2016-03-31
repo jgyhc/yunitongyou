@@ -7,7 +7,6 @@
 //
 
 #import "DetailTopView.h"
-#import "PhotoView.h"
 #import "UIImageView+WebCache.h"
 
 @interface DetailTopView ()
@@ -17,8 +16,7 @@
 @property (nonatomic, strong) UIImageView * positionImg;
 @property (nonatomic, strong) UILabel     * positionLabel;//地址
 @property (nonatomic, strong) UILabel     * contentLabel;//内容
-@property (nonatomic, strong) PhotoView   * picContainerView;//图片
-@property (nonatomic, strong) UIView      * seperateView;
+
 
 @end
 
@@ -33,7 +31,6 @@
         [self addSubview:self.positionLabel];
         [self addSubview:self.contentLabel];
         [self addSubview:self.picContainerView];
-        [self addSubview:self.seperateView];
         
         self.iconView.sd_layout.leftSpaceToView(self, 10).topSpaceToView(self, 10).widthIs(flexibleWidth(80)).heightIs(flexibleWidth(80));
         self.iconView.layer.cornerRadius = CGRectGetMidX(_iconView.bounds);
@@ -52,16 +49,14 @@
         
         self.picContainerView.sd_layout.leftEqualToView(self.contentLabel);
         
-        self.seperateView.sd_layout.leftEqualToView(self).topSpaceToView(self.picContainerView,20).rightEqualToView(self).heightIs(flexibleHeight(5));
-        
-        [self setupAutoHeightWithBottomView:self.seperateView bottomMargin:0];
+        [self setupAutoHeightWithBottomView:self.picContainerView bottomMargin:20];
     }
     return self;
 }
 
 - (void)setTravelObject:(BmobObject *)travelObject{
     _travelObject = travelObject;
-    BmobObject * user =  [travelObject objectForKey:@"userId"];
+    BmobObject * user =  [travelObject objectForKey:@"user"];
     
     
     NSString * imageString =[user objectForKey:@"head_portraits"];
@@ -183,12 +178,4 @@
     }
     return _picContainerView;
 }
-- (UIView *)seperateView{
-    if (!_seperateView) {
-        _seperateView = [UIView new];
-        _seperateView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
-    }
-    return _seperateView;
-}
-
 @end

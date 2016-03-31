@@ -42,7 +42,7 @@
         [travel addObjectsFromArray:self.userIdArray forKey:@"thumbArray"];
         //pointer关系
         BmobObject * user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:ObjectId];
-        [travel setObject:user forKey:@"userId"];
+        [travel setObject:user forKey:@"user"];
         
         
         [travel saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
@@ -131,7 +131,7 @@
     bquery.skip = skip;//跳过查询的前多少条数据来实现分页查询的功能。
     [bquery orderByDescending:@"createdAt"];
     //声明该次查询需要将userId关联的对象信息一并查询出来
-    [bquery includeKey:@"userId"];
+    [bquery includeKey:@"user"];
     //查找travel表的数据
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
@@ -151,9 +151,9 @@
     BmobQuery * inQuery = [BmobQuery queryWithClassName:@"User"];
     [inQuery whereKey:@"objectId" equalTo:OBJECTID];
     //匹配查询
-    [bquery whereKey:@"userId" matchesQuery:inQuery];
+    [bquery whereKey:@"user" matchesQuery:inQuery];
     [bquery orderByDescending:@"createdAt"];
-    [bquery includeKey:@"userId"];
+    [bquery includeKey:@"user"];
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
             NSLog(@"%@",error);

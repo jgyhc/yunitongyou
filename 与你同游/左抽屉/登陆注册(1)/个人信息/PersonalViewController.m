@@ -21,7 +21,7 @@
 @property (nonatomic, strong) UIButton * backButton;//返回按钮
 @property (nonatomic, strong) UIButton * saveButton;//保存按钮
 @property (nonatomic, strong) NSArray * hintArray;//提示文字
-
+@property (nonatomic, strong) UIImageView * headPortrait;//头像
 @property (nonatomic,strong) UIImageView * topView;
 @property (nonatomic,strong) UIView * backView;
 
@@ -35,17 +35,12 @@
 
 @implementation PersonalViewController
 
-- (void)dealloc{
-    [self.user removeObserver:self forKeyPath:@"addUserinfoResult"];
-}
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //注册键盘通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
-    [self.user addObserver:self forKeyPath:@"addUserinfoResult" options:NSKeyValueObservingOptionNew context:nil];
 
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -55,15 +50,14 @@
 
 - (void)initializedApperance{
     self.hintArray = @[@"昵称", @"性别", @"年龄", @"个性签名"];
-    NSArray * array = @[[self.user.getUserData objectForKey:@"username"], [self.user.getUserData objectForKey:@"sex"],[self.user.getUserData objectForKey:@"age"], [self.user.getUserData objectForKey:@"IndividualitySignature"]];
-
-
+   
     [self.view addSubview:self.backView];
     [self.view addSubview:self.topView];
     [self.view addSubview:self.backButton];
     [self.view addSubview:self.saveButton];
     [self.view addSubview:self.headPortrait];
     
+    NSArray * array = @[[self.userInfo objectForKey:@"username"], [self.userInfo objectForKey:@"sex"],[self.userInfo objectForKey:@"age"], [self.userInfo objectForKey:@"IndividualitySignature"]];
     for (int i = 0; i < self.hintArray.count; i ++) {
         
         UILabel * label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(20, 20 + i * 60, 80, 20), NO)];
@@ -86,9 +80,15 @@
         textView.text = array[i];
         textView.tag = TEXTVIEW_TAG + i;
         textView.backgroundColor = [UIColor clearColor];
+        if (self.type == 0) {
+            textView.editable = YES;
+        }
+        else{
+            textView.editable = NO;
+        }
         [self.backView addSubview:textView];
     }
-
+    
     for (int i = 0; i < 3; i ++) {
         UIButton * button = (UIButton *)[self.sharedView viewWithTag:200 + i];
         [button addTarget:self action:@selector(handleSelecte:) forControlEvents:UIControlEventTouchUpInside];
@@ -96,26 +96,6 @@
 
 
 }
-#pragma mark -- KVO 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"addUserinfoResult"]) {
-//        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"修改成功！" preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            
-//            
-//        }];
-//        
-//        [alertController addAction:sureAction];
-//        
-//        [self presentViewController:alertController animated:YES completion:nil];
-//        [self dismissViewControllerAnimated:YES completion:nil];
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-        }];
-    }
-}
-
-
 #pragma mark --相片导入方法
 
 - (void)handleGesture{
@@ -256,9 +236,16 @@
     UITextView * sex = (UITextView *)[self.backView viewWithTag:TEXTVIEW_TAG + 1];
     UITextView * age = (UITextView *)[self.backView viewWithTag:TEXTVIEW_TAG + 2];
     UITextView * signature = (UITextView *)[self.backView viewWithTag:TEXTVIEW_TAG + 3];
-
     //提交修改数据
-    [self.user changeUserinfoWithObjectId:OBJECTID userName:username.text head_portraits: UIImagePNGRepresentation(self.headPortrait.image) sex:sex.text age:age.text IndividualitySignature:signature.text];
+
+    [self.userModel changeUserinfoWithObjectId:OBJECTID userName:username.text  head_portraits:UIImagePNGRepresentation(self.headPortrait.image) sex:sex.text  age:age.text IndividualitySignature:signature.text successBlock:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+
+    } failBlock:^(NSError *error) {
+        
+    }];
 
 }
 
@@ -333,18 +320,12 @@
             UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(147.5, 100, 80, 80), NO)];
             
             imageView.layer.cornerRadius = 0.5 * CGRectGetWidth(imageView.bounds);
-            
-            NSString * imageString =[self.user.getUserData objectForKey:@"head_portraits"];
-            if (imageString.length > 0) {
-                NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
-                [imageView sd_setImageWithURL:imageUrl];
-            }
-            else{
-                imageView.image = IMAGE_PATH(@"无头像.png");
-            }
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfo objectForKey:@"head_portraits"]] placeholderImage:IMAGE_PATH(@"无头像.png")];
             imageView.clipsToBounds = YES;
-            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleGesture)];
-            [imageView addGestureRecognizer:tap];
+            if (self.type == 0) {
+                UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleGesture)];
+                [imageView addGestureRecognizer:tap];
+            }
             imageView.userInteractionEnabled = YES;
             imageView;
         });
@@ -361,25 +342,18 @@
     return _sharedView;
 }
 
-- (UserModel *)user {
-    if (!_user) {
-        _user = [UserModel alloc];
+- (UserModel *)userModel {
+    if (!_userModel) {
+        _userModel = [UserModel alloc];
     }
-    return _user;
+    return _userModel;
 }
 
 - (UIImageView *)topView {
     if (!_topView) {
         _topView = ({
             UIImageView *customBackgournd = [[UIImageView alloc] initWithFrame:flexibleFrame(CGRectMake(0, 0, 375, 250), NO)];
-            NSString * imageString =[self.user.getUserData objectForKey:@"head_portraits"];
-            if (imageString.length > 0) {
-                NSURL * imageUrl = [NSURL URLWithString:[self.user.getUserData objectForKey:@"head_portraits"]];
-                [customBackgournd sd_setImageWithURL:imageUrl];
-            }
-            else{
-                customBackgournd.image = IMAGE_PATH(@"无头像.png");
-            }
+            [customBackgournd sd_setImageWithURL:[NSURL URLWithString:[self.userInfo objectForKey:@"head_portraits"]] placeholderImage:IMAGE_PATH(@"无头像.png")];
             UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
             visualEfView.frame = flexibleFrame(CGRectMake(0, 0, 375, 250), NO);
             visualEfView.alpha = 0.9;

@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhotoView.h"
 
 @interface DetailTopView : UIView
 
 @property (nonatomic, strong) BmobObject * travelObject;
 
 @property (nonatomic, strong) BmobObject * userObject;
+
+@property (nonatomic, strong) PhotoView   * picContainerView;//图片
 
 @end

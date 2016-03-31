@@ -24,8 +24,8 @@
 @property (nonatomic, strong)UILabel *ageLabel;//年龄
 @property (nonatomic, strong)UILabel *followerLabel;
 @property (nonatomic, strong)UILabel *PNumber;
-
 @property (nonatomic, strong) BottomButtonsView *buttonView;
+@property (nonatomic, copy)collection collectionblock;
 @end
 
 @implementation LaunchTableViewCell
@@ -42,10 +42,9 @@
         [self.contentView addSubview:self.launchTimeLabel];
         [self.contentView addSubview:self.departureLabel];
         [self.contentView addSubview:self.startingLabel];
-//        [self.contentView addSubview:self.ContentButton];
+
         [self.contentView addSubview:self.UserHeaderimageView];
         [self.contentView addSubview:self.infoLabel];
-//        [self.contentView addSubview:self.sexImage];
         [self.contentView addSubview:self.ageLabel];
         [self.contentView addSubview:self.followerLabel];
         [self.contentView addSubview:self.PNumber];
@@ -54,7 +53,7 @@
         self.followerLabel.sd_layout.rightEqualToView(self.contentView).widthIs(flexibleWidth(50)).heightIs(flexibleHeight(40)).topSpaceToView(self.contentView, 0);
 //
         self.UserHeaderimageView.sd_layout.leftSpaceToView(self.contentView,flexibleWidth(15)).
-        topSpaceToView(self.contentView, flexibleHeight(15)).heightIs(flexibleHeight(35)).widthIs(flexibleHeight(35));
+        topSpaceToView(self.contentView, flexibleHeight(15)).heightIs(flexibleHeight(80)).widthIs(flexibleHeight(80));
         self.UserHeaderimageView.sd_cornerRadiusFromWidthRatio = @(0.5);
 
         self.userIDLabel.sd_layout.leftSpaceToView(self.UserHeaderimageView, flexibleWidth(5)).topSpaceToView(self.contentView, flexibleHeight(20)).heightIs(flexibleHeight(12));
@@ -75,7 +74,7 @@
 //        
 //        self.sexImage.sd_layout.leftEqualToView(self.ageLabel).topSpaceToView(self.ageLabel, flexibleHeight(5)).heightIs(flexibleHeight(10)).widthIs(flexibleHeight(10));
         
-        self.PNumber.sd_layout.rightEqualToView(self.contentView).topEqualToView(self.contentView).heightIs(flexibleHeight(60)).widthIs(flexibleHeight(60));
+        self.PNumber.sd_layout.rightEqualToView(self.contentView).topEqualToView(self.contentView).heightIs(flexibleHeight(60)).widthIs(flexibleWidth(60));
 
         self.infoLabel.sd_layout.leftSpaceToView(self.contentView,flexibleWidth(15)).rightSpaceToView(self.contentView, flexibleWidth(15)).topSpaceToView(self.startingLabel, flexibleHeight(10)).autoHeightRatio(0);
 
@@ -89,9 +88,13 @@
 
 
 - (void)handldTapEvent:(UITapGestureRecognizer *)sender {
-    if (_ThumbUpBlock) {
-        _ThumbUpBlock(self.indexPath);
+    if (self.collectionblock) {
+        self.collectionblock(1);
     }
+}
+
+- (void)buttonCollection:(collection)collectionBlock{
+    self.collectionblock = collectionBlock;
 }
 
 - (UILabel *)userIDLabel {
@@ -111,6 +114,7 @@
     _obj = obj;
     BmobObject *user = [obj objectForKey:@"user"];
     self.userIDLabel.text = [user objectForKey:@"username"];
+    
     self.ageLabel.text = [user objectForKey:@"age"];
     [self.UserHeaderimageView sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"head_portraits"]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"]];
     self.launchTimeLabel.text = [obj objectForKey:@"called_date"];
@@ -250,16 +254,10 @@
         _PNumber = ({
             UILabel *label = [[UILabel alloc]init];
             label.textAlignment = NSTextAlignmentCenter;
-            label.backgroundColor = [UIColor colorWithRed:0.127 green:0.768 blue:0.503 alpha:1.000];
+            label.backgroundColor = [UIColor colorWithRed:0.374 green:0.820 blue:0.637 alpha:1.000];
             label.font = [UIFont systemFontOfSize:flexibleHeight(12)];
+            label.font = [UIFont boldSystemFontOfSize:15];
             label.textColor = [UIColor whiteColor];
-            label.text = @"12人";
-            
-            UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:label.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(5, 5)];
-            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-            maskLayer.frame = label.bounds;
-            maskLayer.path = maskPath.CGPath;
-            label.layer.mask = maskLayer;
             label;
         });
         

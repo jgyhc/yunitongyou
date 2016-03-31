@@ -9,6 +9,7 @@
 #import "HeaderButtonView.h"
 
 @interface HeaderButtonView ()
+@property (nonatomic, strong) UIView * separatorView;
 @property (nonatomic, strong)UIView *separatationLineView;
 
 @end
@@ -16,24 +17,32 @@
 @implementation HeaderButtonView
 
 
-- (instancetype)init
+- (instancetype)initWithType:(int)type
 {
     self = [super init];
     if (self) {
+        self.separatorView = [UIView new];
+        self.separatorView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
+        [self addSubview:self.separatorView];
         [self addSubview:self.leftsideButton];
         [self addSubview:self.rightsideButton];
         [self addSubview:self.separatationLineView];
         
-        self.leftsideButton.sd_layout.leftEqualToView(self).widthIs(flexibleWidth(375 / 2)).heightIs(flexibleHeight(40)).topSpaceToView(self, 0);
-        
+        self.separatorView.sd_layout.leftEqualToView(self).topEqualToView(self).rightEqualToView(self).heightIs(flexibleHeight(5));
+        self.leftsideButton.sd_layout.leftEqualToView(self).widthIs(flexibleWidth(375 / 2)).heightIs(flexibleHeight(40)).topSpaceToView(self.separatorView, 0);
         self.rightsideButton.sd_layout.rightEqualToView(self).widthIs(flexibleWidth(375 / 2)).heightIs(flexibleHeight(40)).topEqualToView(self.leftsideButton);
-        
+        if (type == 1) {
+            [self.rightsideButton setTitle:@"点赞" forState:UIControlStateNormal];
+        }
+        else{
+            [self.rightsideButton setTitle:@"加入" forState:UIControlStateNormal];
+        }
         self.separatationLineView.sd_layout.centerXIs(flexibleWidth(WIDTH / 4)).heightIs(flexibleHeight(2)).widthIs(flexibleWidth(375 / 2)).topSpaceToView(self.leftsideButton, 0);
         
         UIView *line  = [UIView new];
-        line.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.276];
+        line.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
         [self addSubview:line];
-        line.sd_layout.leftEqualToView(self).rightEqualToView(self).heightIs(1).topSpaceToView(self, 0);
+        line.sd_layout.leftEqualToView(self).rightEqualToView(self).heightIs(1).topSpaceToView(self.leftsideButton, 0);
         
     }
     return self;
@@ -79,7 +88,7 @@
         _leftsideButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [button setTitle:@"评论的小伙伴" forState:UIControlStateNormal];
+            [button setTitle:@"评论" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor colorWithWhite:0.298 alpha:1.000] forState:UIControlStateNormal];
             [button setBackgroundColor:[UIColor whiteColor]];
             [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
@@ -96,7 +105,6 @@
         _rightsideButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [button setTitle:@"加入的小伙伴" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor colorWithWhite:0.298 alpha:1.000] forState:UIControlStateNormal];
             [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
             [button setBackgroundColor:[UIColor whiteColor]];

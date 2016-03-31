@@ -33,7 +33,6 @@
         [self addSubview:self.userHeaderImageView];
         [self addSubview:self.userIDLabel];
         [self addSubview:self.initiateTimeLabel];
-        [self addSubview:self.sexImageView];
         
         [self addSubview:self.followerNumLabel];
         [self addSubview:self.departureLabel];
@@ -49,7 +48,7 @@
         imageView.center = CGPointMake(self.center.x, flexibleHeight(120));
         [self addSubview:imageView];
         
-        self.userHeaderImageView.sd_layout.leftSpaceToView(self, flexibleWidth(15)).topSpaceToView(self, flexibleHeight(10)).widthIs(flexibleHeight(50)).heightIs(flexibleHeight(50));
+        self.userHeaderImageView.sd_layout.leftSpaceToView(self, flexibleWidth(15)).topSpaceToView(self, flexibleHeight(10)).widthIs(flexibleHeight(80)).heightIs(flexibleHeight(80));
         self.userHeaderImageView.sd_cornerRadiusFromWidthRatio = @(0.5);
         
         self.userIDLabel.sd_layout.leftSpaceToView(self.userHeaderImageView, flexibleWidth(5)).topEqualToView(self.userHeaderImageView).heightIs(flexibleHeight(14));
@@ -76,7 +75,7 @@
         
         self.infoLabel.sd_layout.leftSpaceToView(self, flexibleWidth(15)).rightSpaceToView(self, flexibleWidth(15)).topSpaceToView(self.startingLabel, flexibleHeight(10)).autoHeightRatio(0);
         
-        [self setupAutoHeightWithBottomView:self.infoLabel bottomMargin:0];
+        [self setupAutoHeightWithBottomView:self.infoLabel bottomMargin:20];
         
     }
     return self;

@@ -99,9 +99,7 @@
     BmobObject *obj = self.dataSource[indexPath.section];
     cell.obj = obj;
     
-    [cell setThumbUpBlock:^(NSIndexPath *index) {
-        NSLog(@"点的第%ld个", (long)index.section);
-    }];
+
    
     return cell;
 }

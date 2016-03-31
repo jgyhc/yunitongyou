@@ -89,7 +89,7 @@
  *  @param age            年龄
  *  @param userName       用户名
  */
-- (void)changeUserinfoWithObjectId:(NSString *)ObjectId userName:(NSString *)userName head_portraits:(NSData *)head_portraits sex:(NSString *)sex age:(NSString *)age IndividualitySignature:(NSString *)IndividualitySignature;
+- (void)changeUserinfoWithObjectId:(NSString *)ObjectId userName:(NSString *)userName head_portraits:(NSData *)head_portraits sex:(NSString *)sex age:(NSString *)age IndividualitySignature:(NSString *)IndividualitySignature successBlock:(void(^)())success failBlock:(void(^)(NSError * error))fail;
 /**
  *  忘记密码
  *

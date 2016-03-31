@@ -130,7 +130,6 @@
 		24793AB41BDC86B0006491C6 /* MyCommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24793AB31BDC86B0006491C6 /* MyCommentsTableViewCell.m */; };
 		247AF9561BCDE95E00DECE79 /* AnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 247AF9551BCDE95E00DECE79 /* AnimationView.m */; };
 		247D44C01BD24F65006F36D5 /* SharedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D44B71BD24F65006F36D5 /* SharedView.m */; };
-		248D84C11BDF9B50008C3419 /* OtherInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D84C01BDF9B50008C3419 /* OtherInfoViewController.m */; };
 		248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D84C31BDFA4EF008C3419 /* FirstView.m */; };
 		2497BA191BCCC37400251058 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2497BA021BCCC37400251058 /* BaseViewController.m */; };
 		2497BA1A1BCCC37400251058 /* ControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2497BA051BCCC37400251058 /* ControllerManager.m */; };
@@ -379,8 +378,6 @@
 		247AF9551BCDE95E00DECE79 /* AnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationView.m; sourceTree = "<group>"; };
 		247D44B61BD24F65006F36D5 /* SharedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedView.h; sourceTree = "<group>"; };
 		247D44B71BD24F65006F36D5 /* SharedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedView.m; sourceTree = "<group>"; };
-		248D84BF1BDF9B50008C3419 /* OtherInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherInfoViewController.h; sourceTree = "<group>"; };
-		248D84C01BDF9B50008C3419 /* OtherInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherInfoViewController.m; sourceTree = "<group>"; };
 		248D84C21BDFA4EF008C3419 /* FirstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstView.h; sourceTree = "<group>"; };
 		248D84C31BDFA4EF008C3419 /* FirstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstView.m; sourceTree = "<group>"; };
 		2497BA011BCCC37400251058 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -597,8 +594,6 @@
 			children = (
 				24F9F4E51BDCD96F00C722BE /* PersonalViewController.h */,
 				24F9F4E61BDCD96F00C722BE /* PersonalViewController.m */,
-				248D84BF1BDF9B50008C3419 /* OtherInfoViewController.h */,
-				248D84C01BDF9B50008C3419 /* OtherInfoViewController.m */,
 			);
 			name = "个人信息";
 			path = "登陆注册(1)/个人信息";
@@ -1584,7 +1579,6 @@
 				0480C3351CA37EEC002FEE5B /* DetailTopView.m in Sources */,
 				24204BC71BCF66A10034B4C6 /* MyTravelsViewController.m in Sources */,
 				722D84B61CA6610200D4CC25 /* TAAbstractDotView.m in Sources */,
-				248D84C11BDF9B50008C3419 /* OtherInfoViewController.m in Sources */,
 				04D354471C882D0B00DFCB1C /* TravelNotesTabelVC.m in Sources */,
 				04D3543A1C87F40900DFCB1C /* SetViewController.m in Sources */,
 				04D354621C88380600DFCB1C /* SDPhotoBrowser.m in Sources */,

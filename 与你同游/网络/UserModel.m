@@ -16,7 +16,6 @@
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *VerificationCode;
 @property (nonatomic, copy) NSString *VerificationCodeResult;
-@property (nonatomic, copy) NSString *addUserinfoResult;
 @property (nonatomic, strong) NetWorkingViewController *netWork;
 @property (nonatomic, copy) NSString *registerResult;
 @property (nonatomic, copy) NSString *forgetPasswordResult;
@@ -216,7 +215,7 @@
 
 
 
-- (void)changeUserinfoWithObjectId:(NSString *)ObjectId userName:(NSString *)userName head_portraits:(NSData *)head_portraits sex:(NSString *)sex age:(NSString *)age IndividualitySignature:(NSString *)IndividualitySignature {
+- (void)changeUserinfoWithObjectId:(NSString *)ObjectId userName:(NSString *)userName head_portraits:(NSData *)head_portraits sex:(NSString *)sex age:(NSString *)age IndividualitySignature:(NSString *)IndividualitySignature successBlock:(void(^)())success failBlock:(void(^)(NSError * error))fail{
     
 #pragma mark --上传文件之前判断是否上传过头像，为了节约空间，我们应该删除原来的
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"User"];
@@ -237,8 +236,8 @@
                          
                          [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                              if (isSuccessful) {
-                                 //修改成功后的动作
-                                 self.addUserinfoResult = @"YES";
+                                 success();
+                                 
                              } else if (error){
                                  NSLog(@"%@",error);
                              } else {
@@ -269,8 +268,7 @@
                 
                 [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                     if (isSuccessful) {
-                        //修改成功后的动作
-                        self.addUserinfoResult = @"YES";
+                        success();
                     } else if (error){
                         NSLog(@"%@",error);
                     } else {

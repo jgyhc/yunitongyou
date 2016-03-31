@@ -136,7 +136,8 @@
         }
         else{
             PersonalViewController *PVC = [[PersonalViewController alloc] init];
-            PVC.user = self.user;
+            PVC.userInfo = self.user.getUserData;
+            PVC.type = 0;
             [self presentViewController:PVC animated:YES completion:nil];
         }
 }

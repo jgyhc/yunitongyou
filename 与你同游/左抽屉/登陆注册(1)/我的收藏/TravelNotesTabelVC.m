@@ -14,7 +14,6 @@
 #import "RecordDetailViewController.h"
 #import "AddTravelViewController.h"
 
-#import "OtherInfoViewController.h"
 
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
@@ -108,8 +107,8 @@
     //注意是section,若是numberOfRows returnself.modelArray.count，则是row
     BmobObject * object = self.travelArray[indexPath.section];
     cell.info = object;
-    
-    
+     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSLog(@"object = %@",object);
 #pragma mark --点赞
     [cell buttonthumbUp:^(int type) {
         if (type == 1) {
@@ -155,7 +154,7 @@
     BmobObject *obj = self.travelArray[indexPath.section];
     RecordDetailViewController * detail = [[RecordDetailViewController alloc]init];
     detail.travelObject = obj;
-    BmobObject * user = [obj objectForKey:@"userId"];
+    BmobObject * user = [obj objectForKey:@"user"];
     detail.userObject = user;
     [self.navigationController pushViewController:detail animated:YES];
 }

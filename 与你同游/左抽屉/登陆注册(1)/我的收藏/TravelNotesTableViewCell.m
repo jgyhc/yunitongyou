@@ -31,6 +31,7 @@ const CGFloat maxContentLabelHeight = 54;
 @property (nonatomic,copy) share  sharedblock;
 
 @property (nonatomic,copy) comment commentblock;
+@property (nonatomic,copy)personalInfo personblock;
 
 @end
 
@@ -38,6 +39,7 @@ const CGFloat maxContentLabelHeight = 54;
 
 {
     UIImageView *_iconView;
+    UIButton * _portraintbt;
     UILabel *_nameLable;
     UIImageView * _positionImg;
     UILabel * _position;
@@ -65,6 +67,8 @@ const CGFloat maxContentLabelHeight = 54;
 - (void)setup
 {
     _iconView = [UIImageView new];
+    _portraintbt = [UIButton new];
+    [_portraintbt addTarget:self action:@selector(handlePortraint) forControlEvents:UIControlEventTouchUpInside];
     
     _nameLable = [UILabel new];
     _nameLable.font = [UIFont systemFontOfSize:16];
@@ -98,7 +102,7 @@ const CGFloat maxContentLabelHeight = 54;
     _hline1 = [UIView new];
     _hline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
-    NSArray *views = @[_iconView, _nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1];
+    NSArray *views = @[_iconView, _portraintbt,_nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1];
     
     [views enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.contentView addSubview:obj];
@@ -116,6 +120,8 @@ const CGFloat maxContentLabelHeight = 54;
     _iconView.layer.cornerRadius = CGRectGetMidX(_iconView.bounds);
     _iconView.clipsToBounds = YES;
     
+    _portraintbt.sd_layout.leftEqualToView(_iconView).topEqualToView(_iconView).widthIs(flexibleWidth(80)).heightIs(flexibleWidth(80));
+    
     _nameLable.sd_layout
     .leftSpaceToView(_iconView, margin)
     .topSpaceToView(contentView,25)
@@ -128,7 +134,7 @@ const CGFloat maxContentLabelHeight = 54;
     .rightSpaceToView(contentView,10)
     .widthIs(flexibleWidth(60))
     .heightIs(flexibleHeight(15));
-//    _timeLabel.backgroundColor = [UIColor redColor];
+
     
     _positionImg.sd_layout
     .leftSpaceToView(_iconView,margin)
@@ -141,7 +147,6 @@ const CGFloat maxContentLabelHeight = 54;
     .topEqualToView(_positionImg)
     .rightSpaceToView(contentView,10)
     .heightIs(flexibleHeight(18));
-//    _position.backgroundColor = [UIColor orangeColor];
     
     _contentLabel.sd_layout
     .leftEqualToView(_iconView)
@@ -184,17 +189,9 @@ const CGFloat maxContentLabelHeight = 54;
 #pragma mark --赋值
 - (void)setInfo:(BmobObject *)info{
     _info = info;
-    BmobObject * user =  [info objectForKey:@"userId"];
-    
-    
-    NSString * imageString =[user objectForKey:@"head_portraits"];
-    if (imageString.length > 0) {
-        NSURL * imageUrl = [NSURL URLWithString:imageString];
-        [_iconView sd_setImageWithURL:imageUrl];
-    }
-    else{
-        _iconView.image = IMAGE_PATH(@"无头像.png");
-    }
+    BmobObject * user =  [info objectForKey:@"user"];
+
+    [_iconView sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"head_portraits"]] placeholderImage:IMAGE_PATH(@"无头像.png")];
 
     if (![[user objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
         _nameLable.text = [user objectForKey:@"username"];
@@ -205,8 +202,17 @@ const CGFloat maxContentLabelHeight = 54;
     // 防止单行文本label在重用时宽度计算不准的问题
         [_nameLable sizeToFit];
     _contentLabel.text = [info objectForKey:@"content"];
-        _positionImg.image = IMAGE_PATH(@"定位选中.png");
+    
+    
         _position.text = [info objectForKey:@"position"];
+    if ([[info objectForKey:@"position"] isEqualToString:@"未定位"]) {
+         _positionImg.image = IMAGE_PATH(@"定位.png");
+        _position.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+    }else{
+        _positionImg.image = IMAGE_PATH(@"定位选中.png");
+       
+    }
+    
     
 
     NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
@@ -220,7 +226,7 @@ const CGFloat maxContentLabelHeight = 54;
         _picContainerView.picPathStringsArray = pictureArray;
     
     
-    
+    self.dianzanImg.image = IMAGE_PATH(@"未点赞.png");
     NSArray * thumbArray = (NSArray *)[info objectForKey:@"thumbArray"];
     for (NSString * userId in thumbArray) {
         if ([userId isEqualToString:OBJECTID]) {
@@ -338,13 +344,22 @@ const CGFloat maxContentLabelHeight = 54;
     self.sharedblock = thirdblock;
 }
 
+- (void)handlePortraint{
+    if (self.personblock) {
+        self.personblock();
+    }
+}
+- (void)tapPresent:(personalInfo)fourthblock{
+    self.personblock = fourthblock;
+}
+
 #pragma mark --懒加载
 - (UIImageView *)dianzanImg{
     if (!_dianzanImg) {
         _dianzanImg = ({
             UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(20, 2.5, 25, 25), NO)];
+            imageView.image = IMAGE_PATH(@"未点赞.png");
             [_dianzanbt addSubview:imageView];
-            
             imageView;
             
         });
