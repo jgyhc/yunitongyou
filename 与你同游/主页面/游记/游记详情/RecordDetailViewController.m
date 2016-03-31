@@ -183,7 +183,7 @@
 
 - (void)setTravelObject:(BmobObject *)travelObject{
     _travelObject = travelObject;
-    BmobObject * user =  [travelObject objectForKey:@"userId"];
+    BmobObject * user =  [travelObject objectForKey:@"user"];
     self.objId = travelObject.objectId;
     self.topView.travelObject = travelObject;
     self.topView.userObject = user;
@@ -348,16 +348,6 @@
 
     return cell;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 2;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView * bcView = [[UIView alloc]init];
-    bcView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
-    return bcView;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self cellHeightForIndexPath:indexPath cellContentViewWidth:[self cellContentViewWith] tableView:tableView];

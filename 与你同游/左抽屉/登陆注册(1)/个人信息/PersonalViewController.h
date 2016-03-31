@@ -11,7 +11,7 @@
 #import "UserModel.h"
 @interface PersonalViewController : UIViewController
 
-@property (nonatomic, strong) UserModel *user;
-
-@property (nonatomic, strong) UIImageView * headPortrait;//头像
+@property (nonatomic, strong) UserModel *userModel;
+@property (nonatomic, strong) BmobObject * userInfo;
+@property (nonatomic, assign) int type;
 @end

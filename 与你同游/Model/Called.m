@@ -86,7 +86,7 @@
 //通过一条活动找到这条活动对应的作者（未测试）
 + (void)getUserCalledID:(NSString *)calledID Success:(void (^)(BmobObject *user))success failure:(void (^)(NSError *error1))failure {
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"Called"];
-    [bquery includeKey:@"user"];//声明查询Called的时候  把表里面user字段的数据查出来
+    [bquery includeKey:@"user"];//声明查询Called的时候  把表里面user字段的数据查出来 
     [bquery getObjectInBackgroundWithId:calledID block:^(BmobObject *object, NSError *error) {
         if (error) {
             failure(error);

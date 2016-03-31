@@ -100,6 +100,7 @@ static NSString * const identifier = @"CELL";
     BmobObject * object = self.travelArray[indexPath.section];
     //注意是section,若是numberOfRows returnself.modelArray.count，则是row
     cell.info = object;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -107,7 +108,7 @@ static NSString * const identifier = @"CELL";
     BmobObject *obj = self.travelArray[indexPath.section];
     RecordDetailViewController * detail = [[RecordDetailViewController alloc]init];
     detail.travelObject = obj;
-    BmobObject * user = [obj objectForKey:@"userId"];
+    BmobObject * user = [obj objectForKey:@"user"];
     detail.userObject = user;
     [self.navigationController pushViewController:detail animated:YES];
 }

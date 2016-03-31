@@ -48,7 +48,7 @@
         imageView.center = CGPointMake(self.center.x, flexibleHeight(120));
         [self addSubview:imageView];
         
-        self.userHeaderImageView.sd_layout.leftSpaceToView(self, flexibleWidth(15)).topSpaceToView(self, flexibleHeight(10)).widthIs(flexibleHeight(50)).heightIs(flexibleHeight(50));
+        self.userHeaderImageView.sd_layout.leftSpaceToView(self, flexibleWidth(15)).topSpaceToView(self, flexibleHeight(10)).widthIs(flexibleHeight(80)).heightIs(flexibleHeight(80));
         self.userHeaderImageView.sd_cornerRadiusFromWidthRatio = @(0.5);
         
         self.userIDLabel.sd_layout.leftSpaceToView(self.userHeaderImageView, flexibleWidth(5)).topEqualToView(self.userHeaderImageView).heightIs(flexibleHeight(14));

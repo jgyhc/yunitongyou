@@ -349,7 +349,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
         [_positionButton addSubview:self.positionView];
         
         UILabel * positionLabel = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(30, 15,300, 20), NO)];
-        positionLabel.text = @"定位";
+        positionLabel.text = @"未定位";
         self.positionLabel = positionLabel;
         positionLabel.font = [UIFont systemFontOfSize:14];
         positionLabel.textColor = [UIColor colorWithWhite:0.828 alpha:1.000];

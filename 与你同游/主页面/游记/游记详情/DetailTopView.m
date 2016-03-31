@@ -61,7 +61,7 @@
 
 - (void)setTravelObject:(BmobObject *)travelObject{
     _travelObject = travelObject;
-    BmobObject * user =  [travelObject objectForKey:@"userId"];
+    BmobObject * user =  [travelObject objectForKey:@"user"];
     
     
     NSString * imageString =[user objectForKey:@"head_portraits"];
