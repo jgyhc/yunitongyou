@@ -178,7 +178,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-     BmobObject *obj = self.travelArray[indexPath.section];
+    BmobObject *obj = self.travelArray[indexPath.section];
     RecordDetailViewController * detail = [[RecordDetailViewController alloc]init];
     detail.travelObject = obj;
     BmobObject * user = [obj objectForKey:@"userId"];

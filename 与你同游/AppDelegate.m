@@ -85,8 +85,7 @@
                  //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
                  [appInfo SSDKSetupSinaWeiboByAppKey:@"3260457771"
                                            appSecret:@"d7ff96331c1abb629919e77a97727b37"
-                                         redirectUri:@"https://itunes.apple.com/cn/genre/yin-le/id34"
-                                            authType:SSDKAuthTypeBoth];
+                                         redirectUri:@"https://itunes.apple.com/cn/genre/yin-le/id34" authType:SSDKAuthTypeBoth];
                  break;
              case SSDKPlatformTypeWechat:
                  [appInfo SSDKSetupWeChatByAppId:@"wx39d23b21ba20b23e"

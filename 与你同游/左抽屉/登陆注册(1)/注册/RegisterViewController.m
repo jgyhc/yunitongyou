@@ -95,25 +95,21 @@
     if ([keyPath isEqualToString:@"VerificationCode"]) {
         NSLog(@"%@", self.userModel.VerificationCode);
     }
-    
     if ([keyPath isEqualToString:@"VerificationCodeResult"]) {
         if ([self.userModel.VerificationCodeResult isEqualToString:@"YES"]) {
             [self.userModel registeredWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:nil failBlock:nil];
         }else {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"验证码错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"验证码错误"];
             return;
         }
     }
     if ([keyPath isEqualToString:@"registerResult"]) {
         if ([self.userModel.registerResult isEqualToString:@"YES"]) {
             [self.navigationController popViewControllerAnimated:YES];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"注册成功，请登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"注册成功，请登录"];
             
         }else {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"注册失败！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"注册失败！"];
         }
         [self.load hide];
     }
@@ -140,17 +136,14 @@
 
 - (void)handleSingleTap1:(UITapGestureRecognizer *)sender {
     if (self.phoneNumberTF.text.length == 0) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请输入您的手机号"];
         return;
     }else if (_phoneNumberTF.text.length != 11 || [self isPureNumandCharacters:_phoneNumberTF.text] == NO || [self isMobileNumber:_phoneNumberTF.text] == NO) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入正确格式的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请输入正确格式的手机号"];
         return;
     }else {
         [self.userModel getWithPhoneNumber:self.phoneNumberTF.text password:nil successBlock:^(BmobObject *object) {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该账号已经注册！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"该账号已经注册！"];
             
         } failBlock:^(NSError *error) {
             [self.userModel VerificationCodeWithPhoneNumber:self.phoneNumberTF.text];

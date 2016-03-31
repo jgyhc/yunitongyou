@@ -20,7 +20,7 @@
 @property (nonatomic, strong)UIButton *ContentButton;
 @property (nonatomic, strong)UIButton *UserHeaderimageView;
 @property (nonatomic, strong)UILabel *infoLabel;//简介
-@property (nonatomic, strong)UIImageView *sexImage;//性别
+//@property (nonatomic, strong)UIImageView *sexImage;//性别
 @property (nonatomic, strong)UILabel *ageLabel;//年龄
 @property (nonatomic, strong)UILabel *followerLabel;
 @property (nonatomic, strong)UILabel *PNumber;
@@ -42,11 +42,10 @@
         [self.contentView addSubview:self.launchTimeLabel];
         [self.contentView addSubview:self.departureLabel];
         [self.contentView addSubview:self.startingLabel];
-//        [self.contentView addSubview:self.TitleView];
 //        [self.contentView addSubview:self.ContentButton];
         [self.contentView addSubview:self.UserHeaderimageView];
         [self.contentView addSubview:self.infoLabel];
-        [self.contentView addSubview:self.sexImage];
+//        [self.contentView addSubview:self.sexImage];
         [self.contentView addSubview:self.ageLabel];
         [self.contentView addSubview:self.followerLabel];
         [self.contentView addSubview:self.PNumber];
@@ -73,8 +72,8 @@
         self.startingLabel.sd_layout.centerXEqualToView(self.contentView).topSpaceToView(self.departureLabel, flexibleHeight(5)).heightIs(flexibleHeight(12));
         [self.startingLabel setSingleLineAutoResizeWithMaxWidth:200];
 
-        
-        self.sexImage.sd_layout.leftEqualToView(self.ageLabel).topSpaceToView(self.ageLabel, flexibleHeight(5)).heightIs(flexibleHeight(10)).widthIs(flexibleHeight(10));
+//        
+//        self.sexImage.sd_layout.leftEqualToView(self.ageLabel).topSpaceToView(self.ageLabel, flexibleHeight(5)).heightIs(flexibleHeight(10)).widthIs(flexibleHeight(10));
         
         self.PNumber.sd_layout.rightEqualToView(self.contentView).topEqualToView(self.contentView).heightIs(flexibleHeight(60)).widthIs(flexibleHeight(60));
 
@@ -219,17 +218,17 @@
 }
 
 
-- (UIImageView *)sexImage {
-	if(_sexImage == nil) {
-        _sexImage = ({
-            
-            UIImageView *image = [[UIImageView alloc] initWithFrame:flexibleFrame(CGRectMake(120, 52, 15, 15), NO)];
-            image.backgroundColor = [UIColor redColor];
-            image;
-        });
-	}
-	return _sexImage;
-}
+//- (UIImageView *)sexImage {
+//	if(_sexImage == nil) {
+//        _sexImage = ({
+//            
+//            UIImageView *image = [[UIImageView alloc] initWithFrame:flexibleFrame(CGRectMake(120, 52, 15, 15), NO)];
+//            image.backgroundColor = [UIColor redColor];
+//            image;
+//        });
+//	}
+//	return _sexImage;
+//}
 
 - (UILabel *)ageLabel {
 	if(_ageLabel == nil) {

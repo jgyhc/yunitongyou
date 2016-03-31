@@ -202,8 +202,7 @@
     NSNumber *number = [NSNumber numberWithInteger:[numberTextField.text intValue]];
     
     if ([originTextField.text  isEqual: @""] || [destinationTextField.text  isEqual: @""] || [departureTimeTextField.text  isEqual: @""] || [arrivalTimeTextField.text  isEqual: @""] || [number  isEqual: @""]) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请填写必要的信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [self message:@"请填写必要的信息"];
         return;
     }
     [self.load show];

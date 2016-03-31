@@ -118,12 +118,10 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
         return;
     }
     for (int i = 0; i < self.selectedArrayUrl.count; i ++) {
-        
         [assetLibrary assetForURL:self.selectedArrayUrl[i] resultBlock:^(ALAsset *asset) {
             UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
             [imageArray addObject:image];
             if (i == self.selectedArrayUrl.count - 1) {
-             
                 [self.travelModel addTravelNoteWithObejectId:OBJECTID content:self.contentView.text imagesArray:imageArray location:self.positionLabel.text];
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             }

@@ -67,14 +67,17 @@
     CGFloat w = self.view.bounds.size.width;
     
     NSArray *imagesURLStrings = @[
-                                  @"https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a4b3d7085dee3d6d2293d48b252b5910/0e2442a7d933c89524cd5cd4d51373f0830200ea.jpg",
-                                  @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a41eb338dd33c895a62bcb3bb72e47c2/5fdf8db1cb134954a2192ccb524e9258d1094a1e.jpg",
-                                  @"http://c.hiphotos.baidu.com/image/w%3D400/sign=c2318ff84334970a4773112fa5c8d1c0/b7fd5266d0160924c1fae5ccd60735fae7cd340d.jpg"
+                                  @"http://pic3.40017.cn/scenery/destination/2015/04/19/12/yP904h.jpg",
+                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/18/DKMh1m.jpg",
+                                  @"http://pic3.40017.cn/scenery/destination/2015/04/19/00/af8g1x.jpg",
+                                  @"http://pic3.40017.cn/scenery/destination/2015/04/23/20/qozukp.jpg",
+                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/20/tPj6Id.jpg"
                                   ];
-    NSArray *titles = @[@"新建交流QQ群：185534916 ",
-                        @"感谢您的支持，如果下载的",
-                        @"如果代码在使用过程中出现问题",
-                        @"您可以发邮件到gsdios@126.com"
+    NSArray *titles = @[@"大木花谷 ",
+                        @"仙女山",
+                        @"丰都鬼城",
+                        @"黄山",
+                        @"张家界"
                         ];
     
     // 网络加载 --- 创建带标题的图片轮播器
@@ -84,11 +87,7 @@
     cycleScrollView2.titlesGroup = titles;
     cycleScrollView2.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
     [self.scrollView addSubview:cycleScrollView2];
-    
-    //         --- 模拟加载延迟
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        cycleScrollView2.imageURLStringsGroup = imagesURLStrings;
-    });
+    cycleScrollView2.imageURLStringsGroup = imagesURLStrings;
     
     
     

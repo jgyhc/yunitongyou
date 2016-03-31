@@ -10,6 +10,7 @@
 #import "PreviousForgetViewController.h"
 #import "RegisterViewController.h"
 #import "UserModel.h"
+#import "UIAlertController+Blocks.h"
 #import "LoadingView.h"
 #define IMAGE_NAME(X) [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForAuxiliaryExecutable:(X)]]
 
@@ -84,16 +85,12 @@
 #pragma mark --登录
 - (void)loginButtonAction:(UIButton *)sender {
     if (_phoneNumberTF.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [self message:@"请输入您的手机号"];
     }else if (_phoneNumberTF.text.length != 11 || [self isPureNumandCharacters:_phoneNumberTF.text] == NO || [self isMobileNumber:_phoneNumberTF.text] == NO){
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [self message:@"请输入正确的手机号" ];
     }else if (_passwordTF.text.length == 0 || _passwordTF.text.length < 6) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确的密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [self message:@"请输入正确的密码"];
     }else {
-   //网络请求
         [self.loading show];
         [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:^(BmobObject *object) {
             [self.loading hide];
@@ -101,14 +98,21 @@
             [self.navigationController popViewControllerAnimated:YES];
         } failBlock:^(NSError *error) {
             [self.loading hide];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"用户名或者密码错误！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"用户名或者密码错误！"];
         }];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.loading hide];
         });
     }
 }
+
+- (void)message:(NSString *)message {
+    [UIAlertController showAlertInViewController:self withTitle:@"温馨提示" message:message cancelButtonTitle:@"确认" destructiveButtonTitle:nil otherButtonTitles:nil tapBlock:^(UIAlertController * _Nonnull controller, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        
+    }];
+    
+}
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
     

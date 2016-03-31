@@ -60,10 +60,8 @@
             UIViewController *viewController = [[class alloc] init];
             [viewControllers addObject:viewController];
         }];
-//        NSArray *array = @[@"1000-1", @"1001-1", @"1002-1", @"1003-1", @"1004-1"];
         _mainViewController = ({
             LcTabarViewController *mainVC = [[LcTabarViewController alloc] initWithViewControllers:viewControllers barItemImages:nil];
-//            LcTabarViewController *TabarViewController = [[LcTabarViewController alloc] init];
             mainVC;
         });
     }

@@ -25,9 +25,6 @@
          SSPicList *simageUrl = model.picList[0];
         [self.imageView sd_setImageWithURL:[NSURL URLWithString:simageUrl.picUrlSmall] placeholderImage:[UIImage imageNamed:@""]];
     }
-   
-#warning placeholderImage
-
     self.addressLabel.text = model.name;
 }
 
