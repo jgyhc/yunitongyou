@@ -18,9 +18,9 @@
 
 @implementation ScenicSpot
 
-+ (void)addScenicSpotID:(NSString *)ScenicSpotID name:(NSString *)name content:(NSString *)content lat:(double)lat lon:(double)lon address:(NSString *)address areaName:(NSString *)areaName price:(NSNumber *)price priceList:(NSArray *)priceList picList:(NSArray *)picList success:(void (^)(BmobObject* hotWordID))success failure:(void (^)(NSError *error1))failure {
++ (void)addScenicSpotID:(long)ScenicSpotID name:(NSString *)name content:(NSString *)content lat:(double)lat lon:(double)lon address:(NSString *)address areaName:(NSString *)areaName price:(NSNumber *)price priceList:(NSArray *)priceList picList:(NSArray *)picList success:(void (^)(BOOL* isSuccessful))success failure:(void (^)(NSError *error1))failure {
     BmobObject  *SSobj = [BmobObject objectWithClassName:@"Scenic_spot"];
-    [SSobj setObject:ScenicSpotID forKey:@"ScenicSpotID"];
+    [SSobj setObject:@(ScenicSpotID) forKey:@"ScenicSpotID"];
     [SSobj setObject:name forKey:@"name"];
     [SSobj setObject:content forKey:@"content"];
     [SSobj setObject:@(lat) forKey:@"lat"];
@@ -33,7 +33,7 @@
        //异步保存
     [SSobj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
         if (isSuccessful) {
-            
+            success(isSuccessful);
         } else if (error){
             //发生错误后的动作
             NSLog(@"%@",error);

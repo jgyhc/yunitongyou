@@ -31,6 +31,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:NO];
     [self.travelVC removeFromParentViewController];
     [self.activityVC removeFromParentViewController];
 }
@@ -85,8 +86,7 @@
     if (!_travelVC) {
         _travelVC = [[TravelNotesTabelVC alloc]init];
         
-        CGRect frame = _travelVC.tableView.frame;
-        frame = flexibleFrame(CGRectMake(0, flexibleHeight(104), WIDTH, HEIGHT - flexibleHeight(104)), NO);
+        CGRect frame = flexibleFrame(CGRectMake(0, flexibleHeight(104), WIDTH, HEIGHT - flexibleHeight(104)), NO);
         _travelVC.tableView.frame = frame;
     }
     return _travelVC;
@@ -96,8 +96,7 @@
     if (!_activityVC) {
         _activityVC = [[MyCollectionActivityTabelVC alloc]init];
         
-        CGRect frame = _activityVC.tableView.frame;
-        frame = flexibleFrame(CGRectMake(0, flexibleHeight(104), WIDTH, HEIGHT - flexibleHeight(104)), NO);
+        CGRect frame = flexibleFrame(CGRectMake(0, flexibleHeight(104), WIDTH, HEIGHT - flexibleHeight(104)), NO);
         _activityVC.tableView.frame = frame;
     }
     return _activityVC;

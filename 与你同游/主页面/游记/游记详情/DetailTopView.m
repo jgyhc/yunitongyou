@@ -95,6 +95,7 @@
         picContainerTopMargin = 10;
     }
     self.picContainerView.sd_layout.topSpaceToView(self.contentLabel, picContainerTopMargin);
+    [self.picContainerView updateLayout];
 }
 
 - (NSString *) compareCurrentTime:(NSDate *) compareDate {

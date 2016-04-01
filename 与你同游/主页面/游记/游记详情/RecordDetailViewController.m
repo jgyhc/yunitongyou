@@ -75,6 +75,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:NO];
     [self getCommentList];
     [self getThumbUpList];
     [self textViewDidEndEditing:self.comment.inputText];

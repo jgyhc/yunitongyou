@@ -146,6 +146,19 @@
 		720F67551CA02DF500312A2C /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 720F67541CA02DF500312A2C /* HeaderView.m */; };
 		720F67581CA0305D00312A2C /* HeaderButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 720F67571CA0305D00312A2C /* HeaderButtonView.m */; };
 		722C0D371CA5539400ADE47E /* SSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C0D361CA5539400ADE47E /* SSTextView.m */; };
+		722C36811CAD5577008CE650 /* MLPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 722C366C1CAD5577008CE650 /* MLPhotoBrowser.bundle */; };
+		722C36821CAD5577008CE650 /* MLPhotoBrowserAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C366E1CAD5577008CE650 /* MLPhotoBrowserAssets.m */; };
+		722C36831CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C36701CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.m */; };
+		722C36841CAD5577008CE650 /* MLPhotoBrowserDatas.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C36721CAD5577008CE650 /* MLPhotoBrowserDatas.m */; };
+		722C36851CAD5577008CE650 /* MLPhotoBrowserPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C36741CAD5577008CE650 /* MLPhotoBrowserPhoto.m */; };
+		722C36861CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C36761CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.m */; };
+		722C36871CAD5577008CE650 /* MLPhotoBrowserPhotoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C36781CAD5577008CE650 /* MLPhotoBrowserPhotoScrollView.m */; };
+		722C36881CAD5577008CE650 /* MLPhotoBrowserPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C367A1CAD5577008CE650 /* MLPhotoBrowserPhotoView.m */; };
+		722C36891CAD5577008CE650 /* MLPhotoBrowserSignleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C367C1CAD5577008CE650 /* MLPhotoBrowserSignleViewController.m */; };
+		722C368A1CAD5577008CE650 /* MLPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C367E1CAD5577008CE650 /* MLPhotoBrowserViewController.m */; };
+		722C368B1CAD5577008CE650 /* UIImage+MLBrowserPhotoImageForBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C36801CAD5577008CE650 /* UIImage+MLBrowserPhotoImageForBundle.m */; };
+		722C36921CAD5668008CE650 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C368F1CAD5668008CE650 /* DACircularProgressView.m */; };
+		722C36931CAD5668008CE650 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C36911CAD5668008CE650 /* DALabeledCircularProgressView.m */; };
 		722D84B61CA6610200D4CC25 /* TAAbstractDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722D84A91CA6610200D4CC25 /* TAAbstractDotView.m */; };
 		722D84B71CA6610200D4CC25 /* TAAnimatedDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722D84AB1CA6610200D4CC25 /* TAAnimatedDotView.m */; };
 		722D84B81CA6610200D4CC25 /* TADotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722D84AD1CA6610200D4CC25 /* TADotView.m */; };
@@ -411,6 +424,31 @@
 		720F67571CA0305D00312A2C /* HeaderButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderButtonView.m; sourceTree = "<group>"; };
 		722C0D351CA5539400ADE47E /* SSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTextView.h; sourceTree = "<group>"; };
 		722C0D361CA5539400ADE47E /* SSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTextView.m; sourceTree = "<group>"; };
+		722C366C1CAD5577008CE650 /* MLPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MLPhotoBrowser.bundle; sourceTree = "<group>"; };
+		722C366D1CAD5577008CE650 /* MLPhotoBrowserAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserAssets.h; sourceTree = "<group>"; };
+		722C366E1CAD5577008CE650 /* MLPhotoBrowserAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserAssets.m; sourceTree = "<group>"; };
+		722C366F1CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserCustomToolBarView.h; sourceTree = "<group>"; };
+		722C36701CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserCustomToolBarView.m; sourceTree = "<group>"; };
+		722C36711CAD5577008CE650 /* MLPhotoBrowserDatas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserDatas.h; sourceTree = "<group>"; };
+		722C36721CAD5577008CE650 /* MLPhotoBrowserDatas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserDatas.m; sourceTree = "<group>"; };
+		722C36731CAD5577008CE650 /* MLPhotoBrowserPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserPhoto.h; sourceTree = "<group>"; };
+		722C36741CAD5577008CE650 /* MLPhotoBrowserPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserPhoto.m; sourceTree = "<group>"; };
+		722C36751CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserPhotoImageView.h; sourceTree = "<group>"; };
+		722C36761CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserPhotoImageView.m; sourceTree = "<group>"; };
+		722C36771CAD5577008CE650 /* MLPhotoBrowserPhotoScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserPhotoScrollView.h; sourceTree = "<group>"; };
+		722C36781CAD5577008CE650 /* MLPhotoBrowserPhotoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserPhotoScrollView.m; sourceTree = "<group>"; };
+		722C36791CAD5577008CE650 /* MLPhotoBrowserPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserPhotoView.h; sourceTree = "<group>"; };
+		722C367A1CAD5577008CE650 /* MLPhotoBrowserPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserPhotoView.m; sourceTree = "<group>"; };
+		722C367B1CAD5577008CE650 /* MLPhotoBrowserSignleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserSignleViewController.h; sourceTree = "<group>"; };
+		722C367C1CAD5577008CE650 /* MLPhotoBrowserSignleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserSignleViewController.m; sourceTree = "<group>"; };
+		722C367D1CAD5577008CE650 /* MLPhotoBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserViewController.h; sourceTree = "<group>"; };
+		722C367E1CAD5577008CE650 /* MLPhotoBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserViewController.m; sourceTree = "<group>"; };
+		722C367F1CAD5577008CE650 /* UIImage+MLBrowserPhotoImageForBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MLBrowserPhotoImageForBundle.h"; sourceTree = "<group>"; };
+		722C36801CAD5577008CE650 /* UIImage+MLBrowserPhotoImageForBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MLBrowserPhotoImageForBundle.m"; sourceTree = "<group>"; };
+		722C368E1CAD5668008CE650 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		722C368F1CAD5668008CE650 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		722C36901CAD5668008CE650 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
+		722C36911CAD5668008CE650 /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
 		722D84A81CA6610200D4CC25 /* TAAbstractDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAbstractDotView.h; sourceTree = "<group>"; };
 		722D84A91CA6610200D4CC25 /* TAAbstractDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAAbstractDotView.m; sourceTree = "<group>"; };
 		722D84AA1CA6610200D4CC25 /* TAAnimatedDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAnimatedDotView.h; sourceTree = "<group>"; };
@@ -1119,6 +1157,85 @@
 			path = "头部";
 			sourceTree = "<group>";
 		};
+		722C36671CAD5577008CE650 /* MLPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				722C36681CAD5577008CE650 /* Classes */,
+				722C366C1CAD5577008CE650 /* MLPhotoBrowser.bundle */,
+				722C366D1CAD5577008CE650 /* MLPhotoBrowserAssets.h */,
+				722C366E1CAD5577008CE650 /* MLPhotoBrowserAssets.m */,
+				722C366F1CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.h */,
+				722C36701CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.m */,
+				722C36711CAD5577008CE650 /* MLPhotoBrowserDatas.h */,
+				722C36721CAD5577008CE650 /* MLPhotoBrowserDatas.m */,
+				722C36731CAD5577008CE650 /* MLPhotoBrowserPhoto.h */,
+				722C36741CAD5577008CE650 /* MLPhotoBrowserPhoto.m */,
+				722C36751CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.h */,
+				722C36761CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.m */,
+				722C36771CAD5577008CE650 /* MLPhotoBrowserPhotoScrollView.h */,
+				722C36781CAD5577008CE650 /* MLPhotoBrowserPhotoScrollView.m */,
+				722C36791CAD5577008CE650 /* MLPhotoBrowserPhotoView.h */,
+				722C367A1CAD5577008CE650 /* MLPhotoBrowserPhotoView.m */,
+				722C367B1CAD5577008CE650 /* MLPhotoBrowserSignleViewController.h */,
+				722C367C1CAD5577008CE650 /* MLPhotoBrowserSignleViewController.m */,
+				722C367D1CAD5577008CE650 /* MLPhotoBrowserViewController.h */,
+				722C367E1CAD5577008CE650 /* MLPhotoBrowserViewController.m */,
+				722C367F1CAD5577008CE650 /* UIImage+MLBrowserPhotoImageForBundle.h */,
+				722C36801CAD5577008CE650 /* UIImage+MLBrowserPhotoImageForBundle.m */,
+			);
+			path = MLPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		722C36681CAD5577008CE650 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				722C36691CAD5577008CE650 /* Models */,
+				722C366A1CAD5577008CE650 /* ViewControllers */,
+				722C366B1CAD5577008CE650 /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		722C36691CAD5577008CE650 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		722C366A1CAD5577008CE650 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		722C366B1CAD5577008CE650 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		722C368C1CAD5668008CE650 /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				722C368D1CAD5668008CE650 /* DACircularProgress */,
+			);
+			path = DACircularProgress;
+			sourceTree = "<group>";
+		};
+		722C368D1CAD5668008CE650 /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				722C368E1CAD5668008CE650 /* DACircularProgressView.h */,
+				722C368F1CAD5668008CE650 /* DACircularProgressView.m */,
+				722C36901CAD5668008CE650 /* DALabeledCircularProgressView.h */,
+				722C36911CAD5668008CE650 /* DALabeledCircularProgressView.m */,
+			);
+			path = DACircularProgress;
+			sourceTree = "<group>";
+		};
 		722D84A61CA6610200D4CC25 /* SDCycleScrollView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1155,6 +1272,8 @@
 				722D84C21CA672F800D4CC25 /* ScenicViewController.m */,
 				722D84C41CA6893C00D4CC25 /* ScenicDetailView.h */,
 				722D84C51CA6893C00D4CC25 /* ScenicDetailView.m */,
+				722C368C1CAD5668008CE650 /* DACircularProgress */,
+				722C36671CAD5577008CE650 /* MLPhotoBrowser */,
 			);
 			path = "景点详情";
 			sourceTree = "<group>";
@@ -1497,6 +1616,7 @@
 				2462C62C1BECA99A001714C8 /* 我的游记.png in Resources */,
 				2462C64C1BECA99A001714C8 /* 添加相片.png in Resources */,
 				245B59F21BCB8BE80003EBA7 /* LaunchScreen.xib in Resources */,
+				722C36811CAD5577008CE650 /* MLPhotoBrowser.bundle in Resources */,
 				2462C6481BECA99A001714C8 /* 已评论.png in Resources */,
 				2462C6521BECA99A001714C8 /* 朝下箭头.png in Resources */,
 				2462C6541BECB3ED001714C8 /* 设置.png in Resources */,
@@ -1585,6 +1705,7 @@
 				2462C6631BECD522001714C8 /* ChooseImageListViewController.m in Sources */,
 				24793AB41BDC86B0006491C6 /* MyCommentsTableViewCell.m in Sources */,
 				72657E251C99906B00CC08AD /* SearchResultView.m in Sources */,
+				722C368B1CAD5577008CE650 /* UIImage+MLBrowserPhotoImageForBundle.m in Sources */,
 				04D354391C87F40900DFCB1C /* ChangePwViewController.m in Sources */,
 				24600CBE1BEDDCDC00C3C3B9 /* AddTravelViewController.m in Sources */,
 				247AF9561BCDE95E00DECE79 /* AnimationView.m in Sources */,
@@ -1592,6 +1713,7 @@
 				245B59EA1BCB8BE80003EBA7 /* ViewController.m in Sources */,
 				72657E231C99906B00CC08AD /* LaunchViewController.m in Sources */,
 				7275C6401CA2DBEC00BD81FF /* ICommentsView.m in Sources */,
+				722C36841CAD5577008CE650 /* MLPhotoBrowserDatas.m in Sources */,
 				722D84BC1CA6610200D4CC25 /* UIView+SDExtension.m in Sources */,
 				72657E271C99906B00CC08AD /* SearchViewController.m in Sources */,
 				24780C6E1BD628550009A40D /* TravelCommentsNetWorking.m in Sources */,
@@ -1601,7 +1723,9 @@
 				720F67551CA02DF500312A2C /* HeaderView.m in Sources */,
 				2497BA1B1BCCC37400251058 /* DrawerViewController.m in Sources */,
 				72657E241C99906B00CC08AD /* LaunchViewScrollImage.m in Sources */,
+				722C36831CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.m in Sources */,
 				72C1C65C1C735807002317FE /* Login.m in Sources */,
+				722C36851CAD5577008CE650 /* MLPhotoBrowserPhoto.m in Sources */,
 				24BDA5851BF213D100C84CAF /* RecordDetailViewController.m in Sources */,
 				72657E141C99906B00CC08AD /* BottomButtonsView.m in Sources */,
 				24204BC41BCF66730034B4C6 /* MyCollectionViewController.m in Sources */,
@@ -1615,6 +1739,7 @@
 				0480C3381CA38EA6002FEE5B /* Collection.m in Sources */,
 				04D3543B1C87F40900DFCB1C /* SuggestionViewController.m in Sources */,
 				2497BA191BCCC37400251058 /* BaseViewController.m in Sources */,
+				722C368A1CAD5577008CE650 /* MLPhotoBrowserViewController.m in Sources */,
 				24BDA5821BF213D100C84CAF /* CommentViewController.m in Sources */,
 				0480C33B1CA3C9BC002FEE5B /* ShareView.m in Sources */,
 				24204BBB1BCF65D30034B4C6 /* MyActivitiesViewController.m in Sources */,
@@ -1644,6 +1769,8 @@
 				72657E151C99906B00CC08AD /* ImageView.m in Sources */,
 				246FB4571BD472CC001EA853 /* InsetsLabel.m in Sources */,
 				72B517361C7495390089CE97 /* RetrievePassword.m in Sources */,
+				722C36861CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.m in Sources */,
+				722C36821CAD5577008CE650 /* MLPhotoBrowserAssets.m in Sources */,
 				04D354401C87F50900DFCB1C /* MyJoinsView.m in Sources */,
 				72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */,
 				7282F5211CA40A290097DAFD /* UIAlertController+Blocks.m in Sources */,
@@ -1653,6 +1780,8 @@
 				049169781C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m in Sources */,
 				72C1C6561C734CA1002317FE /* NetWorking.m in Sources */,
 				720F67581CA0305D00312A2C /* HeaderButtonView.m in Sources */,
+				722C36891CAD5577008CE650 /* MLPhotoBrowserSignleViewController.m in Sources */,
+				722C36871CAD5577008CE650 /* MLPhotoBrowserPhotoScrollView.m in Sources */,
 				24780C701BD628550009A40D /* UserModel.m in Sources */,
 				722C0D371CA5539400ADE47E /* SSTextView.m in Sources */,
 				044F50331C8ACD44002DF802 /* TravelsViewController.m in Sources */,
@@ -1664,11 +1793,14 @@
 				7288E1111C77496900F554D0 /* Travel.m in Sources */,
 				7288E10E1C77455600F554D0 /* Called.m in Sources */,
 				24780C6F1BD628550009A40D /* TravelModel.m in Sources */,
+				722C36881CAD5577008CE650 /* MLPhotoBrowserPhotoView.m in Sources */,
+				722C36921CAD5668008CE650 /* DACircularProgressView.m in Sources */,
 				722D84C31CA672F800D4CC25 /* ScenicViewController.m in Sources */,
 				246A91231BDB168200B76514 /* MyActivitiesView.m in Sources */,
 				24780C6C1BD628550009A40D /* CalledNetWorking.m in Sources */,
 				722D84BF1CA66D8800D4CC25 /* ScenicSpot.m in Sources */,
 				0473E8F91C9D16B500BC9702 /* ThumbUp.m in Sources */,
+				722C36931CAD5668008CE650 /* DALabeledCircularProgressView.m in Sources */,
 				24780C801BD661610009A40D /* TFIndicatorView.m in Sources */,
 				04D3544A1C882D4C00DFCB1C /* TravelNotesTableViewCell.m in Sources */,
 			);

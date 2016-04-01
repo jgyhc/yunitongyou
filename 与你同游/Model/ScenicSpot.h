@@ -39,7 +39,7 @@
  *  @param success
  *  @param failure
  */
-+ (void)addScenicSpotID:(NSString *)ScenicSpotID name:(NSString *)name content:(NSString *)content lat:(double)lat lon:(double)lon address:(NSString *)address areaName:(NSString *)areaName price:(NSNumber *)price priceList:(NSArray *)priceList picList:(NSArray *)picList success:(void (^)(BmobObject* hotWordID))success failure:(void (^)(NSError *error1))failure;
++ (void)addScenicSpotID:(long)ScenicSpotID name:(NSString *)name content:(NSString *)content lat:(double)lat lon:(double)lon address:(NSString *)address areaName:(NSString *)areaName price:(NSNumber *)price priceList:(NSArray *)priceList picList:(NSArray *)picList success:(void (^)(BOOL* isSuccessful))success failure:(void (^)(NSError *error1))failure;
 
 - (void)sendAsynchronizedPostRequest:(NSString *)keyword;
 @property (nonatomic, strong) void (^ssblock)(ScenicSpot *scenicSpot);
@@ -84,7 +84,7 @@
 @interface SSContentlist : NSObject
 
 /** 景点id */
-@property (nonatomic, assign) NSInteger  Id;
+@property (nonatomic, assign) long  Id;
 
 /**  */
 @property (nonatomic, copy) NSString* summary;

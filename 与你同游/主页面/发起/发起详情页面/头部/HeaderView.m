@@ -100,14 +100,6 @@
     self.infoLabel.text = [calledObject objectForKey:@"content"];
     [self.startingLabel updateLayout];
     [self.infoLabel updateLayout];
-//    __weak typeof(self) weakSelf = self;
-//    [self.infoLabel setDidFinishAutoLayoutBlock:^(CGRect frame) {
-////        [self layoutSubviews];
-//        weakSelf.h = frame.size.height + frame.origin.y;
-//        NSLog(@"%f   %f", frame.size.height, frame.origin.y);
-//    }];
-    
-//    _h = self.frame.size.height;
 
 }
 

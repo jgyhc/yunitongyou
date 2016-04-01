@@ -20,27 +20,48 @@ static CGFloat maxContentLabelHeight = 50.0f;
     _model = model;
     [self addSubview:self.contentlabel];
     _isOpen = NO;
+    if (model.length > 0) {
+        UIView *line = [UIView new];
+        line.backgroundColor = [UIColor colorWithWhite:0.716 alpha:1.000];
+        [self addSubview:line];
+        line.sd_layout.leftEqualToView(self).rightEqualToView(self).heightIs(flexibleHeight(1)).topSpaceToView(self, 0);
+    }
+
     self.contentlabel.sd_layout.leftSpaceToView(self, flexibleWidth(15)).rightSpaceToView(self, flexibleWidth(15)).topSpaceToView(self, flexibleHeight(10)).autoHeightRatio(0);
     if ([self msgContent:model]) {
         [self addSubview:self.xsjImgaeView];
-        self.xsjImgaeView.sd_layout.rightSpaceToView(self, flexibleWidth(15)).bottomSpaceToView(self, flexibleHeight(10)).heightIs(flexibleHeight(32)).widthIs(flexibleWidth(32));
+        self.xsjImgaeView.sd_layout.rightSpaceToView(self, flexibleWidth(15)).bottomSpaceToView(self, flexibleHeight(5)).heightIs(flexibleHeight(16)).widthIs(flexibleWidth(16));
         self.contentlabel.sd_layout.maxHeightIs(flexibleHeight(maxContentLabelHeight));
     }
     self.contentlabel.text = model;
+    [self.contentlabel sizeToFit];
+    [self update];
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapEvent:)];
+    [self addGestureRecognizer:tap];
+}
 
+- (void)handleTapEvent:(UITapGestureRecognizer *)sender {
+    _isOpen = !_isOpen;
     [self update];
 }
 
+
 - (void)update {
     if (_isOpen == NO) {
-        self.contentlabel.sd_layout.maxHeightIs(flexibleHeight(maxContentLabelHeight));
+        
         [UIView animateWithDuration:0.4 animations:^{
+            self.contentlabel.sd_layout.maxHeightIs(flexibleHeight(maxContentLabelHeight));
             self.xsjImgaeView.transform = CGAffineTransformMakeRotation(0);
+            [self updateLayout];
         }];
     }else {
-        self.contentlabel.sd_layout.maxHeightIs(MAXFLOAT);
+        
         [UIView animateWithDuration:0.4 animations:^{
+            self.contentlabel.sd_layout.maxHeightIs(MAXFLOAT);
             self.xsjImgaeView.transform = CGAffineTransformMakeRotation(M_PI);
+            [self updateLayout];
         }];
     }
     [self setupAutoHeightWithBottomView:self.contentlabel bottomMargin:flexibleHeight(10)];

@@ -51,7 +51,7 @@
         [self.contentView addSubview:self.buttonView];
         
         self.followerLabel.sd_layout.rightEqualToView(self.contentView).widthIs(flexibleWidth(50)).heightIs(flexibleHeight(40)).topSpaceToView(self.contentView, 0);
-//
+
         self.UserHeaderimageView.sd_layout.leftSpaceToView(self.contentView,flexibleWidth(15)).
         topSpaceToView(self.contentView, flexibleHeight(15)).heightIs(flexibleHeight(80)).widthIs(flexibleHeight(80));
         self.UserHeaderimageView.sd_cornerRadiusFromWidthRatio = @(0.5);

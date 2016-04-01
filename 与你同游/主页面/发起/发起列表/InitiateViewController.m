@@ -50,6 +50,7 @@
     
 }
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:NO];
     if (self.dataSource.count > 0) {
         [self.dataSource removeAllObjects];
     }
