@@ -77,9 +77,16 @@
     // 防止单行文本label在重用时宽度计算不准的问题
     [self.nameLabel sizeToFit];
     self.contentLabel.text = [travelObject objectForKey:@"content"];
-    self.positionImg.image = IMAGE_PATH(@"定位选中.png");
-    self.positionLabel.text = [travelObject objectForKey:@"position"];
     
+ 
+    self.positionLabel.text = [travelObject objectForKey:@"position"];
+    if ([[travelObject objectForKey:@"position"] isEqualToString:@"未定位"]) {
+        self.positionImg.image = IMAGE_PATH(@"定位.png");
+        self.positionLabel.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+    }else{
+        self.positionImg.image = IMAGE_PATH(@"定位选中.png");
+        
+    }
     
     NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];

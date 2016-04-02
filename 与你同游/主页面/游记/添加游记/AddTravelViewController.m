@@ -9,16 +9,18 @@
 #import "AddTravelViewController.h"
 #import "TravelModel.h"
 #import "LoadingView.h"
+#import "PhotoSelect.h"
 #import "ChooseImageListCollectionViewCell.h"
 #import "ChooseImageListViewController.h"
+#import "WTImagePickerController.h"
+
 #import "WGS84TOGCJ02.h"//精确定位
 @import AssetsLibrary;
 @import CoreLocation;//导入框架
 
-#define  BUTTON_TAG 200
 static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCellIndentfier";
 
-@interface AddTravelViewController ()<UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ChooseImageListViewControllerDelegate, ChooseImageListCollectionViewCellDelegate,CLLocationManagerDelegate>
+@interface AddTravelViewController ()<UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ChooseImageListViewControllerDelegate, ChooseImageListCollectionViewCellDelegate,CLLocationManagerDelegate,PhotoSelectDelegate,WTImagePickerControllerDelegate>
 // 管理定位
 @property (nonatomic, strong) CLLocationManager * manager;
 
@@ -36,20 +38,21 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 @property (nonatomic, strong) NSMutableArray *indexPathArray;
 @property (nonatomic, strong) NSMutableArray *selectedArrayUrl;
 @property (nonatomic, strong)  UIImageView * positionView;
+@property (nonatomic, strong) PhotoSelect * photoSelecte;
 @end
 
 @implementation AddTravelViewController
 
-- (void)dealloc {
-    [self.travelModel removeObserver:self forKeyPath:@"addTravelResult"];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionViewY = 125;
     [self initUserDataSource];
     [self initializedApperance];
-    [self.travelModel addObserver:self forKeyPath:@"addTravelResult" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [self.photoSelecte handlePress];
 }
 
 - (void)initUserDataSource {
@@ -91,50 +94,88 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 
   
 }
-#pragma mark -- KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"addTravelResult"]) {
-       if ([self.travelModel.addTravelResult isEqualToString:@"YES"]) {
-           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"游记发表成功！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-        }
-       else{
-           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-           UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"游记发表失败！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-           [alertView show];
-       }
-        
-    }
-}
-#pragma mark -- 网络请求
+
+#pragma mark -- 发布游记网络请求
 - (void)handleComplete {
     NSMutableArray *imageArray = [NSMutableArray array];
     ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
     
+    __weak typeof(self) weakself = self;
     if (self.selectedArrayUrl.count == 0) {
-        [self.travelModel addTravelNoteWithObejectId:OBJECTID content:self.contentView.text imagesArray:nil location:self.positionLabel.text];
+        
+        [self.travelModel addTravelNoteWithObejectId:OBJECTID content:self.contentView.text imagesArray:nil location:self.positionLabel.text successBlock:^{
+            [weakself message:@"发表游记成功！"];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        }];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         return;
     }
     for (int i = 0; i < self.selectedArrayUrl.count; i ++) {
+        
         [assetLibrary assetForURL:self.selectedArrayUrl[i] resultBlock:^(ALAsset *asset) {
             UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
             [imageArray addObject:image];
+            
             if (i == self.selectedArrayUrl.count - 1) {
-                [self.travelModel addTravelNoteWithObejectId:OBJECTID content:self.contentView.text imagesArray:imageArray location:self.positionLabel.text];
+                
+                [self.travelModel addTravelNoteWithObejectId:OBJECTID content:self.contentView.text imagesArray:imageArray location:self.positionLabel.text successBlock:^{
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                    [weakself message:@"发表游记成功！"];
+                    
+                }];
+                
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             }
         }
     failureBlock:^(NSError *error) {
-            NSLog(@"%@", error);
+        
         }];
     }
 }
 
+- (void)buttonClick:(UIButton *)sender{
+    if (sender.tag == 100) {
+        
+        if (self.dataSource.count < 9) {
+            //            if (indexPath.row == self.dataSource.count) {
+            ChooseImageListViewController *CLVC = [[ChooseImageListViewController alloc] init];
+            [self.navigationController pushViewController:CLVC animated:NO];
+            CLVC.selectedIndex = self.indexPathArray;
+            CLVC.delegate = self;
+            //            }
+        }
+    }
+    else if (sender.tag == 101){
+        WTImagePickerController * takePhoto = [[WTImagePickerController alloc]init];
+        takePhoto.delegate = self;
+        [self.navigationController pushViewController:takePhoto animated:NO];
+    }
+    else{
+        [self.photoSelecte handlePress];
+    }
+}
+
+#pragma mark -- ChooseImageListViewControllerDelegate  选取相册完成
+- (void)CallbackPhotoArray:(NSMutableArray *)photoUrl thumbnailArray:(NSMutableArray *)thumbnailArray selectIndexArray:(NSMutableArray *)selectIndexArray {
+    self.dataSource = thumbnailArray;
+    self.indexPathArray = selectIndexArray;
+    self.selectedArrayUrl = photoUrl;
+    [self initUserDataSource];
+    [self.collectionView reloadData];
+    
+}
+
+#pragma mark --照相
+- (void)wtimagePickerController:(WTImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
+}
+
+- (void)wtimagePickerControllerDidCancel:(WTImagePickerController *)picker{
+    [self.photoSelecte handlePress];
+}
 
 
-#pragma mark -- ChooseImageListCollectionViewCellDelegate
+#pragma mark -- ChooseImageListCollectionViewCellDelegate  删除照片
 - (void)cell:(ChooseImageListCollectionViewCell *)cell clickButtonDidPressed:(UIButton *)sender {
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
     [self.selectedArrayUrl removeObjectAtIndex:indexPath.row];
@@ -144,15 +185,6 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     [self.collectionView reloadData];
 }
 
-#pragma mark -- ChooseImageListViewControllerDelegate
-- (void)CallbackPhotoArray:(NSMutableArray *)photoUrl thumbnailArray:(NSMutableArray *)thumbnailArray selectIndexArray:(NSMutableArray *)selectIndexArray {
-    self.dataSource = thumbnailArray;
-    self.indexPathArray = selectIndexArray;
-    self.selectedArrayUrl = photoUrl;
-    [self initUserDataSource];
-    [self.collectionView reloadData];
-    
-}
 
 #pragma mark -- UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -181,25 +213,16 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.dataSource.count < 9) {
-        if (indexPath.row == self.dataSource.count) {
-            ChooseImageListViewController *CLVC = [[ChooseImageListViewController alloc] init];
-            [self.navigationController pushViewController:CLVC animated:NO];
-            CLVC.selectedIndex = self.indexPathArray;
-            CLVC.delegate = self;
-        }
-    }
+    
+    [self.view addSubview:self.photoSelecte.maskButton];
+    [self.view addSubview:self.photoSelecte.selectView];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.photoSelecte.selectView.frame = flexibleFrame(CGRectMake(10, 527, 355, 140), NO);
+    }];
+    
 }
 
-#pragma mark --压缩图片
--(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
-{
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
     
@@ -322,6 +345,13 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 
 
 #pragma mark -- getter
+- (PhotoSelect *)photoSelecte{
+    if (!_photoSelecte) {
+        _photoSelecte = [PhotoSelect new];
+        _photoSelecte.delegate = self;
+    }
+    return _photoSelecte;
+}
 - (TravelModel *)travelModel {
     if (!_travelModel) {
         _travelModel = [[TravelModel alloc] init];

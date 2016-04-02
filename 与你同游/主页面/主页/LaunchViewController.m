@@ -14,13 +14,11 @@
 #import "ScenicViewController.h"
 #import "ScenicSpotmodei.h"
 #import "LoadingView.h"
-#import "CalledModel.h"
 #import "SDCycleScrollView.h"
 #import "ScenicSpot.h"
 @interface LaunchViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchResultDelegate, SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) CalledModel *calledModel;
 @property (nonatomic, strong) ScenicSpotmodei *scenic;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -37,8 +35,6 @@
 
 - (void)dealloc {
     [self.scenic removeObserver:self forKeyPath:@"scenicSpotSearchResults"];
-    [self.calledModel removeObserver:self forKeyPath:@"calledArray"];
-    [self.calledModel removeObserver:self forKeyPath:@"userArray"];
 }
 
 - (void)addAD {
@@ -100,9 +96,6 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.950 alpha:1.000];
 
     [self.scenic addObserver:self forKeyPath:@"scenicSpotSearchResults" options:NSKeyValueObservingOptionNew context:nil];
-    [self.calledModel addObserver:self forKeyPath:@"calledArray" options:NSKeyValueObservingOptionNew context:nil];
-    [self.calledModel addObserver:self forKeyPath:@"userArray" options:NSKeyValueObservingOptionNew context:nil];
-    
 
     [self initUserInterface];
     [self initCollectionView];
@@ -304,10 +297,4 @@
     return _load;
 }
 
-- (CalledModel *)calledModel {
-    if (!_calledModel) {
-        _calledModel = [[CalledModel alloc] init];
-    }
-    return _calledModel;
-}
 @end

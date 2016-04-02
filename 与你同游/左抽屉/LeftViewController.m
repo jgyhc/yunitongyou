@@ -10,8 +10,6 @@
 #import "gradientView.h"
 #import "LoginViewController.h"
 
-#import "MyJoinsViewController.h"
-#import "MyCommentsViewController.h"
 #import "MyCollectionViewController.h"
 #import "MyTravelsViewController.h"
 #import "MyActivitiesViewController.h"
@@ -95,8 +93,8 @@
     [self.view addSubview:self.icon];
     [self.view addSubview:self.userName];
     
-    NSArray * myselfNameArray = @[@"我的关注",@"我的发起",@"我的加入", @"我的评论", @"我的游记", @"设置"];
-    NSArray * imageArray = @[@"我的收藏.png",@"我的发起.png", @"我的加入.png",@"我的评论.png", @"我的游记.png", @"设置.png"];
+    NSArray * myselfNameArray = @[@"我的关注",@"我的活动", @"我的游记", @"设置"];
+    NSArray * imageArray = @[@"我的收藏.png",@"我的发起.png", @"我的游记.png", @"设置.png"];
     
     for (int i = 0 ; i < myselfNameArray.count; i ++)
     {
@@ -133,6 +131,7 @@
         if ([self.userName.titleLabel.text isEqualToString:@"点击登录"]) {
             UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确认", nil];
             [alertView show];
+            
         }
         else{
             PersonalViewController *PVC = [[PersonalViewController alloc] init];
@@ -149,7 +148,7 @@
 #pragma mark --进入
 - (void)handleEventUserCenter:(UIButton * )sender
 {
-    if (!OBJECTID) {
+    if (!OBJECTID && sender.tag != 105) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
         return;
@@ -166,21 +165,9 @@
         [self.navigationController pushViewController:MAVC animated:YES];
     }if (sender.tag == 102)
     {
-        MyJoinsViewController * MJVC = [[MyJoinsViewController alloc] init];
-        [self.navigationController pushViewController:MJVC animated:YES];
-    }if (sender.tag == 103)
-    {
-        MyCommentsViewController *commentVC = [[MyCommentsViewController alloc] init];
-        [self.navigationController pushViewController:commentVC animated:YES];
-        
-    }
-    if (sender.tag == 104)
-    {
         MyTravelsViewController *MTVC = [[MyTravelsViewController alloc] init];
         [self.navigationController pushViewController:MTVC animated:YES];
-        
-    }
-    if (sender.tag == 105)
+    }if (sender.tag == 103)
     {
         SetViewController *settingVC = [[SetViewController alloc] init];
         [self.navigationController pushViewController:settingVC animated:YES];

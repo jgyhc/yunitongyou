@@ -10,11 +10,11 @@
 #import "ControllerManager.h"
 #import <BmobSDK/Bmob.h>
 #import <SMS_SDK/SMSSDK.h>
-#import "Register.h"
+
 //#import "Comments.h
 #import "Called.h"
 
-#import "NetWorking.h"
+
 
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
