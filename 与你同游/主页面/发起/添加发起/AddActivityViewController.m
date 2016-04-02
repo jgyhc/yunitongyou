@@ -7,7 +7,7 @@
 //
 
 #import "AddActivityViewController.h"
-#import "SharedView.h"
+#import "PhotoSelect.h"
 #import "SearchPopWindow.h"
 #import "CalledModel.h"
 #import "LoadingView.h"
@@ -18,7 +18,7 @@
 @interface AddActivityViewController ()<UITextFieldDelegate,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong ) UIView          * backView;//全部控件及视图加载此view上，便于做动画
-@property (nonatomic, strong ) SharedView      * sharedView;
+@property (nonatomic, strong ) PhotoSelect      * sharedView;
 @property (nonatomic, assign ) CGFloat         keyboardHeight;//键盘高度
 @property (nonatomic, assign ) NSTimeInterval  duration;//键盘出现时间
 @property (nonatomic, strong ) UILabel         * label;
@@ -280,9 +280,9 @@
 #pragma mark --lazy loading
 
 
-- (SharedView *)sharedView{
+- (PhotoSelect *)sharedView{
     if (!_sharedView) {
-        _sharedView = [SharedView new];
+        _sharedView = [PhotoSelect new];
     }
     return _sharedView;
 }

@@ -8,23 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SharedView : UIView
+@protocol PhotoSelectDelegate <NSObject>
+
+- (void)buttonClick:(UIButton *)sender;
+
+@end
+
+@interface PhotoSelect : UIView
 
 @property (nonatomic,strong) UIButton * maskButton;
 
-//分享
-@property (nonatomic,strong) UIView * shareView;
 @property (nonatomic,strong) UIView * selectView;
 @property (nonatomic,strong) UIView * firstSubView;
 
-//导入照片
 @property (nonatomic,strong) UITextView * textView;
-@property (nonatomic,strong) UIButton * importPhotoButton;
-@property (nonatomic,strong) UIImageView * photoImageView;
 
-@property (nonatomic,strong) UIView * inputView;
-@property (nonatomic,strong) UITextView * inputText;
-@property (nonatomic,strong) UIButton * conmmentButton;
+@property (nonatomic, assign) id<PhotoSelectDelegate>delegate;
 
 - (void)handlePress;
 

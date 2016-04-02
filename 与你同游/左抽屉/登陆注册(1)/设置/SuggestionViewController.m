@@ -7,11 +7,11 @@
 //
 
 #import "SuggestionViewController.h"
-#import "SharedView.h"
+#import "PhotoSelect.h"
 
 @interface SuggestionViewController ()
 
-@property (nonatomic,strong) SharedView * sharedView;
+@property (nonatomic,strong) PhotoSelect * sharedView;
 @property (nonatomic,strong) UILabel * textlable;
 @property (nonatomic,strong) UIButton * callbt;
 @property (nonatomic,strong) UIButton * presentButton;
@@ -126,9 +126,9 @@
     return _presentButton;
 }
 
-- (SharedView *)sharedView{
+- (PhotoSelect *)sharedView{
     if (!_sharedView) {
-        _sharedView = [SharedView new];
+        _sharedView = [PhotoSelect new];
     }
     return _sharedView;
 }

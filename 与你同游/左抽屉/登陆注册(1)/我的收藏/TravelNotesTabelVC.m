@@ -8,7 +8,7 @@
 
 #import "TravelNotesTabelVC.h"
 #import "TravelNotesTableViewCell.h"
-#import "SharedView.h"
+#import "PhotoSelect.h"
 #import "ShareView.h"
 
 #import "RecordDetailViewController.h"
@@ -30,7 +30,7 @@
 @interface TravelNotesTabelVC ()
 
 @property (nonatomic, strong) NSMutableArray *travelArray;//数据
-@property (nonatomic, strong) SharedView *sharedView;
+@property (nonatomic, strong) PhotoSelect *sharedView;
 @property (nonatomic, strong) TravelModel *travelModel;
 @end
 

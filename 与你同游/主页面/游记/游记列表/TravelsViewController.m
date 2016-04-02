@@ -8,7 +8,7 @@
 
 #import "TravelsViewController.h"
 #import "TravelNotesTableViewCell.h"
-#import "SharedView.h"
+#import "PhotoSelect.h"
 #import "ShareView.h"
 
 #import "RecordDetailViewController.h"
@@ -35,7 +35,7 @@
 @property (nonatomic, strong) NSMutableArray *thumbArray;
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) SharedView *sharedView;
+@property (nonatomic, strong) PhotoSelect *sharedView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) TravelModel *travelModel;
 
@@ -228,8 +228,7 @@
 
 - (void)handleTravelNotes:(UIButton *)sender {
     if (!OBJECTID) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [self message:@"您还未登录喔！"];
         return;
     }
     AddTravelViewController * addVC = [[AddTravelViewController alloc]init];

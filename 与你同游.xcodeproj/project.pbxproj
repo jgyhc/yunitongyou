@@ -30,6 +30,10 @@
 		04D354611C88380600DFCB1C /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3545B1C88380600DFCB1C /* SDBrowserImageView.m */; };
 		04D354621C88380600DFCB1C /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3545D1C88380600DFCB1C /* SDPhotoBrowser.m */; };
 		04D354631C88380600DFCB1C /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D354601C88380600DFCB1C /* SDWaitingView.m */; };
+		04DA39791CAE817600F801DB /* SelectImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA39721CAE817600F801DB /* SelectImageViewController.m */; };
+		04DA397A1CAE817600F801DB /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA39741CAE817600F801DB /* UIImage+Rotate.m */; };
+		04DA397B1CAE817600F801DB /* WTImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA39761CAE817600F801DB /* WTImagePickerController.m */; };
+		04DA397C1CAE817600F801DB /* WTImagePickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA39781CAE817600F801DB /* WTImagePickerVC.m */; };
 		04DC2E791C9698A800B01E42 /* 未定位.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DC2E771C9698A800B01E42 /* 未定位.png */; };
 		04DC2E7A1C9698A800B01E42 /* 已定位.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DC2E781C9698A800B01E42 /* 已定位.png */; };
 		24204BB21BCF65440034B4C6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24204BA31BCF65440034B4C6 /* LoginViewController.m */; };
@@ -129,7 +133,7 @@
 		24780C831BD663050009A40D /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24780C821BD663050009A40D /* LoadingView.m */; };
 		24793AB41BDC86B0006491C6 /* MyCommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24793AB31BDC86B0006491C6 /* MyCommentsTableViewCell.m */; };
 		247AF9561BCDE95E00DECE79 /* AnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 247AF9551BCDE95E00DECE79 /* AnimationView.m */; };
-		247D44C01BD24F65006F36D5 /* SharedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D44B71BD24F65006F36D5 /* SharedView.m */; };
+		247D44C01BD24F65006F36D5 /* PhotoSelect.m in Sources */ = {isa = PBXBuildFile; fileRef = 247D44B71BD24F65006F36D5 /* PhotoSelect.m */; };
 		248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D84C31BDFA4EF008C3419 /* FirstView.m */; };
 		2497BA191BCCC37400251058 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2497BA021BCCC37400251058 /* BaseViewController.m */; };
 		2497BA1A1BCCC37400251058 /* ControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2497BA051BCCC37400251058 /* ControllerManager.m */; };
@@ -255,6 +259,14 @@
 		04D3545E1C88380600DFCB1C /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
 		04D3545F1C88380600DFCB1C /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		04D354601C88380600DFCB1C /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
+		04DA39711CAE817600F801DB /* SelectImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectImageViewController.h; sourceTree = "<group>"; };
+		04DA39721CAE817600F801DB /* SelectImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectImageViewController.m; sourceTree = "<group>"; };
+		04DA39731CAE817600F801DB /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
+		04DA39741CAE817600F801DB /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
+		04DA39751CAE817600F801DB /* WTImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTImagePickerController.h; sourceTree = "<group>"; };
+		04DA39761CAE817600F801DB /* WTImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTImagePickerController.m; sourceTree = "<group>"; };
+		04DA39771CAE817600F801DB /* WTImagePickerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTImagePickerVC.h; sourceTree = "<group>"; };
+		04DA39781CAE817600F801DB /* WTImagePickerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTImagePickerVC.m; sourceTree = "<group>"; };
 		04DC2E771C9698A800B01E42 /* 未定位.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "未定位.png"; sourceTree = "<group>"; };
 		04DC2E781C9698A800B01E42 /* 已定位.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "已定位.png"; sourceTree = "<group>"; };
 		24115E6A1BCE3FAA00C3A814 /* AdaptScreenHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdaptScreenHelp.h; sourceTree = "<group>"; };
@@ -389,8 +401,8 @@
 		24793AB31BDC86B0006491C6 /* MyCommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCommentsTableViewCell.m; sourceTree = "<group>"; };
 		247AF9541BCDE95E00DECE79 /* AnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationView.h; sourceTree = "<group>"; };
 		247AF9551BCDE95E00DECE79 /* AnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationView.m; sourceTree = "<group>"; };
-		247D44B61BD24F65006F36D5 /* SharedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedView.h; sourceTree = "<group>"; };
-		247D44B71BD24F65006F36D5 /* SharedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedView.m; sourceTree = "<group>"; };
+		247D44B61BD24F65006F36D5 /* PhotoSelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSelect.h; sourceTree = "<group>"; };
+		247D44B71BD24F65006F36D5 /* PhotoSelect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSelect.m; sourceTree = "<group>"; };
 		248D84C21BDFA4EF008C3419 /* FirstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstView.h; sourceTree = "<group>"; };
 		248D84C31BDFA4EF008C3419 /* FirstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstView.m; sourceTree = "<group>"; };
 		2497BA011BCCC37400251058 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -618,6 +630,21 @@
 			path = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		04DA39701CAE817600F801DB /* 拍照 */ = {
+			isa = PBXGroup;
+			children = (
+				04DA39711CAE817600F801DB /* SelectImageViewController.h */,
+				04DA39721CAE817600F801DB /* SelectImageViewController.m */,
+				04DA39731CAE817600F801DB /* UIImage+Rotate.h */,
+				04DA39741CAE817600F801DB /* UIImage+Rotate.m */,
+				04DA39751CAE817600F801DB /* WTImagePickerController.h */,
+				04DA39761CAE817600F801DB /* WTImagePickerController.m */,
+				04DA39771CAE817600F801DB /* WTImagePickerVC.h */,
+				04DA39781CAE817600F801DB /* WTImagePickerVC.m */,
+			);
+			path = "拍照";
+			sourceTree = "<group>";
+		};
 		24204BA11BCF65440034B4C6 /* 登录 */ = {
 			isa = PBXGroup;
 			children = (
@@ -794,6 +821,7 @@
 		2462C5DE1BEC9C72001714C8 /* 添加游记 */ = {
 			isa = PBXGroup;
 			children = (
+				04DA39701CAE817600F801DB /* 拍照 */,
 				2462C65F1BECD522001714C8 /* 选择照片 */,
 				24600CBC1BEDDCDC00C3C3B9 /* AddTravelViewController.h */,
 				24600CBD1BEDDCDC00C3C3B9 /* AddTravelViewController.m */,
@@ -1059,8 +1087,8 @@
 				04D354491C882D4C00DFCB1C /* TravelNotesTableViewCell.m */,
 				24BDA5791BF213D000C84CAF /* 游记详情 */,
 				2462C5DE1BEC9C72001714C8 /* 添加游记 */,
-				247D44B61BD24F65006F36D5 /* SharedView.h */,
-				247D44B71BD24F65006F36D5 /* SharedView.m */,
+				247D44B61BD24F65006F36D5 /* PhotoSelect.h */,
+				247D44B71BD24F65006F36D5 /* PhotoSelect.m */,
 			);
 			path = "游记";
 			sourceTree = "<group>";
@@ -1759,7 +1787,7 @@
 				722D84B81CA6610200D4CC25 /* TADotView.m in Sources */,
 				722D84B91CA6610200D4CC25 /* TAPageControl.m in Sources */,
 				24204BC11BCF664E0034B4C6 /* MyCommentsViewController.m in Sources */,
-				247D44C01BD24F65006F36D5 /* SharedView.m in Sources */,
+				247D44C01BD24F65006F36D5 /* PhotoSelect.m in Sources */,
 				722D84BA1CA6610200D4CC25 /* SDCollectionViewCell.m in Sources */,
 				2497BA1A1BCCC37400251058 /* ControllerManager.m in Sources */,
 				049E7B9B1C980BAB00D01E5B /* WGS84TOGCJ02.m in Sources */,
@@ -1768,15 +1796,18 @@
 				04D354631C88380600DFCB1C /* SDWaitingView.m in Sources */,
 				72657E151C99906B00CC08AD /* ImageView.m in Sources */,
 				246FB4571BD472CC001EA853 /* InsetsLabel.m in Sources */,
+				04DA397C1CAE817600F801DB /* WTImagePickerVC.m in Sources */,
 				72B517361C7495390089CE97 /* RetrievePassword.m in Sources */,
 				722C36861CAD5577008CE650 /* MLPhotoBrowserPhotoImageView.m in Sources */,
 				722C36821CAD5577008CE650 /* MLPhotoBrowserAssets.m in Sources */,
+				04DA397B1CAE817600F801DB /* WTImagePickerController.m in Sources */,
 				04D354401C87F50900DFCB1C /* MyJoinsView.m in Sources */,
 				72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */,
 				7282F5211CA40A290097DAFD /* UIAlertController+Blocks.m in Sources */,
 				72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */,
 				245B59E71BCB8BE80003EBA7 /* AppDelegate.m in Sources */,
 				24780C831BD663050009A40D /* LoadingView.m in Sources */,
+				04DA397A1CAE817600F801DB /* UIImage+Rotate.m in Sources */,
 				049169781C9A8E4F00B8824B /* MyCollectionActivityTabelVC.m in Sources */,
 				72C1C6561C734CA1002317FE /* NetWorking.m in Sources */,
 				720F67581CA0305D00312A2C /* HeaderButtonView.m in Sources */,
@@ -1794,6 +1825,7 @@
 				7288E10E1C77455600F554D0 /* Called.m in Sources */,
 				24780C6F1BD628550009A40D /* TravelModel.m in Sources */,
 				722C36881CAD5577008CE650 /* MLPhotoBrowserPhotoView.m in Sources */,
+				04DA39791CAE817600F801DB /* SelectImageViewController.m in Sources */,
 				722C36921CAD5668008CE650 /* DACircularProgressView.m in Sources */,
 				722D84C31CA672F800D4CC25 /* ScenicViewController.m in Sources */,
 				246A91231BDB168200B76514 /* MyActivitiesView.m in Sources */,

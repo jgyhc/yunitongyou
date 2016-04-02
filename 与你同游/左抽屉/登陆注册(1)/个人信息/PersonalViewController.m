@@ -7,16 +7,15 @@
 //
 
 #import "PersonalViewController.h"
-#import "SharedView.h"
+#import "PhotoSelect.h"
 
 #import "LoadingView.h"
 #import "UIImageView+WebCache.h"
 
 #define TEXTVIEW_TAG 100
-#define BUTTON_TAG 200
 
 
-@interface PersonalViewController ()<UITextFieldDelegate,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface PersonalViewController ()<UITextFieldDelegate,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,PhotoSelectDelegate>
 
 @property (nonatomic, strong) UIButton * backButton;//返回按钮
 @property (nonatomic, strong) UIButton * saveButton;//保存按钮
@@ -27,7 +26,7 @@
 
 @property (nonatomic, assign) CGFloat keyboardHeight;//键盘高度
 @property (nonatomic, assign) NSTimeInterval duration;//键盘出现时间
-@property (nonatomic, strong) SharedView * sharedView;
+@property (nonatomic, strong) PhotoSelect * photoSelected;
 @property (nonatomic, strong) LoadingView *load;
 
 
@@ -89,28 +88,20 @@
         [self.backView addSubview:textView];
     }
     
-    for (int i = 0; i < 3; i ++) {
-        UIButton * button = (UIButton *)[self.sharedView viewWithTag:200 + i];
-        [button addTarget:self action:@selector(handleSelecte:) forControlEvents:UIControlEventTouchUpInside];
-    }
-
-
 }
 #pragma mark --相片导入方法
 
 - (void)handleGesture{
-    [self.view addSubview:self.sharedView.maskButton];
-    [self.view addSubview:self.sharedView.selectView];
+    [self.view addSubview:self.photoSelected.maskButton];
+    [self.view addSubview:self.photoSelected.selectView];
     
-    [UIView animateWithDuration:0.5 animations:^{
-        self.sharedView.selectView.frame = flexibleFrame(CGRectMake(10, 527, 355, 140), NO);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.photoSelected.selectView.frame = flexibleFrame(CGRectMake(10, 527, 355, 140), NO);
     }];
 }
 
-//选择相片或拍照
-- (void)handleSelecte:(UIButton *)sender{
-    if (sender.tag == BUTTON_TAG) {
-        
+- (void)buttonClick:(UIButton *)sender{
+    if (sender.tag == 100) {
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
         {
             UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -128,19 +119,14 @@
                                   otherButtonTitles:nil];
             [alert show];
         }
-    
-
     }
-    else if (sender.tag == BUTTON_TAG + 1){
-        [self handleTakePhoto];
+    else if (sender.tag == 101){
+         [self handleTakePhoto];
     }
     else{
-        
-        [self.sharedView handlePress];
-        
+        [self.photoSelected handlePress];
     }
 }
-
 
 //照相机
 - (void)handleTakePhoto{
@@ -206,13 +192,13 @@
         self.headPortrait.image = image;
         self.topView.image = image;
         self.saveButton.hidden = NO;
-        [self.sharedView handlePress];
+        [self.photoSelected handlePress];
         [self dismissViewControllerAnimated:YES completion:nil];
      }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    [self.sharedView handlePress];
+    [self.photoSelected handlePress];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -335,11 +321,12 @@
 
 
 
-- (SharedView *)sharedView{
-    if (!_sharedView) {
-        _sharedView = [SharedView new];
+- (PhotoSelect *)photoSelected{
+    if (!_photoSelected) {
+        _photoSelected = [PhotoSelect new];
+        _photoSelected.delegate = self;
     }
-    return _sharedView;
+    return _photoSelected;
 }
 
 - (UserModel *)userModel {

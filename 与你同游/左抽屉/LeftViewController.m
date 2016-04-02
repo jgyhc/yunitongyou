@@ -133,6 +133,7 @@
         if ([self.userName.titleLabel.text isEqualToString:@"点击登录"]) {
             UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确认", nil];
             [alertView show];
+            
         }
         else{
             PersonalViewController *PVC = [[PersonalViewController alloc] init];
@@ -149,7 +150,7 @@
 #pragma mark --进入
 - (void)handleEventUserCenter:(UIButton * )sender
 {
-    if (!OBJECTID) {
+    if (!OBJECTID && sender.tag != 105) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
         return;
