@@ -6,79 +6,54 @@
 //  Copyright (c) 2015年 LiuCong. All rights reserved.
 //
 
-#import "TravelsViewController.h"
+#import "MyTravelsViewController.h"
 #import "TravelNotesTableViewCell.h"
-#import "PhotoSelect.h"
 #import "ShareView.h"
-
+#import "CommentViewController.h"
+#import "ThumbUp.h"
 #import "RecordDetailViewController.h"
-#import "AddTravelViewController.h"
-
 #import "PersonalViewController.h"
-
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKUI/ShareSDK+SSUI.h>
-
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
-#import "ThumbUp.h"
 #import "MJRefresh.h"
-#import "CommentViewController.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"//cell高度自适应
 
 
+static NSString * const identifier = @"CELL";
 
-
-@interface TravelsViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MyTravelsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *travelArray;//数据
 @property (nonatomic, strong) UITableView *tableView;
-
-@property (nonatomic, strong) PhotoSelect *sharedView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) TravelModel *travelModel;
-
-@property (nonatomic, assign) NSInteger skip;
 @end
 
-@implementation TravelsViewController
+@implementation MyTravelsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.skip = 10;
-    [self initalizedInterface];
-
-}
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:NO];
-    [self getData];
-}
-
-- (void)getData{
-    if (self.travelArray.count > 0) {
-        [self.travelArray removeAllObjects];
-    }
-    [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
-        [self.travelArray addObjectsFromArray:objectArray];
+    
+    [self.travelModel getMyTravelNotesSuccess:^(NSArray *mytravels) {
+        [self.travelArray addObjectsFromArray:mytravels];
         [self.tableView reloadData];
-    } skip:0 failBlock:^(NSError *error) {
+    } failure:^(NSError *error) {
         
     }];
-
-}
-- (void)initalizedInterface {
     
-    [self initNavTitle:@"游记"];
+    [self initalizedInterface];
+}
+- (void)initalizedInterface{
+    
+    [self initNavTitle:@"我的游记"];
     [self initPersonButton];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self initRightButtonEvent:@selector(handleTravelNotes:) Image:[UIImage imageNamed:@"添加游记"]];
-
-    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
     
-#warning 这两步的顺序不能改,因为需要先把视图放上才能布局。
+    [self.tableView registerClass:[TravelNotesTableViewCell class] forCellReuseIdentifier:identifier];
+    
     [self.view addSubview:self.tableView];
-    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(10));
-
+    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
+    
     
     [self setupRefresh];
 }
@@ -91,15 +66,6 @@
     self.tableView.mj_header = header;
     
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
-            [self.travelArray addObjectsFromArray:objectArray];
-            self.skip = self.skip + 10;
-            [self.tableView reloadData];
-            
-        } skip:self.skip failBlock:^(NSError *error) {
-            
-        }];
-        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView.mj_footer endRefreshing];
         });
@@ -108,7 +74,6 @@
 
 - (void)loadNewData {
     
-    [self getData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];
@@ -128,13 +93,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-     TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
-    
-      //注意是section,若是numberOfRows returnself.modelArray.count，则是row
+    TravelNotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[TravelNotesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
     BmobObject * object = self.travelArray[indexPath.section];
-   cell.obj = object;
+    //注意是section,若是numberOfRows returnself.modelArray.count，则是row
+    cell.obj = object;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
 #pragma mark --点赞
     [cell buttonthumbUp:^(int type) {
         if (type == 1) {
@@ -151,7 +117,7 @@
                 
             }];
         }
-       
+        
     }];
     
 #pragma mark --评论
@@ -164,7 +130,7 @@
     
 #pragma mark --分享
     [cell buttonshared:^{
-       //分享
+        //分享
         NSArray * imageArray;
         if ([object objectForKey:@"urlArray"]) {
             imageArray = [object objectForKey:@"urlArray"];
@@ -174,17 +140,16 @@
         }
         [ShareView sharedWithImages:imageArray content:[object objectForKey:@"content"]];
     }];
-    
-#pragma mark --查看个人信息
     [cell tapPresent:^{
         PersonalViewController *PVC = [[PersonalViewController alloc] init];
         PVC.userInfo = [object objectForKey:@"user"];
         PVC.type = 1;
         [self presentViewController:PVC animated:YES completion:nil];
     }];
+
+
     return cell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BmobObject *obj = self.travelArray[indexPath.section];
@@ -225,17 +190,7 @@
     return width;
 }
 
-- (void)handleTravelNotes:(UIButton *)sender {
-    if (!OBJECTID) {
-        [self message:@"您还未登录喔！"];
-        return;
-    }
-    AddTravelViewController * addVC = [[AddTravelViewController alloc]init];
-    [self.navigationController pushViewController:addVC animated:YES];
-}
 
-
-#pragma mark --lazy loading
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = ({
@@ -262,6 +217,5 @@
     }
     return _travelArray;
 }
-
 
 @end

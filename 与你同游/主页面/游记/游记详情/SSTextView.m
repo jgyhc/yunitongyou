@@ -79,9 +79,6 @@
         [_placeholder drawAtPoint:CGPointMake(8.0, 8) withAttributes:attrs1];
 	}
 }
-
-
-#pragma mark -
 #pragma mark Private Methods
 
 - (void)_updateShouldDrawPlaceholder {

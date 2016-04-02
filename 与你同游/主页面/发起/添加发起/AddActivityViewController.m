@@ -9,7 +9,6 @@
 #import "AddActivityViewController.h"
 #import "PhotoSelect.h"
 #import "SearchPopWindow.h"
-#import "CalledModel.h"
 #import "LoadingView.h"
 #import "Called.h"
 #define BUTTON_TAG 200
@@ -23,16 +22,13 @@
 @property (nonatomic, assign ) NSTimeInterval  duration;//键盘出现时间
 @property (nonatomic, strong ) UILabel         * label;
 @property (nonatomic, strong ) SearchPopWindow * timePopWindow;//弹出日期选择
-@property (nonatomic, strong ) CalledModel     *addActivities;
+
 @property (nonatomic, strong ) LoadingView *load;
 
 @end
 
 @implementation AddActivityViewController
 
-- (void)dealloc{
-    [self.addActivities removeObserver:self forKeyPath:@"addActivitiesResult"];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,8 +38,6 @@
     
     //注册键盘通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-
-    [self.addActivities addObserver:self forKeyPath:@"addActivitiesResult" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)initializedApperance{
@@ -223,21 +217,6 @@
     return 0;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"addActivitiesResult"]) {
-//        addActive
-        if ([self.addActivities.addActivitiesResult isEqualToString:@"YES"]) {
-            [self.navigationController popViewControllerAnimated:YES];
-            [self.load hide];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"发送成功！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-        }
-    }
-}
-
-
-
-
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     _timePopWindow = [[SearchPopWindow alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width * 0.75, [[UIScreen mainScreen] bounds].size.height * 0.6) title:@"请选择选择时间" complect:^(NSString *str) {
         textField.text = str;
@@ -298,13 +277,6 @@
         });
     }
     return _backView;
-}
-
-- (CalledModel *)addActivities {
-    if (!_addActivities) {
-        _addActivities = [[CalledModel alloc]init];
-    }
-    return _addActivities;
 }
 
 - (LoadingView *)load {

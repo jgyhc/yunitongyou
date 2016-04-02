@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
 @interface Called : BmobObject
 
 /**

@@ -87,11 +87,6 @@ static NSString * const kCollectionViewFooterIndentifier = @"ChooseImageListView
 - (void)cell:(ChooseImageListCollectionViewCell *)cell clickButtonDidPressed:(UIButton *)sender {
     if (sender.selected == NO) {
         if (self.photoNumber >= 9) {
-//            UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"最多选择九张" preferredStyle:UIAlertControllerStyleAlert];
-//            UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            }];
-//            [alertController addAction:sureAction];
-//            [self presentViewController:alertController animated:YES completion:nil];
             [self message:@"最多选择九张"];
             return;
         }

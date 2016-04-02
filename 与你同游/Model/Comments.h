@@ -7,11 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
 #import "Called.h"
 @class Comments;
 @interface Comments : NSObject
-@property (nonatomic, strong) User *master;//评论者
 @property (nonatomic, strong) Called *called;//被评论发起
 @property (nonatomic, strong) NSString *contents;//内容
 @property (nonatomic, strong) NSString *commentsTime;//评论时间

@@ -95,7 +95,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
   
 }
 
-#pragma mark -- 网络请求
+#pragma mark -- 发布游记网络请求
 - (void)handleComplete {
     NSMutableArray *imageArray = [NSMutableArray array];
     ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
@@ -223,16 +223,6 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     
 }
 
-
-#pragma mark --压缩图片
--(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
-{
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
     
