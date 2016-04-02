@@ -39,7 +39,31 @@
  *  @param success
  *  @param failure
  */
-+ (void)addScenicSpotID:(long)ScenicSpotID name:(NSString *)name content:(NSString *)content lat:(double)lat lon:(double)lon address:(NSString *)address areaName:(NSString *)areaName price:(NSNumber *)price priceList:(NSArray *)priceList picList:(NSArray *)picList success:(void (^)(BOOL* isSuccessful))success failure:(void (^)(NSError *error1))failure;
++ (void)addScenicSpotArray:(NSDictionary *)dic success:(void (^)(BOOL isSuccessful))success failure:(void (^)(NSError *error1))failure;
+
+/**
+ *  热词统计
+ *
+ *  @param words   关键词
+ *  @param success
+ *  @param failure 
+ */
++ (void)addSearchWords:(NSString *)words success:(void (^)(NSString* hotWordID))success failure:(void (^)(NSError *error1))failure;
+/**
+ *  热词列表
+ *
+ *  @param success
+ *  @param failure 
+ */
++ (void)getHotWordsSuccess:(void (^)(NSArray *horWords))success failure:(void (^)(NSError *error))failure;
+
+/**
+ *  获取广告
+ *
+ *  @param success
+ *  @param failure
+ */
++ (void)getAdUrlsSuccess:(void (^)(NSArray *urls))success failure:(void (^)(NSError *error))failure;
 
 - (void)sendAsynchronizedPostRequest:(NSString *)keyword;
 @property (nonatomic, strong) void (^ssblock)(ScenicSpot *scenicSpot);

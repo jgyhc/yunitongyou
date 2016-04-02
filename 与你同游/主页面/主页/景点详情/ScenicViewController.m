@@ -29,7 +29,7 @@
 
 @property (nonatomic, strong) SDCycleScrollView *cycleScrollView;
 
-@property (nonatomic, strong)     NSMutableArray *url;
+@property (nonatomic, strong) NSMutableArray *url;
 @end
 
 @implementation ScenicViewController
@@ -47,8 +47,6 @@
 
 - (void)initUserInterface {
     [self initBackButton];
-
-//    [self initRightButtonEvent:@selector(rightButtonEvent) Image:[UIImage imageNamed:@"添加游记"]];
     [self initRightButtonEvent:@selector(rightButtonEvent) Image:[UIImage imageNamed:@"添加游记"]];
 }
 
@@ -60,12 +58,14 @@
 
 - (void)setModel:(SSContentlist *)model {
     _model = model;
-    
-//    [ScenicSpot addScenicSpotID:model.Id name:model.name content:model.content?model.content:@"" lat:model.location.lat lon:model.location.lon address:model.address?model.address:@"" areaName:model.areaName?model.areaName:@"" price:@(model.price)?@(model.price):@(0.00) priceList:model.priceList?model.priceList:@[] picList:model.picList?model.picList:@[] success:^(BOOL *isSuccessful) {
-//
-//    } failure:^(NSError *error1) {
-//        
-//    }];
+
+    NSData *data = [model yy_modelToJSONData];
+    NSDictionary *dic = [self JSONWithData:data];
+    [ScenicSpot addScenicSpotArray:dic success:^(BOOL isSuccessful) {
+        
+    } failure:^(NSError *error1) {
+        
+    }];
     
     [self initNavTitle:model.name];
     [self.scrollView addSubview:self.contentView];
@@ -101,7 +101,14 @@
     
     
 }
-
+- (id) JSONWithData:(NSData *)data {
+    NSError *error = nil;
+    
+    id obj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    //条件为假，崩溃
+    NSAssert(!error, @"JSON解析失败，原因%@",[error localizedDescription]);
+    return obj;
+}
 
 
 

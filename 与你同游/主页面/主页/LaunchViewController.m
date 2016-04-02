@@ -16,6 +16,7 @@
 #import "LoadingView.h"
 #import "CalledModel.h"
 #import "SDCycleScrollView.h"
+#import "ScenicSpot.h"
 @interface LaunchViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchResultDelegate, SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -40,9 +41,51 @@
     [self.calledModel removeObserver:self forKeyPath:@"userArray"];
 }
 
+- (void)addAD {
+
+    
+    CGFloat w = self.view.bounds.size.width;
+    
+//    NSArray *imagesURLStrings = @[
+//                                  @,
+//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/18/DKMh1m.jpg",
+//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/19/00/af8g1x.jpg",
+//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/23/20/qozukp.jpg",
+//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/20/tPj6Id.jpg"
+//                                  ];
+//    NSArray *titles = @[@"大木花谷 ",
+//                        @"仙女山",
+//                        @"丰都鬼城",["http://pic3.40017.cn/scenery/destination/2015/04/18/23/V8naCo.jpg"]
+//                        @"黄山",
+//                        @"张家界"
+//                        ];
+    
+    // 网络加载 --- 创建带标题的图片轮播器
+    SDCycleScrollView *cycleScrollView2 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, w, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    cycleScrollView2.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+    cycleScrollView2.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
+    [self.scrollView addSubview:cycleScrollView2];
+    NSMutableArray *uslArray = [NSMutableArray array];
+    NSMutableArray *titleArray = [NSMutableArray array];
+    [ScenicSpot getAdUrlsSuccess:^(NSArray *urls) {
+        for (BmobObject *obj in urls) {
+            [uslArray addObject:[(NSArray *)[obj objectForKey:@"url"] objectAtIndex:0]];
+            NSLog(@"%@", uslArray);
+            [titleArray addObject:[obj objectForKey:@"spotName"]];
+        }
+        cycleScrollView2.imageURLStringsGroup = uslArray;
+        cycleScrollView2.titlesGroup = titleArray;
+
+    } failure:^(NSError *error) {
+        
+    }];
+
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self addAD];
     self.addressArray = @[@"北京", @"上海", @"江苏" ,@"海南" ,@"四川" ,@"重庆" ,@"广西" ,@"云南"];
     self.imageArray = @[@"北京.jpg", @"上海.jpg", @"江苏.jpg" ,@"海南.jpg" ,@"四川.jpg" ,@"重庆.jpg" ,@"广西.jpg" ,@"云南.jpg"];
     
@@ -63,31 +106,6 @@
 
     [self initUserInterface];
     [self initCollectionView];
-    
-    CGFloat w = self.view.bounds.size.width;
-    
-    NSArray *imagesURLStrings = @[
-                                  @"http://pic3.40017.cn/scenery/destination/2015/04/19/12/yP904h.jpg",
-                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/18/DKMh1m.jpg",
-                                  @"http://pic3.40017.cn/scenery/destination/2015/04/19/00/af8g1x.jpg",
-                                  @"http://pic3.40017.cn/scenery/destination/2015/04/23/20/qozukp.jpg",
-                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/20/tPj6Id.jpg"
-                                  ];
-    NSArray *titles = @[@"大木花谷 ",
-                        @"仙女山",
-                        @"丰都鬼城",
-                        @"黄山",
-                        @"张家界"
-                        ];
-    
-    // 网络加载 --- 创建带标题的图片轮播器
-    SDCycleScrollView *cycleScrollView2 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, w, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    
-    cycleScrollView2.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-    cycleScrollView2.titlesGroup = titles;
-    cycleScrollView2.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
-    [self.scrollView addSubview:cycleScrollView2];
-    cycleScrollView2.imageURLStringsGroup = imagesURLStrings;
     
     
     

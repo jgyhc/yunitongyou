@@ -18,18 +18,9 @@
 
 @implementation ScenicSpot
 
-+ (void)addScenicSpotID:(long)ScenicSpotID name:(NSString *)name content:(NSString *)content lat:(double)lat lon:(double)lon address:(NSString *)address areaName:(NSString *)areaName price:(NSNumber *)price priceList:(NSArray *)priceList picList:(NSArray *)picList success:(void (^)(BOOL* isSuccessful))success failure:(void (^)(NSError *error1))failure {
++ (void)addScenicSpotArray:(NSDictionary *)dic success:(void (^)(BOOL isSuccessful))success failure:(void (^)(NSError *error1))failure {
     BmobObject  *SSobj = [BmobObject objectWithClassName:@"Scenic_spot"];
-    [SSobj setObject:@(ScenicSpotID) forKey:@"ScenicSpotID"];
-    [SSobj setObject:name forKey:@"name"];
-    [SSobj setObject:content forKey:@"content"];
-    [SSobj setObject:@(lat) forKey:@"lat"];
-    [SSobj setObject:@(lon) forKey:@"lon"];
-    [SSobj setObject:address forKey:@"address"];
-    [SSobj setObject:areaName forKey:@"areaName"];
-    [SSobj setObject:price forKey:@"price"];
-    [SSobj setObject:priceList forKey:@"priceList"];
-    [SSobj setObject:picList forKey:@"picList"];
+    [SSobj setObject:dic forKey:@"dic"];
        //异步保存
     [SSobj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
         if (isSuccessful) {
@@ -41,19 +32,79 @@
             NSLog(@"Unknow error");
         }
     }];
-
-    
-    
-    
 }
 
 
-+ (void)addSearchWords:(NSString *)words success:(void (^)(BmobObject* hotWordID))success failure:(void (^)(NSError *error1))failure {
-    
++ (void)addSearchWords:(NSString *)words success:(void (^)(NSString* hotWordID))success failure:(void (^)(NSError *error1))failure {
 
+    BmobQuery   *bquery = [BmobQuery queryWithClassName:@"HotWord"];
+    [bquery whereKey:@"hotWord" equalTo:words];
+    //查找GameScore表的数据
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (array.count > 0) {
+            BmobObject *hotWord  = array[0];
+            NSLog(@"%@", [hotWord objectForKey:@"hotWord_Number"]);
+            [hotWord incrementKey:@"hotWord_Number"];
+            //异步保存
+            [hotWord updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                if (isSuccessful) {
+                    success(hotWord.objectId);
+                } else if (error){
+                    //发生错误后的动作
+                    NSLog(@"%@",error);
+                } else {
+                    NSLog(@"Unknow error");
+                }
+            }];
+        }else {
+            BmobObject *hotWord = [BmobObject objectWithClassName:@"HotWord"];
+            [hotWord setObject:words forKey:@"hotWord"];
+            [hotWord setObject:@(1) forKey:@"hotWord_Number"];
+            //异步保存
+            [hotWord saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                if (isSuccessful) {
+                    success(hotWord.objectId);
+                } else if (error){
+                    //发生错误后的动作
+                    NSLog(@"%@",error);
+                } else {
+                    NSLog(@"Unknow error");
+                }
+            }];
+        }
 
+    }];
 }
 
+
+//查找热词
++ (void)getHotWordsSuccess:(void (^)(NSArray *horWords))success failure:(void (^)(NSError *error))failure {
+    //关联对象表
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"HotWord"];
+    bquery.limit = 10;
+    [bquery orderByDescending:@"hotWord_Number"];
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            
+        }else {
+            success(array);
+        }
+    }];
+}
+
+//查找广告url
++ (void)getAdUrlsSuccess:(void (^)(NSArray *urls))success failure:(void (^)(NSError *error))failure {
+    //关联对象表
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"Ad_list"];
+    bquery.limit = 6;
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            
+        }else {
+            success(array);
+        }
+    }];
+}
 
 
 // 异步post
@@ -78,7 +129,6 @@
     
     
     NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
-    NSLog(@"%@", connection);
 }
 
 
@@ -114,7 +164,7 @@
         //        //2.更新表格视图
         //        [self.tableView reloadData];
         
-        NSLog(@"obj = %@", obj);
+//        NSLog(@"obj = %@", obj);
         ScenicSpot *scenicSpot = [ScenicSpot yy_modelWithJSON:obj];
         //        NSLog(@"%@", self.scenicSpotSearchResults);
         if (_ssblock) {

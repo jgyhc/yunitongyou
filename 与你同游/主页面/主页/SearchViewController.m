@@ -29,7 +29,6 @@
 
 @property (nonatomic,strong) UIView * buttomView;
 @property (nonatomic,strong) NSMutableArray * buttomArray;
-@property (nonatomic, strong) ScenicSpotmodei *scenic;
 
 @property (nonatomic, strong) SearchResultView *resultView;
 
@@ -40,29 +39,26 @@
 @end
 
 @implementation SearchViewController
-- (void)dealloc {
-    [self.scenic removeObserver:self forKeyPath:@"scenicSpotSearchResults"];
 
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initAllDataSource];
     [self initializedApperance];
-    [self.scenic addObserver:self forKeyPath:@"scenicSpotSearchResults" options:NSKeyValueObservingOptionNew context:nil];
+    [self gethotList];
 }
 
-#pragma mark -- KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+- (void)gethotList {
     
-    if ([keyPath isEqualToString:@"scenicSpotSearchResults"]) {
-//        NSLog(@"data = %@", self.scenic.scenicSpotSearchResults[@"showapi_res_body"][@"pagebean"][@"contentlist"]);
-
-//        NSLog(@"%@", self.dataSource);
-
-//        NSLog(@"%ld", self.dataSource.count);
-
-    }
+    [ScenicSpot getHotWordsSuccess:^(NSArray *horWords) {
+        [self.topArray removeAllObjects];
+         for (BmobObject *obj in horWords)  {
+            [self.topArray addObject:[obj objectForKey:@"hotWord"]];
+        }
+        [self initializedTopView];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 
@@ -84,17 +80,24 @@
         }
         [weakSelf.load hide];
     }];
+    
     [self.scenicSpot sendAsynchronizedPostRequest:keyWord];
+    
+    [ScenicSpot addSearchWords:keyWord success:^(NSString *hotWordID) {
+        NSLog(@"%@", hotWordID);
+    } failure:^(NSError *error1) {
+        
+    }];
 
 }
 
 - (void)initAllDataSource{
     
     
-   self.colorArray = @[[UIColor colorWithRed:0.025 green:0.720 blue:1.000 alpha:1.000],[UIColor colorWithRed:1.000 green:0.612 blue:0.314 alpha:1.000],[UIColor colorWithRed:0.414 green:0.746 blue:0.429 alpha:1.000],[UIColor colorWithRed:1.000 green:0.527 blue:0.976 alpha:1.000], [UIColor colorWithRed:0.788 green:0.374 blue:0.438 alpha:1.000],[UIColor colorWithRed:0.820 green:0.715 blue:0.106 alpha:1.000]];
+   self.colorArray = @[[UIColor colorWithRed:0.025 green:0.720 blue:1.000 alpha:1.000],[UIColor colorWithRed:1.000 green:0.867 blue:0.215 alpha:1.000],[UIColor colorWithRed:0.414 green:0.746 blue:0.429 alpha:1.000],[UIColor colorWithRed:1.000 green:0.527 blue:0.976 alpha:1.000], [UIColor colorWithRed:0.812 green:0.680 blue:1.000 alpha:1.000],[UIColor colorWithRed:1.000 green:0.481 blue:0.453 alpha:1.000]];
     
-    //热门搜索申请网络数据
-    self.topArray = [NSMutableArray arrayWithObjects:@"大木花谷",@"云海",@"杭州西湖",@"乌鲁木齐",@"普吉岛",@"丽江束河古镇",@"百里峡",@"山西五台山", nil];
+//    //热门搜索申请网络数据
+//    self.topArray = [NSMutableArray arrayWithObjects:@"大木花谷",@"云海",@"杭州西湖",@"乌鲁木齐",@"普吉岛",@"丽江束河古镇",@"百里峡",@"山西五台山", nil];
     
     //tableView历史记录
     self.buttomArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"history"] mutableCopy];
@@ -109,7 +112,7 @@
     [self.view addSubview:self.topView];
     
     [self.topView addSubview:self.subTopView];
-    [self initializedTopView];
+
     [self initSearch];
     
     [self.buttomView addSubview:self.tableView];
@@ -317,7 +320,7 @@
 
 #pragma mark --cell ContentView
 
-- (void)initFirstImage:(NSString *)imageString index:(NSInteger)index deleteImage:(NSString *)deleteString  cell:(UITableViewCell *)cell{
+- (void)initFirstImage:(NSString *)imageString index:(NSInteger)index deleteImage:(NSString *)deleteString  cell:(UITableViewCell *)cell {
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:flexibleFrame(CGRectMake(10, 10, 20, 20), NO)];
     imageView.image = IMAGE_PATH(imageString);
     [cell.contentView addSubview:imageView];
@@ -336,8 +339,7 @@
     [cell.contentView addSubview:deleteButton];
 }
 
-- (void)clearAll:(NSString *)string cell:(UITableViewCell *)cell{
-    
+- (void)clearAll:(NSString *)string cell:(UITableViewCell *)cell {
     UILabel * label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(37.5, 10, 300, 20), NO)];
     label.textColor = [UIColor colorWithRed:0.233 green:0.528 blue:0.126 alpha:1.000];
     label.font = [UIFont systemFontOfSize:16 ];
@@ -454,12 +456,6 @@
     return _tableView;
 }
 
-- (ScenicSpotmodei *)scenic {
-    if (!_scenic) {
-        _scenic = [[ScenicSpotmodei alloc] init];
-    }
-    return _scenic;
-}
 
 - (SearchResultView *)resultView {
     if (!_resultView) {
@@ -483,6 +479,13 @@
 		_scenicSpot = [[ScenicSpot alloc] init];
 	}
 	return _scenicSpot;
+}
+
+- (NSMutableArray *)topArray {
+	if(_topArray == nil) {
+		_topArray = [[NSMutableArray alloc] init];
+	}
+	return _topArray;
 }
 
 @end
