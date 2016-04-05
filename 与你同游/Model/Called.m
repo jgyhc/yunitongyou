@@ -37,24 +37,22 @@
     BmobObject *user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:UserID];
     [called setObject:user forKey:@"user"];
     
-    //新建relation对象  (把这条活动放进User表下的calleds字段下)（方便通过这个人找到他所有的活动）（这里的关系是relation）
-    BmobRelation *relation = [BmobRelation relation];
-    [relation addObject:called];
-    //添加关联关系到calleds列中
-    [user addRelation:relation forKey:@"calleds"];
-    [user updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-        if (isSuccessful) {
-            NSLog(@"successful");
-            success(user.objectId);
-        }else{
-            NSLog(@"error %@",[error description]);
-        }
-    }];
-
     //异步保存
     [called saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
         if (isSuccessful) {
-
+            //新建relation对象  (把这条活动放进User表下的calleds字段下)（方便通过这个人找到他所有的活动）（这里的关系是relation）
+            BmobRelation *relation = [BmobRelation relation];
+            [relation addObject:called];
+            //添加关联关系到calleds列中
+            [user addRelation:relation forKey:@"calleds"];
+            [user updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                if (isSuccessful) {
+                    NSLog(@"successful");
+                    success(user.objectId);
+                }else{
+                    NSLog(@"error %@",[error description]);
+                }
+            }];
         } else if (error){
             //发生错误后的动作
             NSLog(@"%@",error);
@@ -157,6 +155,26 @@
     }];
 }
 
+//查询一条发起的成员列表
++ (void)getMemeberWithCalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure {
+    //关联对象表
+    BmobQuery *bqueryCommont = [BmobQuery queryWithClassName:@"User"];
+    bqueryCommont.limit = 20;
+    bqueryCommont.skip = 0;
+    //需要查询的列
+    BmobObject *called = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
+    [bqueryCommont whereObjectKey:@"member" relatedTo:called];
+    [bqueryCommont findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSLog(@"%@",error);
+        } else {
+            success(array);
+        }
+    }];
+}
+
+
+
 #pragma mark -- 申请加入一条发起
 + (void)joinInCalledWithCalledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure {
     BmobObject  *called = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
@@ -190,6 +208,53 @@
             success(NO);
         }
     }];
+}
+
++ (void)inviteJoinUserId:(NSString *)userID calledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure {
+    BmobObject  *called = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
+    BmobObject *joinUser = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:userID];
+    //新建relation对象  (把这条发起放进called表下的member字段下)（方便通过这条发起找到它的成员）（这里的关系是relation）
+    BmobRelation *relation1 = [BmobRelation relation];
+    [relation1 addObject:joinUser];
+    //添加关联关系到calleds列中
+    [called addRelation:relation1 forKey:@"member"];
+    [called updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+        if (isSuccessful) {
+            NSLog(@"successful");
+            success(YES);
+        }else{
+            NSLog(@"error %@",[error description]);
+            success(NO);
+        }
+    }];
+}
+
+
++ (void)queryCalledsLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray* calleds))success failure:(void (^)(NSError *error))failure {
+    //关联对象表
+    BmobQuery *bquery = [BmobQuery queryWithClassName:@"Called"];
+    bquery.limit = limit;
+    bquery.skip = skip;
+    [bquery includeKey:@"user"];
+    //需要查询的列
+    BmobObject *user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:UserID];
+    [bquery whereObjectKey:@"calleds" relatedTo:user];
+    
+    
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSLog(@"%@",error);
+            failure(error);
+        } else {
+            success(array);
+//            for (BmobObject *user in array) {
+//                NSLog(@"%@",[user objectForKey:@"username"]);
+//            }
+            NSLog(@"%@", array);
+        }
+    }];
+
+
 }
 
 

@@ -118,7 +118,7 @@
     self.ageLabel.text = [user objectForKey:@"age"];
     [self.UserHeaderimageView sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"head_portraits"]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"]];
     self.launchTimeLabel.text = [obj objectForKey:@"called_date"];
-    self.departureLabel.text = [NSString stringWithFormat:@"%@  ---->   %@", [obj objectForKey:@"point_of_departure"], [obj objectForKey:@"destination"]];
+    self.departureLabel.text = [NSString stringWithFormat:@"%@ → %@", [obj objectForKey:@"point_of_departure"], [obj objectForKey:@"destination"]];
     self.startingLabel.text = [NSString stringWithFormat:@"%@        %@", [obj objectForKey:@"departure_time"], [obj objectForKey:@"arrival_time"]];
     self.infoLabel.text = [obj objectForKey:@"content"];
     self.PNumber.text = [NSString stringWithFormat:@"%@", [obj objectForKey:@"number_Of_people"]];

@@ -26,6 +26,10 @@
     return self;
 }
 
+- (void)isText {
+
+}
+
 - (void)setModel:(BmobObject *)model {
     _model = model;
     [self.contentView addSubview:self.nameLabel];

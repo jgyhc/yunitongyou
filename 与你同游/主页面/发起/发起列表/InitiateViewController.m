@@ -83,11 +83,10 @@
 }
 
 - (void)handleAddCalled:(UIButton *)sender {
-    
     AddActivityViewController *AAVC = [[AddActivityViewController alloc] init];
     [self.navigationController pushViewController:AAVC animated:YES];
-
 }
+
 #pragma mark -- UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -99,9 +98,6 @@
     LaunchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     BmobObject *obj = self.dataSource[indexPath.section];
     cell.obj = obj;
-    
-
-   
     return cell;
 }
 

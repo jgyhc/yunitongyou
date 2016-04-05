@@ -19,23 +19,6 @@
 @implementation ScenicSpotmodei
 
 
-//- (void)sendAsynchronizedGetRequest {
-//    NSString *timeString = [self CurrentTime];
-//    NSLog(@"%@", timeString);
-//    NSString *placeString = @"泰山";
-//    NSString *urlString = APIURL(timeString, placeString);
-////    NSString *urlString = [NSString stringWithFormat:@"http://route.showapi.com/268-1?showapi_appid=10650&showapi_timestamp=%@&showapi_sign=a038ca3eac044e818fafe3d659f36ec3&keyword=%@&proId=&cityId=&areaId=&", timeString, placeString];
-//    //    NSString *urlString1 = [NSString stringWithFormat:@"http://route.showapi.com/268-1name=1&age=2&showapi_timestamp=%@&showapi_sign=a038ca3eac044e818fafe3d659f36ec3&showapi_appid= 10650", timeString];
-//    NSLog(@"urlString = %@",urlString);
-//    //    1.获取url
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    //2.创建请求
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-//    //发送请求
-//    [NSURLConnection connectionWithRequest:request delegate:self];
-//    
-//}
-
 // 异步post
 - (void)sendAsynchronizedPostRequest:(NSString *)keyword {
     //1.获取url

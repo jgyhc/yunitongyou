@@ -97,6 +97,7 @@
     //关联对象表
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"Ad_list"];
     bquery.limit = 6;
+    [bquery includeKey:@"scenicSpot"];
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
             

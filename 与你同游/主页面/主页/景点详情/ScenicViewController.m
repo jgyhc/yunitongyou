@@ -52,7 +52,7 @@
 
 - (void)rightButtonEvent {
     AddActivityViewController *addActive = [[AddActivityViewController alloc]init];
-    addActive.destinationString = self.dataSource[@"name"];
+    addActive.destinationString = _model.name;
     [self.navigationController pushViewController:addActive animated:YES];
 }
 

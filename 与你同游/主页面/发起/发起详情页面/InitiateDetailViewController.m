@@ -55,6 +55,13 @@
     }];
 }
 
+- (void)getMemeberList {
+    [Called getMemeberWithCalledsID:_calledID Success:^(NSArray *commentArray) {
+        NSLog(@"%@", commentArray);
+    } failure:^(NSError *error1) {
+        
+    }];
+}
 
 
 - (void)setCalledID:(NSString *)calledID {
@@ -64,6 +71,7 @@
     _limit = 15;
     [self getCommentList];
     [self getjoinList];
+    [self getMemeberList];
 }
 
 - (void)getCommentList {
@@ -107,8 +115,10 @@
     }];
 }
 
-- (void)thumUpCalled {
 
+
+- (void)thumUpCalled {
+    
 
 }
 
@@ -152,6 +162,10 @@
     BmobObject *model = self.dataSource[indexPath.row];
     cell.model = model;
     cell.indexPath = indexPath;
+    if ([UserID isEqualToString:_userObject.objectId]) {
+        [cell isText];
+    }
+    
     if (_type == 0) {
         [cell setReplayBlock:^(NSIndexPath *indexPath) {
             CommentViewController *comVC = [[CommentViewController alloc] init];
@@ -166,6 +180,18 @@
             }
             [self.navigationController pushViewController:comVC animated:YES];
         }];
+    }else {
+
+        [cell setReplayBlock:^(NSIndexPath *indexPath) {
+            [Called inviteJoinUserId:model.objectId calledID:_calledID Success:^(BOOL isSuccess) {
+                if (isSuccess) {
+                    [self message:@"小伙伴已经成为您的队友！"];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }];
+    
     }
     return cell;
 }

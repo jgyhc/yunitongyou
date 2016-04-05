@@ -203,6 +203,7 @@
   
     [Called AddCalledWithTitle:nil origin:originTextField.text destination:destinationTextField.text departureTime:departureTimeTextField.text arrivalTime:arrivalTimeTextField.text NumberOfPeople:number content:self.sharedView.textView.text Success:^(NSString *calledID) {
         [self.load hide];
+        [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
     
     }];

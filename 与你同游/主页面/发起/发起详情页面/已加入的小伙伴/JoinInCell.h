@@ -11,8 +11,11 @@
 @interface JoinInCell : UITableViewCell
 @property (nonatomic, strong) BmobObject *model;
 @property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, strong) void (^replayBlock)(NSIndexPath *indexPath);
 /**
  *  是否显示后面的同意按钮
  */
 - (void)isText;
+
+
 @end

@@ -59,4 +59,36 @@
  *  @param failure  
  */
 + (void)getJoinWithLimit:(NSInteger)limit skip:(NSInteger)skip CalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure ;
+
+/**
+ *  查询用户的发起
+ *
+ *  @param limit   条数
+ *  @param skip    跳到多少条
+ *  @param success
+ *  @param failure
+ */
++ (void)queryCalledsLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray* calleds))success failure:(void (^)(NSError *error))failure ;
+
+/**
+ *  邀请以为报名真加入
+ *
+ *  @param userID   被邀请者的ID
+ *  @param calledID 发起ID
+ *  @param success
+ *  @param failure  
+ */
++ (void)inviteJoinUserId:(NSString *)userID calledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure;
+
+/**
+ *  查询一条发起的成员列表
+ *
+ *  @param limit
+ *  @param skip
+ *  @param calledID
+ *  @param success
+ *  @param failure  
+ */
++ (void)getMemeberWithCalledsID:(NSString *)calledID Success:(void (^)(NSArray *commentArray))success failure:(void (^)(NSError *error1))failure;
+
 @end

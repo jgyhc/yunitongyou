@@ -16,6 +16,8 @@
 #import "LoadingView.h"
 #import "SDCycleScrollView.h"
 #import "ScenicSpot.h"
+#import "ScenicViewController.h"
+#import <YYModel.h>
 @interface LaunchViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchResultDelegate, SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -29,6 +31,8 @@
 @property (nonatomic, strong) SearchResultView *resultView;
 @property (nonatomic, strong) NSArray *collectionData;
 @property (nonatomic, strong) LoadingView *load;
+
+@property (nonatomic, strong) NSArray *urls;
 @end
 
 @implementation LaunchViewController
@@ -38,25 +42,7 @@
 }
 
 - (void)addAD {
-
-    
     CGFloat w = self.view.bounds.size.width;
-    
-//    NSArray *imagesURLStrings = @[
-//                                  @,
-//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/18/DKMh1m.jpg",
-//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/19/00/af8g1x.jpg",
-//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/23/20/qozukp.jpg",
-//                                  @"http://pic3.40017.cn/scenery/destination/2015/04/18/20/tPj6Id.jpg"
-//                                  ];
-//    NSArray *titles = @[@"大木花谷 ",
-//                        @"仙女山",
-//                        @"丰都鬼城",["http://pic3.40017.cn/scenery/destination/2015/04/18/23/V8naCo.jpg"]
-//                        @"黄山",
-//                        @"张家界"
-//                        ];
-    
-    // 网络加载 --- 创建带标题的图片轮播器
     SDCycleScrollView *cycleScrollView2 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, w, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cycleScrollView2.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     cycleScrollView2.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
@@ -66,12 +52,11 @@
     [ScenicSpot getAdUrlsSuccess:^(NSArray *urls) {
         for (BmobObject *obj in urls) {
             [uslArray addObject:[(NSArray *)[obj objectForKey:@"url"] objectAtIndex:0]];
-            NSLog(@"%@", uslArray);
             [titleArray addObject:[obj objectForKey:@"spotName"]];
         }
         cycleScrollView2.imageURLStringsGroup = uslArray;
         cycleScrollView2.titlesGroup = titleArray;
-
+        _urls = urls;
     } failure:^(NSError *error) {
         
     }];
@@ -108,9 +93,12 @@
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
-    NSLog(@"---点击了第%ld张图片", (long)index);
-    
-    [self.navigationController pushViewController:[NSClassFromString(@"DemoVCWithXib") new] animated:YES];
+    BmobObject *obj = [_urls[index] objectForKey:@"scenicSpot"];
+    NSDictionary *dic = [obj objectForKey:@"dic"];
+    SSContentlist *list = [SSContentlist yy_modelWithJSON:dic];
+    ScenicViewController *SVc = [[ScenicViewController alloc] init];
+    SVc.model = list;
+    [self.navigationController pushViewController:SVc animated:YES];
 }
 
 #pragma mark -- KVO
@@ -144,12 +132,8 @@
     [self.scrollView addSubview:label];
     
     UILabel *senseLabel = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(22, 0, 80, 20), NO)];
-//    CGRect frame = senseLabel.frame;
-//    frame.origin.y = self.tableView.frame.origin.y + self.tableView.frame.size.height ;
-//    senseLabel.frame = frame;
     senseLabel.text = @"热门旅游城市";
     senseLabel.font = [UIFont boldSystemFontOfSize:(SCREEN_HEIGHT / 667.0) * 12];
-//    [self.scrollView addSubview:senseLabel];
     
 }
 

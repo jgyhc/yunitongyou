@@ -13,4 +13,5 @@
 
 @property (nonatomic, strong) void (^replayBlock)(NSIndexPath *indexPath);
 @property (nonatomic, strong) NSIndexPath *indexPath;
+- (void)isText;
 @end

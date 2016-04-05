@@ -10,8 +10,9 @@
 #import "TopSelectButtonView.h"
 #import "LaunchTableViewCell.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
-
-
+#import "Called.h"
+#import <MJRefresh.h>
+#import "InitiateDetailViewController.h"
 
 @interface MyActivitiesViewController ()<TopSelectButtonViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) TopSelectButtonView * selectButton;
@@ -19,12 +20,18 @@
 @property (nonatomic, strong) NSMutableArray * dataSource;
 @property (nonatomic, assign) int type;
 
+@property (nonatomic, assign) long limit;
+@property (nonatomic, assign) long skip;
+@property (nonatomic, assign) long rType;
 @end
 
 @implementation MyActivitiesViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUserInterface];
+    _limit = 20;
+    _skip = 0;
+    [self getFoundList];
 }
 
 - (void)initUserInterface {
@@ -39,14 +46,52 @@
     [self.view addSubview:self.selectButton];
     self.selectButton.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).heightIs(flexibleHeight(45));
     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.selectButton, 0).bottomEqualToView(self.view);
+    
+    self.tableView.mj_header = [MJRefreshStateHeader headerWithRefreshingBlock:^{
+        _skip = 0;
+        _rType = 1;
+        [self getFoundList];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView.mj_header endRefreshing];
+        });
+    }];
+    
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _rType = 0;
+        [self getFoundList];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView.mj_footer endRefreshing];
+        });
+    }];
+    
+    
+
+    
 }
+
+- (void)getFoundList {
+    [Called queryCalledsLimit:_limit skip:_skip Success:^(NSArray *calleds) {
+        _skip = _skip + _limit;
+        if (_rType == 1) {
+            [self.dataSource removeAllObjects];
+        }
+        [self.dataSource addObjectsFromArray:calleds];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
+
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     LaunchTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     BmobObject *model = self.dataSource[indexPath.row];
     cell.obj = model;
@@ -70,6 +115,15 @@
 }
 
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BmobObject *obj = self.dataSource[indexPath.section];
+    InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
+    IVC.calledID = obj.objectId;
+    BmobObject *user = [obj objectForKey:@"user"];
+    IVC.userObject = user;
+    IVC.calledObject = obj;
+    [self.navigationController pushViewController:IVC animated:YES];
+}
 
 #pragma mark --lazy loading
 - (UITableView *)tableView {
