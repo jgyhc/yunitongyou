@@ -3,6 +3,8 @@
 #import "TravelNotesTableViewCell.h"
 #import "LaunchTableViewCell.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
+#import "Collection.h"
+#import "MJRefresh.h"
 
 @interface MyCollectionViewController ()<TopSelectButtonViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) TopSelectButtonView * selectButton;
@@ -16,6 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUserInterface];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:NO];
+    [self getcollection:self.type];
 }
 
 - (void)initUserInterface {
@@ -32,13 +39,42 @@
     [self.view addSubview:self.selectButton];
     self.selectButton.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).heightIs(flexibleHeight(45));
     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.selectButton, 0).bottomEqualToView(self.view);
+     [self setupRefresh];
+}
+
+#pragma mark --刷新
+- (void)setupRefresh
+{
     
-    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self getcollection:self.type];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView.mj_footer endRefreshing];
+        });
+    }];
 }
 
 
+- (void)getcollection:(int)type{
+    [self.dataSource removeAllObjects];
+    [Collection getCollectionSuccess:^(NSArray *collections) {
+        [self.dataSource addObjectsFromArray:collections];
+        [self.tableView reloadData];
+  } type:type failure:^(NSError *error) {
+      
+  }];
+}
 
-
+- (void)clickButton:(UIButton *)sender{
+    if (sender == self.selectButton.rightsideButton) {
+        self.type =1;
+        [self getcollection:self.type];
+    }
+    else{
+        self.type = 0;
+        [self getcollection:self.type];
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;

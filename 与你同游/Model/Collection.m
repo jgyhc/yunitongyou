@@ -91,11 +91,15 @@
     }
     BmobObject * obj = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:OBJECTID];
     [bquery whereObjectKey:@"collection" relatedTo:obj];
+    [bquery includeKey:@"user"];
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
             NSLog(@"%@",error);
         } else {
             success(array);
+//            for (BmobObject * obj in array) {
+//                
+//            }
         }
     }];
 

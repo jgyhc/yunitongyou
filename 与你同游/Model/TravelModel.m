@@ -1,11 +1,3 @@
-//
-//  TravelModel.m
-//  BmobSDK网络测试
-//
-//  Created by rimi on 15/10/19.
-//  Copyright (c) 2015年 LiuCong. All rights reserved.
-//
-
 #import "TravelModel.h"
 @interface TravelModel ()
 
@@ -160,9 +152,6 @@
         }
     }];
 }
-
-
-
 
 - (NSMutableArray *)userIdArray {
     if (!_userIdArray) {

@@ -60,14 +60,10 @@ static CGFloat screenHeight;
     
     myScrollView.minimumZoomScale = 1.0;
     myScrollView.maximumZoomScale = 4.0;
-//    myScrollView.backgroundColor = [UIColor redColor];
-//    myScrollView.layer.borderColor = [UIColor mj_whiteBackgroundColor].CGColor;
-//    myScrollView.layer.borderWidth = 1.0;
+
     myScrollView.clipsToBounds = NO;
     CGFloat topInset = 100;
     myScrollView.contentInset = UIEdgeInsetsMake(topInset, 0, screenHeight-screenWidth-topInset, 0);
-//    myScrollView.alwaysBounceHorizontal = NO;
-//    myScrollView.alwaysBounceVertical = NO;
     [self.view addSubview:myScrollView];
     
     

@@ -1305,6 +1305,7 @@
 				TargetAttributes = {
 					245B59DD1BCB8BE80003EBA7 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = 936M5Y4RHX;
 					};
 					245B59F61BCB8BE80003EBA7 = {
 						CreatedOnToolsVersion = 6.3;
@@ -1702,7 +1703,7 @@
 				INFOPLIST_FILE = "与你同游/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou;
+				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
@@ -1727,7 +1728,7 @@
 				INFOPLIST_FILE = "与你同游/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou;
+				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
