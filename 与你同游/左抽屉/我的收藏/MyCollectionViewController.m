@@ -5,6 +5,8 @@
 #import "UITableView+SDAutoTableViewCellHeight.h"
 #import "Collection.h"
 #import "MJRefresh.h"
+#import "RecordDetailViewController.h"
+#import "InitiateDetailViewController.h"
 
 @interface MyCollectionViewController ()<TopSelectButtonViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) TopSelectButtonView * selectButton;
@@ -77,21 +79,45 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    return 1;
     
 }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.dataSource.count;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Class currentClass = [TravelNotesTableViewCell class];
-    TravelNotesTableViewCell * cell = nil;
+    Class currentClass = [LaunchTableViewCell class];
+    LaunchTableViewCell * cell = nil;
     if (self.type == 1) {
-        currentClass = [LaunchTableViewCell class];
+        currentClass = [TravelNotesTableViewCell class];
     }
     cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
-    BmobObject *model = self.dataSource[indexPath.row];
+    BmobObject *model = self.dataSource[indexPath.section];
     cell.obj = model;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BmobObject *obj = self.dataSource[indexPath.section];
+     BmobObject * user = [obj objectForKey:@"user"];
+    if (self.type == 1) {
+        RecordDetailViewController * detail = [[RecordDetailViewController alloc]init];
+        detail.travelObject = obj;
+        detail.userObject = user;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+    else{
+        InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
+        IVC.calledID = obj.objectId;
+        IVC.userObject = user;
+        IVC.calledObject = obj;
+        [self.navigationController pushViewController:IVC animated:YES];
+    }
+   
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

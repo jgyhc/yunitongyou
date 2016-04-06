@@ -53,12 +53,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
-//    UILabel *label = [[UILabel alloc] initWithFrame:flexibleFrame(CGRectMake(200, 15, 130, 30), NO)];
-//    label.text = @"哎哟不错哦";
-//    label.textAlignment = NSTextAlignmentRight;
-//    label.textColor = [UIColor colorWithWhite:0.636 alpha:1.000];
-//    [cell.contentView addSubview:label];
-    
     UIView *line = [[UIView alloc] initWithFrame:flexibleFrame(CGRectMake(0, 58, 375, 0.7), NO)];
     line.backgroundColor = [UIColor colorWithWhite:0.845 alpha:1.000];
     [cell.contentView addSubview:line];
@@ -70,8 +64,14 @@
     
 }
 - (void)ExitButtonAction: (UIButton *)sender {
-    NSString * appDomain = [[NSBundle mainBundle]bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
+//    NSString * appDomain = [[NSBundle mainBundle]bundleIdentifier];
+//    [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"phoneNumber"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"objectId"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginState"];
     [self.navigationController popToRootViewControllerAnimated:YES];
 
 }

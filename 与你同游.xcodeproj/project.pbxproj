@@ -13,6 +13,8 @@
 		0467A3491CAFBBA800D799AF /* TravelNotesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467A3461CAFBBA800D799AF /* TravelNotesTableViewCell.m */; };
 		0467A34A1CAFBBA800D799AF /* TravelsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467A3481CAFBBA800D799AF /* TravelsViewController.m */; };
 		0467A34D1CAFC27F00D799AF /* TopSelectButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467A34C1CAFC27F00D799AF /* TopSelectButtonView.m */; };
+		046F25081CB4BB3400C801AA /* 定位.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F25061CB4BB3400C801AA /* 定位.png */; };
+		046F25091CB4BB3400C801AA /* 定位选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F25071CB4BB3400C801AA /* 定位选中.png */; };
 		0473E8F91C9D16B500BC9702 /* ThumbUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473E8F81C9D16B500BC9702 /* ThumbUp.m */; };
 		047F79161CAFABAA0092D4D9 /* AnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F78F11CAFABAA0092D4D9 /* AnimationView.m */; };
 		047F79171CAFABAA0092D4D9 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F78F41CAFABAA0092D4D9 /* PersonalViewController.m */; };
@@ -189,6 +191,8 @@
 		0467A3481CAFBBA800D799AF /* TravelsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelsViewController.m; sourceTree = "<group>"; };
 		0467A34B1CAFC27F00D799AF /* TopSelectButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopSelectButtonView.h; sourceTree = "<group>"; };
 		0467A34C1CAFC27F00D799AF /* TopSelectButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopSelectButtonView.m; sourceTree = "<group>"; };
+		046F25061CB4BB3400C801AA /* 定位.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "定位.png"; sourceTree = "<group>"; };
+		046F25071CB4BB3400C801AA /* 定位选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "定位选中.png"; sourceTree = "<group>"; };
 		0473E8F71C9D16B500BC9702 /* ThumbUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbUp.h; sourceTree = "<group>"; };
 		0473E8F81C9D16B500BC9702 /* ThumbUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbUp.m; sourceTree = "<group>"; };
 		047F78F01CAFABAA0092D4D9 /* AnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationView.h; sourceTree = "<group>"; };
@@ -809,6 +813,8 @@
 		2462C60E1BECA99A001714C8 /* 游记 */ = {
 			isa = PBXGroup;
 			children = (
+				046F25061CB4BB3400C801AA /* 定位.png */,
+				046F25071CB4BB3400C801AA /* 定位选中.png */,
 				04DC2E771C9698A800B01E42 /* 未定位.png */,
 				04DC2E781C9698A800B01E42 /* 已定位.png */,
 				2461393E1BEF4F5A00E52E08 /* 删除照片.png */,
@@ -1338,6 +1344,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046F25081CB4BB3400C801AA /* 定位.png in Resources */,
+				046F25091CB4BB3400C801AA /* 定位选中.png in Resources */,
 				047F79301CAFADC70092D4D9 /* 女.png in Resources */,
 				2462C64F1BECA99A001714C8 /* 向下箭头.png in Resources */,
 				2462C64D1BECA99A001714C8 /* 点赞.png in Resources */,

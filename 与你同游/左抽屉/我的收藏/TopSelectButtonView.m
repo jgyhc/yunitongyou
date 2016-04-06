@@ -69,7 +69,7 @@
              [self updateLayout];
         }];
     }
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(buttonClickEvent:)]) {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(clickButton:)]) {
         [self.delegate clickButton:sender];
     }
 }
