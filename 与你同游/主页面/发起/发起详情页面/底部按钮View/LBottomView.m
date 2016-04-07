@@ -72,6 +72,18 @@
     return self;
 }
 
+- (void)updateImage:(NSString *)thumbImg{
+    if ([thumbImg isEqualToString:@"点赞"]) {
+       self.label3.textColor = [UIColor colorWithRed:0.2353 green:0.7569 blue:0.0275 alpha:1.0];
+    }
+    else{
+         self.label3.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+    }
+    self.imgaeView3.image = [UIImage imageNamed:thumbImg];
+    [self.thumupView layoutSubviews];
+    
+}
+
 
 - (void)handldTapEvent:(UITapGestureRecognizer *)tap {
     if (tap.view == self.joinView) {

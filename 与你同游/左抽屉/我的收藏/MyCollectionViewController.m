@@ -7,7 +7,11 @@
 #import "MJRefresh.h"
 #import "RecordDetailViewController.h"
 #import "InitiateDetailViewController.h"
-
+#import "ThumbUp.h"
+#import "Collection.h"
+#import "CommentViewController.h"
+#import "ShareView.h"
+#import "PersonalViewController.h"
 @interface MyCollectionViewController ()<TopSelectButtonViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) TopSelectButtonView * selectButton;
 @property (nonatomic, strong) UITableView * tableView;
@@ -29,7 +33,7 @@
 
 - (void)initUserInterface {
     [self initBackButton];
-    [self initNavTitle:@"我的关注"];
+    [self initNavTitle:@"我的收藏"];
     self.type = 0;
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -87,17 +91,105 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Class currentClass = [LaunchTableViewCell class];
-    LaunchTableViewCell * cell = nil;
-    if (self.type == 1) {
-        currentClass = [TravelNotesTableViewCell class];
-    }
-    cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
     BmobObject *model = self.dataSource[indexPath.section];
-    cell.obj = model;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (self.type == 1) {
+        TravelNotesTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
+         cell.obj = model;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+#pragma mark --点赞
+        [cell buttonthumbUp:^(int type) {
+            if (type == 1) {
+                //点赞
+                [ThumbUp thumUpWithID:model.objectId type:1 success:^(NSString *commentID) {
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
+            else if (type == 0){
+                //取消点赞
+                [ThumbUp cancelThumUpWithID:model.objectId type:1 success:^(NSString *commentID) {
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
+            
+        }];
+        
+#pragma mark --评论
+        [cell buttoncomment:^{
+            CommentViewController * commentVC = [[CommentViewController alloc]init];
+            commentVC.objId = model.objectId ;
+            commentVC.type = 1;
+            [self.navigationController pushViewController:commentVC animated:YES];
+        }];
+        
+#pragma mark --分享
+        [cell buttonshared:^{
+            //分享
+            NSArray * imageArray;
+            if ([model objectForKey:@"urlArray"]) {
+                imageArray = [model objectForKey:@"urlArray"];
+            }
+            else{
+                imageArray = nil;
+            }
+            [ShareView sharedWithImages:imageArray content:[model objectForKey:@"content"]];
+        }];
+        
+#pragma mark --查看个人信息
+        [cell tapPresent:^{
+            PersonalViewController *PVC = [[PersonalViewController alloc] init];
+            PVC.userInfo = [model objectForKey:@"user"];
+            PVC.type = 1;
+            [self presentViewController:PVC animated:YES completion:nil];
+        }];
 
-    return cell;
+        return cell;
+
+    }
+    else{
+        LaunchTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LaunchTableViewCell class])];
+        cell.obj = model;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell buttonCollection:^(NSInteger type) {
+            if (type == 1) {
+                
+                [Collection CollectionWithID:model.objectId type:0 success:^(NSString *commentID) {
+                    
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
+            else if (type == 0){
+                [Collection cancelCollectionWithID:model.objectId type:0 success:^(NSString *commentID) {
+                    
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
+        }];
+        [cell buttonthumb:^(int type) {
+            if (type == 1) {
+                //点赞
+                [ThumbUp thumUpWithID:model.objectId type:0 success:^(NSString *commentID) {
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
+            else if (type == 0){
+                //取消点赞
+                [ThumbUp cancelThumUpWithID:model.objectId type:0 success:^(NSString *commentID) {
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
+        }];
+
+        return cell;
+    }
+
+
+   
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

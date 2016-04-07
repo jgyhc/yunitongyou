@@ -26,6 +26,13 @@
 @property (nonatomic, strong)UILabel *PNumber;
 @property (nonatomic, strong) BottomButtonsView *buttonView;
 @property (nonatomic, copy)collection collectionblock;
+@property (nonatomic, copy) thumb thumbblock;
+
+@property (nonatomic,strong) NSString * thumbImg;
+@property (nonatomic, strong)  NSString * collectionImg;
+@property (nonatomic, strong)  NSString * thumbNum;
+@property  (nonatomic, strong)   NSString * commentNum;
+@property (nonatomic, assign)   int     thumbNumber;
 
 @property (nonatomic,strong) UIView * backView;
 @end
@@ -98,13 +105,57 @@
 
 
 - (void)handldTapEvent:(UITapGestureRecognizer *)sender {
-    if (self.collectionblock) {
-        self.collectionblock(sender.view.tag - 300);
+    if (!OBJECTID) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还未登录喔！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        return;
     }
+        if (sender.view.tag - 300 == 0) {
+            if ([self.thumbImg isEqualToString:@"点赞"]) {
+                self.thumbImg = @"未点赞";
+                self.thumbNum = [NSString stringWithFormat:@"%d",(--self.thumbNumber)];
+
+                if (self.thumbblock) {
+                    self.thumbblock(0);
+                }
+                
+            }
+            else{
+               self.thumbImg = @"点赞";
+                self.thumbNum = [NSString stringWithFormat:@"%d",(++self.thumbNumber)];
+
+                if (self.thumbblock) {
+                    self.thumbblock(1);
+                }
+                
+            }
+            
+        }
+        
+        else if (sender.view.tag- 300 == 1){
+            if ([self.collectionImg isEqualToString:@"已收藏"]) {
+                self.collectionImg = @"未收藏";
+                if (self.collectionblock) {
+                    self.collectionblock(0);
+                }
+                
+            }
+            else{
+                self.collectionImg = @"已收藏";
+                if (self.collectionblock) {
+                    self.collectionblock(1);
+                }
+                
+            }
+        }
+    [self.buttonView updateImage:@[self.thumbImg, @"评论", self.collectionImg] label:@[self.thumbNum,self.commentNum,@"收藏"]];
 }
 
 - (void)buttonCollection:(collection)collectionBlock{
     self.collectionblock = collectionBlock;
+}
+- (void)buttonthumb:(thumb)thumbBlock{
+    self.thumbblock = thumbBlock;
 }
 
 - (UILabel *)userIDLabel {
@@ -139,6 +190,35 @@
     self.startingLabel.text = [NSString stringWithFormat:@"%@        %@", [obj objectForKey:@"departure_time"], [obj objectForKey:@"arrival_time"]];
     self.infoLabel.text = [obj objectForKey:@"content"];
     self.PNumber.text = [NSString stringWithFormat:@"%@", [obj objectForKey:@"number_Of_people"]];
+    
+   self.thumbImg = @"未点赞";
+   self.collectionImg= @"未收藏";
+    NSArray * thumbArray = (NSArray *)[obj objectForKey:@"thumbArray"];
+    for (NSString * userId in thumbArray) {
+        if ([userId isEqualToString:OBJECTID]) {
+            self.thumbImg = @"点赞";
+        }
+        else{
+            self.thumbImg = @"未点赞";
+        }
+    }
+    NSArray * collectionArray = (NSArray *)[obj objectForKey:@"collectionArray"];
+    for (NSString * userId in collectionArray) {
+        if ([userId isEqualToString:OBJECTID]) {
+           self.collectionImg = @"已收藏";
+        }
+        else{
+           self.collectionImg = @"未收藏";
+        }
+    }
+    self.thumbNumber = [(NSNumber *)[obj objectForKey:@"number_of_thumb_up"] intValue];
+
+   self.thumbNum = [NSString stringWithFormat:@"%d",self.thumbNumber];
+    self.commentNum = [NSString stringWithFormat:@"%@",[obj objectForKey:@"comments_number"]];
+
+    [self.buttonView updateImage:@[self.thumbImg, @"评论", self.collectionImg] label:@[self.thumbNum,self.commentNum,@"收藏"]];
+    
+    
 }
 
 - (UILabel *)launchTimeLabel {

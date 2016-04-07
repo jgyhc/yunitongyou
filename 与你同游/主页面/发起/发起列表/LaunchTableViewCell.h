@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <BmobSDK/Bmob.h>
 typedef void (^collection)(NSInteger type);
+typedef void(^thumb)(int type);
+
+
 @interface LaunchTableViewCell : UITableViewCell
 @property (nonatomic, strong) BmobObject *obj;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, strong) void (^pdetailBlock)(NSIndexPath *indexPath);
 - (void)buttonCollection:(collection)collectionBlock;
+- (void)buttonthumb:(thumb)thumbBlock;
 @end

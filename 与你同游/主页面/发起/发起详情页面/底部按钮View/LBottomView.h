@@ -19,5 +19,6 @@
 @end
 
 @interface LBottomView : UIView
+- (void)updateImage:(NSString *)thumbImg;
 @property (nonatomic, assign) id<LBottomViewDelegate> delegate;
 @end

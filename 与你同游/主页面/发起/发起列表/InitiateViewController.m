@@ -16,7 +16,11 @@
 #import "UITableView+SDAutoTableViewCellHeight.h"
 #import "Called.h"
 #import "ThumbUp.h"
+
 #import "PersonalViewController.h"
+
+#import "Collection.h"
+
 @interface InitiateViewcontroller ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -52,13 +56,6 @@
     
 }
 
-- (BOOL)isLogin {
-    if (UserID) {
-        return YES;
-    }else {
-        return NO;
-    }
-}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:NO];
     if (self.dataSource.count > 0) {
@@ -75,14 +72,6 @@
 
 }
 
-- (void)ThumbUp:(NSString *)ID {
-    [ThumbUp thumUpWithID:ID type:0 success:^(NSString *commentID) {
-        
-    } failure:^(NSError *error1) {
-        
-    }];
-
-}
 
 - (void)loadNewData {
 //    [self.calledModel queryTheCalledlList];
@@ -119,20 +108,37 @@
     cell.obj = obj;
 
     [cell buttonCollection:^(NSInteger type) {
-        if ([self isLogin]) {
-            if (type == 0) {
-                [self ThumbUp:obj.objectId];
-            }
             if (type == 1) {
                 
+                [Collection CollectionWithID:obj.objectId type:0 success:^(NSString *commentID) {
+                    
+                } failure:^(NSError *error1) {
+                    
+                }];
             }
-            if (type == 2) {
-                
+            else if (type == 0){
+                [Collection cancelCollectionWithID:obj.objectId type:0 success:^(NSString *commentID) {
+                    
+                } failure:^(NSError *error1) {
+                    
+                }];
             }
-        }else {
-            [self message:@"请先登录"];
-        }
-        
+    }];
+    [cell buttonthumb:^(int type) {
+          if (type == 1) {
+                //点赞
+                [ThumbUp thumUpWithID:obj.objectId type:0 success:^(NSString *commentID) {
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
+            else if (type == 0){
+                //取消点赞
+                [ThumbUp cancelThumUpWithID:obj.objectId type:0 success:^(NSString *commentID) {
+                } failure:^(NSError *error1) {
+                    
+                }];
+            }
     }];
     [cell setPdetailBlock:^(NSIndexPath *index) {
         PersonalViewController *PVC = [[PersonalViewController alloc] init];
@@ -166,17 +172,16 @@
 
 
 
-//
-//#pragma mark --UITableViewDelegate
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    BmobObject *obj = self.dataSource[indexPath.section];
-//    InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
-//    IVC.calledID = obj.objectId;
-//    BmobObject *user = [obj objectForKey:@"user"];
-//    IVC.userObject = user;
-//    IVC.calledObject = obj;
-//    [self.navigationController pushViewController:IVC animated:YES];
-//}
+#pragma mark --UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BmobObject *obj = self.dataSource[indexPath.section];
+    InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
+    IVC.calledID = obj.objectId;
+    BmobObject *user = [obj objectForKey:@"user"];
+    IVC.userObject = user;
+    IVC.calledObject = obj;
+    [self.navigationController pushViewController:IVC animated:YES];
+}
 
 #pragma mark --getter
 - (UITableView *)tableView {

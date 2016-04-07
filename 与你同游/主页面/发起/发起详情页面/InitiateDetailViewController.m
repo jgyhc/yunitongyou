@@ -16,6 +16,7 @@
 #import "LBottomView.h"
 #import <MJRefresh.h>
 #import "CommentViewController.h"
+#import "ThumbUp.h"
 #define SIZEHEIGHT frame.size.height
 
 @interface InitiateDetailViewController ()<UITableViewDelegate, UITableViewDataSource, HeaderButtonViewDelegate, LBottomViewDelegate>
@@ -33,6 +34,7 @@
 @property (nonatomic, strong) NSMutableArray *memberArray;
 @property (nonatomic, strong) LBottomView *bottomView;
 @property (nonatomic, assign) long type;
+@property (nonatomic,strong) NSString * thumbImg;
 
 @end
 
@@ -97,6 +99,10 @@
 }
 
 - (void)getjoinList {
+    if (!OBJECTID) {
+        [self message:@"您还未登录喔!"];
+        return;
+    }
     [Called getJoinWithLimit:_limit?_limit:10 skip:_Jskip?_Jskip:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
         [self.userArray addObjectsFromArray:commentArray];
         if (_type == 1) {
@@ -109,6 +115,10 @@
 }
 
 - (void)joinCalled {
+    if (!OBJECTID) {
+        [self message:@"您还未登录喔!"];
+        return;
+    }
     [Called joinInCalledWithCalledID:_calledID Success:^(BOOL isSuccess) {
         if (isSuccess) {
             [self message:@"您已经报名！"];
@@ -121,7 +131,25 @@
 
 
 - (void)thumUpCalled {
-    
+    if (!OBJECTID) {
+        [self message:@"您还未登录喔!"];
+        return;
+    }
+    if ([self.thumbImg isEqualToString:@"点赞"]) {
+        self.thumbImg = @"未点赞";
+        [ThumbUp cancelThumUpWithID:self.calledID type:0 success:^(NSString *commentID) {
+        } failure:^(NSError *error1) {
+            
+        }];
+    }
+    else{
+        self.thumbImg = @"点赞";
+        [ThumbUp thumUpWithID:self.calledID type:0 success:^(NSString *commentID) {
+        } failure:^(NSError *error1) {
+            
+        }];
+    }
+    [self.bottomView updateImage:self.thumbImg];
 
 }
 
@@ -139,6 +167,16 @@
         weakSelf.tableView.tableHeaderView = weakSelf.headerView;
     }];
     self.headerView.calledObject = calledObject;
+    NSArray *  thumbArray = (NSArray *)[calledObject objectForKey:@"thumbArray"];
+    for (NSString * userId in thumbArray) {
+        if ([userId isEqualToString:OBJECTID]) {
+             self.thumbImg = @"点赞";
+        }
+        else{
+           self.thumbImg = @"未点赞";
+        }
+    }
+    [self.bottomView updateImage:self.thumbImg];
 }
 
 - (void)initUserInterface {
@@ -300,6 +338,7 @@
 - (LBottomView *)bottomView {
 	if(_bottomView == nil) {
 		_bottomView = [[LBottomView alloc] init];
+         [_bottomView updateImage:@"未点赞"];
         _bottomView.delegate = self;
 	}
 	return _bottomView;

@@ -93,7 +93,7 @@
     [self.view addSubview:self.icon];
     [self.view addSubview:self.userName];
     
-    NSArray * myselfNameArray = @[@"我的关注",@"我的活动", @"我的游记", @"设置"];
+    NSArray * myselfNameArray = @[@"我的收藏",@"我的活动", @"我的游记", @"设置"];
     NSArray * imageArray = @[@"我的收藏.png",@"我的发起.png", @"我的游记.png", @"设置.png"];
     
     for (int i = 0 ; i < myselfNameArray.count; i ++)

@@ -33,8 +33,8 @@
             [self.leftsideButton setTitle:@"参加的活动" forState:UIControlStateNormal];
         }
         else{
-            [self.rightsideButton setTitle:@"关注的游记" forState:UIControlStateNormal];
-            [self.leftsideButton setTitle:@"关注的活动" forState:UIControlStateNormal];
+            [self.rightsideButton setTitle:@"收藏的游记" forState:UIControlStateNormal];
+            [self.leftsideButton setTitle:@"收藏的活动" forState:UIControlStateNormal];
         }
         
         self.separatorView.sd_layout.leftEqualToView(self).topSpaceToView(self.leftsideButton,0).rightEqualToView(self).heightIs(flexibleHeight(5));

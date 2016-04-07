@@ -30,15 +30,15 @@
         [self addSubview:self.view2];
         [self addSubview:self.view3];
         UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
-        UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
+//        UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
         UITapGestureRecognizer *tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
         [self.view1 addGestureRecognizer:tap1];
-        [self.view2 addGestureRecognizer:tap2];
+//        [self.view2 addGestureRecognizer:tap2];
         [self.view3 addGestureRecognizer:tap3];
         
         self.view1.tag = 300;
-        self.view2.tag = 301;
-        self.view3.tag = 302;
+        self.view2.tag = 302;
+        self.view3.tag = 301;
         
         [self.view1 addSubview:self.label1];
         [self.view2 addSubview:self.label2];
@@ -100,6 +100,18 @@
 }
 
 - (void)updateImage:(NSArray *)imageArray label:(NSArray *)lableString {
+    if ([imageArray[0] isEqualToString:@"点赞"]) {
+        self.label1.textColor = [UIColor colorWithRed:0.2353 green:0.7569 blue:0.0275 alpha:1.0];
+    }
+    else{
+       self.label1.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+    }
+    if ([imageArray[2] isEqualToString:@"已收藏"]) {
+        self.label3.textColor = [UIColor colorWithRed:0.2353 green:0.7569 blue:0.0275 alpha:1.0];
+    }
+    else{
+        self.label3.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];
+    }
     self.label1.text = lableString[0];
     self.label2.text = lableString[1];
     self.label3.text = lableString[2];
