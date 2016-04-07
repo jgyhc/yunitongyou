@@ -26,6 +26,8 @@
 @property (nonatomic, strong)UILabel *PNumber;
 @property (nonatomic, strong) BottomButtonsView *buttonView;
 @property (nonatomic, copy)collection collectionblock;
+
+@property (nonatomic,strong) UIView * backView;
 @end
 
 @implementation LaunchTableViewCell
@@ -49,6 +51,10 @@
         [self.contentView addSubview:self.followerLabel];
         [self.contentView addSubview:self.PNumber];
         [self.contentView addSubview:self.buttonView];
+        
+        self.backView = [UIView new];
+        self.backView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
+        [self.contentView addSubview:self.backView];
         
         self.followerLabel.sd_layout.rightEqualToView(self.contentView).widthIs(flexibleWidth(50)).heightIs(flexibleHeight(40)).topSpaceToView(self.contentView, 0);
 
@@ -80,7 +86,11 @@
 
         self.buttonView.sd_layout.leftEqualToView(self.contentView).rightEqualToView(self.contentView).heightIs(flexibleHeight(40)).topSpaceToView(self.infoLabel, flexibleHeight(20));
         
-        [self setupAutoHeightWithBottomView:self.buttonView bottomMargin:0];
+        self.backView.sd_layout.leftEqualToView(self.contentView).rightEqualToView(self.contentView).topSpaceToView(self.buttonView,0).heightIs(flexibleHeight(5));
+        
+        [self setupAutoHeightWithBottomView:self.backView bottomMargin:0];
+
+        
         
     }
     return self;

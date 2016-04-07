@@ -23,6 +23,8 @@ const CGFloat maxContentLabelHeight = 54;
 @property (nonatomic, strong)   UIView      * vline1;
 @property (nonatomic, strong)   UIView      * vline2;
 
+@property (nonatomic,strong) UIView * backView;
+
 @property (nonatomic, assign)   int     thumbNumber;
 
 
@@ -102,7 +104,10 @@ const CGFloat maxContentLabelHeight = 54;
     _hline1 = [UIView new];
     _hline1.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
-    NSArray *views = @[_iconView, _portraintbt,_nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1];
+    self.backView = [UIView new];
+    self.backView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
+    
+    NSArray *views = @[_iconView, _portraintbt,_nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1,self.backView];
     
     [views enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.contentView addSubview:obj];
@@ -181,8 +186,9 @@ const CGFloat maxContentLabelHeight = 54;
     .rightEqualToView(contentView)
     .bottomSpaceToView(_dianzanbt,0)
     .heightIs(1);
+    self.backView.sd_layout.leftEqualToView(contentView).rightEqualToView(contentView).topSpaceToView(_dianzanbt,0).heightIs(flexibleHeight(5));
     
-    [self setupAutoHeightWithBottomView:_dianzanbt bottomMargin:0];
+    [self setupAutoHeightWithBottomView:self.backView bottomMargin:0];
 
 }
 
@@ -205,6 +211,7 @@ const CGFloat maxContentLabelHeight = 54;
     
     
         _position.text = [obj objectForKey:@"position"];
+    
     if ([[obj objectForKey:@"position"] isEqualToString:@"未定位"]) {
          _positionImg.image = IMAGE_PATH(@"定位.png");
         _position.textColor = [UIColor colorWithWhite:0.600 alpha:1.000];

@@ -79,7 +79,7 @@
 - (void)initUserInterface {
     self.view.backgroundColor = [UIColor colorWithWhite:0.733 alpha:1.000];
     [self.view addSubview:self.tableView];
-    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(0));
+    self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).bottomSpaceToView(self.view, flexibleHeight(40));
 }
 
 - (void)handleAddCalled:(UIButton *)sender {
@@ -129,23 +129,6 @@
 
 
 #pragma mark --UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return flexibleHeight(5);
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return flexibleHeight(5);
-}
-
-- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor colorWithWhite:0.818 alpha:1.000];
-    return view;
-}
-- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor colorWithWhite:0.818 alpha:1.000];
-    return view;
-}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BmobObject *obj = self.dataSource[indexPath.section];
     InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];

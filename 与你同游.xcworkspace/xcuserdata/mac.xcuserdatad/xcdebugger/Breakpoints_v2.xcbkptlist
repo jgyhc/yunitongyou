@@ -19,12 +19,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x4e0e;&#x4f60;&#x540c;&#x6e38;/&#x4e3b;&#x9875;&#x9762;/&#x6e38;&#x8bb0;/&#x6e38;&#x8bb0;&#x5217;&#x8868;/TravelsViewController.m"
-            timestampString = "479805980.076396"
+            filePath = "&#x4e0e;&#x4f60;&#x540c;&#x6e38;/&#x4e3b;&#x9875;&#x9762;/&#x53d1;&#x8d77;/InitiateViewController.m"
+            timestampString = "479805464.833012"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
             landmarkType = "5">
          </BreakpointContent>
@@ -35,13 +35,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x4e0e;&#x4f60;&#x540c;&#x6e38;/&#x4e3b;&#x9875;&#x9762;/&#x53d1;&#x8d77;/InitiateViewController.m"
-            timestampString = "479805464.833012"
+            filePath = "&#x4e0e;&#x4f60;&#x540c;&#x6e38;/&#x4e3b;&#x9875;&#x9762;/&#x6e38;&#x8bb0;/&#x6dfb;&#x52a0;&#x6e38;&#x8bb0;/AddTravelViewController.m"
+            timestampString = "481604637.809772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "-buttonClick:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x4e0e;&#x4f60;&#x540c;&#x6e38;/&#x4e3b;&#x9875;&#x9762;/&#x6e38;&#x8bb0;/&#x6dfb;&#x52a0;&#x6e38;&#x8bb0;/AddTravelViewController.m"
+            timestampString = "481604627.931695"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "-buttonClick:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -3,6 +3,10 @@
 #import "TravelNotesTableViewCell.h"
 #import "LaunchTableViewCell.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
+#import "Collection.h"
+#import "MJRefresh.h"
+#import "RecordDetailViewController.h"
+#import "InitiateDetailViewController.h"
 
 @interface MyCollectionViewController ()<TopSelectButtonViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) TopSelectButtonView * selectButton;
@@ -16,6 +20,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUserInterface];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:NO];
+    [self getcollection:self.type];
 }
 
 - (void)initUserInterface {
@@ -32,30 +41,83 @@
     [self.view addSubview:self.selectButton];
     self.selectButton.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.view, flexibleHeight(64)).heightIs(flexibleHeight(45));
     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.selectButton, 0).bottomEqualToView(self.view);
+     [self setupRefresh];
+}
+
+#pragma mark --刷新
+- (void)setupRefresh
+{
     
-    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self getcollection:self.type];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView.mj_footer endRefreshing];
+        });
+    }];
 }
 
 
+- (void)getcollection:(int)type{
+    [self.dataSource removeAllObjects];
+    [Collection getCollectionSuccess:^(NSArray *collections) {
+        [self.dataSource addObjectsFromArray:collections];
+        [self.tableView reloadData];
+  } type:type failure:^(NSError *error) {
+      
+  }];
+}
 
-
+- (void)clickButton:(UIButton *)sender{
+    if (sender == self.selectButton.rightsideButton) {
+        self.type =1;
+        [self getcollection:self.type];
+    }
+    else{
+        self.type = 0;
+        [self getcollection:self.type];
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    return 1;
     
 }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.dataSource.count;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Class currentClass = [TravelNotesTableViewCell class];
-    TravelNotesTableViewCell * cell = nil;
+    Class currentClass = [LaunchTableViewCell class];
+    LaunchTableViewCell * cell = nil;
     if (self.type == 1) {
-        currentClass = [LaunchTableViewCell class];
+        currentClass = [TravelNotesTableViewCell class];
     }
     cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
-    BmobObject *model = self.dataSource[indexPath.row];
+    BmobObject *model = self.dataSource[indexPath.section];
     cell.obj = model;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BmobObject *obj = self.dataSource[indexPath.section];
+     BmobObject * user = [obj objectForKey:@"user"];
+    if (self.type == 1) {
+        RecordDetailViewController * detail = [[RecordDetailViewController alloc]init];
+        detail.travelObject = obj;
+        detail.userObject = user;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+    else{
+        InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
+        IVC.calledID = obj.objectId;
+        IVC.userObject = user;
+        IVC.calledObject = obj;
+        [self.navigationController pushViewController:IVC animated:YES];
+    }
+   
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -36,7 +36,7 @@
 
 - (void)initUserInterface {
     [self initBackButton];
-    [self initNavTitle:@"我的发起"];
+    [self initNavTitle:@"我的活动"];
     self.type = 0;
     self.view.backgroundColor = [UIColor whiteColor];
     

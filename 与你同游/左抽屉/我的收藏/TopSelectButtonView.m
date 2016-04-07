@@ -65,11 +65,11 @@
         
         [UIView animateWithDuration:0.3 animations:^{
             self.separatationLineView.sd_layout.centerXIs(flexibleWidth(WIDTH / 4 * 3));
-            [self updateLayout];
             [self.separatationLineView updateLayout];
+             [self updateLayout];
         }];
     }
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(buttonClickEvent:)]) {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(clickButton:)]) {
         [self.delegate clickButton:sender];
     }
 }
