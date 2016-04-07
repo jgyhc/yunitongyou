@@ -174,6 +174,15 @@
 		72DCD1F51C058C6900BFDB6D /* BaseGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */; };
 		72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C5981C9AE0F600C57A24 /* JoinInCell.m */; };
 		72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */; };
+		72F73D2A1CB6366E00EA4A0E /* GetPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = 72F73D201CB6366E00EA4A0E /* GetPhotos.m */; };
+		72F73D2B1CB6366E00EA4A0E /* GetPhotosVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 72F73D221CB6366E00EA4A0E /* GetPhotosVC.m */; };
+		72F73D2C1CB6366E00EA4A0E /* GetPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72F73D241CB6366E00EA4A0E /* GetPhotoView.m */; };
+		72F73D2D1CB6366E00EA4A0E /* PhotosModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 72F73D261CB6366E00EA4A0E /* PhotosModel.m */; };
+		72F73D2E1CB6366E00EA4A0E /* DidImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72F73D291CB6366E00EA4A0E /* DidImageCollectionViewCell.m */; };
+		72F73D311CB6381500EA4A0E /* AddTravelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 72F73D301CB6381500EA4A0E /* AddTravelVC.m */; };
+		72F73D371CB660A100EA4A0E /* capture.png in Resources */ = {isa = PBXBuildFile; fileRef = 72F73D351CB660A100EA4A0E /* capture.png */; };
+		72F73D381CB660A100EA4A0E /* SwitchCamera.png in Resources */ = {isa = PBXBuildFile; fileRef = 72F73D361CB660A100EA4A0E /* SwitchCamera.png */; };
+		72F73D3C1CB66BBA00EA4A0E /* XHToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 72F73D3B1CB66BBA00EA4A0E /* XHToast.m */; };
 		818282CFDFFDDFF1283A59A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC4622076ADF4F0085F643B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -463,6 +472,22 @@
 		72E8C5981C9AE0F600C57A24 /* JoinInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinInCell.m; sourceTree = "<group>"; };
 		72E8C59D1C9AEB0700C57A24 /* ICommentsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICommentsCell.h; sourceTree = "<group>"; };
 		72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICommentsCell.m; sourceTree = "<group>"; };
+		72F73D1F1CB6366E00EA4A0E /* GetPhotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPhotos.h; sourceTree = "<group>"; };
+		72F73D201CB6366E00EA4A0E /* GetPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPhotos.m; sourceTree = "<group>"; };
+		72F73D211CB6366E00EA4A0E /* GetPhotosVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPhotosVC.h; sourceTree = "<group>"; };
+		72F73D221CB6366E00EA4A0E /* GetPhotosVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPhotosVC.m; sourceTree = "<group>"; };
+		72F73D231CB6366E00EA4A0E /* GetPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPhotoView.h; sourceTree = "<group>"; };
+		72F73D241CB6366E00EA4A0E /* GetPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPhotoView.m; sourceTree = "<group>"; };
+		72F73D251CB6366E00EA4A0E /* PhotosModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosModel.h; sourceTree = "<group>"; };
+		72F73D261CB6366E00EA4A0E /* PhotosModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosModel.m; sourceTree = "<group>"; };
+		72F73D281CB6366E00EA4A0E /* DidImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DidImageCollectionViewCell.h; sourceTree = "<group>"; };
+		72F73D291CB6366E00EA4A0E /* DidImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DidImageCollectionViewCell.m; sourceTree = "<group>"; };
+		72F73D2F1CB6381500EA4A0E /* AddTravelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTravelVC.h; sourceTree = "<group>"; };
+		72F73D301CB6381500EA4A0E /* AddTravelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTravelVC.m; sourceTree = "<group>"; };
+		72F73D351CB660A100EA4A0E /* capture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capture.png; sourceTree = "<group>"; };
+		72F73D361CB660A100EA4A0E /* SwitchCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchCamera.png; sourceTree = "<group>"; };
+		72F73D3A1CB66BBA00EA4A0E /* XHToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHToast.h; sourceTree = "<group>"; };
+		72F73D3B1CB66BBA00EA4A0E /* XHToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHToast.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -749,6 +774,8 @@
 				2462C65F1BECD522001714C8 /* 选择照片 */,
 				24600CBC1BEDDCDC00C3C3B9 /* AddTravelViewController.h */,
 				24600CBD1BEDDCDC00C3C3B9 /* AddTravelViewController.m */,
+				72F73D2F1CB6381500EA4A0E /* AddTravelVC.h */,
+				72F73D301CB6381500EA4A0E /* AddTravelVC.m */,
 				049E7B991C980BAB00D01E5B /* WGS84TOGCJ02.h */,
 				049E7B9A1C980BAB00D01E5B /* WGS84TOGCJ02.m */,
 			);
@@ -801,6 +828,8 @@
 				2462C5F41BECA99A001714C8 /* 用户未登录.png */,
 				2462C6531BECB3ED001714C8 /* 设置.png */,
 				047F792B1CAFAD2F0092D4D9 /* 登录背景图.jpg */,
+				72F73D351CB660A100EA4A0E /* capture.png */,
+				72F73D361CB660A100EA4A0E /* SwitchCamera.png */,
 			);
 			path = "个人中心";
 			sourceTree = "<group>";
@@ -862,6 +891,7 @@
 		2462C65F1BECD522001714C8 /* 选择照片 */ = {
 			isa = PBXGroup;
 			children = (
+				72F73D1E1CB6366E00EA4A0E /* 获取系统照片 */,
 				2462C6621BECD522001714C8 /* 自定义collectionCell */,
 				24600CB81BEDA19500C3C3B9 /* 读取系统照片 */,
 				2462C6601BECD522001714C8 /* ChooseImageListViewController.h */,
@@ -968,6 +998,7 @@
 		2497BA211BCCC43600251058 /* 屏幕适配工具 */ = {
 			isa = PBXGroup;
 			children = (
+				72F73D391CB66BBA00EA4A0E /* XHToast */,
 				246FB4551BD472CC001EA853 /* InsetsLabel.h */,
 				246FB4561BD472CC001EA853 /* InsetsLabel.m */,
 				24115E6A1BCE3FAA00C3A814 /* AdaptScreenHelp.h */,
@@ -1278,6 +1309,40 @@
 			path = "已加入的小伙伴";
 			sourceTree = "<group>";
 		};
+		72F73D1E1CB6366E00EA4A0E /* 获取系统照片 */ = {
+			isa = PBXGroup;
+			children = (
+				72F73D1F1CB6366E00EA4A0E /* GetPhotos.h */,
+				72F73D201CB6366E00EA4A0E /* GetPhotos.m */,
+				72F73D211CB6366E00EA4A0E /* GetPhotosVC.h */,
+				72F73D221CB6366E00EA4A0E /* GetPhotosVC.m */,
+				72F73D231CB6366E00EA4A0E /* GetPhotoView.h */,
+				72F73D241CB6366E00EA4A0E /* GetPhotoView.m */,
+				72F73D251CB6366E00EA4A0E /* PhotosModel.h */,
+				72F73D261CB6366E00EA4A0E /* PhotosModel.m */,
+				72F73D271CB6366E00EA4A0E /* 已选择的照片 */,
+			);
+			path = "获取系统照片";
+			sourceTree = "<group>";
+		};
+		72F73D271CB6366E00EA4A0E /* 已选择的照片 */ = {
+			isa = PBXGroup;
+			children = (
+				72F73D281CB6366E00EA4A0E /* DidImageCollectionViewCell.h */,
+				72F73D291CB6366E00EA4A0E /* DidImageCollectionViewCell.m */,
+			);
+			path = "已选择的照片";
+			sourceTree = "<group>";
+		};
+		72F73D391CB66BBA00EA4A0E /* XHToast */ = {
+			isa = PBXGroup;
+			children = (
+				72F73D3A1CB66BBA00EA4A0E /* XHToast.h */,
+				72F73D3B1CB66BBA00EA4A0E /* XHToast.m */,
+			);
+			path = XHToast;
+			sourceTree = "<group>";
+		};
 		D516993C0A2549935C6841C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1338,12 +1403,12 @@
 		245B59D61BCB8BE80003EBA7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = LiuCong;
 				TargetAttributes = {
 					245B59DD1BCB8BE80003EBA7 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 936M5Y4RHX;
+						DevelopmentTeam = 7224X3X442;
 					};
 					245B59F61BCB8BE80003EBA7 = {
 						CreatedOnToolsVersion = 6.3;
@@ -1395,6 +1460,7 @@
 				2462C6571BECBDF0001714C8 /* icon.png in Resources */,
 				2462C63F1BECA99A001714C8 /* 空白图片.jpg in Resources */,
 				2462C6491BECA99A001714C8 /* 未分享.png in Resources */,
+				72F73D381CB660A100EA4A0E /* SwitchCamera.png in Resources */,
 				2462C6421BECA99A001714C8 /* 未收藏.png in Resources */,
 				2462C6291BECA99A001714C8 /* 我的加入.png in Resources */,
 				24600CB11BED88D400C3C3B9 /* 选照片.png in Resources */,
@@ -1436,6 +1502,7 @@
 				2462C6361BECA99A001714C8 /* 放大镜.png in Resources */,
 				046719F21C9FB8E6003CE05B /* 无头像.png in Resources */,
 				2462C6201BECA99A001714C8 /* 发起未选中.png in Resources */,
+				72F73D371CB660A100EA4A0E /* capture.png in Resources */,
 				72DC50551CB52B1000A7DB7C /* 重庆.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1517,6 +1584,7 @@
 				047F79201CAFABAA0092D4D9 /* RegisterViewController.m in Sources */,
 				722C36841CAD5577008CE650 /* MLPhotoBrowserDatas.m in Sources */,
 				722D84BC1CA6610200D4CC25 /* UIView+SDExtension.m in Sources */,
+				72F73D2A1CB6366E00EA4A0E /* GetPhotos.m in Sources */,
 				72657E271C99906B00CC08AD /* SearchViewController.m in Sources */,
 				047F79181CAFABAA0092D4D9 /* PreviousForgetViewController.m in Sources */,
 				248D84C41BDFA4EF008C3419 /* FirstView.m in Sources */,
@@ -1526,6 +1594,7 @@
 				722C36831CAD5577008CE650 /* MLPhotoBrowserCustomToolBarView.m in Sources */,
 				722C36851CAD5577008CE650 /* MLPhotoBrowserPhoto.m in Sources */,
 				047F793C1CAFB2310092D4D9 /* TravelModel.m in Sources */,
+				72F73D3C1CB66BBA00EA4A0E /* XHToast.m in Sources */,
 				24BDA5851BF213D100C84CAF /* RecordDetailViewController.m in Sources */,
 				72657E141C99906B00CC08AD /* BottomButtonsView.m in Sources */,
 				047F793F1CAFB2420092D4D9 /* UserModel.m in Sources */,
@@ -1549,15 +1618,18 @@
 				24600CBB1BEDA1D300C3C3B9 /* ReloadImagesFromLibrary.m in Sources */,
 				2470A6751BDA688800CFA21C /* SearchPopWindow.m in Sources */,
 				2470A6741BDA688800CFA21C /* MyPopWindow.m in Sources */,
+				72F73D311CB6381500EA4A0E /* AddTravelVC.m in Sources */,
 				0467A34D1CAFC27F00D799AF /* TopSelectButtonView.m in Sources */,
 				722D84B71CA6610200D4CC25 /* TAAnimatedDotView.m in Sources */,
 				0480C33E1CA3D502002FEE5B /* CommentView.m in Sources */,
 				2497BA201BCCC37400251058 /* LcTabarViewController.m in Sources */,
 				722D84B81CA6610200D4CC25 /* TADotView.m in Sources */,
 				722D84B91CA6610200D4CC25 /* TAPageControl.m in Sources */,
+				72F73D2D1CB6366E00EA4A0E /* PhotosModel.m in Sources */,
 				247D44C01BD24F65006F36D5 /* PhotoSelect.m in Sources */,
 				722D84BA1CA6610200D4CC25 /* SDCollectionViewCell.m in Sources */,
 				2497BA1A1BCCC37400251058 /* ControllerManager.m in Sources */,
+				72F73D2C1CB6366E00EA4A0E /* GetPhotoView.m in Sources */,
 				049E7B9B1C980BAB00D01E5B /* WGS84TOGCJ02.m in Sources */,
 				72657E161C99906B00CC08AD /* InitiateViewController.m in Sources */,
 				722D84C61CA6893C00D4CC25 /* ScenicDetailView.m in Sources */,
@@ -1583,6 +1655,7 @@
 				04D354611C88380600DFCB1C /* SDBrowserImageView.m in Sources */,
 				7275C63D1CA2C4F700BD81FF /* LBottomView.m in Sources */,
 				245B59E41BCB8BE80003EBA7 /* main.m in Sources */,
+				72F73D2B1CB6366E00EA4A0E /* GetPhotosVC.m in Sources */,
 				7288E1141C774B7800F554D0 /* Comments.m in Sources */,
 				047F79221CAFABAA0092D4D9 /* ChangePwViewController.m in Sources */,
 				047F791E1CAFABAA0092D4D9 /* MyActivitiesViewController.m in Sources */,
@@ -1591,6 +1664,7 @@
 				722C36881CAD5577008CE650 /* MLPhotoBrowserPhotoView.m in Sources */,
 				047F79421CAFB2580092D4D9 /* ScenicSpotmodei.m in Sources */,
 				047F79231CAFABAA0092D4D9 /* SetViewController.m in Sources */,
+				72F73D2E1CB6366E00EA4A0E /* DidImageCollectionViewCell.m in Sources */,
 				04DA39791CAE817600F801DB /* SelectImageViewController.m in Sources */,
 				722C36921CAD5668008CE650 /* DACircularProgressView.m in Sources */,
 				722D84C31CA672F800D4CC25 /* ScenicViewController.m in Sources */,
@@ -1737,9 +1811,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 34CFEACCB7830DBA9ED922F1 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -1751,8 +1825,9 @@
 				INFOPLIST_FILE = "与你同游/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou1;
+				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
@@ -1762,9 +1837,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4BA2AD9CDA8EED50A1306C8F /* Pods.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -1776,8 +1851,9 @@
 				INFOPLIST_FILE = "与你同游/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou1;
+				PRODUCT_BUNDLE_IDENTIFIER = yunitongyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};

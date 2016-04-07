@@ -98,7 +98,7 @@ static CGFloat screenWidth;
     [inputSession addInput:deviceInput];
     [inputSession commitConfiguration];
     
-    
+    self.view.backgroundColor = [UIColor blackColor];
     previewBGView = [[UIView alloc] initWithFrame:self.view.bounds];
     captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:inputSession];
     captureVideoPreviewLayer.frame = CGRectMake(0, 130/2, screenWidth, screenHeight-138/2-70);
@@ -115,7 +115,7 @@ static CGFloat screenWidth;
     [inputSession commitConfiguration];
 }
 
--(void)configView
+- (void)configView
 {
     cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelButton setTitle:@"取消" forState:UIControlStateNormal];

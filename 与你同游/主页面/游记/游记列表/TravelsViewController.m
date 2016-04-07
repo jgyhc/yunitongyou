@@ -26,7 +26,7 @@
 #import "CommentViewController.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"//cell高度自适应
 
-
+#import "AddTravelVC.h"
 
 
 @interface TravelsViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -221,7 +221,10 @@
         [self message:@"您还未登录喔！"];
         return;
     }
-    AddTravelViewController * addVC = [[AddTravelViewController alloc]init];
+//    
+//    AddTravelViewController * addVC = [[AddTravelViewController alloc]init];
+//    [self.navigationController pushViewController:addVC animated:YES];
+    AddTravelVC *addVC = [[AddTravelVC alloc] init];
     [self.navigationController pushViewController:addVC animated:YES];
 }
 

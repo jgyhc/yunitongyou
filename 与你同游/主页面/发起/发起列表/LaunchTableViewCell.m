@@ -120,6 +120,13 @@
 	return _userIDLabel;
 }
 
+
+- (void)handelEvent {
+    if (_pdetailBlock) {
+        self.pdetailBlock(_indexPath);
+    }
+}
+
 - (void)setObj:(BmobObject *)obj {
     _obj = obj;
     BmobObject *user = [obj objectForKey:@"user"];
@@ -208,6 +215,7 @@
 	if(_UserHeaderimageView == nil) {
         _UserHeaderimageView =  [[UIButton alloc]init];
         _UserHeaderimageView.layer.masksToBounds = YES;
+        [_UserHeaderimageView addTarget:self action:@selector(handelEvent) forControlEvents:UIControlEventTouchUpInside];
 	}
 	return _UserHeaderimageView;
 }

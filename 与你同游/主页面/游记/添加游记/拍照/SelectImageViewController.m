@@ -86,10 +86,6 @@ static CGFloat screenHeight;
     rectView.layer.borderColor = [UIColor whiteColor].CGColor;
     rectView.layer.borderWidth = 1.0;
     [self.view addSubview:rectView];
-
-
-    
-    
     
     thumbImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, screenHeight-150, 150, 150)];
     thumbImageView.hidden = YES;

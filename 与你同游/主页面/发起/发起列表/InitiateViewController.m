@@ -16,6 +16,7 @@
 #import "UITableView+SDAutoTableViewCellHeight.h"
 #import "Called.h"
 #import "ThumbUp.h"
+#import "PersonalViewController.h"
 @interface InitiateViewcontroller ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -133,6 +134,12 @@
         }
         
     }];
+    [cell setPdetailBlock:^(NSIndexPath *index) {
+        PersonalViewController *PVC = [[PersonalViewController alloc] init];
+        PVC.userInfo = [obj objectForKey:@"user"];
+        PVC.type = 1;
+        [self presentViewController:PVC animated:YES completion:nil];
+    }];
     
     return cell;
 }
@@ -157,9 +164,7 @@
 
 
 
-- (void)handleEventHearImage:(UIButton *)sender {
-    
-}
+
 
 //
 //#pragma mark --UITableViewDelegate

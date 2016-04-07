@@ -123,7 +123,6 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
             [assetLibrary assetForURL:self.selectedArrayUrl[i] resultBlock:^(ALAsset *asset) {
                 UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
                 [self.imageArray addObject:image];
-                
             }failureBlock:^(NSError *error) {
                 
             }];
@@ -406,6 +405,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     }
     return _load;
 }
+
 - (UIButton *)positionButton{
     if (!_positionButton) {
         _positionButton = [[UIButton alloc]initWithFrame:flexibleFrame(CGRectMake(10, self.collectionView.frame.origin.y + self.collectionView.frame.size.height, 356, 50), NO)];
