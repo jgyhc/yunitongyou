@@ -234,9 +234,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     [self.view endEditing:YES];
-
-    
-    
     //存入本地搜索历史记录
     self.buttomArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"history"] mutableCopy];
     

@@ -161,6 +161,14 @@
 		7282F5211CA40A290097DAFD /* UIAlertController+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 7282F5201CA40A290097DAFD /* UIAlertController+Blocks.m */; };
 		7288E10E1C77455600F554D0 /* Called.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E10D1C77455600F554D0 /* Called.m */; };
 		7288E1141C774B7800F554D0 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288E1131C774B7800F554D0 /* Comments.m */; };
+		72DC504E1CB52B1000A7DB7C /* 上海.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC50461CB52B1000A7DB7C /* 上海.jpg */; };
+		72DC504F1CB52B1000A7DB7C /* 云南.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC50471CB52B1000A7DB7C /* 云南.jpg */; };
+		72DC50501CB52B1000A7DB7C /* 北京.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC50481CB52B1000A7DB7C /* 北京.jpg */; };
+		72DC50511CB52B1000A7DB7C /* 四川.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC50491CB52B1000A7DB7C /* 四川.jpg */; };
+		72DC50521CB52B1000A7DB7C /* 广西.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC504A1CB52B1000A7DB7C /* 广西.jpg */; };
+		72DC50531CB52B1000A7DB7C /* 江苏.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC504B1CB52B1000A7DB7C /* 江苏.jpg */; };
+		72DC50541CB52B1000A7DB7C /* 海南.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC504C1CB52B1000A7DB7C /* 海南.jpg */; };
+		72DC50551CB52B1000A7DB7C /* 重庆.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72DC504D1CB52B1000A7DB7C /* 重庆.jpg */; };
 		72DCD1F51C058C6900BFDB6D /* BaseGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */; };
 		72E8C5991C9AE0F600C57A24 /* JoinInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C5981C9AE0F600C57A24 /* JoinInCell.m */; };
 		72E8C59F1C9AEB0700C57A24 /* ICommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72E8C59E1C9AEB0700C57A24 /* ICommentsCell.m */; };
@@ -437,6 +445,14 @@
 		7288E10D1C77455600F554D0 /* Called.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Called.m; sourceTree = "<group>"; };
 		7288E1121C774B7800F554D0 /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
 		7288E1131C774B7800F554D0 /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
+		72DC50461CB52B1000A7DB7C /* 上海.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "上海.jpg"; sourceTree = "<group>"; };
+		72DC50471CB52B1000A7DB7C /* 云南.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "云南.jpg"; sourceTree = "<group>"; };
+		72DC50481CB52B1000A7DB7C /* 北京.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "北京.jpg"; sourceTree = "<group>"; };
+		72DC50491CB52B1000A7DB7C /* 四川.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "四川.jpg"; sourceTree = "<group>"; };
+		72DC504A1CB52B1000A7DB7C /* 广西.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "广西.jpg"; sourceTree = "<group>"; };
+		72DC504B1CB52B1000A7DB7C /* 江苏.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "江苏.jpg"; sourceTree = "<group>"; };
+		72DC504C1CB52B1000A7DB7C /* 海南.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "海南.jpg"; sourceTree = "<group>"; };
+		72DC504D1CB52B1000A7DB7C /* 重庆.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "重庆.jpg"; sourceTree = "<group>"; };
 		72DCD1F31C058C6900BFDB6D /* BaseGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseGradientView.h; sourceTree = "<group>"; };
 		72DCD1F41C058C6900BFDB6D /* BaseGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseGradientView.m; sourceTree = "<group>"; };
 		72E8C5971C9AE0F600C57A24 /* JoinInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinInCell.h; sourceTree = "<group>"; };
@@ -738,6 +754,7 @@
 		2462C5E21BECA99A001714C8 /* 图片 */ = {
 			isa = PBXGroup;
 			children = (
+				72DC50451CB52B1000A7DB7C /* 景点 */,
 				2462C6551BECBDF0001714C8 /* icon.png */,
 				2462C6561BECBDF0001714C8 /* logo.png */,
 				2462C5E31BECA99A001714C8 /*  标签栏 */,
@@ -1220,6 +1237,21 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		72DC50451CB52B1000A7DB7C /* 景点 */ = {
+			isa = PBXGroup;
+			children = (
+				72DC50461CB52B1000A7DB7C /* 上海.jpg */,
+				72DC50471CB52B1000A7DB7C /* 云南.jpg */,
+				72DC50481CB52B1000A7DB7C /* 北京.jpg */,
+				72DC50491CB52B1000A7DB7C /* 四川.jpg */,
+				72DC504A1CB52B1000A7DB7C /* 广西.jpg */,
+				72DC504B1CB52B1000A7DB7C /* 江苏.jpg */,
+				72DC504C1CB52B1000A7DB7C /* 海南.jpg */,
+				72DC504D1CB52B1000A7DB7C /* 重庆.jpg */,
+			);
+			path = "景点";
+			sourceTree = "<group>";
+		};
 		72E8C5921C9ADFB000C57A24 /* 评论 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1360,12 +1392,17 @@
 				2462C64A1BECA99A001714C8 /* 未点赞.png in Resources */,
 				2462C6211BECA99A001714C8 /* 发起选中.png in Resources */,
 				24B320D11BD77B2E00FB622A /* SMS_SDKLocalizable.strings in Resources */,
+				72DC50531CB52B1000A7DB7C /* 江苏.jpg in Resources */,
 				24600CB71BED8BAB00C3C3B9 /* 照片选中.png in Resources */,
 				04DC2E791C9698A800B01E42 /* 未定位.png in Resources */,
+				72DC50511CB52B1000A7DB7C /* 四川.jpg in Resources */,
+				72DC50541CB52B1000A7DB7C /* 海南.jpg in Resources */,
 				2462C6511BECA99A001714C8 /* 朝上箭头.png in Resources */,
+				72DC504E1CB52B1000A7DB7C /* 上海.jpg in Resources */,
 				2462C6231BECA99A001714C8 /* 游记未选中.png in Resources */,
 				2462C62A1BECA99A001714C8 /* 我的发起.png in Resources */,
 				2462C62D1BECA99A001714C8 /* 我的评论.png in Resources */,
+				72DC50501CB52B1000A7DB7C /* 北京.jpg in Resources */,
 				2462C61F1BECA99A001714C8 /* tabar.png in Resources */,
 				04D354281C87E84400DFCB1C /* xiangyou.png in Resources */,
 				2462C62E1BECA99A001714C8 /* 用户未登录.png in Resources */,
@@ -1380,14 +1417,17 @@
 				722C36811CAD5577008CE650 /* MLPhotoBrowser.bundle in Resources */,
 				2462C6521BECA99A001714C8 /* 朝下箭头.png in Resources */,
 				2462C6541BECB3ED001714C8 /* 设置.png in Resources */,
+				72DC504F1CB52B1000A7DB7C /* 云南.jpg in Resources */,
 				047F792C1CAFAD2F0092D4D9 /* 登录背景图.jpg in Resources */,
 				245B59EF1BCB8BE80003EBA7 /* Images.xcassets in Resources */,
 				2462C6581BECBDF0001714C8 /* logo.png in Resources */,
 				047F792F1CAFADC70092D4D9 /* 男.png in Resources */,
+				72DC50521CB52B1000A7DB7C /* 广西.jpg in Resources */,
 				2462C6241BECA99A001714C8 /* 游记选中.png in Resources */,
 				2462C6361BECA99A001714C8 /* 放大镜.png in Resources */,
 				046719F21C9FB8E6003CE05B /* 无头像.png in Resources */,
 				2462C6201BECA99A001714C8 /* 发起未选中.png in Resources */,
+				72DC50551CB52B1000A7DB7C /* 重庆.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

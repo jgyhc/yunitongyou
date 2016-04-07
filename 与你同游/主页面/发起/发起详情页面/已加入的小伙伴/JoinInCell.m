@@ -46,21 +46,32 @@
     if (self.replayBlock) {
         self.replayBlock(_indexPath);
     }
-    sender.selected = YES;
-    sender.backgroundColor = [UIColor colorWithRed:0.951 green:1.000 blue:0.971 alpha:1.000];
+    sender.selected = !sender.selected;
+    if (sender.selected == YES) {
+        sender.backgroundColor = [UIColor colorWithRed:0.951 green:1.000 blue:0.971 alpha:1.000];
+    }else {
+         sender.backgroundColor = [UIColor colorWithRed:0.283 green:0.751 blue:0.371 alpha:1.000];
+    }
 }
+
+
 
 - (void)setModel:(BmobObject *)model {
     _model = model;
-
     if (![[model objectForKey:@"username"] isEqualToString:@"还没取昵称哟！"]) {
         self.nameLabel.text = [model objectForKey:@"username"];
     }else {
         self.nameLabel.text = [model objectForKey:@"phoneNumber"];
     }
-
+    
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model objectForKey:@"head_portraits"]] placeholderImage:[UIImage imageNamed:@"无头像.png"]];
     [self.nameLabel sizeToFit];
+    
+}
+
+- (void)member {
+    self.switchButton.selected = YES;
+    self.switchButton.backgroundColor = [UIColor colorWithRed:0.951 green:1.000 blue:0.971 alpha:1.000];
 }
 
 - (UILabel *)nameLabel {

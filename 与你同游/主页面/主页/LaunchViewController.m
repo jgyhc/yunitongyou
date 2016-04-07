@@ -29,17 +29,15 @@
 @property (nonatomic, strong) NSArray *addressArray;
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) SearchResultView *resultView;
-@property (nonatomic, strong) NSArray *collectionData;
 @property (nonatomic, strong) LoadingView *load;
 
 @property (nonatomic, strong) NSArray *urls;
+@property (nonatomic, strong) ScenicSpot *scenicSpot;
 @end
 
 @implementation LaunchViewController
 
-- (void)dealloc {
-    [self.scenic removeObserver:self forKeyPath:@"scenicSpotSearchResults"];
-}
+
 
 - (void)addAD {
     CGFloat w = self.view.bounds.size.width;
@@ -80,8 +78,6 @@
 
     self.view.backgroundColor = [UIColor colorWithWhite:0.950 alpha:1.000];
 
-    [self.scenic addObserver:self forKeyPath:@"scenicSpotSearchResults" options:NSKeyValueObservingOptionNew context:nil];
-
     [self initUserInterface];
     [self initCollectionView];
     
@@ -101,33 +97,12 @@
     [self.navigationController pushViewController:SVc animated:YES];
 }
 
-#pragma mark -- KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    if ([keyPath isEqualToString:@"scenicSpotSearchResults"]) {
-        NSLog(@"%@", self.scenic.scenicSpotSearchResults);
-        
-        self.collectionData = self.scenic.scenicSpotSearchResults[@"showapi_res_body"][@"pagebean"][@"contentlist"];
-//        //        NSLog(@"%@", self.dataSource);
-        [[NSUserDefaults standardUserDefaults]setObject:self.collectionData forKey:@"searchResult"];
-//        //        NSLog(@"%ld", self.dataSource.count);
-        [self.parentViewController.view addSubview:self.resultView];
-        [UIView animateWithDuration:0.7 animations:^{
-            CGRect frame = _resultView.frame;
-            frame.origin.y = flexibleHeight(64);
-            _resultView.frame = frame;
-        }];
-        [self.rightButton removeTarget:self action:@selector(handleEventRightButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self.rightButton setImage:nil forState:UIControlStateNormal];
-        [self initRightButtonEvent:@selector(cancelEvent) title:@"取消"];
-        [self.load hide];
-    }
-}
+
 
 - (void)initUserInterface {
     UILabel *label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, 80, 20), NO)];
     label.text = @"热门旅游城市";
-    label.center = flexibleCenter(CGPointMake(50, 215), NO);
+    label.center = flexibleCenter(CGPointMake(50, 185), NO);
     label.font = [UIFont boldSystemFontOfSize:(SCREEN_HEIGHT / 667.0) * 12];
     [self.scrollView addSubview:label];
     
@@ -141,7 +116,7 @@
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     flowLayout.headerReferenceSize = CGSizeMake(originWidth_, 0);
-    self.collectionView = [[UICollectionView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 230, originWidth_, originHeight_ - 125), NO) collectionViewLayout:flowLayout];
+    self.collectionView = [[UICollectionView alloc]initWithFrame:flexibleFrame(CGRectMake(0, 200, originWidth_, originHeight_ - 125), NO) collectionViewLayout:flowLayout];
     //代理
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -205,11 +180,32 @@
 #pragma mark --UICollectionDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"选择%ld", indexPath.row);
-//    ScenicViewController *scenicVC = [[ScenicViewController alloc]init];
-//    [self.navigationController pushViewController:scenicVC animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [self.scenicSpot setSsblock:^(ScenicSpot * scenicSpot) {
+        weakSelf.resultView.list = scenicSpot.showapi_res_body.pagebean.contentlist;
+        [weakSelf.parentViewController.view addSubview:weakSelf.resultView];
+        if (weakSelf.resultView.list.count  == 0) {
+            [weakSelf message:@"对不起，没有找到该景点的数据！"];
+            [weakSelf.load hide];
+        }else {
+            [UIView animateWithDuration:0.7 animations:^{
+                CGRect frame = weakSelf.resultView.frame;
+                frame.origin.y = flexibleHeight(64);
+                weakSelf.resultView.frame = frame;
+            }];
+            [weakSelf.rightButton removeTarget:weakSelf action:@selector(handleEventRightButton:) forControlEvents:UIControlEventTouchUpInside];
+            [weakSelf.rightButton setImage:nil forState:UIControlStateNormal];
+            [weakSelf initRightButtonEvent:@selector(cancelEvent) title:@"取消"];
+            [weakSelf.load hide];
+        }
+    }];
+
     [self.load show];
-    [self.scenic sendAsynchronizedPostRequest:self.addressArray[indexPath.row]];
+    [self.scenicSpot sendAsynchronizedPostRequest:self.addressArray[indexPath.row]];
+//    [self.scenic sendAsynchronizedPostRequest:self.addressArray[indexPath.row]];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+       [self.load hide];
+    });
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -227,10 +223,12 @@
 }
 
 #pragma mark --resultDelegate
-- (void)pushToScenicDetailEvent:(NSMutableDictionary *)dic {
+
+#pragma mark --SearchResultDelegate
+- (void)pushToScenicDetailEvent:(SSContentlist *)list {
     ScenicViewController *scenic = [[ScenicViewController alloc]init];
+    scenic.model = list;
     [self.navigationController pushViewController:scenic animated:YES];
-    scenic.dataSource = dic;
 }
 
 - (void)cancelEvent {
@@ -266,11 +264,13 @@
 }
 
 - (SearchResultView *)resultView {
-    _resultView = [[SearchResultView alloc]init];
-    _resultView.delegate = self;
-    CGRect frame = _resultView.frame;
-    frame.origin.y = flexibleHeight(HEIGHT);
-    _resultView.frame = frame;
+    if (!_resultView) {
+        _resultView = [[SearchResultView alloc]init];
+        _resultView.delegate = self;
+        CGRect frame = _resultView.frame;
+        frame.origin.y = flexibleHeight(HEIGHT);
+        _resultView.frame = frame;
+    }
     return _resultView;
 }
 
@@ -279,6 +279,13 @@
         _load = [[LoadingView alloc]init];
     }
     return _load;
+}
+
+- (ScenicSpot *)scenicSpot {
+	if(_scenicSpot == nil) {
+		_scenicSpot = [[ScenicSpot alloc] init];
+	}
+	return _scenicSpot;
 }
 
 @end

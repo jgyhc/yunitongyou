@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *commentArray;
 @property (nonatomic, strong) NSMutableArray *userArray;
+
+@property (nonatomic, strong) NSMutableArray *memberArray;
 @property (nonatomic, strong) LBottomView *bottomView;
 @property (nonatomic, assign) long type;
 
@@ -57,7 +59,9 @@
 
 - (void)getMemeberList {
     [Called getMemeberWithCalledsID:_calledID Success:^(NSArray *commentArray) {
-        NSLog(@"%@", commentArray);
+        [self.memberArray removeAllObjects];
+        [self.memberArray addObjectsFromArray:commentArray];
+        [self getjoinList];
     } failure:^(NSError *error1) {
         
     }];
@@ -70,13 +74,12 @@
     _Jskip = 0;
     _limit = 15;
     [self getCommentList];
-    [self getjoinList];
     [self getMemeberList];
 }
 
 - (void)getCommentList {
     
-    [Called getCommentsWithLimit:_limit?_limit:10 skip:_skip?_skip:0 type:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
+    [Called getCommentsWithLimit:_limit?_limit:20 skip:_skip?_skip:0 type:0 CalledsID:_calledID Success:^(NSArray *commentArray) {
         _skip = _skip + _limit;
         [self.commentArray addObjectsFromArray:commentArray];
         if (_type == 0) {
@@ -153,10 +156,10 @@
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Class currentClass = [ICommentsCell class];
-    ICommentsCell *cell = nil;
-    if (_type == 1) {
-        currentClass = [JoinInCell class];
+    Class currentClass = [JoinInCell class] ;
+    JoinInCell *cell = nil;
+    if (_type == 0) {
+        currentClass = [ICommentsCell class];
     }
     cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([currentClass class])];
     BmobObject *model = self.dataSource[indexPath.row];
@@ -181,9 +184,8 @@
             [self.navigationController pushViewController:comVC animated:YES];
         }];
     }else {
-
         [cell setReplayBlock:^(NSIndexPath *indexPath) {
-            [Called inviteJoinUserId:model.objectId calledID:_calledID Success:^(BOOL isSuccess) {
+        [Called inviteJoinUserId:model.objectId calledID:_calledID Success:^(BOOL isSuccess) {
                 if (isSuccess) {
                     [self message:@"小伙伴已经成为您的队友！"];
                 }
@@ -191,7 +193,12 @@
                 
             }];
         }];
-    
+        for (int i = 0; i < self.memberArray.count; i ++) {
+            BmobObject *member = self.memberArray[i];
+            if (member.objectId == model.objectId) {
+                [cell member];
+            }
+        }
     }
     return cell;
 }
@@ -296,6 +303,13 @@
         _bottomView.delegate = self;
 	}
 	return _bottomView;
+}
+
+- (NSMutableArray *)memberArray {
+	if(_memberArray == nil) {
+		_memberArray = [[NSMutableArray alloc] init];
+	}
+	return _memberArray;
 }
 
 @end

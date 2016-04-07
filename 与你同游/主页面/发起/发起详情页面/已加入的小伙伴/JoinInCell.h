@@ -16,6 +16,6 @@
  *  是否显示后面的同意按钮
  */
 - (void)isText;
-
+- (void)member;
 
 @end
