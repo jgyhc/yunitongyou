@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <BmobSDK/Bmob.h>
-typedef void (^collection)(int type);
+typedef void (^collection)(NSInteger type);
 @interface LaunchTableViewCell : UITableViewCell
 @property (nonatomic, strong) BmobObject *obj;
 @property (nonatomic, strong) NSIndexPath *indexPath;

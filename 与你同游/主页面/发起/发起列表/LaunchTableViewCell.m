@@ -99,7 +99,7 @@
 
 - (void)handldTapEvent:(UITapGestureRecognizer *)sender {
     if (self.collectionblock) {
-        self.collectionblock(1);
+        self.collectionblock(sender.view.tag - 300);
     }
 }
 
@@ -153,7 +153,6 @@
             UILabel *label = [[UILabel alloc]init];
             label.textColor = [UIColor colorWithWhite:0.364 alpha:1.000];
             label.font = [UIFont boldSystemFontOfSize:flexibleHeight(14)];
-            label.text = @"重庆  ---->    香格里拉";
             label;
         });
 	}
@@ -168,7 +167,6 @@
             UILabel *label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(200, 26, 260, 30), NO)];
             label.textColor = [UIColor colorWithWhite:0.723 alpha:1.000];
             label.font = [UIFont boldSystemFontOfSize:flexibleHeight(12)];
-            label.text = @"2017-1-2         2017-2-3";
             label;
         });
 	}
@@ -210,7 +208,6 @@
 	if(_UserHeaderimageView == nil) {
         _UserHeaderimageView =  [[UIButton alloc]init];
         _UserHeaderimageView.layer.masksToBounds = YES;
-        _UserHeaderimageView.backgroundColor = [UIColor blueColor];
 	}
 	return _UserHeaderimageView;
 }
@@ -223,7 +220,6 @@
             label.textAlignment = NSTextAlignmentLeft;
             label.textColor = [UIColor colorWithWhite:0.601 alpha:1.000];
             label.font = [UIFont boldSystemFontOfSize:(SCREEN_HEIGHT / 667.0) * 14];
-            label.text = @"开门呀开门呀开门呀别躲在里面不出声开门呀开门呀开门呀别躲在里面不出声开门呀开门呀开门呀别躲在里面不出声开门呀开门呀开门呀别躲在里面不出声开门呀开门呀开门呀别躲在里面不出声开门呀开门呀开门呀别躲在里面不出声";
             label;
         });
         

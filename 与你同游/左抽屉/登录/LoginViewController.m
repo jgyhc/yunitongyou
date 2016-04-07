@@ -126,7 +126,8 @@
             [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"phoneNumber"] forKey:@"phoneNumber"];
             [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"password"] forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] setObject:self.user.loginUserData.objectId  forKey:@"objectId"];
-          [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"username"]  forKey:@"username"];
+            [[NSUserDefaults standardUserDefaults] setObject:[self.user.loginUserData objectForKey:@"username"]  forKey:@"username"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.user.loginUserData.objectId  forKey:@"userID"];
             
             [[NSUserDefaults standardUserDefaults] setObject:@"in" forKey:@"loginState"];
             [self.navigationController popToRootViewControllerAnimated:YES];

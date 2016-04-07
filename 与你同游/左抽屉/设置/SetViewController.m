@@ -72,6 +72,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"objectId"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginState"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userID"];
     [self.navigationController popToRootViewControllerAnimated:YES];
 
 }

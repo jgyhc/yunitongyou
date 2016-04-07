@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
 #import "Called.h"
+#import "ThumbUp.h"
 @interface InitiateViewcontroller ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -49,6 +50,14 @@
     [self initPersonButton];
     
 }
+
+- (BOOL)isLogin {
+    if (UserID) {
+        return YES;
+    }else {
+        return NO;
+    }
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:NO];
     if (self.dataSource.count > 0) {
@@ -65,7 +74,14 @@
 
 }
 
+- (void)ThumbUp:(NSString *)ID {
+    [ThumbUp thumUpWithID:ID type:0 success:^(NSString *commentID) {
+        
+    } failure:^(NSError *error1) {
+        
+    }];
 
+}
 
 - (void)loadNewData {
 //    [self.calledModel queryTheCalledlList];
@@ -100,6 +116,24 @@
     LaunchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     BmobObject *obj = self.dataSource[indexPath.section];
     cell.obj = obj;
+
+    [cell buttonCollection:^(NSInteger type) {
+        if ([self isLogin]) {
+            if (type == 0) {
+                [self ThumbUp:obj.objectId];
+            }
+            if (type == 1) {
+                
+            }
+            if (type == 2) {
+                
+            }
+        }else {
+            [self message:@"请先登录"];
+        }
+        
+    }];
+    
     return cell;
 }
 
@@ -127,47 +161,19 @@
     
 }
 
+//
+//#pragma mark --UITableViewDelegate
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    BmobObject *obj = self.dataSource[indexPath.section];
+//    InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
+//    IVC.calledID = obj.objectId;
+//    BmobObject *user = [obj objectForKey:@"user"];
+//    IVC.userObject = user;
+//    IVC.calledObject = obj;
+//    [self.navigationController pushViewController:IVC animated:YES];
+//}
 
-#pragma mark --UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BmobObject *obj = self.dataSource[indexPath.section];
-    InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
-    IVC.calledID = obj.objectId;
-    BmobObject *user = [obj objectForKey:@"user"];
-    IVC.userObject = user;
-    IVC.calledObject = obj;
-    [self.navigationController pushViewController:IVC animated:YES];
-}
-
-- (NSString *) compareCurrentTime:(NSDate *) compareDate {
-    NSTimeInterval  timeInterval = [compareDate timeIntervalSinceNow];
-    timeInterval = - timeInterval;
-    long temp = 0;
-    NSString *result = nil;
-    if (timeInterval < 60) {
-        result = [NSString stringWithFormat:@"刚刚"];
-    }
-    else if((temp = timeInterval / 60) < 60){
-        result = [NSString stringWithFormat:@"%ld分前", temp];
-    }
-    else if((temp = temp / 60) < 24){
-        result = [NSString stringWithFormat:@"%ld小时前", temp];
-    }
-    else if((temp = temp / 24) < 30){
-        result = [NSString stringWithFormat:@"%ld天前", temp];
-    }
-    else if((temp = temp / 30) < 12){
-        result = [NSString stringWithFormat:@"%ld月前", temp];
-    }
-    else{
-        temp = temp / 12;
-        result = [NSString stringWithFormat:@"%ld年前", temp];
-    }
-    
-    return  result;
-}
 #pragma mark --getter
-
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = ({

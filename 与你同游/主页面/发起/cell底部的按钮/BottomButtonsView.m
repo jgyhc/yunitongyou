@@ -29,8 +29,16 @@
         [self addSubview:self.view1];
         [self addSubview:self.view2];
         [self addSubview:self.view3];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
-        [self.view3 addGestureRecognizer:tap];
+        UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
+        UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
+        UITapGestureRecognizer *tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handldTapEvent:)];
+        [self.view1 addGestureRecognizer:tap1];
+        [self.view2 addGestureRecognizer:tap2];
+        [self.view3 addGestureRecognizer:tap3];
+        
+        self.view1.tag = 300;
+        self.view2.tag = 301;
+        self.view3.tag = 302;
         
         [self.view1 addSubview:self.label1];
         [self.view2 addSubview:self.label2];

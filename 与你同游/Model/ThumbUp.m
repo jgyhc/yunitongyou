@@ -25,12 +25,15 @@
     BmobObject * obj;
     if (type == 0) {
         obj = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:travelOrCalledId];
+
+        [thumb setObject:obj forKey:@"calledobj"];
     }
-    else if (type == 1){
+    if (type == 1){
         obj = [BmobObject objectWithoutDatatWithClassName:@"Travel" objectId:travelOrCalledId];
+
+        [thumb setObject:obj forKey:@"obj"];
     }
-    //该pointer跳到该条点赞的travel或则called表
-    [thumb setObject:obj forKey:@"obj"];
+
     //异步保存
     [thumb saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
         if (isSuccessful) {
