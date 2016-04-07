@@ -104,7 +104,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
     __weak typeof(self) weakself = self;
-    if (self.selectedArrayUrl.count == 0) {
+    if (self.dataSource.count == 0) {
         
         [self.travelModel addTravelNoteWithObejectId:OBJECTID content:self.contentView.text imagesArray:nil location:self.positionLabel.text successBlock:^{
             [weakself message:@"发表游记成功！"];
@@ -113,9 +113,10 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
         
         return;
     }
-    for (int i = 0; i < self.selectedArrayUrl.count; i ++) {
-        if ([self.selectedArrayUrl[i] isEqualToNumber:@(-1)]) {
-            UIImage * image = [UIImage imageWithData:self.dataSource[i]];
+    for (int i = 0; i < self.dataSource.count; i ++) {
+        NSDictionary * dic = self.dataSource[i];
+        if ([[dic objectForKey:@"resource"] isEqualToString:@"take"]) {
+            UIImage * image = [UIImage imageWithData:[dic objectForKey:@"photo"]];
             [self.imageArray addObject:image];
         }
         else{
@@ -127,7 +128,7 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
                 
             }];
         }
-        if (i == self.selectedArrayUrl.count - 1) {
+        if (i == self.dataSource.count - 1) {
             
             [self.travelModel addTravelNoteWithObejectId:OBJECTID content:self.contentView.text imagesArray:self.imageArray location:self.positionLabel.text successBlock:^{
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -141,20 +142,12 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 
 - (void)buttonClick:(UIButton *)sender{
     if (sender.tag == 100) {
-            ChooseImageListViewController *CLVC = [[ChooseImageListViewController alloc] init];
-        
-        
-        NSMutableArray * array = [self.indexPathArray mutableCopy];
-        for (int i = 0; i < array.count; i ++) {
-            if ([array[i] isEqual:@(-1)]) {
-                [array removeObject:array[i]];
-            }
-        }
-        
-        CLVC.selectedIndex = array;
+        ChooseImageListViewController *CLVC = [[ChooseImageListViewController alloc] init];
+
+        CLVC.selectedIndex = self.indexPathArray;
             
-            CLVC.delegate = self;
-         [self.navigationController pushViewController:CLVC animated:NO];
+        CLVC.delegate = self;
+        [self.navigationController pushViewController:CLVC animated:NO];
     }
     else if (sender.tag == 101){
         WTImagePickerController * takePhoto = [[WTImagePickerController alloc]init];
@@ -168,9 +161,22 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 
 #pragma mark -- ChooseImageListViewControllerDelegate  选取相册完成
 - (void)CallbackPhotoArray:(NSMutableArray *)photoUrl thumbnailArray:(NSMutableArray *)thumbnailArray selectIndexArray:(NSMutableArray *)selectIndexArray {
-    [self.dataSource addObjectsFromArray:thumbnailArray];
+
+    [self.dataSource enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[obj objectForKey:@"resource"] isEqualToString:@"album"]) {
+            [self.dataSource removeObject:obj];
+            [self.indexPathArray removeObjectAtIndex:idx];
+            [self.selectedArrayUrl removeObjectAtIndex:idx];
+        }
+    }];
+    
+    for (id obj in thumbnailArray) {
+        NSDictionary * dic = @{@"photo":obj,@"resource":@"album"};
+        [self.dataSource addObject:dic];
+    }
     [self.indexPathArray addObjectsFromArray:selectIndexArray];
     [self.selectedArrayUrl addObjectsFromArray:photoUrl];
+    
     [self initUserDataSource];
     [self.collectionView reloadData];
 }
@@ -179,9 +185,10 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 - (void)wtimagePickerController:(WTImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [self dismissViewControllerAnimated:YES completion:nil];
     NSData * data = UIImagePNGRepresentation([info objectForKey:@"image"]);
-    [self.dataSource addObject:data];
-    [self.indexPathArray addObject:@(-1)];
-    [self.selectedArrayUrl addObject:@(-1)];
+    NSDictionary * dic = @{@"photo":data,@"resource":@"take"};
+    
+    [self.dataSource addObject:dic];
+
     [self initUserDataSource];
     [self.collectionView reloadData];
 
@@ -197,20 +204,18 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
 - (void)cell:(ChooseImageListCollectionViewCell *)cell clickButtonDidPressed:(UIButton *)sender {
     
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-    [self.dataSource removeObjectAtIndex:indexPath.row];
-    
-    [self.selectedArrayUrl removeObjectAtIndex:indexPath.row];
-    [self.indexPathArray removeObjectAtIndex:indexPath.row];
-    
-    
+    NSDictionary * dic = self.dataSource[indexPath.row];
+    if ([[dic objectForKey:@"resource"] isEqualToString:@"take"]) {
+        [self.dataSource removeObjectAtIndex:indexPath.row];
+    }
+    else{
+        [self.selectedArrayUrl removeObjectAtIndex:indexPath.row];
+        [self.indexPathArray removeObjectAtIndex:indexPath.row];
+         [self.dataSource removeObjectAtIndex:indexPath.row];
+    }
     [self initUserDataSource];
     [self.collectionView reloadData];
 }
-
-
-
-
-
 
 
 #pragma mark -- UICollectionViewDataSource
@@ -230,7 +235,10 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
         [cell.selectedButton removeFromSuperview];
     }else {
         [cell.contentView addSubview:cell.selectedButton];
-        cell.photoImageView.image = [UIImage imageWithData:self.dataSource[indexPath.row]];
+        NSDictionary * dic = self.dataSource[indexPath.row];
+        
+        cell.photoImageView.image = [UIImage imageWithData:[dic objectForKey:@"photo"]];
+        
         [cell.selectedButton setBackgroundImage:IMAGE_PATH(@"删除照片.png") forState:UIControlStateNormal];
     }
     collectionView.frame = flexibleFrame(CGRectMake(10, self.collectionViewY, 355, self.collectionViewHight), NO);
