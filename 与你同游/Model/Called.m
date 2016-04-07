@@ -63,12 +63,15 @@
 }
 
 //查找一个用户表下所有的活动（未测试）
-+ (void)getCalledsSuccess:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error))failure {
++ (void)getCalledsLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error))failure {
     //关联对象表
     BmobQuery *bquery = [BmobQuery queryWithClassName:@"Called"];
+    bquery.limit = limit;
+    bquery.skip = skip;
+    [bquery includeKey:@"user"];
     //需要查询的列
     BmobObject *user = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:UserID];
-    [bquery whereObjectKey:@"calleds" relatedTo:user];
+    [bquery whereObjectKey:@"joinCalleds" relatedTo:user];
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error) {
             NSLog(@"%@",error);
@@ -104,6 +107,7 @@
     [bquery includeKey:@"user"];////声明查询Called的时候  把表里面user字段的数据查出来
     bquery.limit = limit;
     bquery.skip = skip;
+    
     //查找Called表的数据
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         success(array);
@@ -175,6 +179,8 @@
 
 
 
+
+
 #pragma mark -- 申请加入一条发起
 + (void)joinInCalledWithCalledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure {
     BmobObject  *called = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
@@ -216,6 +222,25 @@
     //新建relation对象  (把这条发起放进called表下的member字段下)（方便通过这条发起找到它的成员）（这里的关系是relation）
     BmobRelation *relation1 = [BmobRelation relation];
     [relation1 addObject:joinUser];
+    //添加关联关系到calleds列中
+    [called addRelation:relation1 forKey:@"member"];
+    [called updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+        if (isSuccessful) {
+            NSLog(@"successful");
+            success(YES);
+        }else{
+            NSLog(@"error %@",[error description]);
+            success(NO);
+        }
+    }];
+}
+
++ (void)deleteJoinUserID:(NSString *)userID calledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure {
+    BmobObject  *called = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:calledID];
+    BmobObject *joinUser = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:userID];
+    //新建relation对象  (把这条发起放进called表下的member字段下)（方便通过这条发起找到它的成员）（这里的关系是relation）
+    BmobRelation *relation1 = [BmobRelation relation];
+    [relation1 removeObject:joinUser];
     //添加关联关系到calleds列中
     [called addRelation:relation1 forKey:@"member"];
     [called updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {

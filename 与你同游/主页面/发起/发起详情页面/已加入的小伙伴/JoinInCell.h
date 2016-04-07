@@ -12,10 +12,12 @@
 @property (nonatomic, strong) BmobObject *model;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, strong) void (^replayBlock)(NSIndexPath *indexPath);
+@property (nonatomic, assign) BOOL isMemeber;
+@property (nonatomic, strong) void (^pDetailBlock)(BmobObject *user);
 /**
  *  是否显示后面的同意按钮
  */
 - (void)isText;
 - (void)member;
-
+- (void)deleteMemeber;
 @end

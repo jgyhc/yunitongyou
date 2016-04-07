@@ -16,7 +16,6 @@
 #import "UITableView+SDAutoTableViewCellHeight.h"
 #import "Called.h"
 #import "ThumbUp.h"
-
 #import "PersonalViewController.h"
 
 #import "Collection.h"

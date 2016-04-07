@@ -102,13 +102,10 @@
 - (void)initUserInterface {
     UILabel *label = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(0, 0, 80, 20), NO)];
     label.text = @"热门旅游城市";
-    label.center = flexibleCenter(CGPointMake(50, 185), NO);
+    label.center = flexibleCenter(CGPointMake(50, 190), NO);
     label.font = [UIFont boldSystemFontOfSize:(SCREEN_HEIGHT / 667.0) * 12];
     [self.scrollView addSubview:label];
     
-    UILabel *senseLabel = [[UILabel alloc]initWithFrame:flexibleFrame(CGRectMake(22, 0, 80, 20), NO)];
-    senseLabel.text = @"热门旅游城市";
-    senseLabel.font = [UIFont boldSystemFontOfSize:(SCREEN_HEIGHT / 667.0) * 12];
     
 }
 

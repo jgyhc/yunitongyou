@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UILabel *repaly;
 @property (nonatomic, strong) UILabel *contenLabel;
 @property (nonatomic, strong) UIButton *repalyButton;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, strong) UITapGestureRecognizer *nameTap;
 @end
 
 @implementation ICommentsCell
@@ -28,6 +30,19 @@
 
 - (void)isText {
 
+}
+
+- (void)handleTapEvent:(UITapGestureRecognizer *)sender {
+    BmobObject *user;
+    if ([sender.view isEqual:self.nameLabel]) {
+        user = [_model objectForKey:@"user"];
+    }
+    if ([sender.view isEqual:self.repalyLabel]) {
+        user = [_model objectForKey:@"Ruser"];
+    }
+    if (_pDetailBlock) {
+        self.pDetailBlock(user);
+    }
 }
 
 - (void)setModel:(BmobObject *)model {
@@ -81,7 +96,6 @@
             [alertView show];
             return;
         }
-
         self.replayBlock(_indexPath);
     }
 }
@@ -110,6 +124,8 @@
 		_repalyLabel = [[UILabel alloc] init];
         _repalyLabel.textColor = [UIColor colorWithRed:0.000 green:0.470 blue:1.000 alpha:1.000];
         _repalyLabel.font = [UIFont systemFontOfSize:flexibleHeight(14)];
+        [_repalyLabel addGestureRecognizer:self.tap];
+        _repalyLabel.userInteractionEnabled = YES;
 	}
 	return _repalyLabel;
 }
@@ -119,6 +135,8 @@
 		_nameLabel = [[UILabel alloc] init];
         _nameLabel.textColor = [UIColor colorWithRed:0.000 green:0.470 blue:1.000 alpha:1.000];
         _nameLabel.font = [UIFont systemFontOfSize:flexibleHeight(14)];
+        [_nameLabel addGestureRecognizer:self.nameTap];
+        _nameLabel.userInteractionEnabled = YES;
 	}
 	return _nameLabel;
 }
@@ -132,6 +150,20 @@
         [_repalyButton setTitleColor:[UIColor colorWithRed:0.000 green:0.470 blue:1.000 alpha:1.000] forState:UIControlStateNormal];
 	}
 	return _repalyButton;
+}
+
+- (UITapGestureRecognizer *)tap {
+	if(_tap == nil) {
+        _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapEvent:)];
+	}
+	return _tap;
+}
+
+- (UITapGestureRecognizer *)nameTap {
+	if(_nameTap == nil) {
+        _nameTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapEvent:)];
+	}
+	return _nameTap;
 }
 
 @end

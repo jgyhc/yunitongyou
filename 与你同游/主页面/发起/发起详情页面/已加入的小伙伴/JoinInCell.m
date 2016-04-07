@@ -68,10 +68,16 @@
     [self.nameLabel sizeToFit];
     
 }
+- (void)deleteMemeber {
+    self.switchButton.selected = NO;
+    self.switchButton.backgroundColor = [UIColor colorWithRed:0.283 green:0.751 blue:0.371 alpha:1.000];
+    _isMemeber = NO;
+}
 
 - (void)member {
     self.switchButton.selected = YES;
     self.switchButton.backgroundColor = [UIColor colorWithRed:0.951 green:1.000 blue:0.971 alpha:1.000];
+    _isMemeber = YES;
 }
 
 - (UILabel *)nameLabel {

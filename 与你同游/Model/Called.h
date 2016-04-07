@@ -28,6 +28,15 @@
 + (void)getcalledListWithLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error1))failure;
 
 
+/**
+ *  所有活动
+ *
+ *  @param limit
+ *  @param skip
+ *  @param success
+ *  @param failure
+ */
++ (void)getCalledsLimit:(NSInteger)limit skip:(NSInteger)skip Success:(void (^)(NSArray *calleds))success failure:(void (^)(NSError *error))failure;
 
 /**
  *  查询一条发起的所有评论
@@ -80,6 +89,15 @@
  */
 + (void)inviteJoinUserId:(NSString *)userID calledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure;
 
+/**
+ *  删除一个成员
+ *
+ *  @param userID   userID
+ *  @param calledID 发起id
+ *  @param success
+ *  @param failure  
+ */
++ (void)deleteJoinUserID:(NSString *)userID calledID:(NSString *)calledID Success:(void (^)(BOOL isSuccess))success failure:(void (^)(NSError *error))failure;
 /**
  *  查询一条发起的成员列表
  *

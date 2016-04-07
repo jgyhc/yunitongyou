@@ -17,6 +17,7 @@
 #import <MJRefresh.h>
 #import "CommentViewController.h"
 #import "ThumbUp.h"
+#import "PersonalViewController.h"
 #define SIZEHEIGHT frame.size.height
 
 @interface InitiateDetailViewController ()<UITableViewDelegate, UITableViewDataSource, HeaderButtonViewDelegate, LBottomViewDelegate>
@@ -221,19 +222,38 @@
             }
             [self.navigationController pushViewController:comVC animated:YES];
         }];
+        
+        [cell setPDetailBlock:^(BmobObject *user) {
+            PersonalViewController *PVC = [[PersonalViewController alloc] init];
+            PVC.userInfo = user;
+            PVC.type = 1;
+            [self presentViewController:PVC animated:YES completion:nil];
+        }];
+        
+        
     }else {
         [cell setReplayBlock:^(NSIndexPath *indexPath) {
-        [Called inviteJoinUserId:model.objectId calledID:_calledID Success:^(BOOL isSuccess) {
-                if (isSuccess) {
-                    [self message:@"小伙伴已经成为您的队友！"];
-                }
-            } failure:^(NSError *error) {
-                
-            }];
+            if (cell.isMemeber == YES) {
+                [Called deleteJoinUserID:model.objectId calledID:_calledID Success:^(BOOL isSuccess) {
+                    [self.memberArray removeObject:model];
+                    [self message:@"小伙伴已经删除了"];
+                } failure:^(NSError *error) {
+                    
+                }];
+            }else {
+                [Called inviteJoinUserId:model.objectId calledID:_calledID Success:^(BOOL isSuccess) {
+                    if (isSuccess) {
+                        [self message:@"小伙伴已经成为您的队友！"];
+                    }
+                } failure:^(NSError *error) {
+                    
+                }];
+            }
+
         }];
         for (int i = 0; i < self.memberArray.count; i ++) {
             BmobObject *member = self.memberArray[i];
-            if (member.objectId == model.objectId) {
+            if ([member.objectId isEqualToString: model.objectId]) {
                 [cell member];
             }
         }

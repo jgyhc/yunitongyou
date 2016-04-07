@@ -29,8 +29,8 @@
         self.leftsideButton.sd_layout.leftEqualToView(self).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topEqualToView(self);
         self.rightsideButton.sd_layout.rightEqualToView(self).widthIs(flexibleWidth(WIDTH / 2)).heightIs(flexibleHeight(40)).topEqualToView(self.leftsideButton);
         if (type == 1) {
-            [self.rightsideButton setTitle:@"发起的活动" forState:UIControlStateNormal];
-            [self.leftsideButton setTitle:@"参加的活动" forState:UIControlStateNormal];
+            [self.rightsideButton setTitle:@"参加的活动" forState:UIControlStateNormal];
+            [self.leftsideButton setTitle:@"发起的活动" forState:UIControlStateNormal];
         }
         else{
             [self.rightsideButton setTitle:@"收藏的游记" forState:UIControlStateNormal];

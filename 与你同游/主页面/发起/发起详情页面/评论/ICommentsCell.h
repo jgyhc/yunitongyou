@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) void (^replayBlock)(NSIndexPath *indexPath);
 @property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, strong) void (^pDetailBlock)(BmobObject *user);
 - (void)isText;
 @end

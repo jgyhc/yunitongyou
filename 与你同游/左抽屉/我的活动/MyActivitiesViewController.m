@@ -19,10 +19,17 @@
 @property (nonatomic, strong) UITableView * tableView;
 @property (nonatomic, strong) NSMutableArray * dataSource;
 @property (nonatomic, assign) int type;
+@property (nonatomic, assign) int qtype;
 
 @property (nonatomic, assign) long limit;
 @property (nonatomic, assign) long skip;
 @property (nonatomic, assign) long rType;
+
+@property (nonatomic, assign) long Jlimit;
+@property (nonatomic, assign) long Jskip;
+
+@property (nonatomic, strong) NSMutableArray * MdataSource;
+@property (nonatomic, strong) NSMutableArray * JdataSource;
 @end
 
 @implementation MyActivitiesViewController
@@ -31,7 +38,10 @@
     [self initUserInterface];
     _limit = 20;
     _skip = 0;
+    _Jlimit = 20;
+    _Jskip = 0;
     [self getFoundList];
+    [self getJoinList];
 }
 
 - (void)initUserInterface {
@@ -48,9 +58,15 @@
     self.tableView.sd_layout.leftEqualToView(self.view).rightEqualToView(self.view).topSpaceToView(self.selectButton, 0).bottomEqualToView(self.view);
     
     self.tableView.mj_header = [MJRefreshStateHeader headerWithRefreshingBlock:^{
-        _skip = 0;
         _rType = 1;
-        [self getFoundList];
+        if (_qtype == 1) {
+            _skip = 0;
+            [self getFoundList];
+        }else {
+            _Jskip = 0;
+            [self getJoinList];
+        }
+
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView.mj_header endRefreshing];
         });
@@ -59,38 +75,57 @@
     
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _rType = 0;
-        [self getFoundList];
+        if (_qtype == 1) {
+            [self getFoundList];
+        }else {
+            [self getJoinList];
+        }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView.mj_footer endRefreshing];
         });
     }];
-    
-    
-
-    
 }
 
 - (void)getFoundList {
     [Called queryCalledsLimit:_limit skip:_skip Success:^(NSArray *calleds) {
         _skip = _skip + _limit;
         if (_rType == 1) {
-            [self.dataSource removeAllObjects];
+            [self.MdataSource removeAllObjects];
         }
-        [self.dataSource addObjectsFromArray:calleds];
+        [self.MdataSource addObjectsFromArray:calleds];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
+        self.dataSource = self.MdataSource;
         [self.tableView reloadData];
+        _type = 1;
     } failure:^(NSError *error) {
         
     }];
 
 }
 
+- (void)getJoinList {
+    [Called getCalledsLimit:_Jlimit skip:_Jskip Success:^(NSArray *calleds) {
+        _skip = _skip + _limit;
+        if (_rType == 1) {
+            [self.JdataSource removeAllObjects];
+        }
+        [self.JdataSource addObjectsFromArray:calleds];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        if (_qtype == 1) {
+            self.dataSource = self.JdataSource;
+            [self.tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
-    
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LaunchTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     BmobObject *model = self.dataSource[indexPath.row];
@@ -116,13 +151,25 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BmobObject *obj = self.dataSource[indexPath.section];
+    BmobObject *obj = self.dataSource[indexPath.row];
     InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];
     IVC.calledID = obj.objectId;
     BmobObject *user = [obj objectForKey:@"user"];
     IVC.userObject = user;
     IVC.calledObject = obj;
     [self.navigationController pushViewController:IVC animated:YES];
+}
+
+- (void)clickButton:(UIButton *)sender {
+    if (sender == self.selectButton.rightsideButton) {
+        self.dataSource = self.JdataSource;
+        _qtype = 0;
+    }
+    else{
+        self.dataSource = self.MdataSource;
+        _qtype = 1;
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark --lazy loading
@@ -149,4 +196,18 @@
     }
     return _selectButton;
 }
+- (NSMutableArray *)MdataSource {
+	if(_MdataSource == nil) {
+		_MdataSource = [[NSMutableArray alloc] init];
+	}
+	return _MdataSource;
+}
+
+- (NSMutableArray *)JdataSource {
+	if(_JdataSource == nil) {
+		_JdataSource = [[NSMutableArray alloc] init];
+	}
+	return _JdataSource;
+}
+
 @end
