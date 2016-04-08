@@ -93,9 +93,6 @@
     }else {
         [self.loading show];
         [self.user loginWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:^(BmobObject *object) {
-            [self.loading hide];
-            [[NSUserDefaults standardUserDefaults] setObject:object.objectId forKey:@"userID"];
-            [self.navigationController popViewControllerAnimated:YES];
         } failBlock:^(NSError *error) {
             [self.loading hide];
             [self message:@"用户名或者密码错误！"];

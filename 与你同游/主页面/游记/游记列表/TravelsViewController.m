@@ -8,7 +8,6 @@
 
 #import "TravelsViewController.h"
 #import "TravelNotesTableViewCell.h"
-#import "PhotoSelect.h"
 #import "ShareView.h"
 
 #import "RecordDetailViewController.h"
@@ -18,7 +17,6 @@
 
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
-
 #import <BmobSDK/Bmob.h>
 #import "TravelModel.h"
 #import "ThumbUp.h"
@@ -33,9 +31,6 @@
 
 @property (nonatomic, strong) NSMutableArray *travelArray;//数据
 @property (nonatomic, strong) UITableView *tableView;
-
-@property (nonatomic, strong) PhotoSelect *sharedView;
-@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) TravelModel *travelModel;
 
 @property (nonatomic, assign) NSInteger skip;

@@ -15,7 +15,6 @@
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *VerificationCode;
 @property (nonatomic, copy) NSString *VerificationCodeResult;
-@property (nonatomic, copy) NSString *registerResult;
 @property (nonatomic, copy) NSString *forgetPasswordResult;
 
 @end
@@ -114,7 +113,6 @@
                 return;
             }
             BmobObject *object = array[0];
-            NSLog(@"登录成功返回的用户信息array[0] = %@",array[0]);
             self.loginUserData = object;
             success(object);
         }
@@ -170,7 +168,7 @@
          }
          else
          {
-             self.VerificationCodeResult = @"YES";
+             self.VerificationCodeResult = @"NO";
              NSLog(@"验证失败");
          }
          
@@ -221,7 +219,6 @@
                          [object setObject:sex forKey:@"sex"];
                          [object setObject:age forKey:@"age"];
                          [object setObject:file.url forKey:@"head_portraits"];
-                         NSLog(@"file.url = %@",file.url);
                          [object setObject:IndividualitySignature forKey:@"IndividualitySignature"];
                          
                          [object updateInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {

@@ -59,23 +59,22 @@
     }
 
     if ([keyPath isEqualToString:@"VerificationCodeResult"]) {
-        NSLog(@"验证结果：%@", self.userModel.VerificationCodeResult);
+       
         if ([self.userModel.VerificationCodeResult isEqualToString:@"YES"]) {
+            
             [self.userModel ForgotPasswordWithPhone:self.phoneNumberTF.text newPassword:self.passwordTF.text];
         }else {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"验证码错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"验证码错误"];
             return;
         }
     }
     if ([keyPath isEqualToString:@"forgetPasswordResult"]) {
+        
         if ([self.userModel.forgetPasswordResult isEqualToString:@"YES"]) {
             [self.navigationController popViewControllerAnimated:YES];
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"修改成功，请登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"修改成功，请登录"];
         }else {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"修改失败！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"修改失败！"];
         }
         [self.load hide];
     }
@@ -143,12 +142,10 @@
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender {
     if (self.phoneNumberTF.text.length == 0) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请输入您的手机号"];
         return;
     }else if (_phoneNumberTF.text.length != 11 || [self isPureNumandCharacters:_phoneNumberTF.text] == NO || [self isMobileNumber:_phoneNumberTF.text] == NO) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入正确格式的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请输入正确格式的手机号"];
         return;
     }else {
 #pragma mark -- 验证码
@@ -161,20 +158,18 @@
             }];
             
         } failBlock:^(NSError *error) {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"该账号还未注册！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"该账号还未注册！"];
+
         }];
     }
 }
 
 - (void)completeForgetEvent:(UIButton *)sender {
     if (_phoneNumberTF.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [self message:@"请输入您的手机号"];
         return;
     }else if (_phoneNumberTF.text.length != 11 || [self isPureNumandCharacters:_phoneNumberTF.text] == NO || [self isMobileNumber:_phoneNumberTF.text] == NO) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入正确格式的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [self message:@"请输入正确格式的手机号"];
         return;
     }else if (_codeTF.text.length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入验证码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];

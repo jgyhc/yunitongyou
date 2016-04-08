@@ -133,11 +133,20 @@
     return  result;
 }
 
+- (void)handlePresent{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(handleInfo)]) {
+        [self.delegate handleInfo];
+    }
+}
+
 #pragma mark --lazy loading
 
 - (UIImageView *)iconView{
     if (!_iconView) {
         _iconView = [UIImageView new];
+        _iconView.userInteractionEnabled = YES;
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handlePresent)];
+        [_iconView addGestureRecognizer:tap];
     }
     return _iconView;
 }

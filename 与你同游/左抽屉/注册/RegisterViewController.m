@@ -34,7 +34,7 @@
 
     [self.userModel removeObserver:self forKeyPath:@"VerificationCode"];
     [self.userModel removeObserver:self forKeyPath:@"VerificationCodeResult"];
-    [self.userModel removeObserver:self forKeyPath:@"registerResult"];
+
 }
 
 - (void)viewDidLoad {
@@ -43,7 +43,7 @@
     [self initUserInterface];
     [self.userModel addObserver:self forKeyPath:@"VerificationCode" options:NSKeyValueObservingOptionNew context:nil];
     [self.userModel addObserver:self forKeyPath:@"VerificationCodeResult" options:NSKeyValueObservingOptionNew context:nil];
-    [self.userModel addObserver:self forKeyPath:@"registerResult" options:NSKeyValueObservingOptionNew context:nil];
+
 }
 
 
@@ -51,10 +51,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.animationView];
     [self.view addSubview:self.navView];
+    
     [self initBackButton];
     [self initNavTitle:@"注册"];
     [self.animationView addSubview:self.textView];
-    //    [self.textView addSubview:self.usernameTF];
     [self.textView addSubview:self.passwordTF];
     [self.textView addSubview:self.repeatPasswordTF];
     [self.textView addSubview:self.phoneNumberTF];
@@ -97,21 +97,17 @@
     }
     if ([keyPath isEqualToString:@"VerificationCodeResult"]) {
         if ([self.userModel.VerificationCodeResult isEqualToString:@"YES"]) {
-            [self.userModel registeredWithPhoneNumber:self.phoneNumberTF.text password:self.passwordTF.text successBlock:nil failBlock:nil];
+            [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
+                [self.load hide];
+                [self.navigationController popViewControllerAnimated:YES];
+            } failBlock:^(NSError *error) {
+                 [self message:@"注册失败！"];
+                
+            }];
         }else {
             [self message:@"验证码错误"];
             return;
         }
-    }
-    if ([keyPath isEqualToString:@"registerResult"]) {
-        if ([self.userModel.registerResult isEqualToString:@"YES"]) {
-            [self.navigationController popViewControllerAnimated:YES];
-            [self message:@"注册成功，请登录"];
-            
-        }else {
-            [self message:@"注册失败！"];
-        }
-        [self.load hide];
     }
 }
 
@@ -218,16 +214,7 @@
 
 - (void)completeRegisterEvent:(UIButton *)sender {
     [self.load show];
-    NSLog(@"%@", _phoneNumberTF.text);
-    NSLog(@"%@", _passwordTF.text);
-    [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
-        
-        [self.load hide];
-        
-    } failBlock:^(NSError *error) {
-        
-        
-    }];
+
     
     if (_phoneNumberTF.text.length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入您的手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -254,15 +241,7 @@
         [alertView show];
         return;
     }
-    
-    [self.userModel registeredWithPhoneNumber:_phoneNumberTF.text password:_passwordTF.text successBlock:^(NSString *objiectId) {
-        [self.load hide];
-        [self.navigationController popViewControllerAnimated:YES];
-    } failBlock:^(NSError *error) {
-        
-        
-    }];
-
+    [self.userModel VerificationCodeWithVerificationCode:_codeTF.text phoneNumber:_phoneNumberTF.text];
 }
 - (CAKeyframeAnimation *)KeyrotationAnimation {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];

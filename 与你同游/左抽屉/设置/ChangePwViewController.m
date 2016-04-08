@@ -22,7 +22,6 @@
 @property (nonatomic, strong) UIView *textView;
 @property (nonatomic, strong) UIButton *completeButton;
 @property (nonatomic, strong) AnimationView *animationView;
-@property (nonatomic, strong) UIView *downView;
 @property (nonatomic, strong) LoadingView *load;
 @property (nonatomic, strong) UserModel *userModel;
 
@@ -42,72 +41,56 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"forgetPasswordResult"]) {
         if ([self.userModel.forgetPasswordResult isEqualToString:@"YES"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"out" forKey:@"loginState"];
             [self.navigationController popToRootViewControllerAnimated:YES];
-            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"密码修改成功，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+          
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"密码修改成功，请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
-             [[NSUserDefaults standardUserDefaults] setObject:@"out" forKey:@"loginState"];
+
+            
         }
         else {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"密码修改失败！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self message:@"密码修改失败！" ];
         }
         [self.load hide];
     }
     
 }
 - (void)initUserInterface {
+   
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.animationView];
+    [self.view addSubview:self.navView];
     [self initBackButton];
     [self initNavTitle:@"修改密码"];
-    self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.downView];
-    [self.downView addSubview:self.animationView];
     [self.animationView addSubview:self.textView];
     [self.textView addSubview:self.aNewpasswordTF];
     [self.textView addSubview:self.oldpasswordTF];
     [self.textView addSubview:self.newPassword];
     [self.view addSubview:self.completeButton];
     
-    
-    UIView *pinsView = [[UIView alloc] initWithFrame:flexibleFrame(CGRectMake(0, 0, 16, 16), NO)];
-    pinsView.center =  flexibleCenter(CGPointMake(375 / 2, 64), NO);
-    pinsView.backgroundColor = [UIColor colorWithRed:0.518 green:0.529 blue:0.511 alpha:1.000];
-    pinsView.layer.cornerRadius = 8;
-    pinsView.layer.shadowColor = [UIColor blackColor].CGColor;//阴影颜色
-    pinsView.layer.shadowOffset = CGSizeMake(0, 0);//偏移距离
-    pinsView.layer.shadowOpacity = 0.5;//不透明度
-    pinsView.layer.shadowRadius = 5.0;
-    [self.view addSubview:pinsView];
-    
-    
 }
 - (void)completeChangeEvent:(UIButton *)sender {
     if (self.oldpasswordTF.text.length == 0) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入您的旧密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请输入您的旧密码" ];
         return;
-    }else if (self.oldpasswordTF.text.length < 6 || self.oldpasswordTF.text.length > 16){
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入正确的旧密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+    }else if (![self.oldpasswordTF.text isEqualToString:PASSWORD]){
+        [self message:@"请输入正确的旧密码"];
         return;
     }else if (self.newPassword.text.length == 0) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入您的新密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请输入您的新密码"];
         return;
     }else if (self.newPassword.text.length < 6 || self.newPassword.text.length > 16) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请输入正确格式的新密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请输入正确格式的新密码"];
         return;
     }else if (self.aNewpasswordTF.text.length == 0) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请重复输入您的新密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请重复输入您的新密码"];
         return;
     }else if (self.aNewpasswordTF.text.length < 6 || self.aNewpasswordTF.text.length > 16) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请重复输入正确格式的新密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"请重复输入正确格式的新密码"];
         return;
     }else if ([self.newPassword.text isEqualToString:self.aNewpasswordTF.text] == NO) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"新密码和重复的新密码不同" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        [self message:@"新密码和重复的新密码不同"];
         return;
     }
     
@@ -119,7 +102,7 @@
 - (CAKeyframeAnimation *)KeyrotationAnimation {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
     animation.values = @[@(-M_PI / 36), @(M_PI / 40), @(-M_PI / 50), @(M_PI / 70), @0];
-    animation.duration = 2;
+    animation.duration = 1.5;
     animation.keyTimes = @[@0, @0.25, @0.5, @0.75, @1];
     animation.additive = YES;
     return animation;
@@ -238,25 +221,16 @@
         _animationView = ({
             AnimationView *view = [[AnimationView alloc] init];
             view.backgroundColor = [UIColor clearColor];
-            view.frame = flexibleFrame(CGRectMake(375 / 2, 0, 375.0, 375.0), NO);
-            view.layer.position = flexibleCenter(CGPointMake(375.0 / 2, 0), NO);
+            view.frame = flexibleFrame(CGRectMake(375 / 2, 0, 375.0, 450.0), NO);
+            view.layer.position = flexibleCenter(CGPointMake(375.0 / 2, 23), NO);
             view.layer.anchorPoint = CGPointMake(0.5, 0);
-            
             [view.layer addAnimation:[self KeyrotationAnimation]forKey:@""];
             view;
         });
     }
     return  _animationView;
 }
-- (UIView *)downView {
-    if (!_downView) {
-        _downView = ({
-            UIView *view = [[UIView alloc] initWithFrame:flexibleFrame(CGRectMake(0, 64.0, 375, 500), NO)];
-            view;
-        });
-    }
-    return _downView;
-}
+
 - (LoadingView *)load {
     if (!_load) {
         _load = [[LoadingView alloc] init];

@@ -22,11 +22,12 @@
 #import "UITableView+SDAutoTableViewCellHeight.h"
 #import "CommentViewController.h"
 #import "HeaderButtonView.h"
+#import "PersonalViewController.h"
 
 #define SIZEHEIGHT frame.size.height
 #define SIZEHEIGHT frame.size.height
 
-@interface RecordDetailViewController ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource,HeaderButtonViewDelegate>
+@interface RecordDetailViewController ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource,HeaderButtonViewDelegate,DetailTopViewDelegate>
 @property (nonatomic, strong) UserModel * user;
 #pragma mark --上
 @property (nonatomic, strong) DetailTopView * topView;
@@ -274,6 +275,14 @@
     self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667,375,40), NO);
 }
 
+- (void)handleInfo{
+    PersonalViewController *PVC = [[PersonalViewController alloc] init];
+    PVC.userInfo = [self.travelObject objectForKey:@"user"];
+    PVC.type = 1;
+    [self presentViewController:PVC animated:YES completion:nil];
+
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
     
@@ -373,6 +382,7 @@
 - (DetailTopView *)topView{
     if (!_topView) {
         _topView = [DetailTopView new];
+        _topView.delegate = self;
     }
     return _topView;
 }

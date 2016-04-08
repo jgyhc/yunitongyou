@@ -48,12 +48,6 @@
     [self addSubview:self.firstLabel];
     
     
-//    self.secondLabel = ({
-//        
-//    });
-//    [self addSubview:self.secondLabel];
-    
-    
     
 }
 
