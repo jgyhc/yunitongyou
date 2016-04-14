@@ -128,6 +128,7 @@
       //注意是section,若是numberOfRows returnself.modelArray.count，则是row
     BmobObject * object = self.travelArray[indexPath.section];
    cell.obj = object;
+    cell.type = @(1);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
 #pragma mark --点赞

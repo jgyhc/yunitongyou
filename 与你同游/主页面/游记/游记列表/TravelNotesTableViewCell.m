@@ -23,6 +23,8 @@ const CGFloat maxContentLabelHeight = 54;
 @property (nonatomic, strong)   UIView      * vline1;
 @property (nonatomic, strong)   UIView      * vline2;
 
+@property (nonatomic, strong)   UIButton    * cancelButton;
+
 @property (nonatomic,strong) UIView * backView;
 
 @property (nonatomic, assign)   int     thumbNumber;
@@ -107,11 +109,12 @@ const CGFloat maxContentLabelHeight = 54;
     self.backView = [UIView new];
     self.backView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
     
-    NSArray *views = @[_iconView, _portraintbt,_nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1,self.backView];
+    NSArray *views = @[_iconView, _portraintbt,_nameLable,_positionImg,_position, _timeLabel, _contentLabel, _picContainerView,_dianzanbt,_commentbt,_sharebt,_hline1,self.backView,self.cancelButton];
     
     [views enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.contentView addSubview:obj];
     }];
+    
     
     UIView *contentView = self.contentView;
     CGFloat margin = 10;
@@ -140,6 +143,7 @@ const CGFloat maxContentLabelHeight = 54;
     .widthIs(flexibleWidth(60))
     .heightIs(flexibleHeight(15));
 
+    self.cancelButton.sd_layout.topSpaceToView(contentView,10).rightSpaceToView(contentView,10).widthIs(flexibleWidth(40)).heightIs(flexibleWidth(20));
     
     _positionImg.sd_layout
     .leftSpaceToView(_iconView,margin)
@@ -194,6 +198,12 @@ const CGFloat maxContentLabelHeight = 54;
 
 #pragma mark --赋值
 - (void)setObj:(BmobObject *)obj{
+    if (self.type == 1) {
+        self.cancelButton.hidden = YES;
+    }
+    else{
+        self.cancelButton.hidden = NO;
+    }
     _obj = obj;
     BmobObject * user =  [obj objectForKey:@"user"];
 
@@ -449,6 +459,21 @@ const CGFloat maxContentLabelHeight = 54;
         [_commentbt addSubview:_vline2];
     }
     return _vline2;
+}
+
+- (UIButton *)cancelButton{
+    if (!_cancelButton) {
+        _cancelButton = [UIButton new];
+        [_cancelButton setTitleColor:[UIColor colorWithRed:1.0 green:0.502 blue:0.0 alpha:1.0] forState:UIControlStateNormal];
+        [_cancelButton setTitle:@"删除" forState:UIControlStateNormal];
+        _cancelButton.layer.borderWidth = 1;
+        _cancelButton.layer.borderColor = [UIColor colorWithRed:1.0 green:0.502 blue:0.0 alpha:1.0].CGColor;
+        _cancelButton.layer.cornerRadius = 3;
+        _cancelButton.titleLabel.font = [UIFont systemFontOfSize:14];
+//        _cancelButton.hidden = YES;
+        [_cancelButton addTarget:self action:@selector(handleDelete) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _cancelButton;
 }
 
 @end

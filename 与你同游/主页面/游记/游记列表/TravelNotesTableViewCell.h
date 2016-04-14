@@ -15,6 +15,7 @@ typedef void (^personalInfo)(void);
 @interface TravelNotesTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) BmobObject * obj;
+@property (nonatomic, assign) int  type;
 
 
 - (void)buttonthumbUp:(thumbUp)firstblock;//回调方法
