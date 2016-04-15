@@ -11,6 +11,7 @@ typedef void (^thumbUp)(int type);//区别名
 typedef void (^share)(void);
 typedef void (^comment)(void);
 typedef void (^personalInfo)(void);
+typedef void (^deleteObject)(void);
 
 @interface TravelNotesTableViewCell : UITableViewCell
 
@@ -27,5 +28,6 @@ typedef void (^personalInfo)(void);
 
 - (void)tapPresent:(personalInfo)fourthblock;
 
+- (void)deletebt:(deleteObject)deleteBlock;
 
 @end

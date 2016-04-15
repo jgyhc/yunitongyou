@@ -96,7 +96,23 @@
     }];
 }
 
-
++ (void)serachCommentSuccessBlock:(void(^)(NSArray * commentArray))success failureBlock:(void(^)())failure{
+    BmobQuery * query = [BmobQuery queryWithClassName:@"Comment"];
+    BmobObject * obj = [BmobObject objectWithoutDatatWithClassName:@"User" objectId:OBJECTID];
+    [query whereObjectKey:@"comments" relatedTo:obj];
+    [query includeKey:@"obj"];
+    [query includeKey:@"travelObj"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSLog(@"%@",error);
+        } else {
+            success(array);
+            //            for (BmobObject * obj in array) {
+            //
+            //            }
+        }
+    }];
+}
 
 
 

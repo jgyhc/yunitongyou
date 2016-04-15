@@ -1,11 +1,3 @@
-//
-//  TravelsViewController.m
-//  与你同游
-//
-//  Created by rimi on 15/10/12.
-//  Copyright (c) 2015年 LiuCong. All rights reserved.
-//
-
 #import "MyTravelsViewController.h"
 #import "TravelNotesTableViewCell.h"
 #import "ShareView.h"
@@ -145,6 +137,23 @@ static NSString * const identifier = @"CELL";
         PVC.userInfo = [object objectForKey:@"user"];
         PVC.type = 1;
         [self presentViewController:PVC animated:YES completion:nil];
+    }];
+#pragma mark --删除
+    [cell deletebt:^{
+       [TravelModel deleteTravelOrActivity:object.objectId type:1 successBlock:^{
+           [self message:@"删除成功！"];
+           [self.travelArray removeAllObjects];
+           [self.travelModel getMyTravelNotesSuccess:^(NSArray *mytravels) {
+               [self.travelArray addObjectsFromArray:mytravels];
+               [self.tableView reloadData];
+           } failure:^(NSError *error) {
+               
+           }];
+           
+           
+       } failureBlock:^{
+           
+       }];
     }];
 
 

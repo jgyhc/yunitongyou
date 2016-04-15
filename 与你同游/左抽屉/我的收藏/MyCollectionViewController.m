@@ -94,7 +94,9 @@
     BmobObject *model = self.dataSource[indexPath.section];
     if (self.type == 1) {
         TravelNotesTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TravelNotesTableViewCell class])];
+        cell.type = 1;
          cell.obj = model;
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 #pragma mark --点赞
         [cell buttonthumbUp:^(int type) {

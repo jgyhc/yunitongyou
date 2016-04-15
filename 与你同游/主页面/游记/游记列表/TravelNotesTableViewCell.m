@@ -36,6 +36,7 @@ const CGFloat maxContentLabelHeight = 54;
 
 @property (nonatomic,copy) comment commentblock;
 @property (nonatomic,copy)personalInfo personblock;
+@property (nonatomic,copy) deleteObject deleteblock;
 
 @end
 
@@ -368,6 +369,16 @@ const CGFloat maxContentLabelHeight = 54;
 }
 - (void)tapPresent:(personalInfo)fourthblock{
     self.personblock = fourthblock;
+}
+
+- (void)handleDelete{
+    if (self.deleteblock) {
+        self.deleteblock();
+    }
+}
+
+- (void)deletebt:(deleteObject)deleteBlock{
+    self.deleteblock = deleteBlock;
 }
 
 #pragma mark --懒加载

@@ -30,4 +30,14 @@
 - (void)getMyTravelNotesSuccess:(void (^)(NSArray * mytravels))success failure:(void (^)(NSError *error))failure;
 
 
+/**
+ *  删除游记或活动
+ *
+ *  @param ObjectID 游记或活动ID
+ *  @param type     游记或活动
+ *  @param success  成功
+ *  @param failure  失败
+ */
++ (void)deleteTravelOrActivity:(NSString *)ObjectID type:(int)type successBlock:(void(^)())success failureBlock:(void(^)())failure;
+
 @end

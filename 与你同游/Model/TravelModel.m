@@ -153,6 +153,30 @@
     }];
 }
 
+#pragma mark --删除游记
++ (void)deleteTravelOrActivity:(NSString *)ObjectID type:(int)type successBlock:(void(^)())success failureBlock:(void(^)())failure{
+    BmobObject * obj;
+    if (type == 0) {
+        obj = [BmobObject objectWithoutDatatWithClassName:@"Called" objectId:ObjectID];
+        
+        
+    }
+    if (type == 1){
+        obj = [BmobObject objectWithoutDatatWithClassName:@"Travel" objectId:ObjectID];
+        
+    }
+    [obj deleteInBackgroundWithBlock:^(BOOL isSuccessful, NSError *error) {
+        if (isSuccessful) {
+            success();
+        }
+        else{
+            failure();
+        }
+    }];
+    
+    
+}
+
 - (NSMutableArray *)userIdArray {
     if (!_userIdArray) {
         _userIdArray = [[NSMutableArray alloc] init];

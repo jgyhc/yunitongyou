@@ -123,6 +123,8 @@
 
 - (void)initUserInterface {
     
+    self.comment.inputText.returnKeyType = UIReturnKeyDone;
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.tableView registerClass:[ICommentsCell class] forCellReuseIdentifier:NSStringFromClass([ICommentsCell class])];
     [self.tableView registerClass:[JoinInCell class] forCellReuseIdentifier:NSStringFromClass([JoinInCell class])];
@@ -361,6 +363,9 @@
             self.comment.inputView.frame = flexibleFrame(CGRectMake(0,667 - (size.height + 10 + self.keyboardHeight),375, size.height + 10), NO);
         } completion:nil];
 
+    }
+    if (textView.returnKeyType == UIReturnKeyDone) {
+        [self textViewDidEndEditing:self.comment.inputText];
     }
 }
 

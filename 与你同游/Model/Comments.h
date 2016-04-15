@@ -16,4 +16,8 @@
 @property (nonatomic, strong) Comments *reply;//回复
 
 + (void)addComentWithContent:(NSString *)content userID:(NSString *)userID type:(long)type objID:(NSString *)objID success:(void (^)(NSString *commentID))success failure:(void (^)(NSError *error1))failure;
+
+#pragma mark 查找评论
++ (void)serachCommentSuccessBlock:(void(^)(NSArray * commentArray))success failureBlock:(void(^)())failure;
+
 @end
