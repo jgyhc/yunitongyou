@@ -15,7 +15,9 @@ typedef void(^thumb)(int type);
 @interface LaunchTableViewCell : UITableViewCell
 @property (nonatomic, strong) BmobObject *obj;
 @property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, assign) int  type;
 @property (nonatomic, strong) void (^pdetailBlock)(NSIndexPath *indexPath);
+@property (nonatomic, strong) void (^deleteActivity)();
 - (void)buttonCollection:(collection)collectionBlock;
 - (void)buttonthumb:(thumb)thumbBlock;
 @end

@@ -219,6 +219,7 @@
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
     _timePopWindow = [[SearchPopWindow alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width * 0.75, [[UIScreen mainScreen] bounds].size.height * 0.6) title:@"请选择选择时间" complect:^(NSString *str) {
         textField.text = str;
     }];

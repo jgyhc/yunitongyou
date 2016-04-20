@@ -36,7 +36,7 @@
     _skip = 0;
     _limit = 10;
        self.view.backgroundColor = [UIColor colorWithWhite:0.929 alpha:1.000];
-    [self initNavTitle:@"发起"];
+    [self initNavTitle:@"活动"];
     [self.tableView registerClass:[LaunchTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LaunchTableViewCell class])];
     [self initRightButtonEvent:@selector(handleAddCalled:) Image:IMAGE_PATH(@"添加游记.png")];
 

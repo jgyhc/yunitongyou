@@ -24,6 +24,9 @@
 @property (nonatomic, strong)UILabel *ageLabel;//年龄
 @property (nonatomic, strong)UILabel *followerLabel;
 @property (nonatomic, strong)UILabel *PNumber;
+
+@property (nonatomic, strong)   UIButton    * cancelButton;
+
 @property (nonatomic, strong) BottomButtonsView *buttonView;
 @property (nonatomic, copy)collection collectionblock;
 @property (nonatomic, copy) thumb thumbblock;
@@ -58,10 +61,13 @@
         [self.contentView addSubview:self.followerLabel];
         [self.contentView addSubview:self.PNumber];
         [self.contentView addSubview:self.buttonView];
+        [self.contentView addSubview:self.cancelButton];
         
         self.backView = [UIView new];
         self.backView.backgroundColor = [UIColor colorWithRed:0.902 green:0.902 blue:0.902 alpha:1.0];
         [self.contentView addSubview:self.backView];
+        
+         self.cancelButton.sd_layout.topSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,60).widthIs(flexibleWidth(40)).heightIs(flexibleWidth(20));
         
         self.followerLabel.sd_layout.rightEqualToView(self.contentView).widthIs(flexibleWidth(50)).heightIs(flexibleHeight(40)).topSpaceToView(self.contentView, 0);
 
@@ -177,8 +183,19 @@
         self.pdetailBlock(_indexPath);
     }
 }
+- (void)handleDelete{
+    if (_deleteActivity) {
+        self.deleteActivity();
+    }
+}
 
 - (void)setObj:(BmobObject *)obj {
+    if (self.type == 1) {
+        self.cancelButton.hidden = NO;
+    }
+    else{
+        self.cancelButton.hidden = YES;
+    }
     _obj = obj;
     BmobObject *user = [obj objectForKey:@"user"];
     self.userIDLabel.text = [user objectForKey:@"username"];
@@ -377,6 +394,20 @@
         _followerLabel.backgroundColor = [UIColor colorWithRed:0.141 green:0.933 blue:0.600 alpha:1.000];
 	}
 	return _followerLabel;
+}
+- (UIButton *)cancelButton{
+    if (!_cancelButton) {
+        _cancelButton = [UIButton new];
+        [_cancelButton setTitleColor:[UIColor colorWithRed:1.0 green:0.502 blue:0.0 alpha:1.0] forState:UIControlStateNormal];
+        [_cancelButton setTitle:@"删除" forState:UIControlStateNormal];
+        _cancelButton.layer.borderWidth = 1;
+        _cancelButton.layer.borderColor = [UIColor colorWithRed:1.0 green:0.502 blue:0.0 alpha:1.0].CGColor;
+        _cancelButton.layer.cornerRadius = 3;
+        _cancelButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        //        _cancelButton.hidden = YES;
+        [_cancelButton addTarget:self action:@selector(handleDelete) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _cancelButton;
 }
 
 @end

@@ -55,7 +55,7 @@
     dispatch_async(mainQue, ^{
         for (int i = 0; i < assets.count; i ++) {
             PHAsset *asset = assets[i];
-            NSLog(@"%@", assets);
+//            NSLog(@"%@", assets);
             [imageManager requestImageForAsset:asset targetSize:CGSizeMake(1000, 1000) contentMode:PHImageContentModeAspectFit options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 [array addObject:result];
                 if (i == assets.count - 1) {

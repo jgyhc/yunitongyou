@@ -44,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initBackButton];
-    [self initNavTitle:@"发起详情"];
+    [self initNavTitle:@"活动详情"];
     _type = 0;
     [self initUserInterface];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -122,7 +122,7 @@
     }
     [Called joinInCalledWithCalledID:_calledID Success:^(BOOL isSuccess) {
         if (isSuccess) {
-            [self message:@"您已经报名！"];
+            [self message:@"报名成功！"];
         }
     } failure:^(NSError *error) {
         

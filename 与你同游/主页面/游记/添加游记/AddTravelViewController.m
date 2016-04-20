@@ -253,7 +253,6 @@ static NSString * const kCollectionViewCellIndentifier = @"ChooseImageListViewCe
             [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
             [self.view addSubview:self.photoSelecte.maskButton];
             [self.view addSubview:self.photoSelecte.selectView];
-            
             [UIView animateWithDuration:0.3 animations:^{
                 self.photoSelecte.selectView.frame = flexibleFrame(CGRectMake(10, 527, 355, 140), NO);
             }];

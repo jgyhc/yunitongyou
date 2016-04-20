@@ -107,8 +107,7 @@
     [bquery includeKey:@"user"];////声明查询Called的时候  把表里面user字段的数据查出来
     bquery.limit = limit;
     bquery.skip = skip;
-    
-    //查找Called表的数据
+    [bquery orderByDescending:@"createdAt"];    //查找Called表的数据
     [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         success(array);
     }];
@@ -135,7 +134,7 @@
         if (error) {
             NSLog(@"%@", error);
         } else {
-            NSLog(@"%@", array);
+//            NSLog(@"%@", array);
             success(array);
         }
     }];
@@ -275,7 +274,7 @@
 //            for (BmobObject *user in array) {
 //                NSLog(@"%@",[user objectForKey:@"username"]);
 //            }
-            NSLog(@"%@", array);
+//            NSLog(@"%@", array);
         }
     }];
 

@@ -12,7 +12,7 @@
 #define IMAGE_NAME(X) [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForAuxiliaryExecutable:(X)]]
 #define INDEX_ITEM @"发现"
 #define TRAVELS_ITEM @"游记"
-#define INITIATE_ITEM @"发起"
+#define INITIATE_ITEM @"活动"
 @interface LcTabarViewController ()
 
 @property (nonatomic, strong) NSArray *viewControllers;
