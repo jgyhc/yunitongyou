@@ -184,6 +184,8 @@
     }
 }
 
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BmobObject *obj = self.dataSource[indexPath.row];
     InitiateDetailViewController *IVC = [[InitiateDetailViewController alloc] init];

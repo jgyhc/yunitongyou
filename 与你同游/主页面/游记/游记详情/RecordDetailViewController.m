@@ -364,9 +364,9 @@
         } completion:nil];
 
     }
-    if (textView.returnKeyType == UIReturnKeyDone) {
-        [self textViewDidEndEditing:self.comment.inputText];
-    }
+//    if (UIReturnKeyDone == textView.returnKeyType) {
+//        [self textViewDidEndEditing:self.comment.inputText];
+//    }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView{

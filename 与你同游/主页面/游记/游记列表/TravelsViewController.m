@@ -40,7 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.skip = 10;
+    self.skip = 0;
     [self initalizedInterface];
 
 }
@@ -56,7 +56,7 @@
     [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
         [self.travelArray addObjectsFromArray:objectArray];
         [self.tableView reloadData];
-    } skip:0 failBlock:^(NSError *error) {
+    } skip:self.skip failBlock:^(NSError *error) {
         
     }];
 
@@ -86,14 +86,14 @@
     self.tableView.mj_header = header;
     
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
-            [self.travelArray addObjectsFromArray:objectArray];
-            self.skip = self.skip + 10;
-            [self.tableView reloadData];
-            
-        } skip:self.skip failBlock:^(NSError *error) {
-            
-        }];
+//        [self.travelModel queryTheTravelListSuccessBlock:^(NSArray *objectArray) {
+//            [self.travelArray addObjectsFromArray:objectArray];
+//            self.skip = self.skip + 10;
+//            [self.tableView reloadData];
+//            
+//        } skip:self.skip failBlock:^(NSError *error) {
+//            
+//        }];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView.mj_footer endRefreshing];
@@ -103,7 +103,7 @@
 
 - (void)loadNewData {
     
-    [self getData];
+//    [self getData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];

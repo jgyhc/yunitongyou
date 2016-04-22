@@ -227,6 +227,8 @@
     [self.userModel changeUserinfoWithObjectId:OBJECTID userName:username.text  head_portraits:UIImagePNGRepresentation(self.headPortrait.image) sex:sex.text  age:age.text IndividualitySignature:signature.text successBlock:^{
         [self dismissViewControllerAnimated:YES completion:^{
             
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"修改成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
         }];
 
     } failBlock:^(NSError *error) {
